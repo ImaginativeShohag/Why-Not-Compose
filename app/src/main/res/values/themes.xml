@@ -1,0 +1,11 @@
+<resources>
+
+    <style name="Theme.WhyNotCompose" parent="android:Theme.Material.NoActionBar">
+        <item name="android:colorPrimary">#10B981</item>
+        <item name="android:colorAccent">#10B981</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+
+        <item name="android:fontFamily">@font/titillium_web</item>
+    </style>
+</resources>

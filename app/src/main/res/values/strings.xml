@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Why Not Compose!</string>
+
+    <!-- Start Configuration Strings -->
+    <string name="default_notification_channel_id">default_notification_channel</string>
+    <!-- End Configuration Strings -->
+</resources>

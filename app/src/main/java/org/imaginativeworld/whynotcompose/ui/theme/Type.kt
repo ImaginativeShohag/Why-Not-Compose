@@ -25,7 +25,7 @@ object AppFont {
 val Typography = Typography(
     defaultFontFamily = AppFont.TitilliumWeb,
     h1 = TextStyle(
-        fontSize = 20.sp,
+        fontSize = 24.sp,
         fontWeight = FontWeight.Bold,
         fontFamily = AppFont.TitilliumWeb,
         color = Color(0xFF2F4858),

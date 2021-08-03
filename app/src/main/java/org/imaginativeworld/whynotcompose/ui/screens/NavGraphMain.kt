@@ -11,6 +11,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import org.imaginativeworld.whynotcompose.ui.screens.composition.appbar.AppBarScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.index.CompositionIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.index.HomeIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.splash.SplashScreen
 
@@ -32,7 +34,18 @@ sealed class AnimationsScreen(val route: String) {
 
 sealed class CompositionsScreen(val route: String) {
     object CompositionsIndex : CompositionsScreen("composition/index")
+
     object CompositionsAppBar : CompositionsScreen("composition/appbar")
+    object CompositionsButton : CompositionsScreen("composition/button")
+    object CompositionsCheckBox : CompositionsScreen("composition/checkbox")
+    object CompositionsCodeField : CompositionsScreen("composition/codefield")
+    object CompositionsDialog : CompositionsScreen("composition/dialog")
+    object CompositionsDropDown : CompositionsScreen("composition/dropdown")
+    object CompositionsList : CompositionsScreen("composition/list")
+    object CompositionsLoading : CompositionsScreen("composition/loading")
+    object CompositionsRadioButton : CompositionsScreen("composition/radiobutton")
+    object CompositionsSnackbar : CompositionsScreen("composition/snackbar")
+    object CompositionsTextField : CompositionsScreen("composition/textfield")
 }
 
 // ================================================================
@@ -91,9 +104,12 @@ private fun NavGraphBuilder.addAnimationScreens(
         addAnimationIndexScreen(
             navController = navController
         )
-        addAnimationOneScreen(
-            navController = navController
-        )
+
+        // Below compositions will be just few lines.
+        // So, we will not use functions for those.
+        composable(AnimationsScreen.AnimationOne.route) {
+            BlankScreen()
+        }
     }
 }
 
@@ -107,9 +123,52 @@ private fun NavGraphBuilder.addCompositionScreens(
         addCompositionIndexScreen(
             navController = navController
         )
-        addCompositionAppBarScreen(
-            navController = navController
-        )
+
+        // Below compositions will be just few lines.
+        // So, we will not use functions for those.
+        composable(CompositionsScreen.CompositionsAppBar.route) {
+            AppBarScreen()
+        }
+
+        composable(CompositionsScreen.CompositionsButton.route) {
+            BlankScreen()
+        }
+
+        composable(CompositionsScreen.CompositionsCheckBox.route) {
+            BlankScreen()
+        }
+
+        composable(CompositionsScreen.CompositionsCodeField.route) {
+            BlankScreen()
+        }
+
+        composable(CompositionsScreen.CompositionsDialog.route) {
+            BlankScreen()
+        }
+
+        composable(CompositionsScreen.CompositionsDropDown.route) {
+            BlankScreen()
+        }
+
+        composable(CompositionsScreen.CompositionsList.route) {
+            BlankScreen()
+        }
+
+        composable(CompositionsScreen.CompositionsLoading.route) {
+            BlankScreen()
+        }
+
+        composable(CompositionsScreen.CompositionsRadioButton.route) {
+            BlankScreen()
+        }
+
+        composable(CompositionsScreen.CompositionsSnackbar.route) {
+            BlankScreen()
+        }
+
+        composable(CompositionsScreen.CompositionsTextField.route) {
+            BlankScreen()
+        }
     }
 }
 
@@ -124,7 +183,13 @@ private fun NavGraphBuilder.addHomeSplashScreen(
         SplashScreen(
             gotoHomeIndex = {
                 navController.navigate(HomeScreen.HomeIndex.route) {
-                    popUpTo(HomeScreen.HomeIndex.route)
+                    popUpTo(HomeScreen.Splash.route) {
+                        // TODO: Check later if this is fixed.
+                        // It throws a crash which is an internal bug.
+                        // Will be fixed in Navigation 2.4.0-alpha06 release.
+                        // Track: https://issuetracker.google.com/issues/194301889
+                        // inclusive = true
+                    }
                 }
             }
         )
@@ -135,9 +200,18 @@ private fun NavGraphBuilder.addHomeIndexScreen(
     navController: NavHostController,
 ) {
     composable(HomeScreen.HomeIndex.route) {
-        HomeIndexScreen()
+        HomeIndexScreen(
+            gotoAnimationIndex = {
+                navController.navigate(Screen.Animations.route)
+            },
+            gotoCompositionIndex = {
+                navController.navigate(Screen.Compositions.route)
+            }
+        )
     }
 }
+
+// ----------------------------------------------------------------
 
 private fun NavGraphBuilder.addAnimationIndexScreen(
     navController: NavHostController,
@@ -147,30 +221,19 @@ private fun NavGraphBuilder.addAnimationIndexScreen(
     }
 }
 
-private fun NavGraphBuilder.addAnimationOneScreen(
-    navController: NavHostController,
-) {
-    composable(AnimationsScreen.AnimationOne.route) {
-        BlankScreen()
-    }
-}
+// ----------------------------------------------------------------
 
 private fun NavGraphBuilder.addCompositionIndexScreen(
     navController: NavHostController,
 ) {
     composable(CompositionsScreen.CompositionsIndex.route) {
-        BlankScreen()
+        CompositionIndexScreen(
+            navigate = { screen ->
+                navController.navigate(screen.route)
+            }
+        )
     }
 }
-
-private fun NavGraphBuilder.addCompositionAppBarScreen(
-    navController: NavHostController,
-) {
-    composable(CompositionsScreen.CompositionsAppBar.route) {
-        BlankScreen()
-    }
-}
-
 
 // ================================================================
 // Blank Screen

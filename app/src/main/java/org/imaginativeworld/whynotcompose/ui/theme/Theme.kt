@@ -8,29 +8,33 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = darkColors(
-    primary = Color(0xff064E3B),
-    primaryVariant = Color(0xff064E3B),
-    secondary = Color(0xff064E3B),
-    background = Color(0xff111827),
-    surface = Color(0xff111827),
+    primary = TailwindCSSColor.Green700,
+    primaryVariant = TailwindCSSColor.Green900,
+    secondary = TailwindCSSColor.Pink700,
+    secondaryVariant = TailwindCSSColor.Pink900,
+    background = TailwindCSSColor.Gray900,
+    surface = Color.Black,
+    error = TailwindCSSColor.Red500,
 
-    onPrimary = Color(0xffF9FAFB),
-    onSecondary = Color(0xffF9FAFB),
-    onBackground = Color(0xffF9FAFB),
-    onSurface = Color(0xffF9FAFB),
+    onPrimary = TailwindCSSColor.Gray50,
+    onSecondary = TailwindCSSColor.Gray50,
+    onBackground = TailwindCSSColor.Gray50,
+    onSurface = TailwindCSSColor.Gray50,
 )
 
 private val LightColorPalette = lightColors(
-    primary = Color(0xff10B981),
-    primaryVariant = Color(0xff10B981),
-    secondary = Color(0xff10B981),
-    background = Color(0xffF9FAFB),
-    surface = Color(0xffF9FAFB),
+    primary = TailwindCSSColor.Green500,
+    primaryVariant = TailwindCSSColor.Green700,
+    secondary = TailwindCSSColor.Pink500,
+    secondaryVariant = TailwindCSSColor.Pink700,
+    background = TailwindCSSColor.Gray50,
+    surface = Color.White,
+    error = TailwindCSSColor.Red500,
 
-    onPrimary = Color(0xff111827),
-    onSecondary = Color(0xff111827),
-    onBackground = Color(0xff111827),
-    onSurface = Color(0xff111827),
+    onPrimary = TailwindCSSColor.Gray900,
+    onSecondary = TailwindCSSColor.Gray900,
+    onBackground = TailwindCSSColor.Gray900,
+    onSurface = TailwindCSSColor.Gray900,
 )
 
 @Composable

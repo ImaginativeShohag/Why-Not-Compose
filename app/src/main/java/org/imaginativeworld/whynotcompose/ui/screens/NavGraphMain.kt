@@ -15,6 +15,7 @@ import org.imaginativeworld.whynotcompose.ui.screens.composition.appbar.AppBarSc
 import org.imaginativeworld.whynotcompose.ui.screens.composition.button.ButtonScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.checkbox.CheckBoxScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.index.CompositionIndexScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.radiobutton.RadioButtonScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.index.HomeIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.splash.SplashScreen
 
@@ -161,7 +162,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         }
 
         composable(CompositionsScreen.CompositionsRadioButton.route) {
-            BlankScreen()
+            RadioButtonScreen()
         }
 
         composable(CompositionsScreen.CompositionsSnackbar.route) {

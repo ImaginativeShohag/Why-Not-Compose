@@ -31,6 +31,13 @@ val Typography = Typography(
         color = Color(0xFF2F4858),
         lineHeight = 27.sp
     ),
+    h2 = TextStyle(
+        fontSize = 20.sp,
+        fontWeight = FontWeight.Bold,
+        fontFamily = AppFont.TitilliumWeb,
+        color = Color(0xFF2F4858),
+        lineHeight = 24.sp,
+    ),
     body1 = TextStyle(
         fontSize = 16.sp,
         fontFamily = AppFont.TitilliumWeb,

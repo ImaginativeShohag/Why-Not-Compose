@@ -33,10 +33,40 @@ object AppComponent {
     }
 
     @Composable
+    fun SubHeader(
+        text: String
+    ) {
+        Text(
+            modifier = Modifier
+                .padding(
+                    start = 16.dp,
+                    top = 16.dp,
+                    end = 16.dp,
+                    bottom = 16.dp
+                )
+                .fillMaxWidth(),
+            text = text,
+            style = MaterialTheme.typography.h2,
+            textAlign = TextAlign.Center,
+        )
+    }
+
+    @Composable
     fun MediumSpacer() {
-        Spacer(modifier = Modifier
-            .fillMaxWidth()
-            .height(16.dp))
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(16.dp)
+        )
+    }
+
+    @Composable
+    fun BigSpacer() {
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(32.dp)
+        )
     }
 
 }

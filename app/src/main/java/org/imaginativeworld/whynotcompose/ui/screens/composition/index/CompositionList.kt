@@ -17,6 +17,10 @@ data class Composition(
                 route = CompositionsScreen.CompositionsButton,
             ),
             Composition(
+                name = "Card",
+                route = CompositionsScreen.CompositionsCard,
+            ),
+            Composition(
                 name = "Check Box",
                 route = CompositionsScreen.CompositionsCheckBox,
             ),

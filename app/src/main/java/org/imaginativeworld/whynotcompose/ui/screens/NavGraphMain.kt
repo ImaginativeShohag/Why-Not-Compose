@@ -13,6 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import org.imaginativeworld.whynotcompose.ui.screens.composition.appbar.AppBarScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.button.ButtonScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.card.CardScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.checkbox.CheckBoxScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.index.CompositionIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.radiobutton.RadioButtonScreen
@@ -41,6 +42,7 @@ sealed class CompositionsScreen(val route: String) {
 
     object CompositionsAppBar : CompositionsScreen("composition/appbar")
     object CompositionsButton : CompositionsScreen("composition/button")
+    object CompositionsCard : CompositionsScreen("composition/card")
     object CompositionsCheckBox : CompositionsScreen("composition/checkbox")
     object CompositionsCodeField : CompositionsScreen("composition/codefield")
     object CompositionsDialog : CompositionsScreen("composition/dialog")
@@ -137,6 +139,10 @@ private fun NavGraphBuilder.addCompositionScreens(
 
         composable(CompositionsScreen.CompositionsButton.route) {
             ButtonScreen()
+        }
+
+        composable(CompositionsScreen.CompositionsCard.route) {
+            CardScreen()
         }
 
         composable(CompositionsScreen.CompositionsCheckBox.route) {

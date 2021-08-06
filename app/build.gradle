@@ -56,6 +56,7 @@ android {
         freeCompilerArgs += "-Xallow-jvm-ir-dependencies"
         // Enable experimental coroutines APIs, including Flow
         freeCompilerArgs += '-Xopt-in=kotlin.Experimental'
+        freeCompilerArgs += '-Xopt-in=androidx.compose.material.ExperimentalMaterialApi'
     }
 
     buildFeatures {

@@ -54,7 +54,7 @@ fun CheckBoxScreenSkeleton() {
 
             // ----------------------------------------------------------------
 
-            val (state1, onStateChange1) = remember { mutableStateOf(true) }
+            val (state1, onStateChange1) = remember { mutableStateOf(false) }
             val (state2, onStateChange2) = remember { mutableStateOf(true) }
 
             GeneralCheckBox(

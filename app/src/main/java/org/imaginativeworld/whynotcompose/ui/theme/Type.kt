@@ -1,7 +1,6 @@
 package org.imaginativeworld.whynotcompose.ui.theme
 
 import androidx.compose.material.Typography
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -28,24 +27,20 @@ val Typography = Typography(
         fontSize = 24.sp,
         fontWeight = FontWeight.Bold,
         fontFamily = AppFont.TitilliumWeb,
-        color = Color(0xFF2F4858),
         lineHeight = 27.sp
     ),
     h2 = TextStyle(
         fontSize = 20.sp,
         fontWeight = FontWeight.Bold,
         fontFamily = AppFont.TitilliumWeb,
-        color = Color(0xFF2F4858),
         lineHeight = 24.sp,
     ),
     body1 = TextStyle(
         fontSize = 16.sp,
         fontFamily = AppFont.TitilliumWeb,
-        color = Color(0xFF2F4858)
     ),
     button = TextStyle(
         fontFamily = AppFont.TitilliumWeb,
-        color = Color.White
     )
     /* Other default text styles to override
     caption = TextStyle(

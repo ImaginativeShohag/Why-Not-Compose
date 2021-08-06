@@ -1,6 +1,7 @@
 package org.imaginativeworld.whynotcompose.ui.screens.composition.button
 
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -9,7 +10,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -96,6 +97,30 @@ fun ButtonScreenSkeleton() {
                     color = Color.White
                 )
             }
+
+            // ----------------------------------------------------------------
+
+            AppComponent.MediumSpacer()
+
+            IconButton(onClick = { /* doSomething() */ }) {
+                Icon(Icons.Filled.Favorite, contentDescription = "Localized description")
+            }
+
+            // ----------------------------------------------------------------
+
+            AppComponent.MediumSpacer()
+
+            var checked by remember { mutableStateOf(false) }
+
+            IconToggleButton(checked = checked, onCheckedChange = { checked = it }) {
+                val tint by animateColorAsState(if (checked) Color(0xFFEC407A) else Color(0xFFB0BEC5))
+                Icon(
+                    Icons.Filled.Favorite,
+                    contentDescription = "Localized description",
+                    tint = tint
+                )
+            }
+
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
@@ -633,6 +658,7 @@ fun SolidWideButton(
         shape = shape,
         colors = ButtonDefaults.buttonColors(
             backgroundColor = backgroundColor,
+            contentColor = Color.White,
         ),
         onClick = {
             currentFocus.clearFocus()
@@ -645,7 +671,6 @@ fun SolidWideButton(
                 modifier = Modifier.size(ButtonDefaults.IconSize),
                 painter = painterResource(id = startIcon),
                 contentDescription = text,
-                tint = Color.White,
             )
             Spacer(Modifier.size(horizontalPadding))
         }
@@ -671,7 +696,6 @@ fun SolidWideButton(
                 modifier = Modifier.size(ButtonDefaults.IconSize),
                 painter = painterResource(id = endIcon),
                 contentDescription = text,
-                tint = Color.White,
             )
         }
     }
@@ -763,6 +787,9 @@ fun GradientWideButton(
                 brush = backgroundGradient,
                 shape = shape
             ),
+        colors = ButtonDefaults.textButtonColors(
+            contentColor = Color.White,
+        ),
         shape = shape,
         onClick = {
             currentFocus.clearFocus()
@@ -858,7 +885,6 @@ fun BorderedButton(
         Text(
             text,
             style = MaterialTheme.typography.button,
-            color = MaterialTheme.colors.primary,
             fontSize = fontSize
         )
 
@@ -926,7 +952,6 @@ fun BorderedWideButton(
             text = text,
             fontSize = fontSize,
             style = MaterialTheme.typography.button,
-            color = MaterialTheme.colors.primary,
             textAlign = TextAlign.Center,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,

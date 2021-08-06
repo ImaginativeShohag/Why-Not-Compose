@@ -49,6 +49,10 @@ data class Composition(
                 route = CompositionsScreen.CompositionsSnackbar,
             ),
             Composition(
+                name = "Switch",
+                route = CompositionsScreen.CompositionsSwitch,
+            ),
+            Composition(
                 name = "Text Field",
                 route = CompositionsScreen.CompositionsTextField,
             ),

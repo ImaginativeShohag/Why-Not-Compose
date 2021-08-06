@@ -16,6 +16,7 @@ import org.imaginativeworld.whynotcompose.ui.screens.composition.button.ButtonSc
 import org.imaginativeworld.whynotcompose.ui.screens.composition.checkbox.CheckBoxScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.index.CompositionIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.radiobutton.RadioButtonScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.switch.SwitchScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.index.HomeIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.splash.SplashScreen
 
@@ -48,6 +49,7 @@ sealed class CompositionsScreen(val route: String) {
     object CompositionsLoading : CompositionsScreen("composition/loading")
     object CompositionsRadioButton : CompositionsScreen("composition/radiobutton")
     object CompositionsSnackbar : CompositionsScreen("composition/snackbar")
+    object CompositionsSwitch : CompositionsScreen("composition/switch")
     object CompositionsTextField : CompositionsScreen("composition/textfield")
 }
 
@@ -167,6 +169,10 @@ private fun NavGraphBuilder.addCompositionScreens(
 
         composable(CompositionsScreen.CompositionsSnackbar.route) {
             BlankScreen()
+        }
+
+        composable(CompositionsScreen.CompositionsSwitch.route) {
+            SwitchScreen()
         }
 
         composable(CompositionsScreen.CompositionsTextField.route) {

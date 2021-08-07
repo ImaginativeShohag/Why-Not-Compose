@@ -27,6 +27,7 @@ class SharedPref @Inject constructor(
     companion object {
         private const val PREF_TOKEN = "token"
         private const val PREF_USER = "user"
+        private const val PREF_DARK_MODE = "dark_mode"
     }
 
     private val context: Context = context.applicationContext
@@ -110,6 +111,21 @@ class SharedPref @Inject constructor(
 
     fun isUserLoggedIn(): Boolean {
         return getUser() != null
+    }
+
+    // ----------------------------------------------------------------
+
+    fun setDarkMode(isDark: Boolean) {
+        getSharedPerf()
+            .edit()
+            .apply {
+                putBoolean(PREF_DARK_MODE, isDark)
+                apply()
+            }
+    }
+
+    fun getDarkMode(): Boolean {
+        return getSharedPerf().getBoolean(PREF_DARK_MODE, false)
     }
 
 }

@@ -11,13 +11,20 @@ import androidx.compose.runtime.setValue
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.accompanist.insets.ProvideWindowInsets
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
+import org.imaginativeworld.whynotcompose.utils.SharedPref
 import org.imaginativeworld.whynotcompose.utils.extensions.toast
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var sharedPref: SharedPref
 
     private var pressBackExitJob: Job? = null
     private var backPressedOnce = false
@@ -28,7 +35,7 @@ class MainActivity : ComponentActivity() {
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        var isDarkMode by mutableStateOf(false)
+        var isDarkMode by mutableStateOf(sharedPref.getDarkMode())
 
         setContent {
             AppTheme(
@@ -38,6 +45,8 @@ class MainActivity : ComponentActivity() {
                     MainScreen(
                         turnOnDarkMode = { turnOn ->
                             isDarkMode = turnOn
+
+                            sharedPref.setDarkMode(turnOn)
                         }
                     )
                 }

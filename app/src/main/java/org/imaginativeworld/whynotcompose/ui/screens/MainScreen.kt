@@ -17,7 +17,9 @@ import org.imaginativeworld.whynotcompose.ui.compositions.CustomSnackbarHost
 import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    turnOnDarkMode: (Boolean) -> Unit,
+) {
     val systemUiController = rememberSystemUiController()
     val useDarkIcons = MaterialTheme.colors.isLight
 
@@ -28,7 +30,9 @@ fun MainScreen() {
         )
     }
 
-    MainScreenSkeleton()
+    MainScreenSkeleton(
+        turnOnDarkMode = turnOnDarkMode,
+    )
 }
 
 @Preview
@@ -42,7 +46,9 @@ fun MainScreenSkeletonPreview() {
 }
 
 @Composable
-fun MainScreenSkeleton() {
+fun MainScreenSkeleton(
+    turnOnDarkMode: (Boolean) -> Unit = {},
+) {
     val navController = rememberNavController()
 
     Scaffold(
@@ -54,7 +60,8 @@ fun MainScreenSkeleton() {
             modifier = Modifier
                 .navigationBarsWithImePadding()
                 .systemBarsPadding(),
-            navController = navController
+            navController = navController,
+            turnOnDarkMode = turnOnDarkMode,
         )
     }
 }

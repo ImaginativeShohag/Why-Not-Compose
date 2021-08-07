@@ -74,6 +74,7 @@ sealed class UiScreen(val route: String) {
 fun NavHostMain(
     modifier: Modifier,
     navController: NavHostController,
+    turnOnDarkMode: (Boolean) -> Unit,
 ) {
     NavHost(
         modifier = modifier,
@@ -81,7 +82,8 @@ fun NavHostMain(
         startDestination = Screen.Home.route
     ) {
         addHomeScreens(
-            navController = navController
+            navController = navController,
+            turnOnDarkMode = turnOnDarkMode,
         )
         addAnimationScreens(
             navController = navController
@@ -101,6 +103,7 @@ fun NavHostMain(
 
 private fun NavGraphBuilder.addHomeScreens(
     navController: NavHostController,
+    turnOnDarkMode: (Boolean) -> Unit,
 ) {
     navigation(
         route = Screen.Home.route,
@@ -110,7 +113,8 @@ private fun NavGraphBuilder.addHomeScreens(
             navController = navController
         )
         addHomeIndexScreen(
-            navController = navController
+            navController = navController,
+            turnOnDarkMode = turnOnDarkMode,
         )
     }
 }
@@ -250,12 +254,14 @@ private fun NavGraphBuilder.addHomeSplashScreen(
 
 private fun NavGraphBuilder.addHomeIndexScreen(
     navController: NavHostController,
+    turnOnDarkMode: (Boolean) -> Unit,
 ) {
     composable(HomeScreen.HomeIndex.route) {
         HomeIndexScreen(
             navigate = { screen ->
                 navController.navigate(screen.route)
-            }
+            },
+            turnOnDarkMode = turnOnDarkMode
         )
     }
 }

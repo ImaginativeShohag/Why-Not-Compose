@@ -6,6 +6,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,13 +18,14 @@ import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
 import org.imaginativeworld.whynotcompose.ui.screens.Screen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.switch.GeneralEndSwitch
 import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
 
 @Composable
 fun HomeIndexScreen(
     navigate: (Screen) -> Unit = {},
+    turnOnDarkMode: (Boolean) -> Unit = {},
 ) {
-
     val scroll = rememberScrollState()
 
     Scaffold {
@@ -36,6 +39,21 @@ fun HomeIndexScreen(
             AppComponent.Header(
                 text = stringResource(id = R.string.app_name)
             )
+
+            val (darkModeState, onDarkModeStateChange) = remember { mutableStateOf(false) }
+
+            Row(Modifier.padding(start = 16.dp, end = 16.dp)) {
+                GeneralEndSwitch(
+                    text = "Dark Mode",
+                    state = darkModeState,
+                    onStateChange = {
+                        onDarkModeStateChange(it)
+                        turnOnDarkMode(it)
+                    }
+                )
+            }
+
+            Spacer(modifier = Modifier.requiredHeight(16.dp))
 
             ModuleButton(
                 icon = R.drawable.ic_round_animation_24,

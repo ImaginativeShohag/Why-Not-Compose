@@ -5,6 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.addCallback
 import androidx.activity.compose.setContent
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -25,10 +28,18 @@ class MainActivity : ComponentActivity() {
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
+        var isDarkMode by mutableStateOf(false)
+
         setContent {
-            AppTheme {
+            AppTheme(
+                darkTheme = isDarkMode
+            ) {
                 ProvideWindowInsets {
-                    MainScreen()
+                    MainScreen(
+                        turnOnDarkMode = { turnOn ->
+                            isDarkMode = turnOn
+                        }
+                    )
                 }
             }
         }

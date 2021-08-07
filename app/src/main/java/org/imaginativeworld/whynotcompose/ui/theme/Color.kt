@@ -33,12 +33,13 @@ object TailwindCSSColor {
     // Color from: https://tailwindcss.com/docs/customizing-colors
 
     // colors.coolGray
-    val Gray50 = Color(0xFFF9FAFB)
-    val Gray100 = Color(0xFFF3F4F6)
-    val Gray300 = Color(0xFFD1D5DB)
-    val Gray500 = Color(0xFF6B7280)
-    val Gray700 = Color(0xFF374151)
-    val Gray900 = Color(0xFF111827)
+    val Gray50 = Color(0xFFFAFAFA)
+    val Gray100 = Color(0xFFF5F5F5)
+    val Gray300 = Color(0xFFD4D4D4)
+    val Gray500 = Color(0xFF737373)
+    val Gray700 = Color(0xFF404040)
+    val Gray800 = Color(0xFF262626)
+    val Gray900 = Color(0xFF171717)
 
     // colors.red
     val Red500 = Color(0xFFEF4444)

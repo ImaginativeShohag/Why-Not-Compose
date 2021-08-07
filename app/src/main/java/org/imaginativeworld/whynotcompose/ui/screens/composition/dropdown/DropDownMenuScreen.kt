@@ -34,6 +34,14 @@ fun DropDownMenuScreenSkeletonPreview() {
     }
 }
 
+@Preview
+@Composable
+fun DropDownMenuScreenSkeletonPreviewDark() {
+    AppTheme(darkTheme = true) {
+        DropDownMenuScreenSkeleton()
+    }
+}
+
 @Composable
 fun DropDownMenuScreenSkeleton() {
     Scaffold(Modifier.fillMaxSize()) {
@@ -115,29 +123,25 @@ fun DropDownMenuScreenSkeleton() {
             var selectedItem1 by remember { mutableStateOf("") }
             var selectedItem2 by remember { mutableStateOf("Bangladesh") }
 
-            AppTheme {
-                Column {
-                    DropDownSpinner(
-                        modifier = Modifier.padding(10.dp),
-                        defaultText = "Select Country...",
-                        selectedItem = selectedItem1,
-                        onItemSelected = { index, item ->
-                            selectedItem1 = item
-                        },
-                        itemList = countryList
-                    )
+            DropDownSpinner(
+                modifier = Modifier.padding(10.dp),
+                defaultText = "Select Country...",
+                selectedItem = selectedItem1,
+                onItemSelected = { index, item ->
+                    selectedItem1 = item
+                },
+                itemList = countryList
+            )
 
-                    DropDownSpinner(
-                        modifier = Modifier.padding(10.dp),
-                        defaultText = "Select Country...",
-                        selectedItem = selectedItem2,
-                        onItemSelected = { index, item ->
-                            selectedItem2 = item
-                        },
-                        itemList = countryList
-                    )
-                }
-            }
+            DropDownSpinner(
+                modifier = Modifier.padding(10.dp),
+                defaultText = "Select Country...",
+                selectedItem = selectedItem2,
+                onItemSelected = { index, item ->
+                    selectedItem2 = item
+                },
+                itemList = countryList
+            )
 
             // ----------------------------------------------------------------
 
@@ -160,7 +164,7 @@ fun <E> DropDownSpinner(
         modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .background(Color(0xFFF1F3F2))
+            .background(MaterialTheme.colors.surface)
             .height(ELEMENT_HEIGHT),
         contentAlignment = Alignment.CenterStart
     ) {
@@ -170,7 +174,7 @@ fun <E> DropDownSpinner(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp, bottom = 3.dp),
-                color = MaterialTheme.colors.onBackground.copy(.5f)
+                color = MaterialTheme.colors.onSurface.copy(.45f)
             )
         }
 
@@ -179,6 +183,7 @@ fun <E> DropDownSpinner(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 32.dp, bottom = 3.dp),
+            color = MaterialTheme.colors.onSurface
         )
 
         DropdownMenu(

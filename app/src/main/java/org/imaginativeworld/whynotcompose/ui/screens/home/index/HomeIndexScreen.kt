@@ -40,7 +40,8 @@ fun HomeIndexScreen(
                 text = stringResource(id = R.string.app_name)
             )
 
-            val (darkModeState, onDarkModeStateChange) = remember { mutableStateOf(false) }
+            val isDark = !MaterialTheme.colors.isLight
+            val (darkModeState, onDarkModeStateChange) = remember { mutableStateOf(isDark) }
 
             Row(Modifier.padding(start = 16.dp, end = 16.dp)) {
                 GeneralEndSwitch(

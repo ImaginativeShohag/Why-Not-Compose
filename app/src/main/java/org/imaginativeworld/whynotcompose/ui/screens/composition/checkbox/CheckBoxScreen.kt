@@ -15,11 +15,6 @@ import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
 import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
 
-/**
- * Sources:
- * - https://cs.android.com/androidx/platform/tools/dokka-devsite-plugin/+/master:testData/compose/samples/material/samples/SelectionControlsSamples.kt
- */
-
 private val ELEMENT_HEIGHT = 56.dp
 
 @Composable

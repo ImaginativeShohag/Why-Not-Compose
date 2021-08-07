@@ -33,8 +33,8 @@ data class Composition(
                 route = CompositionsScreen.CompositionsDialog,
             ),
             Composition(
-                name = "DropDown",
-                route = CompositionsScreen.CompositionsDropDown,
+                name = "DropDown Menu",
+                route = CompositionsScreen.CompositionsDropDownMenu,
             ),
             Composition(
                 name = "List",

@@ -17,6 +17,7 @@ import org.imaginativeworld.whynotcompose.ui.screens.composition.card.CardScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.checkbox.CheckBoxScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.dropdown.DropDownMenuScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.index.CompositionIndexScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.loadingindicator.LoadingIndicatorScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.radiobutton.RadioButtonScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.switch.SwitchScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.index.HomeIndexScreen
@@ -49,7 +50,7 @@ sealed class CompositionsScreen(val route: String) {
     object CompositionsDialog : CompositionsScreen("composition/dialog")
     object CompositionsDropDownMenu : CompositionsScreen("composition/dropdownmenu")
     object CompositionsList : CompositionsScreen("composition/list")
-    object CompositionsLoading : CompositionsScreen("composition/loading")
+    object CompositionsLoadingIndicator : CompositionsScreen("composition/loadingindicator")
     object CompositionsRadioButton : CompositionsScreen("composition/radiobutton")
     object CompositionsSnackbar : CompositionsScreen("composition/snackbar")
     object CompositionsSwitch : CompositionsScreen("composition/switch")
@@ -166,8 +167,8 @@ private fun NavGraphBuilder.addCompositionScreens(
             BlankScreen()
         }
 
-        composable(CompositionsScreen.CompositionsLoading.route) {
-            BlankScreen()
+        composable(CompositionsScreen.CompositionsLoadingIndicator.route) {
+            LoadingIndicatorScreen()
         }
 
         composable(CompositionsScreen.CompositionsRadioButton.route) {

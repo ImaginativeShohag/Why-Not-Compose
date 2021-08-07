@@ -29,6 +29,8 @@ import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
 import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
 
+private val ELEMENT_HEIGHT = 48.dp
+
 @Composable
 fun defaultButtonBackgroundBrush(
     alpha: Float = 1f
@@ -75,8 +77,27 @@ fun ButtonScreenSkeleton() {
 
             Button(onClick = { /* Do something! */ }) {
                 Text(
-                    "Button",
-                    color = Color.White
+                    "Button"
+                )
+            }
+
+            // ----------------------------------------------------------------
+
+            AppComponent.MediumSpacer()
+
+            OutlinedButton(onClick = { /* Do something! */ }) {
+                Text(
+                    "Outlined Button"
+                )
+            }
+
+            // ----------------------------------------------------------------
+
+            AppComponent.MediumSpacer()
+
+            TextButton(onClick = { /* Do something! */ }) {
+                Text(
+                    "Text Button"
                 )
             }
 

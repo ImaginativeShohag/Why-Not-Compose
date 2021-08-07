@@ -31,8 +31,8 @@ private val LightColorPalette = lightColors(
     surface = Color.White,
     error = TailwindCSSColor.Red500,
 
-    onPrimary = TailwindCSSColor.Gray900,
-    onSecondary = TailwindCSSColor.Gray900,
+    onPrimary = TailwindCSSColor.Gray50,
+    onSecondary = TailwindCSSColor.Gray50,
     onBackground = TailwindCSSColor.Gray900,
     onSurface = TailwindCSSColor.Gray900,
 )

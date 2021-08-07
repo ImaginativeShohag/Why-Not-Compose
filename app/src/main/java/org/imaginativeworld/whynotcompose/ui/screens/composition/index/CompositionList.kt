@@ -41,8 +41,8 @@ data class Composition(
                 route = CompositionsScreen.CompositionsList,
             ),
             Composition(
-                name = "Loading",
-                route = CompositionsScreen.CompositionsLoading,
+                name = "Loading Indicator",
+                route = CompositionsScreen.CompositionsLoadingIndicator,
             ),
             Composition(
                 name = "Radio Button",

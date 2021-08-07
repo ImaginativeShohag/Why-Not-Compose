@@ -15,12 +15,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
+import org.imaginativeworld.whynotcompose.ui.screens.Screen
 import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
 
 @Composable
 fun HomeIndexScreen(
-    gotoAnimationIndex: () -> Unit = {},
-    gotoCompositionIndex: () -> Unit = {},
+    navigate: (Screen) -> Unit = {},
 ) {
 
     val scroll = rememberScrollState()
@@ -41,15 +41,23 @@ fun HomeIndexScreen(
                 icon = R.drawable.ic_round_animation_24,
                 name = "Animations",
                 onClick = {
-                    gotoAnimationIndex()
+                    navigate(Screen.Animations)
+                }
+            )
+
+            ModuleButton(
+                icon = R.drawable.ic_round_widgets_24,
+                name = "Compositions",
+                onClick = {
+                    navigate(Screen.Compositions)
                 }
             )
 
             ModuleButton(
                 icon = R.drawable.ic_round_grid_view_24,
-                name = "Compositions",
+                name = "UIs",
                 onClick = {
-                    gotoCompositionIndex()
+                    navigate(Screen.UI)
                 }
             )
         }

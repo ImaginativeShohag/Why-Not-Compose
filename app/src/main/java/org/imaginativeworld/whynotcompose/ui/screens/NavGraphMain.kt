@@ -22,16 +22,18 @@ import org.imaginativeworld.whynotcompose.ui.screens.composition.radiobutton.Rad
 import org.imaginativeworld.whynotcompose.ui.screens.composition.switch.SwitchScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.index.HomeIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.splash.SplashScreen
+import org.imaginativeworld.whynotcompose.ui.screens.ui.index.UiIndexScreen
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")
     object Animations : Screen("animation")
     object Compositions : Screen("composition")
+    object UI : Screen("ui")
 }
 
 sealed class HomeScreen(val route: String) {
-    object Splash : AnimationsScreen("splash")
-    object HomeIndex : AnimationsScreen("home/index")
+    object Splash : HomeScreen("splash")
+    object HomeIndex : HomeScreen("home/index")
 }
 
 sealed class AnimationsScreen(val route: String) {
@@ -57,6 +59,13 @@ sealed class CompositionsScreen(val route: String) {
     object CompositionsTextField : CompositionsScreen("composition/textfield")
 }
 
+sealed class UiScreen(val route: String) {
+    object UiIndex : UiScreen("animation/index")
+
+    object UiWebView : UiScreen("animation/webview")
+    object UiMapView : UiScreen("animation/mapview")
+}
+
 // ================================================================
 // NavHost
 // ================================================================
@@ -78,6 +87,9 @@ fun NavHostMain(
             navController = navController
         )
         addCompositionScreens(
+            navController = navController
+        )
+        addUiScreens(
             navController = navController
         )
     }
@@ -189,6 +201,29 @@ private fun NavGraphBuilder.addCompositionScreens(
     }
 }
 
+private fun NavGraphBuilder.addUiScreens(
+    navController: NavHostController,
+) {
+    navigation(
+        route = Screen.UI.route,
+        startDestination = AnimationsScreen.AnimationIndex.route
+    ) {
+        addUiIndexScreen(
+            navController = navController
+        )
+
+        // Below compositions will be just few lines.
+        // So, we will not use functions for those.
+        composable(UiScreen.UiWebView.route) {
+            BlankScreen()
+        }
+
+        composable(UiScreen.UiMapView.route) {
+            BlankScreen()
+        }
+    }
+}
+
 // ================================================================
 // Leaf Screens
 // ================================================================
@@ -218,11 +253,8 @@ private fun NavGraphBuilder.addHomeIndexScreen(
 ) {
     composable(HomeScreen.HomeIndex.route) {
         HomeIndexScreen(
-            gotoAnimationIndex = {
-                navController.navigate(Screen.Animations.route)
-            },
-            gotoCompositionIndex = {
-                navController.navigate(Screen.Compositions.route)
+            navigate = { screen ->
+                navController.navigate(screen.route)
             }
         )
     }
@@ -245,6 +277,20 @@ private fun NavGraphBuilder.addCompositionIndexScreen(
 ) {
     composable(CompositionsScreen.CompositionsIndex.route) {
         CompositionIndexScreen(
+            navigate = { screen ->
+                navController.navigate(screen.route)
+            }
+        )
+    }
+}
+
+// ----------------------------------------------------------------
+
+private fun NavGraphBuilder.addUiIndexScreen(
+    navController: NavHostController,
+) {
+    composable(UiScreen.UiIndex.route) {
+        UiIndexScreen(
             navigate = { screen ->
                 navController.navigate(screen.route)
             }

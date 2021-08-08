@@ -241,11 +241,7 @@ private fun NavGraphBuilder.addHomeSplashScreen(
             gotoHomeIndex = {
                 navController.navigate(HomeScreen.HomeIndex.route) {
                     popUpTo(HomeScreen.Splash.route) {
-                        // TODO: Check later if this is fixed.
-                        // It throws a crash which is an internal bug.
-                        // Will be fixed in Navigation 2.4.0-alpha06 release.
-                        // Track: https://issuetracker.google.com/issues/194301889
-                        // inclusive = true
+                         inclusive = true
                     }
                 }
             }

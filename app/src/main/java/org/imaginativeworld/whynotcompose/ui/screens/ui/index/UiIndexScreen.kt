@@ -15,12 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.ui.screens.AppComponent.Header
-import org.imaginativeworld.whynotcompose.ui.screens.UiScreen
+import org.imaginativeworld.whynotcompose.ui.screens.UIsScreen
 import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
 
 @Composable
 fun UiIndexScreen(
-    navigate: (UiScreen) -> Unit,
+    navigate: (UIsScreen) -> Unit,
 ) {
     UiIndexSkeleton(
         navigate = navigate
@@ -37,7 +37,7 @@ fun UiIndexSkeletonPreview() {
 
 @Composable
 fun UiIndexSkeleton(
-    navigate: (UiScreen) -> Unit = {},
+    navigate: (UIsScreen) -> Unit = {},
 ) {
 
     Scaffold {

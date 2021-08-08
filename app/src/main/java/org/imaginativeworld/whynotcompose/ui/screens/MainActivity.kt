@@ -43,6 +43,7 @@ class MainActivity : ComponentActivity() {
             ) {
                 ProvideWindowInsets {
                     MainScreen(
+                        isDarkMode = isDarkMode,
                         turnOnDarkMode = { turnOn ->
                             isDarkMode = turnOn
 

@@ -31,7 +31,8 @@ sealed class Screen(val route: String) {
     object Home : Screen("home")
     object Animations : Screen("animation")
     object Compositions : Screen("composition")
-    object UI : Screen("ui")
+    object UIs : Screen("ui")
+    object Tutorials : Screen("tutorial")
 }
 
 sealed class HomeScreen(val route: String) {
@@ -48,28 +49,32 @@ sealed class AnimationsScreen(val route: String) {
 }
 
 sealed class CompositionsScreen(val route: String) {
-    object CompositionsIndex : CompositionsScreen("composition/index")
+    object CompositionIndex : CompositionsScreen("composition/index")
 
-    object CompositionsAppBar : CompositionsScreen("composition/appbar")
-    object CompositionsButton : CompositionsScreen("composition/button")
-    object CompositionsCard : CompositionsScreen("composition/card")
-    object CompositionsCheckBox : CompositionsScreen("composition/checkbox")
-    object CompositionsCodeField : CompositionsScreen("composition/codefield")
-    object CompositionsDialog : CompositionsScreen("composition/dialog")
-    object CompositionsDropDownMenu : CompositionsScreen("composition/dropdownmenu")
-    object CompositionsList : CompositionsScreen("composition/list")
-    object CompositionsLoadingIndicator : CompositionsScreen("composition/loadingindicator")
-    object CompositionsRadioButton : CompositionsScreen("composition/radiobutton")
-    object CompositionsSnackbar : CompositionsScreen("composition/snackbar")
-    object CompositionsSwitch : CompositionsScreen("composition/switch")
-    object CompositionsTextField : CompositionsScreen("composition/textfield")
+    object CompositionAppBar : CompositionsScreen("composition/appbar")
+    object CompositionButton : CompositionsScreen("composition/button")
+    object CompositionCard : CompositionsScreen("composition/card")
+    object CompositionCheckBox : CompositionsScreen("composition/checkbox")
+    object CompositionCodeField : CompositionsScreen("composition/codefield")
+    object CompositionDialog : CompositionsScreen("composition/dialog")
+    object CompositionDropDownMenu : CompositionsScreen("composition/dropdownmenu")
+    object CompositionList : CompositionsScreen("composition/list")
+    object CompositionLoadingIndicator : CompositionsScreen("composition/loadingindicator")
+    object CompositionRadioButton : CompositionsScreen("composition/radiobutton")
+    object CompositionSnackbar : CompositionsScreen("composition/snackbar")
+    object CompositionSwitch : CompositionsScreen("composition/switch")
+    object CompositionTextField : CompositionsScreen("composition/textfield")
 }
 
-sealed class UiScreen(val route: String) {
-    object UiIndex : UiScreen("animation/index")
+sealed class UIsScreen(val route: String) {
+    object UiIndex : UIsScreen("animation/index")
 
-    object UiWebView : UiScreen("animation/webview")
-    object UiMapView : UiScreen("animation/mapview")
+    object UiWebView : UIsScreen("animation/webview")
+    object UiMapView : UIsScreen("animation/mapview")
+}
+
+sealed class TutorialsScreen(val route: String) {
+    object TutorialIndex : TutorialsScreen("tutorial/index")
 }
 
 // ================================================================
@@ -98,6 +103,9 @@ fun NavHostMain(
             navController = navController
         )
         addUiScreens(
+            navController = navController
+        )
+        addTutorialScreens(
             navController = navController
         )
     }
@@ -161,7 +169,7 @@ private fun NavGraphBuilder.addCompositionScreens(
 ) {
     navigation(
         route = Screen.Compositions.route,
-        startDestination = CompositionsScreen.CompositionsIndex.route
+        startDestination = CompositionsScreen.CompositionIndex.route
     ) {
         addCompositionIndexScreen(
             navController = navController
@@ -169,55 +177,55 @@ private fun NavGraphBuilder.addCompositionScreens(
 
         // Below compositions will be just few lines.
         // So, we will not use functions for those.
-        composable(CompositionsScreen.CompositionsAppBar.route) {
+        composable(CompositionsScreen.CompositionAppBar.route) {
             AppBarScreen()
         }
 
-        composable(CompositionsScreen.CompositionsButton.route) {
+        composable(CompositionsScreen.CompositionButton.route) {
             ButtonScreen()
         }
 
-        composable(CompositionsScreen.CompositionsCard.route) {
+        composable(CompositionsScreen.CompositionCard.route) {
             CardScreen()
         }
 
-        composable(CompositionsScreen.CompositionsCheckBox.route) {
+        composable(CompositionsScreen.CompositionCheckBox.route) {
             CheckBoxScreen()
         }
 
-        composable(CompositionsScreen.CompositionsCodeField.route) {
+        composable(CompositionsScreen.CompositionCodeField.route) {
             BlankScreen()
         }
 
-        composable(CompositionsScreen.CompositionsDialog.route) {
+        composable(CompositionsScreen.CompositionDialog.route) {
             BlankScreen()
         }
 
-        composable(CompositionsScreen.CompositionsDropDownMenu.route) {
+        composable(CompositionsScreen.CompositionDropDownMenu.route) {
             DropDownMenuScreen()
         }
 
-        composable(CompositionsScreen.CompositionsList.route) {
+        composable(CompositionsScreen.CompositionList.route) {
             BlankScreen()
         }
 
-        composable(CompositionsScreen.CompositionsLoadingIndicator.route) {
+        composable(CompositionsScreen.CompositionLoadingIndicator.route) {
             LoadingIndicatorScreen()
         }
 
-        composable(CompositionsScreen.CompositionsRadioButton.route) {
+        composable(CompositionsScreen.CompositionRadioButton.route) {
             RadioButtonScreen()
         }
 
-        composable(CompositionsScreen.CompositionsSnackbar.route) {
+        composable(CompositionsScreen.CompositionSnackbar.route) {
             BlankScreen()
         }
 
-        composable(CompositionsScreen.CompositionsSwitch.route) {
+        composable(CompositionsScreen.CompositionSwitch.route) {
             SwitchScreen()
         }
 
-        composable(CompositionsScreen.CompositionsTextField.route) {
+        composable(CompositionsScreen.CompositionTextField.route) {
             TextFieldScreen()
         }
     }
@@ -227,7 +235,7 @@ private fun NavGraphBuilder.addUiScreens(
     navController: NavHostController,
 ) {
     navigation(
-        route = Screen.UI.route,
+        route = Screen.UIs.route,
         startDestination = AnimationsScreen.AnimationIndex.route
     ) {
         addUiIndexScreen(
@@ -236,13 +244,32 @@ private fun NavGraphBuilder.addUiScreens(
 
         // Below compositions will be just few lines.
         // So, we will not use functions for those.
-        composable(UiScreen.UiWebView.route) {
+        composable(UIsScreen.UiWebView.route) {
             BlankScreen()
         }
 
-        composable(UiScreen.UiMapView.route) {
+        composable(UIsScreen.UiMapView.route) {
             BlankScreen()
         }
+    }
+}
+
+private fun NavGraphBuilder.addTutorialScreens(
+    navController: NavHostController,
+) {
+    navigation(
+        route = Screen.UIs.route,
+        startDestination = TutorialsScreen.TutorialIndex.route
+    ) {
+        addTutorialIndexScreen(
+            navController = navController
+        )
+
+        // Below compositions will be just few lines.
+        // So, we will not use functions for those.
+//        composable(TutorialsScreen.xyz.route) {
+//            BlankScreen()
+//        }
     }
 }
 
@@ -299,7 +326,7 @@ private fun NavGraphBuilder.addAnimationIndexScreen(
 private fun NavGraphBuilder.addCompositionIndexScreen(
     navController: NavHostController,
 ) {
-    composable(CompositionsScreen.CompositionsIndex.route) {
+    composable(CompositionsScreen.CompositionIndex.route) {
         CompositionIndexScreen(
             navigate = { screen ->
                 navController.navigate(screen.route)
@@ -313,12 +340,22 @@ private fun NavGraphBuilder.addCompositionIndexScreen(
 private fun NavGraphBuilder.addUiIndexScreen(
     navController: NavHostController,
 ) {
-    composable(UiScreen.UiIndex.route) {
+    composable(UIsScreen.UiIndex.route) {
         UiIndexScreen(
             navigate = { screen ->
                 navController.navigate(screen.route)
             }
         )
+    }
+}
+
+// ----------------------------------------------------------------
+
+private fun NavGraphBuilder.addTutorialIndexScreen(
+    navController: NavHostController,
+) {
+    composable(UIsScreen.UiIndex.route) {
+        BlankScreen()
     }
 }
 

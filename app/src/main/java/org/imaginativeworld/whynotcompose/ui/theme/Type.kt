@@ -45,6 +45,7 @@ val Typography = Typography(
     ),
     button = TextStyle(
         fontFamily = AppFont.TitilliumWeb,
+        fontWeight = FontWeight.Medium,
     )
     /* Other default text styles to override
     caption = TextStyle(

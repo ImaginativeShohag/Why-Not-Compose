@@ -1,10 +1,13 @@
 package org.imaginativeworld.whynotcompose.ui.screens.home.index
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -14,27 +17,54 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
 import org.imaginativeworld.whynotcompose.ui.screens.Screen
-import org.imaginativeworld.whynotcompose.ui.screens.composition.switch.GeneralEndSwitch
 import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
+import org.imaginativeworld.whynotcompose.ui.theme.TailwindCSSColor
 
+
+private val menuItems = listOf(
+    MenuItem(
+        name = "Animations",
+        icon = R.drawable.ic_round_animation_24,
+        color = TailwindCSSColor.Yellow500,
+        route = Screen.Animations
+    ),
+    MenuItem(
+        name = "Compositions",
+        icon = R.drawable.ic_round_widgets_24,
+        color = TailwindCSSColor.Red500,
+        route = Screen.Compositions
+    ),
+    MenuItem(
+        name = "UIs",
+        icon = R.drawable.ic_round_grid_view_24,
+        color = TailwindCSSColor.Blue500,
+        route = Screen.UIs
+    ),
+    MenuItem(
+        name = "Tutorials",
+        icon = R.drawable.ic_round_sticky_note_2_24,
+        color = TailwindCSSColor.Purple500,
+        route = Screen.Tutorials
+    ),
+)
+
+@ExperimentalFoundationApi
 @Composable
 fun HomeIndexScreen(
     navigate: (Screen) -> Unit = {},
     turnOnDarkMode: (Boolean) -> Unit = {},
 ) {
-    val scroll = rememberScrollState()
-
     Scaffold {
 
         Column(
             Modifier
-                .fillMaxSize()
-                .verticalScroll(scroll),
+                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             AppComponent.Header(
@@ -47,73 +77,91 @@ fun HomeIndexScreen(
             Row(
                 Modifier
                     .padding(start = 32.dp, end = 32.dp)
-                    .border(2.dp, MaterialTheme.colors.primary, MaterialTheme.shapes.medium)
+                    .fillMaxWidth()
+                    .height(56.dp)
+                    .border(2.dp, MaterialTheme.colors.primary, MaterialTheme.shapes.small)
+                    .clickable {
+                        onDarkModeStateChange(!darkModeState)
+                        turnOnDarkMode(!darkModeState)
+                    },
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
             ) {
-                GeneralEndSwitch(
-                    text = "Dark Mode",
-                    state = darkModeState,
-                    onStateChange = {
-                        onDarkModeStateChange(it)
-                        turnOnDarkMode(it)
-                    }
+                Icon(
+                    painter = painterResource(
+                        id = if (isDark) R.drawable.ic_moon_stars else R.drawable.ic_brightness_high
+                    ),
+                    contentDescription = null
+                )
+
+                Spacer(modifier = Modifier.requiredWidth(16.dp))
+
+                Text(
+                    modifier = Modifier,
+                    text = if (isDark) "Dark Mode" else "Light Mode",
+                    fontWeight = FontWeight.Medium,
                 )
             }
 
             Spacer(modifier = Modifier.requiredHeight(8.dp))
 
-            ModuleButton(
-                icon = R.drawable.ic_round_animation_24,
-                name = "Animations",
-                onClick = {
-                    navigate(Screen.Animations)
+            LazyVerticalGrid(
+                modifier = Modifier.weight(1f),
+                cells = GridCells.Fixed(2),
+                contentPadding = PaddingValues(24.dp, 8.dp)
+            ) {
+                items(menuItems) { menu ->
+                    ModuleButton(
+                        name = menu.name,
+                        icon = menu.icon,
+                        color = menu.color,
+                        onClick = {
+                            navigate(menu.route)
+                        }
+                    )
                 }
-            )
-
-            ModuleButton(
-                icon = R.drawable.ic_round_widgets_24,
-                name = "Compositions",
-                onClick = {
-                    navigate(Screen.Compositions)
-                }
-            )
-
-            ModuleButton(
-                icon = R.drawable.ic_round_grid_view_24,
-                name = "UIs",
-                onClick = {
-                    navigate(Screen.UI)
-                }
-            )
+            }
         }
     }
 }
 
 @Composable
 fun ModuleButton(
-    @DrawableRes icon: Int,
     name: String,
+    @DrawableRes icon: Int,
+    color: Color,
     onClick: () -> Unit,
 ) {
     Button(
         modifier = Modifier
-            .padding(start = 32.dp, top = 8.dp, end = 32.dp, bottom = 8.dp)
+            .padding(8.dp)
             .fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(
+            backgroundColor = color,
             contentColor = Color.White
         ),
         onClick = onClick,
         contentPadding = PaddingValues(16.dp, 16.dp),
     ) {
-        Icon(
-            painter = painterResource(id = icon),
-            contentDescription = name,
-            tint = LocalContentColor.current,
-        )
-        Text(
-            modifier = Modifier.padding(start = 8.dp),
-            text = name,
-            color = LocalContentColor.current,
-        )
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+        ) {
+            Icon(
+                modifier = Modifier.size(32.dp),
+                painter = painterResource(id = icon),
+                contentDescription = name,
+                tint = LocalContentColor.current,
+            )
+            Text(
+                modifier = Modifier.padding(top = 8.dp),
+                text = name,
+                color = LocalContentColor.current,
+            )
+        }
     }
 }
 
@@ -124,3 +172,20 @@ fun HomeIndexScreenPreview() {
         HomeIndexScreen()
     }
 }
+
+@Preview
+@Composable
+fun HomeIndexScreenPreviewDark() {
+    AppTheme(
+        darkTheme = true
+    ) {
+        HomeIndexScreen()
+    }
+}
+
+data class MenuItem(
+    val name: String,
+    @DrawableRes val icon: Int,
+    val color: Color,
+    val route: Screen,
+)

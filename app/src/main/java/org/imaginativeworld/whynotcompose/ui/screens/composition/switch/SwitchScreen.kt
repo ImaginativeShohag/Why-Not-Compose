@@ -9,6 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
@@ -128,7 +129,8 @@ fun GeneralStartSwitch(
 fun GeneralEndSwitch(
     text: String,
     state: Boolean,
-    onStateChange: (Boolean) -> Unit
+    onStateChange: (Boolean) -> Unit,
+    fontWeight: FontWeight? = MaterialTheme.typography.body1.fontWeight,
 ) {
     Row(
         Modifier
@@ -144,7 +146,9 @@ fun GeneralEndSwitch(
     ) {
         Text(
             text = text,
-            style = MaterialTheme.typography.body1.merge(),
+            style = MaterialTheme.typography.body1.copy(
+                fontWeight = fontWeight
+            ),
             modifier = Modifier
                 .padding(end = 16.dp)
                 .weight(1f)

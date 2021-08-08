@@ -10,55 +10,55 @@ data class Composition(
         val compositionList = listOf(
             Composition(
                 name = "App Bar",
-                route = CompositionsScreen.CompositionsAppBar,
+                route = CompositionsScreen.CompositionAppBar,
             ),
             Composition(
                 name = "Button",
-                route = CompositionsScreen.CompositionsButton,
+                route = CompositionsScreen.CompositionButton,
             ),
             Composition(
                 name = "Card",
-                route = CompositionsScreen.CompositionsCard,
+                route = CompositionsScreen.CompositionCard,
             ),
             Composition(
                 name = "Check Box",
-                route = CompositionsScreen.CompositionsCheckBox,
+                route = CompositionsScreen.CompositionCheckBox,
             ),
             Composition(
                 name = "Code Field",
-                route = CompositionsScreen.CompositionsCodeField,
+                route = CompositionsScreen.CompositionCodeField,
             ),
             Composition(
                 name = "Dialog",
-                route = CompositionsScreen.CompositionsDialog,
+                route = CompositionsScreen.CompositionDialog,
             ),
             Composition(
                 name = "DropDown Menu",
-                route = CompositionsScreen.CompositionsDropDownMenu,
+                route = CompositionsScreen.CompositionDropDownMenu,
             ),
             Composition(
                 name = "List",
-                route = CompositionsScreen.CompositionsList,
+                route = CompositionsScreen.CompositionList,
             ),
             Composition(
                 name = "Loading Indicator",
-                route = CompositionsScreen.CompositionsLoadingIndicator,
+                route = CompositionsScreen.CompositionLoadingIndicator,
             ),
             Composition(
                 name = "Radio Button",
-                route = CompositionsScreen.CompositionsRadioButton,
+                route = CompositionsScreen.CompositionRadioButton,
             ),
             Composition(
                 name = "Snackbar",
-                route = CompositionsScreen.CompositionsSnackbar,
+                route = CompositionsScreen.CompositionSnackbar,
             ),
             Composition(
                 name = "Switch",
-                route = CompositionsScreen.CompositionsSwitch,
+                route = CompositionsScreen.CompositionSwitch,
             ),
             Composition(
                 name = "Text Field",
-                route = CompositionsScreen.CompositionsTextField,
+                route = CompositionsScreen.CompositionTextField,
             ),
         )
     }

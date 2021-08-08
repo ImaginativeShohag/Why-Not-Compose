@@ -2,9 +2,11 @@
 
 A collection of Jetpack Compose compositions that I created for various projects.
 
+Note: Some of the official samples are modified as needed.
+
 ## Credits
 
-- [Android official compose samples](https://cs.android.com/androidx/platform/tools/dokka-devsite-plugin/+/master:testData/compose/samples/material/samples/)
+- [Android official compose samples](https://cs.android.com/androidx/platform/tools/dokka-devsite-plugin/+/master:testData/compose/samples/)
 - [Iconly icon](https://freebiesbug.com/figma-freebies/iconly/)
 
 ## Licence

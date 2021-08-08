@@ -9,6 +9,14 @@
         app:fontStyle="italic"
         app:fontWeight="400" />
     <font
+        app:font="@font/titillium_web_medium"
+        app:fontStyle="normal"
+        app:fontWeight="500" />
+    <font
+        app:font="@font/titillium_web_medium_italic"
+        app:fontStyle="italic"
+        app:fontWeight="500" />
+    <font
         app:font="@font/titillium_web_bold"
         app:fontStyle="normal"
         app:fontWeight="700" />

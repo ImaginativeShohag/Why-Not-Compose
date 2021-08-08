@@ -20,6 +20,7 @@ import org.imaginativeworld.whynotcompose.ui.screens.composition.index.Compositi
 import org.imaginativeworld.whynotcompose.ui.screens.composition.loadingindicator.LoadingIndicatorScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.radiobutton.RadioButtonScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.switch.SwitchScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.textfield.TextFieldScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.index.HomeIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.splash.SplashScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.index.UiIndexScreen
@@ -200,7 +201,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         }
 
         composable(CompositionsScreen.CompositionsTextField.route) {
-            BlankScreen()
+            TextFieldScreen()
         }
     }
 }

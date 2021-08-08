@@ -13,8 +13,8 @@ object AppFont {
     val TitilliumWeb = FontFamily(
         Font(R.font.titillium_web_regular),
         Font(R.font.titillium_web_italic, style = FontStyle.Italic),
-        // Font(R.font.titillium_web_medium, FontWeight.Medium),
-        // Font(R.font.titillium_web_medium_italic, FontWeight.Medium, style = FontStyle.Italic),
+        Font(R.font.titillium_web_medium, FontWeight.Medium),
+        Font(R.font.titillium_web_medium_italic, FontWeight.Medium, style = FontStyle.Italic),
         Font(R.font.titillium_web_bold, FontWeight.Bold),
         Font(R.font.titillium_web_bold_italic, FontWeight.Bold, style = FontStyle.Italic),
     )
@@ -36,6 +36,10 @@ val Typography = Typography(
         lineHeight = 24.sp,
     ),
     body1 = TextStyle(
+        fontSize = 16.sp,
+        fontFamily = AppFont.TitilliumWeb,
+    ),
+    body2 = TextStyle(
         fontSize = 16.sp,
         fontFamily = AppFont.TitilliumWeb,
     ),

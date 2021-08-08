@@ -1,9 +1,21 @@
 package org.imaginativeworld.whynotcompose.ui.theme
 
+import androidx.compose.material.Colors
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
+
+val Colors.inputBackground: Color
+    @Composable get() = if (isLight) TailwindCSSColor.Gray100 else TailwindCSSColor.Gray800
+
+val Colors.onInputBackground: Color
+    @Composable get() = if (isLight) TailwindCSSColor.Gray900 else TailwindCSSColor.Gray50
+
+val Colors.errorInputBackground: Color
+    @Composable get() = TailwindCSSColor.Red500.copy(.15f)
+
 object AppColor {
-//    val PrimaryColor = Color(0xff10B981)
+//    val ExampleColor = Color(0xff123456)
 }
 
 object FlatColor {

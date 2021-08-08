@@ -1,6 +1,7 @@
 package org.imaginativeworld.whynotcompose.ui.screens.home.index
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -43,7 +44,11 @@ fun HomeIndexScreen(
             val isDark = !MaterialTheme.colors.isLight
             val (darkModeState, onDarkModeStateChange) = remember { mutableStateOf(isDark) }
 
-            Row(Modifier.padding(start = 16.dp, end = 16.dp)) {
+            Row(
+                Modifier
+                    .padding(start = 32.dp, end = 32.dp)
+                    .border(2.dp, MaterialTheme.colors.primary, MaterialTheme.shapes.medium)
+            ) {
                 GeneralEndSwitch(
                     text = "Dark Mode",
                     state = darkModeState,
@@ -54,7 +59,7 @@ fun HomeIndexScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.requiredHeight(16.dp))
+            Spacer(modifier = Modifier.requiredHeight(8.dp))
 
             ModuleButton(
                 icon = R.drawable.ic_round_animation_24,

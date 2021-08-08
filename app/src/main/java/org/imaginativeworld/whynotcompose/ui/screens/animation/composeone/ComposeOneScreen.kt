@@ -1,4 +1,4 @@
-package org.imaginativeworld.whynotcompose.ui.screens.home.splash
+package org.imaginativeworld.whynotcompose.ui.screens.animation.composeone
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
@@ -7,6 +7,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -14,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
@@ -24,23 +26,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import org.imaginativeworld.whynotcompose.R
-import org.imaginativeworld.whynotcompose.ui.screens.animation.composeone.dotBackground
 import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
+import org.imaginativeworld.whynotcompose.ui.theme.TailwindCSSColor
 import kotlin.math.min
 import kotlin.random.Random
 
+val Colors.dotBackground: Color
+    get() = if (isLight) TailwindCSSColor.Gray200 else TailwindCSSColor.Gray800
+
 @Composable
-fun SplashScreen(
-    gotoHomeIndex: () -> Unit = {},
-) {
+fun ComposeOneScreen() {
     val density = LocalDensity.current
     val dotBackground = MaterialTheme.colors.dotBackground
-
-    LaunchedEffect(Unit) {
-        delay(2500)
-
-        gotoHomeIndex()
-    }
 
     Scaffold {
 
@@ -53,8 +50,13 @@ fun SplashScreen(
                     var state by remember { mutableStateOf(false) }
 
                     LaunchedEffect(Unit) {
-                        delay(Random.nextLong(300, 5000))
-                        state = true
+                        while (true) {
+                            delay(Random.nextLong(300, 5000))
+                            state = true
+                            delay(3600)
+                            state = false
+                            delay(3600)
+                        }
                     }
 
                     val animScale by animateFloatAsState(
@@ -116,9 +118,14 @@ fun SplashScreen(
             var state by remember { mutableStateOf(false) }
 
             LaunchedEffect(Unit) {
-                val startDelay = Random.nextLong(300, 900)
-                delay(startDelay)
-                state = true
+                while (true) {
+                    val startDelay = Random.nextLong(300, 900)
+                    delay(startDelay)
+                    state = true
+                    delay(3000)
+                    state = false
+                    delay(2000 - startDelay)
+                }
             }
 
             val animAlpha by animateFloatAsState(
@@ -173,9 +180,9 @@ fun SplashScreen(
 
 @Preview
 @Composable
-fun SplashScreenPreview() {
+fun ComposeOneScreenPreview() {
     AppTheme {
-        SplashScreen()
+        ComposeOneScreen()
     }
 }
 
@@ -193,9 +200,14 @@ fun AnimatedText(
             var state by remember { mutableStateOf(false) }
 
             LaunchedEffect(char) {
-                val startDelay = Random.nextLong(300, 900)
-                delay(startDelay)
-                state = true
+                while (true) {
+                    val startDelay = Random.nextLong(300, 900)
+                    delay(startDelay)
+                    state = true
+                    delay(3000)
+                    state = false
+                    delay(2000 - startDelay)
+                }
             }
 
             val animAlpha by animateFloatAsState(

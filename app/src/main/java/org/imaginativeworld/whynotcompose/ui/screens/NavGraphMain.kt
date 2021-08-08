@@ -11,6 +11,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import org.imaginativeworld.whynotcompose.ui.screens.animation.composeone.ComposeOneScreen
+import org.imaginativeworld.whynotcompose.ui.screens.animation.index.AnimationIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.appbar.AppBarScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.button.ButtonScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.card.CardScreen
@@ -39,7 +41,10 @@ sealed class HomeScreen(val route: String) {
 
 sealed class AnimationsScreen(val route: String) {
     object AnimationIndex : AnimationsScreen("animation/index")
-    object AnimationOne : AnimationsScreen("animation/1")
+    object AnimationComposeOne : AnimationsScreen("animation/composeone")
+    object AnimationEmudi : AnimationsScreen("animation/emudi")
+    object AnimationFadeScale : AnimationsScreen("animation/fadescale")
+    object AnimationRunningCar : AnimationsScreen("animation/runningcar")
 }
 
 sealed class CompositionsScreen(val route: String) {
@@ -133,7 +138,19 @@ private fun NavGraphBuilder.addAnimationScreens(
 
         // Below compositions will be just few lines.
         // So, we will not use functions for those.
-        composable(AnimationsScreen.AnimationOne.route) {
+        composable(AnimationsScreen.AnimationComposeOne.route) {
+            ComposeOneScreen()
+        }
+
+        composable(AnimationsScreen.AnimationEmudi.route) {
+            BlankScreen()
+        }
+
+        composable(AnimationsScreen.AnimationFadeScale.route) {
+            BlankScreen()
+        }
+
+        composable(AnimationsScreen.AnimationRunningCar.route) {
             BlankScreen()
         }
     }
@@ -241,7 +258,7 @@ private fun NavGraphBuilder.addHomeSplashScreen(
             gotoHomeIndex = {
                 navController.navigate(HomeScreen.HomeIndex.route) {
                     popUpTo(HomeScreen.Splash.route) {
-                         inclusive = true
+                        inclusive = true
                     }
                 }
             }
@@ -269,7 +286,11 @@ private fun NavGraphBuilder.addAnimationIndexScreen(
     navController: NavHostController,
 ) {
     composable(AnimationsScreen.AnimationIndex.route) {
-        BlankScreen()
+        AnimationIndexScreen(
+            navigate = { screen ->
+                navController.navigate(screen.route)
+            },
+        )
     }
 }
 

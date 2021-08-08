@@ -1,4 +1,4 @@
-package org.imaginativeworld.whynotcompose.ui.screens
+package org.imaginativeworld.whynotcompose.template
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -20,7 +20,7 @@ import org.imaginativeworld.whynotcompose.utils.extensions.toast
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class TemplateActivity : ComponentActivity() {
 
     @Inject
     lateinit var sharedPref: SharedPref
@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity() {
                 darkTheme = isDarkMode
             ) {
                 ProvideWindowInsets {
-                    MainScreen(
+                    TemplateScreen(
                         isDarkMode = isDarkMode,
                         turnOnDarkMode = { turnOn ->
                             isDarkMode = turnOn

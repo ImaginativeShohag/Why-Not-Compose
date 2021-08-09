@@ -258,7 +258,7 @@ private fun NavGraphBuilder.addTutorialScreens(
     navController: NavHostController,
 ) {
     navigation(
-        route = Screen.UIs.route,
+        route = Screen.Tutorials.route,
         startDestination = TutorialsScreen.TutorialIndex.route
     ) {
         addTutorialIndexScreen(
@@ -354,7 +354,7 @@ private fun NavGraphBuilder.addUiIndexScreen(
 private fun NavGraphBuilder.addTutorialIndexScreen(
     navController: NavHostController,
 ) {
-    composable(UIsScreen.UiIndex.route) {
+    composable(TutorialsScreen.TutorialIndex.route) {
         BlankScreen()
     }
 }

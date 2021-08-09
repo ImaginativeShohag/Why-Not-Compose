@@ -20,6 +20,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.accompanist.insets.navigationBarsWithImePadding
+import com.google.accompanist.insets.statusBarsPadding
 import kotlinx.coroutines.delay
 import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
 import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
@@ -42,7 +44,11 @@ fun LoadingIndicatorScreenSkeleton() {
 
     var showLoading by remember { mutableStateOf(false) }
 
-    Scaffold(Modifier.fillMaxSize()) {
+    Scaffold(
+        Modifier
+            .navigationBarsWithImePadding()
+            .statusBarsPadding()
+    ) {
         Column(
             Modifier
                 .fillMaxSize()

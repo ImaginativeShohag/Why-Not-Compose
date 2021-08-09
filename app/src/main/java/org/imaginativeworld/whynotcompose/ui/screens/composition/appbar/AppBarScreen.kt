@@ -16,6 +16,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.accompanist.insets.navigationBarsWithImePadding
+import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
 import org.imaginativeworld.whynotcompose.ui.screens.AppComponent.Header
 import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
@@ -37,7 +39,11 @@ fun AppBarScreenSkeletonPreview() {
 @Composable
 fun AppBarScreenSkeleton() {
 
-    Scaffold {
+    Scaffold(
+        Modifier
+            .navigationBarsWithImePadding()
+            .statusBarsPadding()
+    ) {
         Column(Modifier.fillMaxSize()) {
 
             Header("App Bar")

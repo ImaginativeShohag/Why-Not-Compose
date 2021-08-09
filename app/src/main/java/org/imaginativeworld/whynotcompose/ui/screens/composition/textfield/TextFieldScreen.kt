@@ -55,6 +55,8 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.navigationBarsWithImePadding
+import com.google.accompanist.insets.statusBarsPadding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.R
@@ -94,7 +96,11 @@ fun TextFieldScreenSkeletonPreviewDark() {
 
 @Composable
 fun TextFieldScreenSkeleton() {
-    Scaffold(Modifier.fillMaxSize()) {
+    Scaffold(
+        Modifier
+            .navigationBarsWithImePadding()
+            .statusBarsPadding()
+    ) {
         Column(
             Modifier
                 .fillMaxSize()

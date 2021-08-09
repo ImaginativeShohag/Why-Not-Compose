@@ -15,6 +15,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.insets.navigationBarsWithImePadding
+import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
 import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
@@ -44,7 +46,11 @@ fun DropDownMenuScreenSkeletonPreviewDark() {
 
 @Composable
 fun DropDownMenuScreenSkeleton() {
-    Scaffold(Modifier.fillMaxSize()) {
+    Scaffold(
+        Modifier
+            .navigationBarsWithImePadding()
+            .statusBarsPadding()
+    ) {
         Column(
             Modifier
                 .fillMaxSize()

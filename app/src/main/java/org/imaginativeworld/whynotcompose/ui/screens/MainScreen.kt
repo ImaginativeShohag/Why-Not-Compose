@@ -9,8 +9,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.ProvideWindowInsets
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.imaginativeworld.whynotcompose.ui.compositions.CustomSnackbarHost
 import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
@@ -55,9 +53,7 @@ fun MainScreenSkeleton(
         snackbarHost = { CustomSnackbarHost(it) },
     ) {
         NavHostMain(
-            modifier = Modifier
-                .navigationBarsWithImePadding()
-                .statusBarsPadding(),
+            modifier = Modifier,
             navController = navController,
             turnOnDarkMode = turnOnDarkMode,
         )

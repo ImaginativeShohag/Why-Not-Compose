@@ -14,6 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.insets.navigationBarsWithImePadding
+import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.ui.screens.AppComponent.Header
 import org.imaginativeworld.whynotcompose.ui.screens.UIsScreen
 import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
@@ -40,7 +42,11 @@ fun UiIndexSkeleton(
     navigate: (UIsScreen) -> Unit = {},
 ) {
 
-    Scaffold {
+    Scaffold(
+        Modifier
+            .navigationBarsWithImePadding()
+            .statusBarsPadding()
+    ) {
 
         Column(Modifier.fillMaxSize()) {
             Header("UIs")

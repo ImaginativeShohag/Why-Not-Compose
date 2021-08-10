@@ -14,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,6 +36,16 @@ fun LoadingIndicatorScreen() {
 @Composable
 fun LoadingIndicatorScreenSkeletonPreview() {
     AppTheme {
+        LoadingIndicatorScreenSkeleton()
+    }
+}
+
+@Preview
+@Composable
+fun LoadingIndicatorScreenSkeletonPreviewDark() {
+    AppTheme(
+        darkTheme = true
+    ) {
         LoadingIndicatorScreenSkeleton()
     }
 }
@@ -193,6 +204,26 @@ fun LoadingIndicatorScreenSkeleton() {
 
             Divider()
 
+            AppComponent.SubHeader("Capsule Loading Indicator")
+
+            // ----------------------------------------------------------------
+
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                CapsuleLoadingIndicator(
+                    show = true
+                )
+            }
+
+            // ----------------------------------------------------------------
+            // ----------------------------------------------------------------
+
+            AppComponent.MediumSpacer()
+
+            Divider()
+
             AppComponent.SubHeader("Loading Indicator")
 
             // ----------------------------------------------------------------
@@ -230,8 +261,20 @@ fun LoadingIndicatorScreenSkeleton() {
 
 @Preview
 @Composable
-fun LoadingIndicatorPreview() {
+fun FullscreenLoadingIndicatorPreview() {
     AppTheme {
+        FullscreenLoadingIndicator(
+            show = true
+        )
+    }
+}
+
+@Preview
+@Composable
+fun FullscreenLoadingIndicatorPreviewDark() {
+    AppTheme(
+        darkTheme = true
+    ) {
         FullscreenLoadingIndicator(
             show = true
         )
@@ -388,5 +431,39 @@ private fun RoundedLinearProgressIndicator(
             }
         }
 
+    }
+}
+
+@Composable
+private fun CapsuleLoadingIndicator(
+    modifier: Modifier = Modifier,
+    show: Boolean
+) {
+    AnimatedVisibility(
+        visible = show,
+        enter = fadeIn(),
+        exit = fadeOut()
+    ) {
+        Row(
+            modifier
+                .shadow(2.dp, CircleShape)
+                .clip(CircleShape)
+                .background(MaterialTheme.colors.surface)
+                .padding(0.dp, 4.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .padding(start = 8.dp, end = 8.dp)
+                    .size(16.dp),
+                strokeWidth = 2.dp
+            )
+            Text(
+                modifier = Modifier.padding(end = 12.dp),
+                text = "Loading...",
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.onSurface.copy(alpha = .75f)
+            )
+        }
     }
 }

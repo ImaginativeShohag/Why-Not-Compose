@@ -21,6 +21,8 @@ import org.imaginativeworld.whynotcompose.ui.screens.composition.dropdown.DropDo
 import org.imaginativeworld.whynotcompose.ui.screens.composition.index.CompositionIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.loadingindicator.LoadingIndicatorScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.radiobutton.RadioButtonScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold.*
+import org.imaginativeworld.whynotcompose.ui.screens.composition.snackbar.SnackbarScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.switch.SwitchScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.textfield.TextFieldScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.index.HomeIndexScreen
@@ -61,6 +63,14 @@ sealed class CompositionsScreen(val route: String) {
     object CompositionList : CompositionsScreen("composition/list")
     object CompositionLoadingIndicator : CompositionsScreen("composition/loadingindicator")
     object CompositionRadioButton : CompositionsScreen("composition/radiobutton")
+
+    object CompositionScaffoldIndex : CompositionsScreen("composition/scaffold")
+    object CompositionScaffoldOne : CompositionsScreen("composition/scaffold/1")
+    object CompositionScaffoldTwo : CompositionsScreen("composition/scaffold/2")
+    object CompositionScaffoldThree : CompositionsScreen("composition/scaffold/3")
+    object CompositionScaffoldFour : CompositionsScreen("composition/scaffold/4")
+    object CompositionScaffoldFive : CompositionsScreen("composition/scaffold/5")
+
     object CompositionSnackbar : CompositionsScreen("composition/snackbar")
     object CompositionSwitch : CompositionsScreen("composition/switch")
     object CompositionTextField : CompositionsScreen("composition/textfield")
@@ -217,8 +227,40 @@ private fun NavGraphBuilder.addCompositionScreens(
             RadioButtonScreen()
         }
 
+        composable(CompositionsScreen.CompositionScaffoldIndex.route) {
+            ScaffoldIndexScreen(
+                navigate = { screen ->
+                    navController.navigate(screen.route)
+                },
+            )
+        }
+
+        composable(CompositionsScreen.CompositionScaffoldOne.route) {
+            SimpleScaffoldWithTopBarScreen()
+        }
+
+        composable(CompositionsScreen.CompositionScaffoldTwo.route) {
+            ScaffoldWithBottomBarAndCutoutScreen()
+        }
+
+        composable(CompositionsScreen.CompositionScaffoldThree.route) {
+            ScaffoldWithSimpleSnackbarScreen()
+        }
+
+        composable(CompositionsScreen.CompositionScaffoldFour.route) {
+            ScaffoldWithCustomSnackbarScreen()
+        }
+
+        composable(CompositionsScreen.CompositionScaffoldFive.route) {
+            ScaffoldWithCoroutinesSnackbarScreen()
+        }
+
         composable(CompositionsScreen.CompositionSnackbar.route) {
-            BlankScreen()
+            SnackbarScreen(
+                navigate = { route ->
+                    navController.navigate(route)
+                }
+            )
         }
 
         composable(CompositionsScreen.CompositionSwitch.route) {

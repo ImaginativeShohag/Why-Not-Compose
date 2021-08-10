@@ -1,7 +1,6 @@
 package org.imaginativeworld.whynotcompose.template
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
@@ -14,7 +13,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
 
 @Composable
-fun TemplateScreen(
+fun TemplateMainScreen(
     isDarkMode: Boolean,
     turnOnDarkMode: (Boolean) -> Unit,
 ) {
@@ -27,24 +26,24 @@ fun TemplateScreen(
         )
     }
 
-    TemplateScreenSkeleton(
+    TemplateMainScreenSkeleton(
         turnOnDarkMode = turnOnDarkMode
     )
 }
 
 @Preview
 @Composable
-fun TemplateScreenSkeletonPreview() {
+fun TemplateMainScreenSkeletonPreview() {
     AppTheme {
-        TemplateScreenSkeleton()
+        TemplateMainScreenSkeleton()
     }
 }
 
 @Composable
-fun TemplateScreenSkeleton(
+fun TemplateMainScreenSkeleton(
     turnOnDarkMode: (Boolean) -> Unit = {},
 ) {
-    Scaffold(Modifier.fillMaxSize()) {
+    Scaffold {
         Box(
             modifier = Modifier
                 .navigationBarsWithImePadding()

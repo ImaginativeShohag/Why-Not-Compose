@@ -40,7 +40,7 @@ class TemplateActivity : ComponentActivity() {
                 darkTheme = isDarkMode
             ) {
                 ProvideWindowInsets {
-                    TemplateScreen(
+                    TemplateMainScreen(
                         isDarkMode = isDarkMode,
                         turnOnDarkMode = { turnOn ->
                             isDarkMode = turnOn

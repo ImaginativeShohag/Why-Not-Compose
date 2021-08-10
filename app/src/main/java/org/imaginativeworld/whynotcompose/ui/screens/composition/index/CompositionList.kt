@@ -49,6 +49,10 @@ data class Composition(
                 route = CompositionsScreen.CompositionRadioButton,
             ),
             Composition(
+                name = "Scaffold",
+                route = CompositionsScreen.CompositionScaffoldIndex,
+            ),
+            Composition(
                 name = "Snackbar",
                 route = CompositionsScreen.CompositionSnackbar,
             ),

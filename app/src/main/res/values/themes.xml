@@ -1,6 +1,5 @@
 <resources>
-
-    <style name="Theme.WhyNotCompose" parent="android:Theme.Material.NoActionBar">
+    <style name="Theme.WhyNotCompose" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:colorPrimary">#10B981</item>
         <item name="android:colorAccent">#10B981</item>
         <item name="android:statusBarColor">@android:color/transparent</item>

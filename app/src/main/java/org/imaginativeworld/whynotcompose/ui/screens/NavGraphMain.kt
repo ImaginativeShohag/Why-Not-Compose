@@ -32,6 +32,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -58,6 +59,9 @@ import org.imaginativeworld.whynotcompose.ui.screens.composition.textfield.TextF
 import org.imaginativeworld.whynotcompose.ui.screens.home.index.HomeIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.splash.SplashScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.index.UiIndexScreen
+import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.WebViewScreen
+import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.WebViewTarget
+import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.WebViewViewModel
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")
@@ -87,7 +91,6 @@ sealed class CompositionsScreen(val route: String) {
     object CompositionButton : CompositionsScreen("composition/button")
     object CompositionCard : CompositionsScreen("composition/card")
     object CompositionCheckBox : CompositionsScreen("composition/checkbox")
-    object CompositionCodeField : CompositionsScreen("composition/codefield")
     object CompositionDialog : CompositionsScreen("composition/dialog")
     object CompositionDropDownMenu : CompositionsScreen("composition/dropdownmenu")
 
@@ -124,6 +127,7 @@ sealed class UIsScreen(val route: String) {
 
     object UiWebView : UIsScreen("animation/webview")
     object UiMapView : UIsScreen("animation/mapview")
+    object UiOtpCodeView : UIsScreen("animation/otpcodeview")
 }
 
 sealed class TutorialsScreen(val route: String) {
@@ -246,10 +250,6 @@ private fun NavGraphBuilder.addCompositionScreens(
             CheckBoxScreen()
         }
 
-        composable(CompositionsScreen.CompositionCodeField.route) {
-            BlankScreen()
-        }
-
         composable(CompositionsScreen.CompositionDialog.route) {
             BlankScreen()
         }
@@ -370,10 +370,22 @@ private fun NavGraphBuilder.addUiScreens(
         // Below compositions will be just few lines.
         // So, we will not use functions for those.
         composable(UIsScreen.UiWebView.route) {
-            BlankScreen()
+            val viewModel: WebViewViewModel = hiltViewModel()
+
+            WebViewScreen(
+                viewModel = viewModel,
+                target = WebViewTarget.AboutMe,
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(UIsScreen.UiMapView.route) {
+            BlankScreen()
+        }
+
+        composable(UIsScreen.UiOtpCodeView.route) {
             BlankScreen()
         }
     }

@@ -51,10 +51,6 @@ data class Composition(
                 route = CompositionsScreen.CompositionCheckBox,
             ),
             Composition(
-                name = "Code Field",
-                route = CompositionsScreen.CompositionCodeField,
-            ),
-            Composition(
                 name = "Dialog",
                 route = CompositionsScreen.CompositionDialog,
             ),

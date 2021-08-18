@@ -35,12 +35,16 @@ data class Ui(
     companion object {
         val uiList = listOf(
             Ui(
-                name = "Web View",
-                route = UIsScreen.UiWebView,
-            ),
-            Ui(
                 name = "Map View",
                 route = UIsScreen.UiMapView,
+            ),
+            Ui(
+                name = "OTP Code View",
+                route = UIsScreen.UiOtpCodeView,
+            ),
+            Ui(
+                name = "Web View",
+                route = UIsScreen.UiWebView,
             ),
         )
     }

@@ -63,7 +63,7 @@ fun SplashScreen(
     val dotBackground = MaterialTheme.colors.dotBackground
 
     LaunchedEffect(Unit) {
-        delay(2500)
+        delay(3000)
 
         gotoHomeIndex()
     }

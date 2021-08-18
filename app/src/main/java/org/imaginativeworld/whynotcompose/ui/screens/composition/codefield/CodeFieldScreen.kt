@@ -24,15 +24,5 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.ui.compositions
+package org.imaginativeworld.whynotcompose.ui.screens.composition.codefield
 
-import androidx.compose.runtime.Composable
-import coil.compose.rememberImagePainter
-
-@Composable
-fun rememberImagePainterFade(data: Any?) = rememberImagePainter(
-    data = data,
-    builder = {
-        crossfade(true)
-    }
-)

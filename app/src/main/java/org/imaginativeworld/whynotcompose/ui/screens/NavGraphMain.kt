@@ -45,6 +45,10 @@ import org.imaginativeworld.whynotcompose.ui.screens.composition.card.CardScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.checkbox.CheckBoxScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.dropdown.DropDownMenuScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.index.CompositionIndexScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.list.*
+import org.imaginativeworld.whynotcompose.ui.screens.composition.list.lazycolumn.LazyColumnSampleOneScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.list.lazycolumn.LazyColumnSampleTwoScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.listitem.ListItemScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.loadingindicator.LoadingIndicatorScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.radiobutton.RadioButtonScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold.*
@@ -86,7 +90,20 @@ sealed class CompositionsScreen(val route: String) {
     object CompositionCodeField : CompositionsScreen("composition/codefield")
     object CompositionDialog : CompositionsScreen("composition/dialog")
     object CompositionDropDownMenu : CompositionsScreen("composition/dropdownmenu")
-    object CompositionList : CompositionsScreen("composition/list")
+
+    object CompositionListIndex : CompositionsScreen("composition/list")
+    object CompositionListColumn : CompositionsScreen("composition/list/column")
+    object CompositionListRow : CompositionsScreen("composition/list/row")
+
+    object CompositionListLazyColumnIndex : CompositionsScreen("composition/list/lazycolumn")
+    object CompositionListLazyColumnOne : CompositionsScreen("composition/list/lazycolumn/1")
+    object CompositionListLazyColumnTwo : CompositionsScreen("composition/list/lazycolumn/2")
+
+    object CompositionListLazyRow : CompositionsScreen("composition/list/lazyrow")
+    object CompositionListGridVertical : CompositionsScreen("composition/list/grid/vertical")
+
+    object CompositionListItem : CompositionsScreen("composition/listitem")
+
     object CompositionLoadingIndicator : CompositionsScreen("composition/loadingindicator")
     object CompositionRadioButton : CompositionsScreen("composition/radiobutton")
 
@@ -241,8 +258,48 @@ private fun NavGraphBuilder.addCompositionScreens(
             DropDownMenuScreen()
         }
 
-        composable(CompositionsScreen.CompositionList.route) {
-            BlankScreen()
+        composable(CompositionsScreen.CompositionListIndex.route) {
+            ListIndexScreen(
+                navigate = { screen ->
+                    navController.navigate(screen.route)
+                },
+            )
+        }
+
+        composable(CompositionsScreen.CompositionListColumn.route) {
+            ListColumnScreen()
+        }
+
+        composable(CompositionsScreen.CompositionListRow.route) {
+            ListRowScreen()
+        }
+
+        composable(CompositionsScreen.CompositionListLazyColumnIndex.route) {
+            LazyColumnIndexScreen(
+                navigate = { screen ->
+                    navController.navigate(screen.route)
+                },
+            )
+        }
+
+        composable(CompositionsScreen.CompositionListLazyColumnOne.route) {
+            LazyColumnSampleOneScreen()
+        }
+
+        composable(CompositionsScreen.CompositionListLazyColumnTwo.route) {
+            LazyColumnSampleTwoScreen()
+        }
+
+        composable(CompositionsScreen.CompositionListLazyRow.route) {
+            LazyRowScreen()
+        }
+
+        composable(CompositionsScreen.CompositionListGridVertical.route) {
+            LazyVerticalGridScreen()
+        }
+
+        composable(CompositionsScreen.CompositionListItem.route) {
+            ListItemScreen()
         }
 
         composable(CompositionsScreen.CompositionLoadingIndicator.route) {

@@ -5,14 +5,14 @@ buildscript {
         lifecycle_version = '2.4.0-alpha03'
         compose_version = '1.0.1'
         hilt_version = '2.38.1'
-        accompanist_version = '0.16.0'
+        accompanist_version = '0.16.1'
     }
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:7.1.0-alpha03"
+        classpath 'com.android.tools.build:gradle:7.0.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"

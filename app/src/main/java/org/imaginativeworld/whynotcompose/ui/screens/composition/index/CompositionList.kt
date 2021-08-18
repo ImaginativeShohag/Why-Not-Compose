@@ -64,7 +64,11 @@ data class Composition(
             ),
             Composition(
                 name = "List",
-                route = CompositionsScreen.CompositionList,
+                route = CompositionsScreen.CompositionListIndex,
+            ),
+            Composition(
+                name = "ListItem",
+                route = CompositionsScreen.CompositionListItem,
             ),
             Composition(
                 name = "Loading Indicator",

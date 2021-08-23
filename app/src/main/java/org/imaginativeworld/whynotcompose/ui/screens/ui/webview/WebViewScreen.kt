@@ -30,6 +30,8 @@ import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
 import org.imaginativeworld.whynotcompose.ui.theme.TailwindCSSColor
 import timber.log.Timber
 
+// TODO: Swipe to refresh
+
 sealed class WebViewTarget(val name: String, val url: String) {
     object AboutMe : WebViewTarget(
         name = "About Me",

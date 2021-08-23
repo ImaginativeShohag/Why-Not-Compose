@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!--
+     Help Links:
+     - https://medium.com/@aungkyawmyint_26195/using-implicit-camera-intent-with-fileprovider-8182f59ee972
+     -->
+
+    <!-- Context.getExternalFilesDir() -->
+    <external-files-path
+        name="private_external_files"
+        path="." />
+
+    <!-- Environment.getExternalStorageDirectory() -->
+    <external-path
+        name="external_files"
+        path="." />
+
+    <!-- Context.getCacheDir() -->
+    <cache-path
+        name="cache"
+        path="." />
+
+    <!-- Context.getFilesDir() -->
+    <files-path
+        name="files"
+        path="." />
+</paths>

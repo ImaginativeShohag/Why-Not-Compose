@@ -5,7 +5,7 @@ buildscript {
         lifecycle_version = '2.4.0-alpha03'
         compose_version = '1.0.1'
         hilt_version = '2.38.1'
-        accompanist_version = '0.16.1'
+        accompanist_version = '0.17.0'
     }
     repositories {
         google()
@@ -16,6 +16,8 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+
+        classpath "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.0"
     }
 }
 

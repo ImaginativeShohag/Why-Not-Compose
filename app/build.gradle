@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -116,7 +117,7 @@ dependencies {
     implementation "androidx.compose.runtime:runtime:$compose_version"
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
     // Compose Navigation Component
-    implementation "androidx.navigation:navigation-compose:2.4.0-alpha06"
+    implementation "androidx.navigation:navigation-compose:2.4.0-alpha07"
     // Constraint Layout
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02"
     // Integration with activities
@@ -186,7 +187,7 @@ dependencies {
     implementation 'org.imaginativeworld.oopsnointernet:oopsnointernet:2.0.0'
 
     // Maps
-    implementation 'com.google.android.gms:play-services-maps:17.0.1'
+//    implementation 'com.google.android.gms:play-services-maps:17.0.1'
     implementation 'com.google.android.libraries.maps:maps:3.1.0-beta'
     implementation 'com.google.maps.android:maps-v3-ktx:3.0.1'
 }

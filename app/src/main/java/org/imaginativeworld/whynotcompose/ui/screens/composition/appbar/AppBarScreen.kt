@@ -53,11 +53,18 @@ fun AppBarScreen() {
     AppBarScreenSkeleton()
 }
 
-
 @Preview
 @Composable
 fun AppBarScreenSkeletonPreview() {
     AppTheme {
+        AppBarScreenSkeleton()
+    }
+}
+
+@Preview
+@Composable
+fun AppBarScreenSkeletonPreviewDark() {
+    AppTheme(darkTheme = true) {
         AppBarScreenSkeleton()
     }
 }

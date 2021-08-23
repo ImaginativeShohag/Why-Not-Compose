@@ -31,7 +31,7 @@ import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
 @HiltAndroidApp
-class MyApplication : Application() {
+class App : Application() {
 
     override fun onCreate() {
         super.onCreate()

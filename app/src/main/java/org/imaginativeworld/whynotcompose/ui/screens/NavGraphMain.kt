@@ -38,6 +38,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import org.imaginativeworld.whynotcompose.models.MapPlace
 import org.imaginativeworld.whynotcompose.ui.screens.animation.composeone.ComposeOneScreen
 import org.imaginativeworld.whynotcompose.ui.screens.animation.index.AnimationIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.appbar.AppBarScreen
@@ -59,9 +60,13 @@ import org.imaginativeworld.whynotcompose.ui.screens.composition.textfield.TextF
 import org.imaginativeworld.whynotcompose.ui.screens.home.index.HomeIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.splash.SplashScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.index.UiIndexScreen
+import org.imaginativeworld.whynotcompose.ui.screens.ui.mapview.MapScreen
+import org.imaginativeworld.whynotcompose.ui.screens.ui.mapview.MapViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.WebViewScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.WebViewTarget
 import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.WebViewViewModel
+import org.imaginativeworld.whynotcompose.utils.extensions.getJsonFromObj
+import org.imaginativeworld.whynotcompose.utils.extensions.getObjFromJson
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")
@@ -123,11 +128,17 @@ sealed class CompositionsScreen(val route: String) {
 }
 
 sealed class UIsScreen(val route: String) {
-    object UiIndex : UIsScreen("animation/index")
+    object UiIndex : UIsScreen("ui/index")
 
-    object UiWebView : UIsScreen("animation/webview")
-    object UiMapView : UIsScreen("animation/mapview")
-    object UiOtpCodeView : UIsScreen("animation/otpcodeview")
+    object UiWebView : UIsScreen("ui/webview")
+    object UiMapView : UIsScreen("ui/mapview")
+    object UiMapViewDetails : UIsScreen("ui/mapview/details?item={item}") {
+        const val PARAM_ITEM = "item"
+        fun createRoute(item: MapPlace) =
+            route.replace("{$PARAM_ITEM}", item.getJsonFromObj() ?: "")
+    }
+
+    object UiOtpCodeView : UIsScreen("ui/otpcodeview")
 }
 
 sealed class TutorialsScreen(val route: String) {
@@ -361,7 +372,7 @@ private fun NavGraphBuilder.addUiScreens(
 ) {
     navigation(
         route = Screen.UIs.route,
-        startDestination = AnimationsScreen.AnimationIndex.route
+        startDestination = UIsScreen.UiIndex.route
     ) {
         addUiIndexScreen(
             navController = navController
@@ -382,6 +393,27 @@ private fun NavGraphBuilder.addUiScreens(
         }
 
         composable(UIsScreen.UiMapView.route) {
+            val viewModel: MapViewModel = hiltViewModel()
+
+            MapScreen(
+                viewModel = viewModel,
+                goBack = {
+                    navController.popBackStack()
+                },
+                gotoDetailsScreen = { item ->
+                    navController.navigate(UIsScreen.UiMapViewDetails.createRoute(item))
+                }
+            )
+        }
+
+        composable(UIsScreen.UiMapViewDetails.route) { backStackEntry ->
+            backStackEntry.arguments?.let { args ->
+                val item = args.getString(UIsScreen.UiMapViewDetails.PARAM_ITEM)
+                    .getObjFromJson<MapPlace>() ?: throw Exception("Item cannot be null!")
+
+                // TODO user $item
+            }
+
             BlankScreen()
         }
 

@@ -9,4 +9,5 @@ import com.squareup.moshi.JsonClass
 data class MapPlace(
     val name: String,
     val location: LatLng,
+    val description: String,
 )

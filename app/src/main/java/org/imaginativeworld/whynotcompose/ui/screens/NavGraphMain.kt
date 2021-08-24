@@ -63,6 +63,7 @@ import org.imaginativeworld.whynotcompose.ui.screens.home.index.HomeIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.splash.SplashScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.index.UiIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.mapview.MapScreen
+import org.imaginativeworld.whynotcompose.ui.screens.ui.mapview.MapViewDetailsScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.mapview.MapViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.WebViewScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.WebViewTarget
@@ -87,7 +88,6 @@ sealed class AnimationsScreen(val route: String) {
     object AnimationIndex : AnimationsScreen("animation/index")
     object AnimationComposeOne : AnimationsScreen("animation/composeone")
     object AnimationEmudi : AnimationsScreen("animation/emudi")
-    object AnimationFadeScale : AnimationsScreen("animation/fadescale")
     object AnimationRunningCar : AnimationsScreen("animation/runningcar")
 }
 
@@ -222,10 +222,6 @@ private fun NavGraphBuilder.addAnimationScreens(
 
         composable(AnimationsScreen.AnimationEmudi.route) {
             EmudiScreen()
-        }
-
-        composable(AnimationsScreen.AnimationFadeScale.route) {
-            BlankScreen()
         }
 
         composable(AnimationsScreen.AnimationRunningCar.route) {
@@ -413,10 +409,13 @@ private fun NavGraphBuilder.addUiScreens(
                 val item = args.getString(UIsScreen.UiMapViewDetails.PARAM_ITEM)
                     .getObjFromJson<MapPlace>() ?: throw Exception("Item cannot be null!")
 
-                // TODO user $item
+                MapViewDetailsScreen(
+                    item = item,
+                    goBack = {
+                        navController.popBackStack()
+                    }
+                )
             }
-
-            BlankScreen()
         }
 
         composable(UIsScreen.UiOtpCodeView.route) {

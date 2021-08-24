@@ -35,16 +35,12 @@ data class Animation(
     companion object {
         val animationList = listOf(
             Animation(
-                name = "Compose One",
+                name = "Animated Text & Bubbles",
                 route = AnimationsScreen.AnimationComposeOne,
             ),
             Animation(
                 name = "Emudi",
                 route = AnimationsScreen.AnimationEmudi,
-            ),
-            Animation(
-                name = "Fade-Scale",
-                route = AnimationsScreen.AnimationFadeScale,
             ),
             Animation(
                 name = "Running Car",

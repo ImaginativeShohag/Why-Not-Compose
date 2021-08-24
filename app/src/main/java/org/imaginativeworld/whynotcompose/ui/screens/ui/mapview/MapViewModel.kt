@@ -271,7 +271,7 @@ class MapViewModel @Inject constructor() : ViewModel() {
                 gMap.addMarker {
                     position(latLng)
                     title(place.name)
-                    snippet(place.name)
+                    snippet("Click for details")
 
                     if (place == cacheSelectedVendor) {
                         selectMarker(context)

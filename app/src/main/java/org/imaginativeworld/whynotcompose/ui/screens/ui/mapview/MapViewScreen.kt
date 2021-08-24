@@ -195,8 +195,7 @@ fun MapSkeleton(
                         Icon(Icons.Rounded.ArrowBack, contentDescription = null)
                     }
                 },
-
-                )
+            )
 
             Box(
                 Modifier

@@ -9,6 +9,7 @@ Note: Some of the official samples are modified as needed.
 - [Android official compose samples](https://cs.android.com/androidx/platform/tools/dokka-devsite-plugin/+/master:testData/compose/samples/)
 - [Iconly icon](https://freebiesbug.com/figma-freebies/iconly/)
 - [spencergriffin/exoplayer-compose](https://github.com/spencergriffin/exoplayer-compose)
+- [Loripsum.net](https://loripsum.net)
 
 ## Licence
 

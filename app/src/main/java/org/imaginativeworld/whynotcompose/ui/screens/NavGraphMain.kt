@@ -42,6 +42,7 @@ import org.imaginativeworld.whynotcompose.models.MapPlace
 import org.imaginativeworld.whynotcompose.ui.screens.animation.composeone.ComposeOneScreen
 import org.imaginativeworld.whynotcompose.ui.screens.animation.emudi.EmudiScreen
 import org.imaginativeworld.whynotcompose.ui.screens.animation.index.AnimationIndexScreen
+import org.imaginativeworld.whynotcompose.ui.screens.animation.runningcar.RunningCarScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.appbar.AppBarScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.button.ButtonScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.card.CardScreen
@@ -228,7 +229,7 @@ private fun NavGraphBuilder.addAnimationScreens(
         }
 
         composable(AnimationsScreen.AnimationRunningCar.route) {
-            BlankScreen()
+            RunningCarScreen()
         }
     }
 }

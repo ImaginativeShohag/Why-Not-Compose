@@ -40,6 +40,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import org.imaginativeworld.whynotcompose.models.MapPlace
 import org.imaginativeworld.whynotcompose.ui.screens.animation.composeone.ComposeOneScreen
+import org.imaginativeworld.whynotcompose.ui.screens.animation.emudi.EmudiScreen
 import org.imaginativeworld.whynotcompose.ui.screens.animation.index.AnimationIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.appbar.AppBarScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.button.ButtonScreen
@@ -219,7 +220,7 @@ private fun NavGraphBuilder.addAnimationScreens(
         }
 
         composable(AnimationsScreen.AnimationEmudi.route) {
-            BlankScreen()
+            EmudiScreen()
         }
 
         composable(AnimationsScreen.AnimationFadeScale.route) {

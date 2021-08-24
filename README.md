@@ -8,8 +8,11 @@ Note: Some of the official samples are modified as needed.
 
 - [Android official compose samples](https://cs.android.com/androidx/platform/tools/dokka-devsite-plugin/+/master:testData/compose/samples/)
 - [Iconly icon](https://freebiesbug.com/figma-freebies/iconly/)
+- [spencergriffin/exoplayer-compose](https://github.com/spencergriffin/exoplayer-compose)
 
 ## Licence
+
+- *Emudi* is a trademark of [Softzino Technologies](https://softzino.com/).
 
 ```
 Copyright 2021 Md. Mahmudul Hasan Shohag

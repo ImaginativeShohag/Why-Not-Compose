@@ -58,9 +58,7 @@ fun TemplateChildScreenSkeletonPreview() {
 @Preview
 @Composable
 fun TemplateChildScreenSkeletonPreviewDark() {
-    AppTheme(
-        darkTheme = true
-    ) {
+    AppTheme(darkTheme = true) {
         TemplateChildScreenSkeleton()
     }
 }

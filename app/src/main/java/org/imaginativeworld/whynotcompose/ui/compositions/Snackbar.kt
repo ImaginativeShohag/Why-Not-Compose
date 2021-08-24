@@ -81,7 +81,6 @@ fun CustomSnackbar(
                 modifier = Modifier.fillMaxWidth(),
                 text = snackbarData.message,
                 textAlign = TextAlign.Center,
-                color = Color.White
             )
         },
         action = actionComposable,

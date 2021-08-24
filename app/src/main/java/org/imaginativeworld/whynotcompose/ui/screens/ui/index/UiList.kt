@@ -39,8 +39,8 @@ data class Ui(
                 route = UIsScreen.UiMapView,
             ),
             Ui(
-                name = "OTP Code View",
-                route = UIsScreen.UiOtpCodeView,
+                name = "OTP Code Verify",
+                route = UIsScreen.UiOtpCodeVerify,
             ),
             Ui(
                 name = "Web View",

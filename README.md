@@ -1,8 +1,53 @@
 # Why Not Compose!
 
-A collection of Jetpack Compose compositions that I created for various projects.
+A collection of animations, compositions, UIs using Jetpack Compose. You can say Jetpack Compose cookbook or play-ground if you want!
 
-Note: Some of the official samples are modified as needed.
+Feel free to request features or suggestions for improvements.
+
+## Notable Features & Libraries
+
+- MVI Pattern
+- Navigation Component
+- Hilt
+- Everywhere dark mode support
+- Ready to use compositions
+
+## Screenshots
+
+![Preview](images/animated-text-and-bubbles.gif)
+
+### Animations
+
+| ![Preview](images/animated-text-and-bubbles.png) | ![Preview](images/emudi.png) | ![Preview](images/running-car.png) |
+| :------: | :------: | :------: |
+
+### Compositions
+
+| ![Preview](images/app-bar.png) | ![Preview](images/button.png) | ![Preview](images/card.png) |
+| :------: | :------: | :------: |
+| ![Preview](images/check-box.png) | ![Preview](images/drop-down.png) | ![Preview](images/grid.png) |
+| ![Preview](images/list-item.png) | ![Preview](images/lists.png) | ![Preview](images/loading-indicator.png) |
+| ![Preview](images/radio-button.png) | ![Preview](images/scaffold.png) | ![Preview](images/snackbar.png) |
+| ![Preview](images/switch.png) | ![Preview](images/text-fields.png) |  |
+
+### UIs
+
+| ![Preview](images/map-view.png) | ![Preview](images/otp-code-verify.png) | ![Preview](images/web-view.png) |
+| :------: | :------: | :------: |
+
+### Tutorials
+
+*Coming soon maybe...*
+
+## Setup
+
+### Map API Key
+
+Open the `local.properties` in your project level directory, and then add the following code. Replace `YOUR_API_KEY` with your API key.
+
+```groovy
+MAPS_API_KEY=YOUR_API_KEY
+```
 
 ## Credits
 

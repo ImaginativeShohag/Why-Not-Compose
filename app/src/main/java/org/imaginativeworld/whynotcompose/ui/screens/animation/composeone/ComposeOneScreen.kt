@@ -45,7 +45,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -190,11 +189,11 @@ fun ComposeOneScreen() {
                         scaleY = animScale
                     },
                 painter = painterResource(id = R.drawable.ic_jetpack_compose_logo),
-                contentDescription = stringResource(id = R.string.app_name)
+                contentDescription = "Why Not Compose!"
             )
 
             AnimatedText(
-                text = stringResource(id = R.string.app_name),
+                text = "Why Not Compose!",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, top = 16.dp, end = 16.dp)

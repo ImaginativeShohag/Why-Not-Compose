@@ -349,6 +349,14 @@ fun MapEmptyView(
                     color = MaterialTheme.colors.onSurface.copy(alpha = .7f),
                     textAlign = TextAlign.Center
                 )
+
+                Text(
+                    modifier = Modifier.padding(top = 4.dp),
+                    text = "Come back again later.",
+                    fontSize = 16.sp,
+                    color = MaterialTheme.colors.onSurface.copy(alpha = .7f),
+                    textAlign = TextAlign.Center
+                )
             }
         }
     }

@@ -37,6 +37,9 @@ import org.imaginativeworld.whynotcompose.models.Event
 import javax.inject.Inject
 import kotlin.random.Random
 
+// Code resend counter interval in seconds
+private const val RESEND_COUNTER_INTERVAL_SEC = 30
+
 class OtpCodeVerifyViewModel @Inject constructor() : ViewModel() {
 
     private val _eventShowLoading = MutableStateFlow(false)
@@ -137,8 +140,7 @@ class OtpCodeVerifyViewModel @Inject constructor() : ViewModel() {
         get() = _resetCounterValue
 
     fun restartCounter() {
-        // Code resend counter delay in seconds
-        var counterSec = 5 //30 todo
+        var counterSec = RESEND_COUNTER_INTERVAL_SEC
 
         viewModelScope.launch {
             while (true) {

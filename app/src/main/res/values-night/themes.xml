@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ Copyright 2021 Md. Mahmudul Hasan Shohag
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,6 +25,5 @@
   ~ Source: https://github.com/ImaginativeShohag/Why-Not-Compose
   -->
 <resources>
-
     <style name="Theme.WhyNotCompose" parent="android:Theme.Material.NoActionBar" />
 </resources>

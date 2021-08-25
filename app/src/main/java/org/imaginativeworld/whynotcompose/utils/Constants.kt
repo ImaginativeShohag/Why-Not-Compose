@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.utils
 
-
 object Constants {
     /**
      * Server endpoint without end slash.

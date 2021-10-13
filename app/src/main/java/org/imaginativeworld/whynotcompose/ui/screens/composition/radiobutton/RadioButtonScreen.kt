@@ -41,7 +41,6 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
-import org.imaginativeworld.whynotcompose.ui.screens.composition.checkbox.CheckBoxScreenSkeleton
 import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
 
 private val ELEMENT_HEIGHT = 56.dp
@@ -55,7 +54,7 @@ fun RadioButtonScreen() {
 @Composable
 fun RadioButtonScreenSkeletonPreview() {
     AppTheme {
-        CheckBoxScreenSkeleton()
+        RadioButtonScreenSkeleton()
     }
 }
 

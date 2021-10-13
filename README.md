@@ -39,14 +39,20 @@ Feel free to request features or suggestions for improvements.
 
 *Coming soon maybe...*
 
+# TODO
+
+- [ ] Gradle Kotlin DSL
+- [ ] SwipeToDismiss
+
 ## Setup
 
 ### Map API Key
 
-Open the `local.properties` in your project level directory, and then add the following code. Replace `YOUR_API_KEY` with your API key.
+Open the `local.properties` in your project level directory, and then add the following code.
+Replace `YOUR_API_KEY` with your API key.
 
 ```groovy
-MAPS_API_KEY=YOUR_API_KEY
+MAPS_API_KEY = YOUR_API_KEY
 ```
 
 ## Credits

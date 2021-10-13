@@ -10,7 +10,8 @@ Feel free to request features or suggestions for improvements.
 - Navigation Component
 - Hilt
 - Everywhere dark mode support
-- Ready to use compositions
+- A lot of Ready to use compositions
+- Gradle Kotlin DSL
 
 ## Screenshots
 
@@ -41,7 +42,7 @@ Feel free to request features or suggestions for improvements.
 
 # TODO
 
-- [ ] Gradle Kotlin DSL
+- [x] Gradle Kotlin DSL
 - [ ] SwipeToDismiss
 
 ## Setup

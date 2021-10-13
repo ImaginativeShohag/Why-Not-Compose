@@ -7,4 +7,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Why Not Compose!"
-include ':app'
+include(":app")

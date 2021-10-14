@@ -44,6 +44,7 @@ Feel free to request features or suggestions for improvements.
 
 - [x] Gradle Kotlin DSL
 - [ ] SwipeToDismiss
+- [ ] Spotless
 
 ## Setup
 

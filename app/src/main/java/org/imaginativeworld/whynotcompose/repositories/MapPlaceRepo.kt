@@ -26,7 +26,7 @@
 
 package org.imaginativeworld.whynotcompose.repositories
 
-import com.google.android.libraries.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLng
 import org.imaginativeworld.whynotcompose.models.MapPlace
 import kotlin.random.Random
 

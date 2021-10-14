@@ -54,8 +54,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
-import com.google.android.libraries.maps.GoogleMap
-import com.google.android.libraries.maps.MapView
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
 import com.google.maps.android.ktx.awaitMap
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.models.MapPlace

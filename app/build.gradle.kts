@@ -21,16 +21,6 @@ android {
         vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-//        javaCompileOptions {
-//            annotationProcessor(Options {
-//                arguments += listOf(
-//                    "room.schemaLocation"   = "$projectDir/schemas".toString(),
-//                    "room.incremental"      = "true",
-//                    "room.expandProjection" = "true"
-//                )
-//            })
-//        }
     }
 
     buildTypes {
@@ -192,9 +182,9 @@ dependencies {
     implementation("org.imaginativeworld.oopsnointernet:oopsnointernet:2.0.0")
 
     // Maps
-//    implementation("com.google.android.gms:play-services-maps:17.0.1")
-    implementation("com.google.android.libraries.maps:maps:3.1.0-beta")
-    implementation("com.google.maps.android:maps-v3-ktx:3.0.1")
+    implementation("com.google.android.gms:play-services-maps:17.0.1")
+    implementation("com.google.maps.android:maps-ktx:3.0.0")
+    implementation("com.google.maps.android:maps-utils-ktx:3.0.0")
 }
 
 kapt {

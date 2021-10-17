@@ -10,7 +10,7 @@ buildscript {
 
         classpath(Libs.Hilt.androidGradlePlugin)
 
-        classpath("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.0")
+        classpath(Libs.secretsGradlePlugin)
     }
 }
 

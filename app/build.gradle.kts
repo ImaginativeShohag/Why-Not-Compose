@@ -48,18 +48,22 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
-        useIR = true
-        freeCompilerArgs += "-Xallow-jvm-ir-dependencies"
-        freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+
+        freeCompilerArgs = freeCompilerArgs + "-Xallow-jvm-ir-dependencies"
+        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
 
         // Enable experimental coroutines APIs, including Flow
-        freeCompilerArgs += "-Xopt-in=kotlin.Experimental"
+        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.Experimental"
 
         // Enable experimental compose APIs
-        freeCompilerArgs += "-Xopt-in=androidx.compose.material.ExperimentalMaterialApi"
-        freeCompilerArgs += "-Xopt-in=androidx.compose.animation.ExperimentalAnimationApi"
-        freeCompilerArgs += "-Xopt-in=androidx.compose.ui.ExperimentalComposeUiApi"
-        freeCompilerArgs += "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi"
+        freeCompilerArgs =
+            freeCompilerArgs + "-Xopt-in=androidx.compose.material.ExperimentalMaterialApi"
+        freeCompilerArgs =
+            freeCompilerArgs + "-Xopt-in=androidx.compose.animation.ExperimentalAnimationApi"
+        freeCompilerArgs =
+            freeCompilerArgs + "-Xopt-in=androidx.compose.ui.ExperimentalComposeUiApi"
+        freeCompilerArgs =
+            freeCompilerArgs + "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi"
     }
 
     buildFeatures {
@@ -86,11 +90,11 @@ dependencies {
     implementation(Libs.AndroidX.appcompat)
 
     // Let"s not use material xml view components at all. :)
-    // implementation("com.google.android.material:material:1.4.0")
+    // implementation(Google.android.material)
 
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    testImplementation(Libs.junit)
+    androidTestImplementation(Libs.AndroidX.Test.Ext.junit)
+    androidTestImplementation(Libs.AndroidX.Test.espressoCore)
     androidTestImplementation(Libs.AndroidX.Compose.uiTest)
 
     // ----------------------------------------------------------------
@@ -136,16 +140,16 @@ dependencies {
     // ----------------------------------------------------------------
 
     // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
+    implementation(Libs.Square.Retrofit.core)
+    implementation(Libs.Square.okhttpLoggingInterceptor)
 
     // Moshi
-    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
-    implementation("com.squareup.moshi:moshi-kotlin:1.12.0")
-    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.12.0")
+    implementation(Libs.Square.Retrofit.converterMoshi)
+    implementation(Libs.Square.Moshi.core)
+    kapt(Libs.Square.Moshi.codegen)
 
     // Gson
-    implementation("com.google.code.gson:gson:2.8.7")
+    implementation(Libs.gson)
 
     // ViewModel and LiveData
     implementation(Libs.AndroidX.Lifecycle.viewmodel)
@@ -154,24 +158,24 @@ dependencies {
     implementation(Libs.AndroidX.Lifecycle.runtime)
 
     // Kotlin Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
+    implementation(Libs.Coroutines.core)
+    implementation(Libs.Coroutines.android)
 
     // Room Persistence Library
-    implementation("androidx.room:room-runtime:2.3.0")
-    kapt("androidx.room:room-compiler:2.3.0")
+    implementation(Libs.AndroidX.Room.runtime)
+    kapt(Libs.AndroidX.Room.compiler)
 
     // Room: Kotlin Extensions and Coroutines support for Room
-    implementation("androidx.room:room-ktx:2.3.0")
+    implementation(Libs.AndroidX.Room.ktx)
 
     // Coil
-    implementation("io.coil-kt:coil-compose:1.3.2")
+    implementation(Libs.coil)
 
     // Paging
     implementation(Libs.AndroidX.Paging.runtime)
 
     // Timber
-    implementation("com.jakewharton.timber:timber:5.0.1")
+    implementation(Libs.timber)
 
     // Hilt
     implementation(Libs.Hilt.core)
@@ -179,12 +183,12 @@ dependencies {
     implementation(Libs.Hilt.navigationCompose)
 
     // No Internet Library
-    implementation("org.imaginativeworld.oopsnointernet:oopsnointernet:2.0.0")
+    implementation(Libs.oopsNoInternet)
 
     // Maps
-    implementation("com.google.android.gms:play-services-maps:17.0.1")
-    implementation("com.google.maps.android:maps-ktx:3.0.0")
-    implementation("com.google.maps.android:maps-utils-ktx:3.0.0")
+    implementation(Libs.Google.PlayService.maps)
+    implementation(Libs.Google.Maps.core)
+    implementation(Libs.Google.Maps.utils)
 }
 
 kapt {

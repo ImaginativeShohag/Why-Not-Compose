@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Md. Mahmudul Hasan Shohag
+ * Copyright $YEAR Md. Mahmudul Hasan Shohag
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,23 +24,3 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.utils.extensions
-
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
-import kotlinx.coroutines.flow.Flow
-
-@Composable
-fun <T> Flow<T>.rememberFlowWithLifecycle(): Flow<T> {
-    val lifecycleOwner = LocalLifecycleOwner.current
-
-    return remember(this, lifecycleOwner) {
-        this.flowWithLifecycle(
-            lifecycleOwner.lifecycle,
-            Lifecycle.State.STARTED
-        )
-    }
-}

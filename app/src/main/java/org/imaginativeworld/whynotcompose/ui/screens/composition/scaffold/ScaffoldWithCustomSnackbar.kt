@@ -30,8 +30,19 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material.ExtendedFloatingActionButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Snackbar
+import androidx.compose.material.SnackbarHost
+import androidx.compose.material.Text
+import androidx.compose.material.rememberScaffoldState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -39,7 +50,6 @@ import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
-
 
 // Source: https://cs.android.com/androidx/platform/tools/dokka-devsite-plugin/+/master:testData/compose/samples/material/samples/ScaffoldSamples.kt
 
@@ -108,31 +118,31 @@ fun ScaffoldWithCustomSnackbarScreenSkeleton() {
     )
 }
 
-//@Composable
-//fun TemplateChildScreen() {
+// @Composable
+// fun TemplateChildScreen() {
 //    TemplateChildScreenSkeleton()
-//}
+// }
 //
-//@Preview
-//@Composable
-//fun TemplateChildScreenSkeletonPreview() {
+// @Preview
+// @Composable
+// fun TemplateChildScreenSkeletonPreview() {
 //    AppTheme {
 //        TemplateChildScreenSkeleton()
 //    }
-//}
+// }
 //
-//@Preview
-//@Composable
-//fun TemplateChildScreenSkeletonPreviewDark() {
+// @Preview
+// @Composable
+// fun TemplateChildScreenSkeletonPreviewDark() {
 //    AppTheme(
 //        darkTheme = true
 //    ) {
 //        TemplateChildScreenSkeleton()
 //    }
-//}
+// }
 //
-//@Composable
-//fun TemplateChildScreenSkeleton() {
+// @Composable
+// fun TemplateChildScreenSkeleton() {
 //    Scaffold(
 //        Modifier
 //            .navigationBarsWithImePadding()
@@ -170,4 +180,4 @@ fun ScaffoldWithCustomSnackbarScreenSkeleton() {
 //
 //        }
 //    }
-//}
+// }

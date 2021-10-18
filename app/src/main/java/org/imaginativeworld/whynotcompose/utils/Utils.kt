@@ -26,6 +26,7 @@
 
 package org.imaginativeworld.whynotcompose.utils
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -39,7 +40,7 @@ import androidx.core.app.NotificationCompat
 import com.squareup.moshi.Moshi
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.network.ApiClient
-import java.util.*
+import java.util.Date
 
 object Utils {
 
@@ -98,7 +99,6 @@ object Utils {
             .setAutoCancel(true)
             .setSound(defaultSoundUri)
 
-
         targetIntent?.also {
             val pendingIntent = PendingIntent.getActivity(
                 context, 0 /* Request code */, targetIntent,
@@ -107,7 +107,6 @@ object Utils {
 
             notificationBuilder.setContentIntent(pendingIntent)
         }
-
 
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -132,13 +131,13 @@ object Utils {
         notificationManager.notify(notificationId, notificationBuilder.build())
     }
 
-
     // --------------------------------
     // Internet Utils
     // --------------------------------
     /**
      * Check if the device is connected with the Internet.
      */
+    @SuppressLint("MissingPermission")
     fun isConnectedToInternet(context: Context): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

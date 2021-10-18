@@ -22,15 +22,13 @@ subprojects {
     apply(plugin = "com.diffplug.spotless")
 
     spotless {
-//        isEnforceCheck = false
-
         kotlin {
             target("**/*.kt")
             targetExclude("$buildDir/**/*.kt")
             targetExclude("bin/**/*.kt")
 
-            ktlint(Versions.ktlint)
-            // licenseHeaderFile rootProject.file('spotless/copyright.kt')
+            ktlint("0.42.1")
+            licenseHeaderFile(rootProject.file("spotless/copyright.kt"))
         }
     }
 }

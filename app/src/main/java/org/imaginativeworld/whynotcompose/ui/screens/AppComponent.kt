@@ -119,5 +119,4 @@ object AppComponent {
             textAlign = TextAlign.Center,
         )
     }
-
 }

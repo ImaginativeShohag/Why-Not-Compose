@@ -106,7 +106,6 @@ fun LazyColumnSampleOneScreenSkeleton() {
                     AppComponent.CustomListItem("Item at index $index is $item")
                 }
             }
-
         }
     }
 }

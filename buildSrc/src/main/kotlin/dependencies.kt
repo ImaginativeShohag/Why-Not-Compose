@@ -1,7 +1,3 @@
-object Versions {
-    const val ktlint = "_"
-}
-
 object Libs {
     const val androidGradlePlugin = "com.android.tools.build:gradle:_"
 

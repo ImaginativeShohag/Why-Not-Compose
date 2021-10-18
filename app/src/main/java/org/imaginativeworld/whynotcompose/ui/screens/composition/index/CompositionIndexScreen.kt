@@ -99,9 +99,7 @@ fun CompositionIndexSkeleton(
                         text = item.name
                     )
                 }
-
             }
         }
-
     }
 }

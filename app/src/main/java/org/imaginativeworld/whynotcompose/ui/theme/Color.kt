@@ -30,7 +30,6 @@ import androidx.compose.material.Colors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-
 val Colors.inputBackground: Color
     @Composable get() = if (isLight) TailwindCSSColor.Gray100 else TailwindCSSColor.Gray800
 

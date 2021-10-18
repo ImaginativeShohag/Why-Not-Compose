@@ -100,9 +100,7 @@ fun AnimationIndexSkeleton(
                         text = item.name
                     )
                 }
-
             }
         }
-
     }
 }

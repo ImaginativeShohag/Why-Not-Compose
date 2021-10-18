@@ -30,7 +30,7 @@ import com.squareup.moshi.Moshi
 import org.imaginativeworld.whynotcompose.network.ApiClient
 import timber.log.Timber
 import java.net.URLEncoder
-import java.util.*
+import java.util.Date
 
 object MoshiUtil {
     fun getMoshi(): Moshi {

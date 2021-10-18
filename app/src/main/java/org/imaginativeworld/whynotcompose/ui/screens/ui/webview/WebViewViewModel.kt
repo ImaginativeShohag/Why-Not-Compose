@@ -55,5 +55,4 @@ class WebViewViewModel @Inject constructor() : ViewModel() {
         Timber.e("webViewGoBack")
         webView?.get()?.goBack()
     }
-
 }

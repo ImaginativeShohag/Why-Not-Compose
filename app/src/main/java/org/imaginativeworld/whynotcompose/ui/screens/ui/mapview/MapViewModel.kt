@@ -41,8 +41,13 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.Marker
 import com.google.maps.android.ktx.addMarker
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.models.Event
 import org.imaginativeworld.whynotcompose.models.MapPlace
 import org.imaginativeworld.whynotcompose.repositories.MapPlaceRepo
@@ -51,7 +56,7 @@ import org.imaginativeworld.whynotcompose.utils.composeutils.selectMarker
 import org.imaginativeworld.whynotcompose.utils.composeutils.setZoom
 import org.imaginativeworld.whynotcompose.utils.extensions.dpToPx
 import timber.log.Timber
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -88,7 +93,6 @@ class MapViewModel @Inject constructor() : ViewModel() {
                     message = showMessage,
                     currentLocationName = currentLocationName,
                 )
-
             }.catch { throwable ->
                 // TODO: emit a UI error here. For now we'll just rethrow
                 throw throwable
@@ -154,7 +158,6 @@ class MapViewModel @Inject constructor() : ViewModel() {
         } catch (e: Exception) {
             Timber.e(e)
         }
-
     }
 
     // ----------------------------------------------------------------
@@ -225,8 +228,8 @@ class MapViewModel @Inject constructor() : ViewModel() {
             if (ActivityCompat.checkSelfPermission(
                     context, Manifest.permission.ACCESS_FINE_LOCATION
                 ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                    context, Manifest.permission.ACCESS_COARSE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
+                        context, Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) == PackageManager.PERMISSION_GRANTED
             ) {
                 gMap.isMyLocationEnabled = true
             }
@@ -388,7 +391,6 @@ class MapViewModel @Inject constructor() : ViewModel() {
             }
         }
     }
-
 }
 
 data class MapViewState(

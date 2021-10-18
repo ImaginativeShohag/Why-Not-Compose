@@ -144,5 +144,4 @@ class SharedPref @Inject constructor(
     fun getDarkMode(): Boolean {
         return getSharedPerf().getBoolean(PREF_DARK_MODE, false)
     }
-
 }

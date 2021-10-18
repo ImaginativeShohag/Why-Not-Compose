@@ -99,7 +99,6 @@ fun TemplateChildScreenSkeleton() {
             // ----------------------------------------------------------------
 
             AppComponent.BigSpacer()
-
         }
     }
 }

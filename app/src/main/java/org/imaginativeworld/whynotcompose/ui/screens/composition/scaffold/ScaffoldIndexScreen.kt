@@ -100,9 +100,7 @@ fun ScaffoldIndexSkeleton(
                         text = item.name
                     )
                 }
-
             }
         }
-
     }
 }

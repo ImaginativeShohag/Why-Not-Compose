@@ -14,6 +14,23 @@ buildscript {
     }
 }
 
-tasks.register<Delete>("clean").configure {
-    delete(rootProject.buildDir)
+plugins {
+    id("com.diffplug.spotless") version "5.17.0"
+}
+
+subprojects {
+    apply(plugin = "com.diffplug.spotless")
+
+    spotless {
+//        isEnforceCheck = false
+
+        kotlin {
+            target("**/*.kt")
+            targetExclude("$buildDir/**/*.kt")
+            targetExclude("bin/**/*.kt")
+
+            ktlint(Versions.ktlint)
+            // licenseHeaderFile rootProject.file('spotless/copyright.kt')
+        }
+    }
 }

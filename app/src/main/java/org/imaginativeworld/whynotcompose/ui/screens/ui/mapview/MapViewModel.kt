@@ -308,7 +308,7 @@ class MapViewModel @Inject constructor() : ViewModel() {
                         deselectMarker(context)
                     }
                 }
-                    .apply {
+                    ?.apply {
                         tag = place
 
                         if (place == cacheSelectedVendor) {

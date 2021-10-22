@@ -50,8 +50,7 @@ object MapPlaceRepo {
         MapPlace(
             name = "Khulna Division",
             location = LatLng(22.8454448, 89.4624617),
-            description = "\n" +
-                "Ad eas enim res ab Epicuro praecepta dantur. Quod quidem iam fit etiam in Academia. Deinde prima illa, quae in congressu solemus: Quid tu, inquit, huc? Quae contraria sunt his, malane? Sed residamus, inquit, si placet. Ergo hoc quidem apparet, nos ad agendum esse natos. Iubet igitur nos Pythius Apollo noscere nosmet ipsos. Verba tu fingas et ea dicas, quae non sentias?",
+            description = "Ad eas enim res ab Epicuro praecepta dantur. Quod quidem iam fit etiam in Academia. Deinde prima illa, quae in congressu solemus: Quid tu, inquit, huc? Quae contraria sunt his, malane? Sed residamus, inquit, si placet. Ergo hoc quidem apparet, nos ad agendum esse natos. Iubet igitur nos Pythius Apollo noscere nosmet ipsos. Verba tu fingas et ea dicas, quae non sentias?",
         ),
         MapPlace(
             name = "Mymensingh Division",

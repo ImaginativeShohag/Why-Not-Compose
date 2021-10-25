@@ -26,6 +26,7 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.ui.webview
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.view.ViewGroup
 import android.webkit.WebChromeClient
@@ -83,6 +84,7 @@ import org.imaginativeworld.whynotcompose.ui.theme.TailwindCSSColor
 import timber.log.Timber
 
 // TODO: Swipe to refresh
+// TODO: Error/message pages
 
 sealed class WebViewTarget(val name: String, val url: String) {
     object AboutMe : WebViewTarget(
@@ -115,8 +117,9 @@ fun WebViewScreen(
         goBack = {
             goBack()
         },
-        webView = {
+        webView = { modifier ->
             MapViewContainer(
+                modifier = modifier,
                 url = target.url,
                 initWebView = viewModel::initWebView
             )
@@ -195,15 +198,17 @@ fun WebViewSkeleton(
     }
 }
 
+@SuppressLint("SetJavaScriptEnabled")
 @Composable
 private fun MapViewContainer(
+    modifier: Modifier,
     url: String,
     initWebView: (webView: WebView) -> Unit
 ) {
     val currentProgress = remember { mutableStateOf(0) }
     val loadingVisibility = remember { mutableStateOf(true) }
 
-    Box(Modifier.fillMaxSize()) {
+    Box(modifier.fillMaxSize()) {
         AndroidView(
             modifier = Modifier.fillMaxSize(),
             factory = { context ->
@@ -268,7 +273,7 @@ fun LoadingContainerPreview() {
     val scope = rememberCoroutineScope()
     val progress = remember { mutableStateOf(0) }
 
-    LaunchedEffect(key1 = "key1", block = {
+    LaunchedEffect(true) {
         scope.launch {
             while (true) {
                 progress.value = 0
@@ -288,7 +293,7 @@ fun LoadingContainerPreview() {
                 delay(1000)
             }
         }
-    })
+    }
 
     LoadingContainer(
         progress.value

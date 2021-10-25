@@ -43,6 +43,7 @@ import org.imaginativeworld.whynotcompose.ui.screens.animation.composeone.Compos
 import org.imaginativeworld.whynotcompose.ui.screens.animation.emudi.EmudiScreen
 import org.imaginativeworld.whynotcompose.ui.screens.animation.index.AnimationIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.animation.runningcar.RunningCarScreen
+import org.imaginativeworld.whynotcompose.ui.screens.animation.thestory.TheStoryScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.appbar.AppBarScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.button.ButtonScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.card.CardScreen
@@ -101,6 +102,7 @@ sealed class AnimationsScreen(val route: String) {
     object AnimationComposeOne : AnimationsScreen("animation/composeone")
     object AnimationEmudi : AnimationsScreen("animation/emudi")
     object AnimationRunningCar : AnimationsScreen("animation/runningcar")
+    object AnimationTheStory : AnimationsScreen("animation/thestory")
 }
 
 sealed class CompositionsScreen(val route: String) {
@@ -238,6 +240,10 @@ private fun NavGraphBuilder.addAnimationScreens(
 
         composable(AnimationsScreen.AnimationRunningCar.route) {
             RunningCarScreen()
+        }
+
+        composable(AnimationsScreen.AnimationTheStory.route) {
+            TheStoryScreen()
         }
     }
 }

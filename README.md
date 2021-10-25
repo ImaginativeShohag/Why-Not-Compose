@@ -48,6 +48,7 @@ Feel free to request features or suggestions for improvements.
 - [ ] Select image for upload
 - [ ] Permission
 - [ ] ExoPlayer sample
+- [ ] Swipe to Refresh in WebView
 
 # Note
 

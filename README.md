@@ -43,12 +43,12 @@ Feel free to request features or suggestions for improvements.
 # TODO
 
 - [x] Gradle Kotlin DSL
-- [ ] SwipeToDismiss
 - [x] Spotless
-- [ ] Select image for upload
-- [ ] Permission
-- [ ] ExoPlayer sample
-- [ ] Swipe to Refresh in WebView
+- [x] Composition: SwipeToDismiss
+- [ ] Tutorial: Select image for upload
+- [ ] Tutorial: Permission
+- [ ] Tutorial: ExoPlayer sample
+- [ ] UI: WebView: Swipe to Refresh in WebView
 
 # Note
 

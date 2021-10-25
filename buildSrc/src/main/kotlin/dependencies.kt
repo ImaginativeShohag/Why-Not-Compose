@@ -110,7 +110,7 @@ object Libs {
 
         object Paging {
             private const val version = "3.0.1"
-            private const val composeVersion = "1.0.0-alpha13"
+            private const val composeVersion = "1.0.0-alpha14"
 
             const val runtime = "androidx.paging:paging-runtime-ktx:$version"
             const val compose = "androidx.paging:paging-compose:$composeVersion"

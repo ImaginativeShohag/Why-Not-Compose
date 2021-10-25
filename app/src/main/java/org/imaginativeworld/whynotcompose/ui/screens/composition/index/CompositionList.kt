@@ -83,6 +83,10 @@ data class Composition(
                 route = CompositionsScreen.CompositionSnackbar,
             ),
             Composition(
+                name = "SwipeToDismiss",
+                route = CompositionsScreen.CompositionSwipeToDismiss,
+            ),
+            Composition(
                 name = "Switch",
                 route = CompositionsScreen.CompositionSwitch,
             ),

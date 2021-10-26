@@ -68,6 +68,7 @@ import org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold.Scaffo
 import org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold.ScaffoldWithSimpleSnackbarScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold.SimpleScaffoldWithTopBarScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.snackbar.SnackbarScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.swiperefresh.SwipeRefreshScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.swipetodismiss.SwipeToDismissScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.switch.SwitchScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.textfield.TextFieldScreen
@@ -143,6 +144,7 @@ sealed class CompositionsScreen(val route: String) {
     object CompositionSwitch : CompositionsScreen("composition/switch")
     object CompositionTextField : CompositionsScreen("composition/textfield")
     object CompositionSwipeToDismiss : CompositionsScreen("composition/swipetodismiss")
+    object CompositionSwipeRefresh : CompositionsScreen("composition/swiperefresh")
 }
 
 sealed class UIsScreen(val route: String) {
@@ -385,6 +387,10 @@ private fun NavGraphBuilder.addCompositionScreens(
 
         composable(CompositionsScreen.CompositionSwipeToDismiss.route) {
             SwipeToDismissScreen()
+        }
+
+        composable(CompositionsScreen.CompositionSwipeRefresh.route) {
+            SwipeRefreshScreen()
         }
     }
 }

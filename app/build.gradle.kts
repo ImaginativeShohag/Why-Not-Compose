@@ -136,6 +136,7 @@ dependencies {
     implementation(Libs.Accompanist.systemuicontroller)
     implementation(Libs.Accompanist.flowlayout)
     implementation(Libs.Accompanist.pager)
+    implementation(Libs.Accompanist.swipeRefresh)
 
     // ----------------------------------------------------------------
 

@@ -35,6 +35,7 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -75,28 +76,15 @@ import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.imaginativeworld.whynotcompose.models.ListItem
+import org.imaginativeworld.whynotcompose.repositories.MockData
 import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
 import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
 
 // Source:
 // https://cs.android.com/androidx/platform/tools/dokka-devsite-plugin/+/master:testData/compose/samples/material/samples/SwipeToDismissSamples.kt
 
-private val dummyItems = mutableListOf(
-    ListItem(id = 1, name = "Cupcake"),
-    ListItem(id = 2, name = "Donut"),
-    ListItem(id = 3, name = "Eclair"),
-    ListItem(id = 4, name = "Froyo"),
-    ListItem(id = 5, name = "Gingerbread"),
-    ListItem(id = 6, name = "Honeycomb"),
-    ListItem(id = 7, name = "Ice cream sandwich"),
-    ListItem(id = 8, name = "Jelly bean"),
-    ListItem(id = 9, name = "KitKat"),
-    ListItem(id = 10, name = "Lollipop"),
-    ListItem(id = 11, name = "Marshmallow"),
-    ListItem(id = 12, name = "Nougat"),
-    ListItem(id = 13, name = "Oreo"),
-    ListItem(id = 14, name = "Pie"),
-)
+private val dummyItems = MockData.dummyListItem.toList()
 
 @Composable
 fun SwipeToDismissScreen() {
@@ -161,7 +149,6 @@ fun SwipeToDismissScreenSkeleton(
         Column(
             Modifier
                 .fillMaxSize()
-                .padding(start = 16.dp, end = 16.dp)
         ) {
             AppComponent.Header("SwipeToDismiss")
 
@@ -181,7 +168,8 @@ fun SwipeToDismissScreenSkeleton(
             LazyColumn(
                 Modifier
                     .fillMaxWidth()
-                    .weight(1f)
+                    .weight(1f),
+                contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
             ) {
                 items(
                     items = items,
@@ -286,8 +274,3 @@ fun SwipeToDismissScreenSkeleton(
         }
     }
 }
-
-data class ListItem(
-    val id: Int,
-    val name: String,
-)

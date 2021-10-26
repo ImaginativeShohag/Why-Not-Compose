@@ -21,6 +21,7 @@ Feel free to request features or suggestions for improvements.
 
 | ![Preview](images/animated-text-and-bubbles.png) | ![Preview](images/emudi.png) | ![Preview](images/running-car.png) |
 | :------: | :------: | :------: |
+| The Story |  |  |
 
 ### Compositions
 
@@ -29,7 +30,8 @@ Feel free to request features or suggestions for improvements.
 | ![Preview](images/check-box.png) | ![Preview](images/drop-down.png) | ![Preview](images/grid.png) |
 | ![Preview](images/list-item.png) | ![Preview](images/lists.png) | ![Preview](images/loading-indicator.png) |
 | ![Preview](images/radio-button.png) | ![Preview](images/scaffold.png) | ![Preview](images/snackbar.png) |
-| ![Preview](images/switch.png) | ![Preview](images/text-fields.png) |  |
+| ![Preview](images/switch.png) | ![Preview](images/text-fields.png) | SwipeRefresh |
+| SwipeToDismiss |  |  |
 
 ### UIs
 

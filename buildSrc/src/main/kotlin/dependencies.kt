@@ -39,6 +39,7 @@ object Libs {
             "com.google.accompanist:accompanist-systemuicontroller:$version"
         const val flowlayout = "com.google.accompanist:accompanist-flowlayout:$version"
         const val pager = "com.google.accompanist:accompanist-pager:$version"
+        const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:$version"
     }
 
     object Kotlin {

@@ -70,6 +70,7 @@ object Libs {
     object AndroidX {
         const val appcompat = "androidx.appcompat:appcompat:1.3.0"
         const val coreKtx = "androidx.core:core-ktx:1.6.0"
+        const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
         object Activity {
             const val activityCompose = "androidx.activity:activity-compose:1.3.1"
@@ -109,22 +110,6 @@ object Libs {
             const val compose = "androidx.constraintlayout:constraintlayout-compose:$version"
         }
 
-        object Paging {
-            private const val version = "3.0.1"
-            private const val composeVersion = "1.0.0-alpha14"
-
-            const val runtime = "androidx.paging:paging-runtime-ktx:$version"
-            const val compose = "androidx.paging:paging-compose:$composeVersion"
-        }
-
-        object Navigation {
-            private const val version = "2.4.0-alpha10"
-
-            const val fragment = "androidx.navigation:navigation-fragment-ktx:$version"
-            const val uiKtx = "androidx.navigation:navigation-ui-ktx:$version"
-            const val compose = "androidx.navigation:navigation-compose:$version"
-        }
-
         object Lifecycle {
             private const val version = "2.4.0-rc01"
 
@@ -136,13 +121,28 @@ object Libs {
             const val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:$version"
         }
 
+        object Navigation {
+            private const val version = "2.4.0-alpha10"
+
+            const val fragment = "androidx.navigation:navigation-fragment-ktx:$version"
+            const val uiKtx = "androidx.navigation:navigation-ui-ktx:$version"
+            const val compose = "androidx.navigation:navigation-compose:$version"
+        }
+
+        object Paging {
+            private const val version = "3.0.1"
+            private const val composeVersion = "1.0.0-alpha14"
+
+            const val runtime = "androidx.paging:paging-runtime-ktx:$version"
+            const val compose = "androidx.paging:paging-compose:$composeVersion"
+        }
+
         object Room {
             private const val version = "2.3.0"
 
             const val runtime = "androidx.room:room-runtime:$version"
             const val compiler = "androidx.room:room-compiler:$version"
             const val ktx = "androidx.room:room-ktx:$version"
-
         }
 
         object Test {

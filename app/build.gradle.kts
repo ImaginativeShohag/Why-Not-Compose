@@ -88,7 +88,7 @@ dependencies {
     implementation(Libs.Kotlin.stdlib)
     implementation(Libs.AndroidX.coreKtx)
     implementation(Libs.AndroidX.appcompat)
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    implementation(Libs.AndroidX.swipeRefreshLayout)
 
     // Let"s not use material xml view components at all. :)
     // implementation(Google.android.material)

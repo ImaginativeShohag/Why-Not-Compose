@@ -61,6 +61,12 @@ Feel free to request features or suggestions for improvements.
 ./gradlew dependencyUpdates
 ```
 
+- To apply Spotless:
+
+```bash
+./gradlew spotlessApply
+```
+
 ## Setup
 
 ### Map API Key

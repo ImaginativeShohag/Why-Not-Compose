@@ -50,7 +50,7 @@ Feel free to request features or suggestions for improvements.
 - [ ] Tutorial: Select image for upload
 - [ ] Tutorial: Permission
 - [ ] Tutorial: ExoPlayer sample
-- [ ] UI: WebView: Swipe to Refresh in WebView
+- [x] UI: WebView: Swipe to Refresh in WebView
 
 # Note
 

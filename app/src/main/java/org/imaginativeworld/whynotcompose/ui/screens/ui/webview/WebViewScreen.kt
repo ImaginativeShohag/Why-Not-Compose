@@ -221,8 +221,6 @@ fun WebViewSkeleton(
                 }
             }
         }
-
-
     }
 }
 

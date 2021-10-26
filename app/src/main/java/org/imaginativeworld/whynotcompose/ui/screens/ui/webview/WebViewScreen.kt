@@ -62,6 +62,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -74,8 +75,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.R
@@ -104,6 +108,8 @@ fun WebViewScreen(
     target: WebViewTarget,
     goBack: () -> Unit,
 ) {
+    val state by viewModel.state.collectAsState()
+
     BackHandler {
         if (viewModel.webViewCanGoBack()) {
             viewModel.webViewGoBack()
@@ -121,7 +127,9 @@ fun WebViewScreen(
             MapViewContainer(
                 modifier = modifier,
                 url = target.url,
-                initWebView = viewModel::initWebView
+                loadingProgress = state.loadingProgress,
+                initSwipeRefresh = viewModel::initSwipeRefresh,
+                initWebView = viewModel::initWebView,
             )
         },
     )
@@ -198,72 +206,62 @@ fun WebViewSkeleton(
     }
 }
 
-@SuppressLint("SetJavaScriptEnabled")
 @Composable
 private fun MapViewContainer(
     modifier: Modifier,
     url: String,
-    initWebView: (webView: WebView) -> Unit
+    loadingProgress: Int?,
+    initSwipeRefresh: (swipeRefreshLayout: SwipeRefreshLayout) -> Unit,
+    initWebView: (webView: WebView) -> Unit,
 ) {
-    val currentProgress = remember { mutableStateOf(0) }
-    val loadingVisibility = remember { mutableStateOf(true) }
+    SwipeRefresh(
+        modifier = Modifier.fillMaxSize(),
+        state = rememberSwipeRefreshState(false),
+        onRefresh = { },
+    ) {
+        Box(modifier.fillMaxSize()) {
+            AndroidView(
+                modifier = Modifier.fillMaxSize(),
+                factory = { context ->
+                    Timber.e("AndroidView: factory")
 
-    Box(modifier.fillMaxSize()) {
-        AndroidView(
-            modifier = Modifier.fillMaxSize(),
-            factory = { context ->
-                Timber.e("AndroidView: WebView: factory")
+                    SwipeRefreshLayout(context).apply {
 
-                WebView(context).apply {
-                    initWebView(this)
+                        initSwipeRefresh(this)
 
-                    val webSettings = this.settings
+                        addView(
+                            WebView(context).apply {
+                                id = R.id.webView
 
-                    webSettings.run {
-                        javaScriptEnabled = true
+                                initWebView(this)
+                            }
+                        )
                     }
+                },
+                update = { swipeRefreshLayout ->
+                    Timber.e("AndroidView: update")
 
-                    webViewClient = object : WebViewClient() {
-                        override fun onPageStarted(
-                            view: WebView?,
-                            url: String?,
-                            favicon: Bitmap?
-                        ) {
-                            loadingVisibility.value = true
+                    val webView = swipeRefreshLayout.findViewById<WebView>(R.id.webView)
 
-                            super.onPageStarted(view, url, favicon)
-                        }
+                    swipeRefreshLayout.layoutParams = ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT
+                    )
 
-                        override fun onPageFinished(view: WebView?, url: String?) {
-                            loadingVisibility.value = false
+                    webView.layoutParams = ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT
+                    )
 
-                            super.onPageFinished(view, url)
-                        }
-                    }
-
-                    webChromeClient = object : WebChromeClient() {
-                        override fun onProgressChanged(view: WebView?, newProgress: Int) {
-                            currentProgress.value = newProgress
-                        }
-                    }
+                    webView.loadUrl(url)
                 }
-            },
-            update = { view ->
-                Timber.e("AndroidView: WebView: update")
+            )
 
-                view.layoutParams = ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
-                )
-
-                view.loadUrl(url)
-            }
-        )
-
-        LoadingContainer(
-            progress = currentProgress.value,
-            visible = loadingVisibility.value
-        )
+            LoadingContainer(
+                progress = loadingProgress ?: 0,
+                visible = loadingProgress != null,
+            )
+        }
     }
 }
 
@@ -307,8 +305,8 @@ private fun LoadingContainer(
 ) {
     val infiniteTransition = rememberInfiniteTransition()
     val color by infiniteTransition.animateColor(
-        initialValue = Color(0xff999999),
-        targetValue = Color(0xff333333),
+        initialValue = TailwindCSSColor.Green500,
+        targetValue =TailwindCSSColor.Green700,
         animationSpec = infiniteRepeatable(
             animation = tween(1000, easing = LinearEasing),
             repeatMode = RepeatMode.Reverse

@@ -26,12 +26,8 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.ui.webview
 
-import android.annotation.SuppressLint
-import android.graphics.Bitmap
 import android.view.ViewGroup
-import android.webkit.WebChromeClient
 import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColor
@@ -83,6 +79,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.R
+import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.components.ErrorView
 import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
 import org.imaginativeworld.whynotcompose.ui.theme.TailwindCSSColor
 import timber.log.Timber
@@ -124,7 +121,7 @@ fun WebViewScreen(
             goBack()
         },
         webView = { modifier ->
-            MapViewContainer(
+            WebViewContainer(
                 modifier = modifier,
                 url = target.url,
                 loadingProgress = state.loadingProgress,
@@ -132,6 +129,8 @@ fun WebViewScreen(
                 initWebView = viewModel::initWebView,
             )
         },
+        webViewError = state.error,
+        onRetry = viewModel::webViewReload,
     )
 }
 
@@ -176,6 +175,8 @@ fun WebViewSkeleton(
     title: String,
     goBack: () -> Unit,
     webView: @Composable (Modifier) -> Unit,
+    webViewError: WebViewError? = null,
+    onRetry: () -> Unit = {},
 ) {
 
     Scaffold(
@@ -199,15 +200,34 @@ fun WebViewSkeleton(
                 },
             )
 
-            webView(
+            Box(
                 Modifier.weight(1f)
-            )
+            ) {
+                webView(Modifier.fillMaxSize())
+
+                androidx.compose.animation.AnimatedVisibility(
+                    visible = webViewError != null,
+                    enter = fadeIn(),
+                    exit = fadeOut()
+                ) {
+                    webViewError?.let {
+                        ErrorView(
+                            errorCode = webViewError.errorCode,
+                            description = webViewError.description,
+                            failingUrl = webViewError.failingUrl,
+                            onRetry = onRetry
+                        )
+                    }
+                }
+            }
         }
+
+
     }
 }
 
 @Composable
-private fun MapViewContainer(
+private fun WebViewContainer(
     modifier: Modifier,
     url: String,
     loadingProgress: Int?,
@@ -306,7 +326,7 @@ private fun LoadingContainer(
     val infiniteTransition = rememberInfiniteTransition()
     val color by infiniteTransition.animateColor(
         initialValue = TailwindCSSColor.Green500,
-        targetValue =TailwindCSSColor.Green700,
+        targetValue = TailwindCSSColor.Green700,
         animationSpec = infiniteRepeatable(
             animation = tween(1000, easing = LinearEasing),
             repeatMode = RepeatMode.Reverse

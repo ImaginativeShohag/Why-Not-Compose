@@ -45,6 +45,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.navigationBarsWithImePadding
@@ -89,12 +90,14 @@ fun SimpleScaffoldWithTopBarScreenSkeletonPreviewDark() {
 fun SimpleScaffoldWithTopBarScreenSkeleton() {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
+
     Scaffold(
         modifier = Modifier
             .navigationBarsWithImePadding()
             .statusBarsPadding(),
         scaffoldState = scaffoldState,
         drawerContent = { Text("Drawer content") },
+        drawerShape = RectangleShape,
         topBar = {
             TopAppBar(
                 title = { Text("Simple Scaffold Screen") },
@@ -112,7 +115,7 @@ fun SimpleScaffoldWithTopBarScreenSkeleton() {
         floatingActionButtonPosition = FabPosition.End,
         floatingActionButton = {
             ExtendedFloatingActionButton(
-                text = { Text("Inc") },
+                text = { Text("Extended FAB") },
                 onClick = { /* fab click handler */ }
             )
         },

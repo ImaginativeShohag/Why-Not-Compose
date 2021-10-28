@@ -63,6 +63,10 @@ data class Composition(
                 route = CompositionsScreen.CompositionDropDownMenu,
             ),
             Composition(
+                name = "FloatingActionButton",
+                route = CompositionsScreen.CompositionFloatingActionButton,
+            ),
+            Composition(
                 name = "List",
                 route = CompositionsScreen.CompositionListIndex,
             ),

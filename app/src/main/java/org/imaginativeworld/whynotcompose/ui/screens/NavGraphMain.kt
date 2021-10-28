@@ -50,6 +50,7 @@ import org.imaginativeworld.whynotcompose.ui.screens.composition.button.ButtonSc
 import org.imaginativeworld.whynotcompose.ui.screens.composition.card.CardScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.checkbox.CheckBoxScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.dropdown.DropDownMenuScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.floatingactionbutton.FloatingActionButtonScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.index.CompositionIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.list.LazyColumnIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.list.LazyRowScreen
@@ -147,6 +148,7 @@ sealed class CompositionsScreen(val route: String) {
     object CompositionSwipeToDismiss : CompositionsScreen("composition/swipetodismiss")
     object CompositionSwipeRefresh : CompositionsScreen("composition/swiperefresh")
     object CompositionBadge : CompositionsScreen("composition/badge")
+    object CompositionFloatingActionButton : CompositionsScreen("composition/fab")
 }
 
 sealed class UIsScreen(val route: String) {
@@ -397,6 +399,10 @@ private fun NavGraphBuilder.addCompositionScreens(
 
         composable(CompositionsScreen.CompositionBadge.route) {
             BadgeScreen()
+        }
+
+        composable(CompositionsScreen.CompositionFloatingActionButton.route) {
+            FloatingActionButtonScreen()
         }
     }
 }

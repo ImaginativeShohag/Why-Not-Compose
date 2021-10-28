@@ -69,6 +69,7 @@ import org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold.Scaffo
 import org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold.ScaffoldWithCustomSnackbarScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold.ScaffoldWithSimpleSnackbarScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold.SimpleScaffoldWithTopBarScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.slider.SliderScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.snackbar.SnackbarScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.swiperefresh.SwipeRefreshScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.swipetodismiss.SwipeToDismissScreen
@@ -149,6 +150,7 @@ sealed class CompositionsScreen(val route: String) {
     object CompositionSwipeRefresh : CompositionsScreen("composition/swiperefresh")
     object CompositionBadge : CompositionsScreen("composition/badge")
     object CompositionFloatingActionButton : CompositionsScreen("composition/fab")
+    object CompositionSlider : CompositionsScreen("composition/slider")
 }
 
 sealed class UIsScreen(val route: String) {
@@ -403,6 +405,10 @@ private fun NavGraphBuilder.addCompositionScreens(
 
         composable(CompositionsScreen.CompositionFloatingActionButton.route) {
             FloatingActionButtonScreen()
+        }
+
+        composable(CompositionsScreen.CompositionSlider.route) {
+            SliderScreen()
         }
     }
 }

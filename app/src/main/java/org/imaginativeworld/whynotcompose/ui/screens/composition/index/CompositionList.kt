@@ -87,6 +87,10 @@ data class Composition(
                 route = CompositionsScreen.CompositionScaffoldIndex,
             ),
             Composition(
+                name = "Slider",
+                route = CompositionsScreen.CompositionSlider,
+            ),
+            Composition(
                 name = "Snackbar",
                 route = CompositionsScreen.CompositionSnackbar,
             ),

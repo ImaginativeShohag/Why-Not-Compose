@@ -48,10 +48,12 @@ Feel free to request features or suggestions for improvements.
 - [x] Gradle Kotlin DSL
 - [x] Spotless
 - [x] Composition: SwipeToDismiss
+- [x] UI: WebView: Swipe to Refresh in WebView
+- [ ] Tutorial: Counter
+- [ ] Tutorial: Counter with ViewModel
 - [ ] Tutorial: Select image for upload
 - [ ] Tutorial: Permission
 - [ ] Tutorial: ExoPlayer sample
-- [x] UI: WebView: Swipe to Refresh in WebView
 - [ ] Material You
 
 # Note

@@ -45,6 +45,7 @@ import org.imaginativeworld.whynotcompose.ui.screens.animation.index.AnimationIn
 import org.imaginativeworld.whynotcompose.ui.screens.animation.runningcar.RunningCarScreen
 import org.imaginativeworld.whynotcompose.ui.screens.animation.thestory.TheStoryScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.appbar.AppBarScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.badge.BadgeScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.button.ButtonScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.card.CardScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.checkbox.CheckBoxScreen
@@ -145,6 +146,7 @@ sealed class CompositionsScreen(val route: String) {
     object CompositionTextField : CompositionsScreen("composition/textfield")
     object CompositionSwipeToDismiss : CompositionsScreen("composition/swipetodismiss")
     object CompositionSwipeRefresh : CompositionsScreen("composition/swiperefresh")
+    object CompositionBadge : CompositionsScreen("composition/badge")
 }
 
 sealed class UIsScreen(val route: String) {
@@ -391,6 +393,10 @@ private fun NavGraphBuilder.addCompositionScreens(
 
         composable(CompositionsScreen.CompositionSwipeRefresh.route) {
             SwipeRefreshScreen()
+        }
+
+        composable(CompositionsScreen.CompositionBadge.route) {
+            BadgeScreen()
         }
     }
 }

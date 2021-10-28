@@ -39,6 +39,10 @@ data class Composition(
                 route = CompositionsScreen.CompositionAppBar,
             ),
             Composition(
+                name = "Badge",
+                route = CompositionsScreen.CompositionBadge,
+            ),
+            Composition(
                 name = "Button",
                 route = CompositionsScreen.CompositionButton,
             ),

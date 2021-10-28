@@ -1,6 +1,7 @@
 # Why Not Compose!
 
-A collection of animations, compositions, UIs using Jetpack Compose. You can say Jetpack Compose cookbook or play-ground if you want!
+A collection of animations, compositions, UIs using Jetpack Compose. You can say Jetpack Compose
+cookbook or play-ground if you want!
 
 Feel free to request features or suggestions for improvements.
 
@@ -51,17 +52,20 @@ Feel free to request features or suggestions for improvements.
 - [ ] Tutorial: Permission
 - [ ] Tutorial: ExoPlayer sample
 - [x] UI: WebView: Swipe to Refresh in WebView
+- [ ] Material You
 
 # Note
 
-- For dependency version check I am currently using [Gradle Versions Plugin](https://github.com/ben-manes/gradle-versions-plugin#using-a-gradle-init-script).
-  I added this in the Gradle init script and can check versions using the following commend.
+- For dependency version check I am currently
+  using [Gradle Versions Plugin](https://github.com/ben-manes/gradle-versions-plugin#using-a-gradle-init-script)
+  . I added this in the Gradle init script and can check versions using the following commend.
 
 ```bash
 ./gradlew dependencyUpdates
 ```
 
-- To apply Spotless:
+- The project using [spotless](https://github.com/diffplug/spotless/tree/main/plugin-gradle)
+  with [klint](https://github.com/pinterest/ktlint). Apply spotless using the following command.
 
 ```bash
 ./gradlew spotlessApply
@@ -75,7 +79,7 @@ Open the `local.properties` in your project level directory, and then add the fo
 Replace `YOUR_API_KEY` with your API key.
 
 ```groovy
-MAPS_API_KEY = YOUR_API_KEY
+MAPS_API_KEY=YOUR_API_KEY
 ```
 
 ## Credits

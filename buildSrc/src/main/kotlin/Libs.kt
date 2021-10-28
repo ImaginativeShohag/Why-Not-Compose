@@ -20,7 +20,7 @@ object Libs {
 
     object Google {
         object PlayService {
-            const val maps = "com.google.android.gms:play-services-maps:17.0.1"
+            const val maps = "com.google.android.gms:play-services-maps:18.0.0"
         }
 
         object Maps {
@@ -32,7 +32,7 @@ object Libs {
     }
 
     object Accompanist {
-        private const val version = "0.20.0"
+        private const val version = "0.21.0-beta"
 
         const val insets = "com.google.accompanist:accompanist-insets:$version"
         const val systemuicontroller =
@@ -59,7 +59,7 @@ object Libs {
     }
 
     object Hilt {
-        private const val version = "2.39.1"
+        private const val version = "2.40"
 
         const val androidGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:$version"
         const val core = "com.google.dagger:hilt-android:$version"
@@ -69,11 +69,11 @@ object Libs {
 
     object AndroidX {
         const val appcompat = "androidx.appcompat:appcompat:1.3.0"
-        const val coreKtx = "androidx.core:core-ktx:1.6.0"
+        const val coreKtx = "androidx.core:core-ktx:1.7.0"
         const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
         object Activity {
-            const val activityCompose = "androidx.activity:activity-compose:1.3.1"
+            const val activityCompose = "androidx.activity:activity-compose:1.1.0-beta01"
         }
 
         object Compose {
@@ -111,7 +111,7 @@ object Libs {
         }
 
         object Lifecycle {
-            private const val version = "2.4.0-rc01"
+            private const val version = "2.4.0"
 
             const val extensions = "androidx.lifecycle:lifecycle-extensions:$version"
             const val livedata = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
@@ -122,7 +122,7 @@ object Libs {
         }
 
         object Navigation {
-            private const val version = "2.4.0-alpha10"
+            private const val version = "2.4.0-beta01"
 
             const val fragment = "androidx.navigation:navigation-fragment-ktx:$version"
             const val uiKtx = "androidx.navigation:navigation-ui-ktx:$version"

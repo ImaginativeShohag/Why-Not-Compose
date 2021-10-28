@@ -48,6 +48,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
@@ -88,8 +90,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.layout.RelocationRequester
-import androidx.compose.ui.layout.relocationRequester
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -412,7 +412,7 @@ fun TextInputFieldOne(
     onValueChange: (TextFieldValue) -> Unit = {},
 ) {
     val focusManager = LocalFocusManager.current
-    val relocationRequester = remember { RelocationRequester() }
+    val bringIntoViewRequester = remember { BringIntoViewRequester() }
     val interactionSource = remember { MutableInteractionSource() }
     val interactionSourceState = interactionSource.collectIsFocusedAsState()
     val scope = rememberCoroutineScope()
@@ -423,7 +423,7 @@ fun TextInputFieldOne(
         if (ime.isVisible && interactionSourceState.value) {
             scope.launch {
                 delay(300)
-                relocationRequester.bringIntoView()
+                bringIntoViewRequester.bringIntoView()
             }
         }
     }
@@ -452,7 +452,7 @@ fun TextInputFieldOne(
         ),
         interactionSource = interactionSource,
         modifier = modifier
-            .relocationRequester(relocationRequester)
+            .bringIntoViewRequester(bringIntoViewRequester)
             .fillMaxWidth(),
         readOnly = readOnly,
         decorationBox = { innerTextField ->
@@ -504,7 +504,7 @@ fun PasswordInputFieldOne(
 ) {
     val focusManager = LocalFocusManager.current
     var passwordVisibility by remember { mutableStateOf(false) }
-    val relocationRequester = remember { RelocationRequester() }
+    val bringIntoViewRequester = remember { BringIntoViewRequester() }
     val interactionSource = remember { MutableInteractionSource() }
     val interactionSourceState = interactionSource.collectIsFocusedAsState()
     val scope = rememberCoroutineScope()
@@ -515,7 +515,7 @@ fun PasswordInputFieldOne(
         if (ime.isVisible && interactionSourceState.value) {
             scope.launch {
                 delay(300)
-                relocationRequester.bringIntoView()
+                bringIntoViewRequester.bringIntoView()
             }
         }
     }
@@ -541,7 +541,7 @@ fun PasswordInputFieldOne(
         ),
         interactionSource = interactionSource,
         modifier = modifier
-            .relocationRequester(relocationRequester)
+            .bringIntoViewRequester(bringIntoViewRequester)
             .fillMaxWidth(),
         readOnly = readOnly,
         textStyle = TextStyle(
@@ -628,7 +628,7 @@ fun TextInputFieldTwo(
     onValueChange: (TextFieldValue) -> Unit = {},
 ) {
     val focusManager = LocalFocusManager.current
-    val relocationRequester = remember { RelocationRequester() }
+    val bringIntoViewRequester = remember { BringIntoViewRequester() }
     val interactionSource = remember { MutableInteractionSource() }
     val interactionSourceState = interactionSource.collectIsFocusedAsState()
     val scope = rememberCoroutineScope()
@@ -639,7 +639,7 @@ fun TextInputFieldTwo(
         if (ime.isVisible && interactionSourceState.value) {
             scope.launch {
                 delay(300)
-                relocationRequester.bringIntoView()
+                bringIntoViewRequester.bringIntoView()
             }
         }
     }
@@ -650,7 +650,7 @@ fun TextInputFieldTwo(
     BasicTextField(
         modifier = modifier
             .focusRequester(focusRequester)
-            .relocationRequester(relocationRequester)
+            .bringIntoViewRequester(bringIntoViewRequester)
             .onFocusChanged {
                 isFocused.value = it.isFocused
             }
@@ -758,7 +758,7 @@ fun PasswordInputFieldTwo(
 ) {
     val focusManager = LocalFocusManager.current
     val passwordVisibility = remember { mutableStateOf(false) }
-    val relocationRequester = remember { RelocationRequester() }
+    val bringIntoViewRequester = remember { BringIntoViewRequester() }
     val interactionSource = remember { MutableInteractionSource() }
     val interactionSourceState = interactionSource.collectIsFocusedAsState()
     val scope = rememberCoroutineScope()
@@ -769,7 +769,7 @@ fun PasswordInputFieldTwo(
         if (ime.isVisible && interactionSourceState.value) {
             scope.launch {
                 delay(300)
-                relocationRequester.bringIntoView()
+                bringIntoViewRequester.bringIntoView()
             }
         }
     }
@@ -785,7 +785,7 @@ fun PasswordInputFieldTwo(
             .onFocusChanged {
                 isFocused.value = it.isFocused
             }
-            .relocationRequester(relocationRequester)
+            .bringIntoViewRequester(bringIntoViewRequester)
             .fillMaxWidth(),
         interactionSource = interactionSource,
         value = textFieldValue.value,

@@ -77,6 +77,7 @@ import org.imaginativeworld.whynotcompose.ui.screens.composition.switch.SwitchSc
 import org.imaginativeworld.whynotcompose.ui.screens.composition.textfield.TextFieldScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.index.HomeIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.splash.SplashScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.index.TutorialIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.index.UiIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.mapview.MapScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.mapview.MapViewDetailsScreen
@@ -169,6 +170,8 @@ sealed class UIsScreen(val route: String) {
 
 sealed class TutorialsScreen(val route: String) {
     object TutorialIndex : TutorialsScreen("tutorial/index")
+
+    object TutorialCounter : TutorialsScreen("tutorial/counter")
 }
 
 // ================================================================
@@ -581,6 +584,14 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
     navController: NavHostController,
 ) {
     composable(TutorialsScreen.TutorialIndex.route) {
+        TutorialIndexScreen(
+            navigate = { screen ->
+                navController.navigate(screen.route)
+            }
+        )
+    }
+
+    composable(TutorialsScreen.TutorialCounter.route) {
         BlankScreen()
     }
 }

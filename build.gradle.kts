@@ -28,7 +28,7 @@ subprojects {
             targetExclude("$buildDir/**/*.kt")
             targetExclude("bin/**/*.kt")
 
-            ktlint("0.42.1").userData(
+            ktlint("0.43.0").userData(
                 mapOf("disabled_rules" to "filename")
             )
             licenseHeaderFile(rootProject.file("spotless/copyright.kt"))

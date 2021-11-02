@@ -54,7 +54,10 @@ Feel free to request features or suggestions for improvements.
 - [ ] Tutorial: Select image for upload
 - [ ] Tutorial: Permission
 - [ ] Tutorial: ExoPlayer sample
-- [ ] Material You
+- [ ] Tutorial: Data fetch and LazyColumn
+- [ ] Tutorial: Navigation
+- [ ] Tutorial: Navigation with Data pass
+- [ ] Tutorial: Material You
 
 # Note
 
@@ -84,11 +87,16 @@ Replace `YOUR_API_KEY` with your API key.
 MAPS_API_KEY=YOUR_API_KEY
 ```
 
+## Other Interesting Repos
+
+- [Gurupreet/ComposeCookBook](https://github.com/Gurupreet/ComposeCookBook)
+- [spencergriffin/exoplayer-compose](https://github.com/spencergriffin/exoplayer-compose)
+- [godaddy/compose-color-picker](https://github.com/godaddy/compose-color-picker)
+
 ## Credits
 
 - [Android official compose samples](https://cs.android.com/androidx/platform/tools/dokka-devsite-plugin/+/master:testData/compose/samples/)
 - [Iconly icon](https://freebiesbug.com/figma-freebies/iconly/)
-- [spencergriffin/exoplayer-compose](https://github.com/spencergriffin/exoplayer-compose)
 - [Loripsum.net](https://loripsum.net)
 
 ## Licence

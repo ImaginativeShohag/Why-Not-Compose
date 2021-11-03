@@ -24,63 +24,69 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.ui.screens.tutorial.counter
+package org.imaginativeworld.whynotcompose.ui.screens.tutorial.animatedvisibility
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material.Button
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.Card
 import androidx.compose.material.Divider
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
+import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
 import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
 
 @Composable
-fun CounterScreen() {
-    CounterScreenSkeleton()
+fun AnimatedVisibilityScreen() {
+    AnimatedVisibilityScreenSkeleton()
 }
 
 @Preview
 @Composable
-fun CounterScreenSkeletonPreview() {
+fun AnimatedVisibilityScreenSkeletonPreview() {
     AppTheme {
-        CounterScreenSkeleton()
+        AnimatedVisibilityScreenSkeleton()
     }
 }
 
 @Preview
 @Composable
-fun CounterScreenSkeletonPreviewDark() {
+fun AnimatedVisibilityScreenSkeletonPreviewDark() {
     AppTheme(darkTheme = true) {
-        CounterScreenSkeleton()
+        AnimatedVisibilityScreenSkeleton()
     }
 }
 
 @Composable
-fun CounterScreenSkeleton() {
+fun AnimatedVisibilityScreenSkeleton() {
     Scaffold(
         Modifier
             .navigationBarsWithImePadding()
             .statusBarsPadding()
     ) {
         Column(Modifier.fillMaxSize()) {
-            AppComponent.Header("Counter")
+            AppComponent.Header("AnimatedVisibility")
 
             Divider()
 
@@ -92,39 +98,30 @@ fun CounterScreenSkeleton() {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
+                Card {
+                    var expanded by remember { mutableStateOf(false) }
 
-                val counter = remember { mutableStateOf(0) }
-
-                Text(
-                    modifier = Modifier.padding(top = 32.dp),
-                    text = "${counter.value}",
-                    fontSize = 64.sp,
-                )
-
-                Row(
-                    Modifier
-                        .padding(top = 32.dp)
-                        .fillMaxWidth()
-                ) {
-                    Button(
-                        modifier = Modifier
-                            .weight(1f),
-                        onClick = { counter.value += 1 }
+                    Column(
+                        Modifier
+                            .clickable { expanded = !expanded }
+                            .padding(16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        Text(
-                            text = "Increase",
+                        Image(
+                            modifier = Modifier
+                                .size(96.dp),
+                            painter = painterResource(id = R.drawable.ic_jetpack_compose_logo),
+                            contentDescription = null
                         )
-                    }
-
-                    Spacer(Modifier.width(16.dp))
-
-                    Button(
-                        modifier = Modifier.weight(1f),
-                        onClick = { counter.value -= 1 }
-                    ) {
-                        Text(
-                            text = "Decrease",
-                        )
+                        AnimatedVisibility(expanded) {
+                            Text(
+                                modifier = Modifier
+                                    .padding(top = 16.dp),
+                                text = "Jetpack\nCompose",
+                                style = MaterialTheme.typography.h2,
+                                textAlign = TextAlign.Center,
+                            )
+                        }
                     }
                 }
             }

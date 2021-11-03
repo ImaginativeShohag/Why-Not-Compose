@@ -38,8 +38,13 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.ui.screens.AppComponent.Header
@@ -97,7 +102,20 @@ fun TutorialIndexSkeleton(
                                 bottom = 8.dp
                             )
                             .fillMaxWidth(),
-                        text = item.name
+                        text = buildAnnotatedString {
+                            append(item.name)
+                            append(" ")
+
+                            withStyle(
+                                SpanStyle(
+                                    color = item.level.color,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 12.sp,
+                                )
+                            ) {
+                                append(item.level.name.uppercase())
+                            }
+                        }
                     )
                 }
             }

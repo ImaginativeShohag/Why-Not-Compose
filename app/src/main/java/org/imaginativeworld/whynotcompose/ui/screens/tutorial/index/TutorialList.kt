@@ -26,21 +26,51 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.index
 
+import androidx.compose.ui.graphics.Color
 import org.imaginativeworld.whynotcompose.ui.screens.TutorialsScreen
+import org.imaginativeworld.whynotcompose.ui.theme.TailwindCSSColor
+
+sealed class TutorialLevel(
+    val name: String,
+    val color: Color,
+) {
+    object Beginner : TutorialLevel(
+        name = "Beginner",
+        color = TailwindCSSColor.Green500,
+    )
+
+    object Intermediate : TutorialLevel(
+        name = "Intermediate",
+        color = TailwindCSSColor.Yellow500,
+    )
+
+    object Advanced : TutorialLevel(
+        name = "Advanced",
+        color = TailwindCSSColor.Red500,
+    )
+}
 
 data class Tutorial(
     val name: String,
     val route: TutorialsScreen,
+    val level: TutorialLevel,
 ) {
     companion object {
         val tutorialList = listOf(
             Tutorial(
                 name = "Counter",
                 route = TutorialsScreen.TutorialCounter,
+                level = TutorialLevel.Beginner,
             ),
             Tutorial(
                 name = "Counter with ViewModel",
                 route = TutorialsScreen.TutorialCounterWithViewModel,
+                level = TutorialLevel.Beginner,
+            ),
+            Tutorial(
+                name = "AnimatedVisibility",
+                route = TutorialsScreen.TutorialAnimatedVisibility,
+                level = TutorialLevel.Beginner,
             ),
         )
     }

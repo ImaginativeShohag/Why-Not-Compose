@@ -41,7 +41,9 @@ Feel free to request features or suggestions for improvements.
 
 ### Tutorials
 
-*Coming soon maybe...*
+- Counter (Beginner)
+- Counter with ViewModel (Beginner)
+- AnimatedVisibility (Beginner)
 
 # TODO
 
@@ -51,6 +53,7 @@ Feel free to request features or suggestions for improvements.
 - [x] UI: WebView: Swipe to Refresh in WebView
 - [x] Tutorial: Counter
 - [x] Tutorial: Counter with ViewModel
+- [x] Tutorial: AnimatedVisibility
 - [ ] Tutorial: Select image for upload
 - [ ] Tutorial: Permission
 - [ ] Tutorial: ExoPlayer sample

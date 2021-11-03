@@ -77,6 +77,7 @@ import org.imaginativeworld.whynotcompose.ui.screens.composition.switch.SwitchSc
 import org.imaginativeworld.whynotcompose.ui.screens.composition.textfield.TextFieldScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.index.HomeIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.splash.SplashScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.animatedvisibility.AnimatedVisibilityScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.counter.CounterScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.counterwithviewmodel.CounterWithVMScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.counterwithviewmodel.CounterWithVMViewModel
@@ -176,6 +177,7 @@ sealed class TutorialsScreen(val route: String) {
 
     object TutorialCounter : TutorialsScreen("tutorial/counter")
     object TutorialCounterWithViewModel : TutorialsScreen("tutorial/counter-with-view-model")
+    object TutorialAnimatedVisibility : TutorialsScreen("tutorial/animated-visibility")
 }
 
 // ================================================================
@@ -605,6 +607,10 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
         CounterWithVMScreen(
             viewModel = viewModel
         )
+    }
+
+    composable(TutorialsScreen.TutorialAnimatedVisibility.route) {
+        AnimatedVisibilityScreen()
     }
 }
 

@@ -38,6 +38,10 @@ data class Tutorial(
                 name = "Counter",
                 route = TutorialsScreen.TutorialCounter,
             ),
+            Tutorial(
+                name = "Counter with ViewModel",
+                route = TutorialsScreen.TutorialCounterWithViewModel,
+            ),
         )
     }
 }

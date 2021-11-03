@@ -49,8 +49,8 @@ Feel free to request features or suggestions for improvements.
 - [x] Spotless
 - [x] Composition: SwipeToDismiss
 - [x] UI: WebView: Swipe to Refresh in WebView
-- [ ] Tutorial: Counter
-- [ ] Tutorial: Counter with ViewModel
+- [x] Tutorial: Counter
+- [x] Tutorial: Counter with ViewModel
 - [ ] Tutorial: Select image for upload
 - [ ] Tutorial: Permission
 - [ ] Tutorial: ExoPlayer sample

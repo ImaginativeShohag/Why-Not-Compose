@@ -78,6 +78,8 @@ import org.imaginativeworld.whynotcompose.ui.screens.composition.textfield.TextF
 import org.imaginativeworld.whynotcompose.ui.screens.home.index.HomeIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.splash.SplashScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.counter.CounterScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.counterwithviewmodel.CounterWithVMScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.counterwithviewmodel.CounterWithVMViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.index.TutorialIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.index.UiIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.mapview.MapScreen
@@ -598,7 +600,11 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
     }
 
     composable(TutorialsScreen.TutorialCounterWithViewModel.route) {
-        CounterScreen()
+        val viewModel: CounterWithVMViewModel = hiltViewModel()
+
+        CounterWithVMScreen(
+            viewModel = viewModel
+        )
     }
 }
 

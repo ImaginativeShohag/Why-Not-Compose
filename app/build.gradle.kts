@@ -191,6 +191,8 @@ dependencies {
     implementation(Libs.Google.PlayService.maps)
     implementation(Libs.Google.Maps.core)
     implementation(Libs.Google.Maps.utils)
+
+    implementation(Libs.Airbnb.Lottie.compose)
 }
 
 kapt {

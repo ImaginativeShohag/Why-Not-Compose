@@ -1,0 +1,183 @@
+package org.imaginativeworld.whynotcompose.ui.screens.tutorial.lottie
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Card
+import androidx.compose.material.Divider
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.rememberLottieAnimatable
+import com.airbnb.lottie.compose.rememberLottieComposition
+import com.airbnb.lottie.compose.resetToBeginning
+import com.google.accompanist.insets.navigationBarsWithImePadding
+import com.google.accompanist.insets.statusBarsPadding
+import kotlinx.coroutines.launch
+import org.imaginativeworld.whynotcompose.R
+import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
+import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
+
+@Composable
+fun LottieScreen() {
+    LottieScreenSkeleton()
+}
+
+@Preview
+@Composable
+fun LottieScreenSkeletonPreview() {
+    AppTheme {
+        LottieScreenSkeleton()
+    }
+}
+
+@Preview
+@Composable
+fun LottieScreenSkeletonPreviewDark() {
+    AppTheme(darkTheme = true) {
+        LottieScreenSkeleton()
+    }
+}
+
+@Composable
+fun LottieScreenSkeleton() {
+    Scaffold(
+        Modifier
+            .navigationBarsWithImePadding()
+            .statusBarsPadding()
+    ) {
+        Column(
+            Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(start = 16.dp, end = 16.dp)
+        ) {
+            AppComponent.Header("Lottie")
+
+            // ----------------------------------------------------------------
+            // ----------------------------------------------------------------
+
+            Box {
+                Card(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(256.dp)
+                ) {
+
+                    Column(Modifier.fillMaxSize()) {
+                        val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.hubit_bicycle))
+
+                        LottieAnimation(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f),
+                            composition = composition,
+                            iterations = LottieConstants.IterateForever
+                        )
+
+                        // ----------------------------------------------------------------
+
+                        Divider()
+
+                        Spacer(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(46.dp)
+                        )
+                    }
+
+                }
+
+                Row(
+                    Modifier
+                        .align(Alignment.BottomCenter)
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+
+                    Text(
+                        modifier = Modifier
+                            .padding(start = 16.dp)
+                            .weight(1f),
+                        text = "Let's Ride a Bike",
+                        fontSize = 16.sp,
+                        color = MaterialTheme.colors.onSurface.copy(.75f)
+                    )
+
+                    Box(Modifier.size(48.dp)) {
+                        val scope = rememberCoroutineScope()
+                        var isFavorite by remember { mutableStateOf(false) }
+                        val compositionHeart by rememberLottieComposition(
+                            LottieCompositionSpec.RawRes(
+                                R.raw.heart
+                            )
+                        )
+                        val heartAnimatable = rememberLottieAnimatable()
+
+                        LottieAnimation(
+                            modifier = Modifier
+                                .requiredSize(96.dp)
+                                .clickable(
+                                    interactionSource = MutableInteractionSource(),
+                                    indication = null,
+                                    onClick = {
+                                        compositionHeart ?: return@clickable
+
+                                        scope.launch {
+                                            if (isFavorite) {
+                                                heartAnimatable.resetToBeginning()
+                                            } else {
+                                                heartAnimatable.animate(
+                                                    compositionHeart,
+                                                    continueFromPreviousAnimate = false,
+                                                )
+                                            }
+
+                                            isFavorite = !isFavorite
+                                        }
+                                    }
+                                ),
+                            composition = compositionHeart,
+                            progress = heartAnimatable.progress
+                        )
+                    }
+
+                }
+            }
+
+
+            // ----------------------------------------------------------------
+            // ----------------------------------------------------------------
+
+            AppComponent.BigSpacer()
+        }
+    }
+}
+

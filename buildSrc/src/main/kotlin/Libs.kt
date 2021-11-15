@@ -10,13 +10,19 @@ object Libs {
 
     const val material = "com.google.android.material:material:1.3.0"
 
-    const val gson = "com.google.code.gson:gson:2.8.8"
+    const val gson = "com.google.code.gson:gson:2.8.9"
 
     const val coil = "io.coil-kt:coil-compose:1.3.2"
 
     const val timber = "com.jakewharton.timber:timber:5.0.1"
 
     const val oopsNoInternet = "org.imaginativeworld.oopsnointernet:oopsnointernet:2.0.0"
+
+    object Airbnb {
+        object Lottie {
+            const val compose = "com.airbnb.android:lottie-compose:4.2.1"
+        }
+    }
 
     object Google {
         object PlayService {
@@ -32,7 +38,7 @@ object Libs {
     }
 
     object Accompanist {
-        private const val version = "0.21.0-beta"
+        private const val version = "0.21.2-beta"
 
         const val insets = "com.google.accompanist:accompanist-insets:$version"
         const val systemuicontroller =
@@ -59,7 +65,7 @@ object Libs {
     }
 
     object Hilt {
-        private const val version = "2.40"
+        private const val version = "2.40.1"
 
         const val androidGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:$version"
         const val core = "com.google.dagger:hilt-android:$version"
@@ -73,11 +79,11 @@ object Libs {
         const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
         object Activity {
-            const val activityCompose = "androidx.activity:activity-compose:1.1.0-beta01"
+            const val activityCompose = "androidx.activity:activity-compose:1.4.0"
         }
 
         object Compose {
-            const val version = "1.0.4"
+            const val version = "1.1.0-beta02"
 
             const val foundation = "androidx.compose.foundation:foundation:$version"
             const val layout = "androidx.compose.foundation:foundation-layout:$version"
@@ -122,7 +128,7 @@ object Libs {
         }
 
         object Navigation {
-            private const val version = "2.4.0-beta01"
+            private const val version = "2.4.0-beta02"
 
             const val fragment = "androidx.navigation:navigation-fragment-ktx:$version"
             const val uiKtx = "androidx.navigation:navigation-ui-ktx:$version"

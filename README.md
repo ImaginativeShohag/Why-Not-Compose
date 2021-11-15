@@ -44,6 +44,7 @@ Feel free to request features or suggestions for improvements.
 - Counter (Beginner)
 - Counter with ViewModel (Beginner)
 - AnimatedVisibility (Beginner)
+- Lottie (Beginner)
 
 # TODO
 

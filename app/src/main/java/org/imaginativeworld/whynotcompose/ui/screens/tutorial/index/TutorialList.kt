@@ -72,6 +72,11 @@ data class Tutorial(
                 route = TutorialsScreen.TutorialAnimatedVisibility,
                 level = TutorialLevel.Beginner,
             ),
+            Tutorial(
+                name = "Lottie",
+                route = TutorialsScreen.TutorialLottie,
+                level = TutorialLevel.Beginner,
+            ),
         )
     }
 }

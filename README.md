@@ -16,13 +16,11 @@ Feel free to request features or suggestions for improvements.
 
 ## Screenshots
 
-![Preview](images/animated-text-and-bubbles.gif)
-
 ### Animations
 
-| ![Preview](images/animated-text-and-bubbles.png) | ![Preview](images/emudi.png) | ![Preview](images/running-car.png) |
+| ![Preview](images/animated-text-and-bubbles.gif) | ![Preview](images/the-story.gif) | ![Preview](images/running-car.png) |
 | :------: | :------: | :------: |
-| The Story |  |  |
+| ![Preview](images/emudi.png) |  |  |
 
 ### Compositions
 
@@ -31,8 +29,8 @@ Feel free to request features or suggestions for improvements.
 | ![Preview](images/check-box.png) | ![Preview](images/drop-down.png) | ![Preview](images/grid.png) |
 | ![Preview](images/list-item.png) | ![Preview](images/lists.png) | ![Preview](images/loading-indicator.png) |
 | ![Preview](images/radio-button.png) | ![Preview](images/scaffold.png) | ![Preview](images/snackbar.png) |
-| ![Preview](images/switch.png) | ![Preview](images/text-fields.png) | SwipeRefresh |
-| SwipeToDismiss |  |  |
+| ![Preview](images/switch.png) | ![Preview](images/text-fields.png) | ![Preview](images/swipe-refresh.gif) |
+| ![Preview](images/swipe-to-dismiss.gif) |  |  |
 
 ### UIs
 
@@ -46,15 +44,11 @@ Feel free to request features or suggestions for improvements.
 - AnimatedVisibility (Beginner)
 - Lottie (Beginner)
 
+| ![Preview](images/counter.gif) | ![Preview](images/animated-visibility.gif) | ![Preview](images/lottie.gif) |
+| :------: | :------: | :------: |
+
 # TODO
 
-- [x] Gradle Kotlin DSL
-- [x] Spotless
-- [x] Composition: SwipeToDismiss
-- [x] UI: WebView: Swipe to Refresh in WebView
-- [x] Tutorial: Counter
-- [x] Tutorial: Counter with ViewModel
-- [x] Tutorial: AnimatedVisibility
 - [ ] Tutorial: Select image for upload
 - [ ] Tutorial: Permission
 - [ ] Tutorial: ExoPlayer sample
@@ -62,6 +56,7 @@ Feel free to request features or suggestions for improvements.
 - [ ] Tutorial: Navigation
 - [ ] Tutorial: Navigation with Data pass
 - [ ] Tutorial: Material You
+- [ ] Tutorial: OneSignal with broadcast at notification
 
 # Note
 

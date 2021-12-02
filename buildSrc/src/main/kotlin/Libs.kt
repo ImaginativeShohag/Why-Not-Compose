@@ -20,7 +20,7 @@ object Libs {
 
     object Airbnb {
         object Lottie {
-            const val compose = "com.airbnb.android:lottie-compose:4.2.1"
+            const val compose = "com.airbnb.android:lottie-compose:4.2.2"
         }
     }
 
@@ -30,7 +30,7 @@ object Libs {
         }
 
         object Maps {
-            private const val version = "3.2.0"
+            private const val version = "3.2.1"
 
             const val core = "com.google.maps.android:maps-ktx:$version"
             const val utils = "com.google.maps.android:maps-utils-ktx:$version"
@@ -38,7 +38,7 @@ object Libs {
     }
 
     object Accompanist {
-        private const val version = "0.21.2-beta"
+        private const val version = "0.21.3-beta"
 
         const val insets = "com.google.accompanist:accompanist-insets:$version"
         const val systemuicontroller =
@@ -65,16 +65,16 @@ object Libs {
     }
 
     object Hilt {
-        private const val version = "2.40.1"
+        private const val version = "2.40.4"
 
         const val androidGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:$version"
         const val core = "com.google.dagger:hilt-android:$version"
         const val compiler = "com.google.dagger:hilt-compiler:$version"
-        const val navigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0-alpha03"
+        const val navigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0-beta01"
     }
 
     object AndroidX {
-        const val appcompat = "androidx.appcompat:appcompat:1.3.0"
+        const val appcompat = "androidx.appcompat:appcompat:1.4.0"
         const val coreKtx = "androidx.core:core-ktx:1.7.0"
         const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
@@ -83,7 +83,7 @@ object Libs {
         }
 
         object Compose {
-            const val version = "1.1.0-beta02"
+            const val version = "1.1.0-beta03"
 
             const val foundation = "androidx.compose.foundation:foundation:$version"
             const val layout = "androidx.compose.foundation:foundation-layout:$version"
@@ -111,7 +111,7 @@ object Libs {
         }
 
         object ConstraintLayout {
-            private const val version = "1.0.0-rc01"
+            private const val version = "1.0.0-rc02"
 
             const val compose = "androidx.constraintlayout:constraintlayout-compose:$version"
         }
@@ -136,7 +136,7 @@ object Libs {
         }
 
         object Paging {
-            private const val version = "3.0.1"
+            private const val version = "3.1.0"
             private const val composeVersion = "1.0.0-alpha14"
 
             const val runtime = "androidx.paging:paging-runtime-ktx:$version"

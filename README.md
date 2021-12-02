@@ -18,9 +18,9 @@ Feel free to request features or suggestions for improvements.
 
 ### Animations
 
-| ![Preview](images/animated-text-and-bubbles.gif) | ![Preview](images/the-story.gif) | ![Preview](images/running-car.png) |
+| <img src="images/animated-text-and-bubbles.gif" style="width:320px"> | <img src="images/the-story.gif" style="width:320px"> | <img src="images/running-car.png" style="width:320px"> |
 | :------: | :------: | :------: |
-| ![Preview](images/emudi.png) |  |  |
+| <img src="images/emudi.png" style="width:320px"> |  |  |
 
 ### Compositions
 

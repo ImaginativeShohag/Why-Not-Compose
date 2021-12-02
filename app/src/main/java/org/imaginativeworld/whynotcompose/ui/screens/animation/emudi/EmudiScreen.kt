@@ -26,10 +26,18 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.animation.emudi
 
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -337,7 +345,6 @@ fun EmudiScreenSkeleton(
                 colorFilter = ColorFilter.tint(MaterialTheme.colors.onBackground.copy(alpha = .045f))
             )
 
-
             Box( // Yellow
                 Modifier
                     .padding(end = 151.dp, bottom = 54.dp)
@@ -413,7 +420,6 @@ fun EmudiScreenSkeleton(
                 contentDescription = "Emudi",
                 contentScale = ContentScale.Fit,
             )
-
         }
     }
 }

@@ -25,4 +25,5 @@
   -->
 <resources>
     <item name="map" type="id" />
+    <item name="webView" type="id" />
 </resources>

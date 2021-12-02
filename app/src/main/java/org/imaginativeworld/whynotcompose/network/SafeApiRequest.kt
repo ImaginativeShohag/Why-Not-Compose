@@ -73,7 +73,6 @@ object SafeApiRequest {
 
                 throw ApiException(message.toString())
             }
-
         } catch (e: CancellationException) {
             e.printStackTrace()
 

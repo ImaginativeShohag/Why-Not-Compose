@@ -100,9 +100,7 @@ fun UiIndexSkeleton(
                         text = item.name
                     )
                 }
-
             }
         }
-
     }
 }

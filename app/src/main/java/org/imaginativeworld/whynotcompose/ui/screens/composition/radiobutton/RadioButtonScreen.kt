@@ -26,10 +26,19 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.composition.radiobutton
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
-import androidx.compose.material.*
+import androidx.compose.material.Divider
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.RadioButton
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,7 +50,6 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
-import org.imaginativeworld.whynotcompose.ui.screens.composition.checkbox.CheckBoxScreenSkeleton
 import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
 
 private val ELEMENT_HEIGHT = 56.dp
@@ -55,7 +63,7 @@ fun RadioButtonScreen() {
 @Composable
 fun RadioButtonScreenSkeletonPreview() {
     AppTheme {
-        CheckBoxScreenSkeleton()
+        RadioButtonScreenSkeleton()
     }
 }
 
@@ -87,7 +95,6 @@ fun RadioButtonScreenSkeleton() {
             // ----------------------------------------------------------------
 
             AppComponent.BigSpacer()
-
         }
     }
 }
@@ -105,7 +112,6 @@ fun RadioGroupSample() {
                 selectedOption = selectedOption,
                 onOptionSelected = onOptionSelected
             )
-
         }
     }
 }

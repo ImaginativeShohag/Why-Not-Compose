@@ -100,9 +100,7 @@ fun ListIndexSkeleton(
                         text = item.name
                     )
                 }
-
             }
         }
-
     }
 }

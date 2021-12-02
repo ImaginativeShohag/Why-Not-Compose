@@ -117,7 +117,6 @@ fun ListColumnScreenSkeleton() {
                     )
                 }
             }
-
         }
     }
 }

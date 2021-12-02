@@ -43,24 +43,46 @@ import org.imaginativeworld.whynotcompose.ui.screens.animation.composeone.Compos
 import org.imaginativeworld.whynotcompose.ui.screens.animation.emudi.EmudiScreen
 import org.imaginativeworld.whynotcompose.ui.screens.animation.index.AnimationIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.animation.runningcar.RunningCarScreen
+import org.imaginativeworld.whynotcompose.ui.screens.animation.thestory.TheStoryScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.appbar.AppBarScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.badge.BadgeScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.button.ButtonScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.card.CardScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.checkbox.CheckBoxScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.dropdown.DropDownMenuScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.floatingactionbutton.FloatingActionButtonScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.index.CompositionIndexScreen
-import org.imaginativeworld.whynotcompose.ui.screens.composition.list.*
+import org.imaginativeworld.whynotcompose.ui.screens.composition.list.LazyColumnIndexScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.list.LazyRowScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.list.LazyVerticalGridScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.list.ListColumnScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.list.ListIndexScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.list.ListRowScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.list.lazycolumn.LazyColumnSampleOneScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.list.lazycolumn.LazyColumnSampleTwoScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.listitem.ListItemScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.loadingindicator.LoadingIndicatorScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.radiobutton.RadioButtonScreen
-import org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold.*
+import org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold.ScaffoldIndexScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold.ScaffoldWithBottomBarAndCutoutScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold.ScaffoldWithCoroutinesSnackbarScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold.ScaffoldWithCustomSnackbarScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold.ScaffoldWithSimpleSnackbarScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold.SimpleScaffoldWithTopBarScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.slider.SliderScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.snackbar.SnackbarScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.swiperefresh.SwipeRefreshScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.swipetodismiss.SwipeToDismissScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.switch.SwitchScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.textfield.TextFieldScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.index.HomeIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.splash.SplashScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.animatedvisibility.AnimatedVisibilityScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.counter.CounterScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.counterwithviewmodel.CounterWithVMScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.counterwithviewmodel.CounterWithVMViewModel
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.index.TutorialIndexScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.lottie.LottieScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.index.UiIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.mapview.MapScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.mapview.MapViewDetailsScreen
@@ -91,6 +113,7 @@ sealed class AnimationsScreen(val route: String) {
     object AnimationComposeOne : AnimationsScreen("animation/composeone")
     object AnimationEmudi : AnimationsScreen("animation/emudi")
     object AnimationRunningCar : AnimationsScreen("animation/runningcar")
+    object AnimationTheStory : AnimationsScreen("animation/thestory")
 }
 
 sealed class CompositionsScreen(val route: String) {
@@ -129,6 +152,11 @@ sealed class CompositionsScreen(val route: String) {
     object CompositionSnackbar : CompositionsScreen("composition/snackbar")
     object CompositionSwitch : CompositionsScreen("composition/switch")
     object CompositionTextField : CompositionsScreen("composition/textfield")
+    object CompositionSwipeToDismiss : CompositionsScreen("composition/swipetodismiss")
+    object CompositionSwipeRefresh : CompositionsScreen("composition/swiperefresh")
+    object CompositionBadge : CompositionsScreen("composition/badge")
+    object CompositionFloatingActionButton : CompositionsScreen("composition/fab")
+    object CompositionSlider : CompositionsScreen("composition/slider")
 }
 
 sealed class UIsScreen(val route: String) {
@@ -147,6 +175,11 @@ sealed class UIsScreen(val route: String) {
 
 sealed class TutorialsScreen(val route: String) {
     object TutorialIndex : TutorialsScreen("tutorial/index")
+
+    object TutorialCounter : TutorialsScreen("tutorial/counter")
+    object TutorialCounterWithViewModel : TutorialsScreen("tutorial/counter-with-view-model")
+    object TutorialAnimatedVisibility : TutorialsScreen("tutorial/animated-visibility")
+    object TutorialLottie : TutorialsScreen("tutorial/lottie")
 }
 
 // ================================================================
@@ -228,6 +261,10 @@ private fun NavGraphBuilder.addAnimationScreens(
 
         composable(AnimationsScreen.AnimationRunningCar.route) {
             RunningCarScreen()
+        }
+
+        composable(AnimationsScreen.AnimationTheStory.route) {
+            TheStoryScreen()
         }
     }
 }
@@ -363,6 +400,26 @@ private fun NavGraphBuilder.addCompositionScreens(
 
         composable(CompositionsScreen.CompositionTextField.route) {
             TextFieldScreen()
+        }
+
+        composable(CompositionsScreen.CompositionSwipeToDismiss.route) {
+            SwipeToDismissScreen()
+        }
+
+        composable(CompositionsScreen.CompositionSwipeRefresh.route) {
+            SwipeRefreshScreen()
+        }
+
+        composable(CompositionsScreen.CompositionBadge.route) {
+            BadgeScreen()
+        }
+
+        composable(CompositionsScreen.CompositionFloatingActionButton.route) {
+            FloatingActionButtonScreen()
+        }
+
+        composable(CompositionsScreen.CompositionSlider.route) {
+            SliderScreen()
         }
     }
 }
@@ -535,7 +592,31 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
     navController: NavHostController,
 ) {
     composable(TutorialsScreen.TutorialIndex.route) {
-        BlankScreen()
+        TutorialIndexScreen(
+            navigate = { screen ->
+                navController.navigate(screen.route)
+            }
+        )
+    }
+
+    composable(TutorialsScreen.TutorialCounter.route) {
+        CounterScreen()
+    }
+
+    composable(TutorialsScreen.TutorialCounterWithViewModel.route) {
+        val viewModel: CounterWithVMViewModel = hiltViewModel()
+
+        CounterWithVMScreen(
+            viewModel = viewModel
+        )
+    }
+
+    composable(TutorialsScreen.TutorialAnimatedVisibility.route) {
+        AnimatedVisibilityScreen()
+    }
+
+    composable(TutorialsScreen.TutorialLottie.route) {
+        LottieScreen()
     }
 }
 

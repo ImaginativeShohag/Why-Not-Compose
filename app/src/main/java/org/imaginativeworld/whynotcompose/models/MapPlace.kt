@@ -27,7 +27,7 @@
 package org.imaginativeworld.whynotcompose.models
 
 import androidx.annotation.Keep
-import com.google.android.libraries.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLng
 import com.squareup.moshi.JsonClass
 
 @Keep

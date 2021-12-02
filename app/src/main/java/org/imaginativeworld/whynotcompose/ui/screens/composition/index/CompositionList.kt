@@ -39,6 +39,10 @@ data class Composition(
                 route = CompositionsScreen.CompositionAppBar,
             ),
             Composition(
+                name = "Badge",
+                route = CompositionsScreen.CompositionBadge,
+            ),
+            Composition(
                 name = "Button",
                 route = CompositionsScreen.CompositionButton,
             ),
@@ -57,6 +61,10 @@ data class Composition(
             Composition(
                 name = "DropDown Menu",
                 route = CompositionsScreen.CompositionDropDownMenu,
+            ),
+            Composition(
+                name = "FloatingActionButton",
+                route = CompositionsScreen.CompositionFloatingActionButton,
             ),
             Composition(
                 name = "List",
@@ -79,8 +87,20 @@ data class Composition(
                 route = CompositionsScreen.CompositionScaffoldIndex,
             ),
             Composition(
+                name = "Slider",
+                route = CompositionsScreen.CompositionSlider,
+            ),
+            Composition(
                 name = "Snackbar",
                 route = CompositionsScreen.CompositionSnackbar,
+            ),
+            Composition(
+                name = "SwipeRefresh",
+                route = CompositionsScreen.CompositionSwipeRefresh,
+            ),
+            Composition(
+                name = "SwipeToDismiss",
+                route = CompositionsScreen.CompositionSwipeToDismiss,
             ),
             Composition(
                 name = "Switch",

@@ -26,6 +26,7 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.ui.mapview
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -33,13 +34,33 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.runtime.*
+import androidx.compose.material.rememberScaffoldState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -54,9 +75,10 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
-import com.google.android.libraries.maps.GoogleMap
-import com.google.android.libraries.maps.MapView
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
 import com.google.maps.android.ktx.awaitMap
+import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.models.MapPlace
 import org.imaginativeworld.whynotcompose.ui.compositions.CustomSnackbarHost
@@ -69,6 +91,7 @@ import org.imaginativeworld.whynotcompose.utils.composeutils.selectMarker
 // TODO: add location permission
 // TODO: add current location request
 
+@SuppressLint("PotentialBehaviorOverride")
 @Composable
 fun MapScreen(
     viewModel: MapViewModel,
@@ -76,6 +99,8 @@ fun MapScreen(
     gotoDetailsScreen: (MapPlace) -> Unit,
 ) {
     val context = LocalContext.current
+
+    val scope = rememberCoroutineScope()
 
     val state by viewModel.state.collectAsState()
 
@@ -91,6 +116,9 @@ fun MapScreen(
         showLoadingView = state.loading,
         showEmptyView = state.empty && !state.loading,
         goBack = goBack,
+        onRetryClicked = {
+            viewModel.loadMapPlaces(context)
+        },
         mapView = { modifier ->
             MapPlaceMapView(
                 modifier = modifier,
@@ -141,7 +169,9 @@ fun MapScreen(
 
                             viewModel.saveMapState()
 
-                            gotoDetailsScreen(place)
+                            scope.launch {
+                                gotoDetailsScreen(place)
+                            }
                         }
                     }
                 }
@@ -188,6 +218,7 @@ fun MapSkeleton(
     showLoadingView: Boolean = true,
     showEmptyView: Boolean = true,
     goBack: () -> Unit = {},
+    onRetryClicked: () -> Unit = {},
 ) {
     val scaffoldState = rememberScaffoldState()
 
@@ -209,6 +240,7 @@ fun MapSkeleton(
                 .padding(top = 56.dp)
                 .fillMaxSize(),
             show = showEmptyView,
+            onRetryClicked = onRetryClicked,
         )
 
         Column(Modifier.fillMaxSize()) {
@@ -308,6 +340,7 @@ private fun MapLoadingView(
 fun MapEmptyView(
     modifier: Modifier = Modifier,
     show: Boolean = true,
+    onRetryClicked: () -> Unit,
 ) {
     AnimatedVisibility(
         visible = show,
@@ -352,11 +385,20 @@ fun MapEmptyView(
 
                 Text(
                     modifier = Modifier.padding(top = 4.dp),
-                    text = "Come back again later.",
+                    text = "Please try again.",
                     fontSize = 16.sp,
                     color = MaterialTheme.colors.onSurface.copy(alpha = .7f),
                     textAlign = TextAlign.Center
                 )
+
+                TextButton(
+                    modifier = Modifier.padding(top = 8.dp),
+                    onClick = {
+                        onRetryClicked()
+                    },
+                ) {
+                    Text(text = "Retry")
+                }
             }
         }
     }

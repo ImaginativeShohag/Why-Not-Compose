@@ -46,6 +46,10 @@ data class Animation(
                 name = "Running Car",
                 route = AnimationsScreen.AnimationRunningCar,
             ),
+            Animation(
+                name = "The Story",
+                route = AnimationsScreen.AnimationTheStory,
+            ),
         )
     }
 }

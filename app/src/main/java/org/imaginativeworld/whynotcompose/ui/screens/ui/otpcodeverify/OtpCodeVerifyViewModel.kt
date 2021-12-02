@@ -31,7 +31,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.models.Event
 import javax.inject.Inject
@@ -69,7 +73,6 @@ class OtpCodeVerifyViewModel @Inject constructor() : ViewModel() {
                     message = showMessage,
                     success = success,
                 )
-
             }.catch { throwable ->
                 // TODO: emit a UI error here. For now we'll just rethrow
                 throw throwable
@@ -101,7 +104,6 @@ class OtpCodeVerifyViewModel @Inject constructor() : ViewModel() {
         }
 
         _eventShowLoading.value = false
-
     }
 
     // ----------------------------------------------------------------

@@ -36,9 +36,25 @@ package org.imaginativeworld.whynotcompose.models
  */
 data class Event<out T>(
     val value: T,
-    private val id: Int = ++lastId,
+    private val id: Int = if (lastId == Int.MAX_VALUE) {
+        lastId = Int.MIN_VALUE
+        Int.MAX_VALUE
+    } else lastId++,
 ) {
     companion object {
-        private var lastId = 0
+        private var lastId = Int.MAX_VALUE
+    }
+
+    private var valueSent = false
+
+    /**
+     * Get the [value] only once.
+     */
+    fun getValueOnce(): T? {
+        return if (!valueSent) {
+            valueSent = true
+
+            value
+        } else null
     }
 }

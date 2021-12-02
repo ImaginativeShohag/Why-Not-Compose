@@ -112,9 +112,7 @@ fun LazyColumnIndexScreenSkeleton(
                         text = item.name
                     )
                 }
-
             }
         }
-
     }
 }

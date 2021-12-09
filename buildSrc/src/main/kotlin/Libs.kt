@@ -26,11 +26,11 @@ object Libs {
 
     object Google {
         object PlayService {
-            const val maps = "com.google.android.gms:play-services-maps:18.0.0"
+            const val maps = "com.google.android.gms:play-services-maps:18.0.1"
         }
 
         object Maps {
-            private const val version = "3.2.1"
+            private const val version = "3.3.0"
 
             const val core = "com.google.maps.android:maps-ktx:$version"
             const val utils = "com.google.maps.android:maps-utils-ktx:$version"
@@ -38,7 +38,7 @@ object Libs {
     }
 
     object Accompanist {
-        private const val version = "0.21.3-beta"
+        private const val version = "0.21.4-beta"
 
         const val insets = "com.google.accompanist:accompanist-insets:$version"
         const val systemuicontroller =
@@ -49,7 +49,7 @@ object Libs {
     }
 
     object Kotlin {
-        private const val version = "1.5.31"
+        private const val version = "1.6.0"
 
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$version"
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
@@ -65,7 +65,7 @@ object Libs {
     }
 
     object Hilt {
-        private const val version = "2.40.4"
+        private const val version = "2.40.5"
 
         const val androidGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:$version"
         const val core = "com.google.dagger:hilt-android:$version"
@@ -83,7 +83,7 @@ object Libs {
         }
 
         object Compose {
-            const val version = "1.1.0-beta03"
+            const val version = "1.1.0-beta04"
 
             const val foundation = "androidx.compose.foundation:foundation:$version"
             const val layout = "androidx.compose.foundation:foundation-layout:$version"
@@ -178,7 +178,7 @@ object Libs {
         const val okhttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:4.9.1"
 
         object Moshi {
-            private const val version = "1.12.0"
+            private const val version = "1.13.0"
 
             const val core = "com.squareup.moshi:moshi-kotlin:$version"
             const val codegen = "com.squareup.moshi:moshi-kotlin-codegen:$version"

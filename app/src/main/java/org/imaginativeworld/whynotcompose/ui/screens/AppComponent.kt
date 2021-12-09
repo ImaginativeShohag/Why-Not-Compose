@@ -46,10 +46,11 @@ object AppComponent {
 
     @Composable
     fun Header(
-        text: String
+        text: String,
+        modifier: Modifier = Modifier,
     ) {
         Text(
-            modifier = Modifier
+            modifier = modifier
                 .padding(
                     start = 16.dp,
                     top = 32.dp,
@@ -65,10 +66,11 @@ object AppComponent {
 
     @Composable
     fun SubHeader(
-        text: String
+        text: String,
+        modifier: Modifier = Modifier,
     ) {
         Text(
-            modifier = Modifier
+            modifier = modifier
                 .padding(
                     start = 16.dp,
                     top = 16.dp,
@@ -83,18 +85,22 @@ object AppComponent {
     }
 
     @Composable
-    fun MediumSpacer() {
+    fun MediumSpacer(
+        modifier: Modifier = Modifier,
+    ) {
         Spacer(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .height(16.dp)
         )
     }
 
     @Composable
-    fun BigSpacer() {
+    fun BigSpacer(
+        modifier: Modifier = Modifier,
+    ) {
         Spacer(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .height(32.dp)
         )
@@ -102,10 +108,11 @@ object AppComponent {
 
     @Composable
     fun CustomListItem(
-        text: String
+        text: String,
+        modifier: Modifier = Modifier,
     ) {
         Text(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .padding(16.dp, 4.dp)
                 .shadow(2.dp, RoundedCornerShape(4.dp))

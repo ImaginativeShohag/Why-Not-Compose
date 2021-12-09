@@ -88,6 +88,7 @@ MAPS_API_KEY=YOUR_API_KEY
 
 ## Other Interesting Repos
 
+- [Compose Material Catalog](https://github.com/androidx/androidx/tree/androidx-main/compose/integration-tests/material-catalog)
 - [Gurupreet/ComposeCookBook](https://github.com/Gurupreet/ComposeCookBook)
 - [spencergriffin/exoplayer-compose](https://github.com/spencergriffin/exoplayer-compose)
 - [godaddy/compose-color-picker](https://github.com/godaddy/compose-color-picker)

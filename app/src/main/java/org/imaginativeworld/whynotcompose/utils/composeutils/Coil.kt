@@ -26,13 +26,23 @@
 
 package org.imaginativeworld.whynotcompose.utils.composeutils
 
+import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
 import coil.compose.rememberImagePainter
 
 @Composable
-fun rememberImagePainterFade(data: Any?) = rememberImagePainter(
+fun rememberImagePainter(
+    data: Any?,
+    @DrawableRes placeholder: Int? = null,
+    crossFade: Boolean = true,
+) = rememberImagePainter(
     data = data,
     builder = {
-        crossfade(true)
+        crossfade(crossFade)
+        placeholder?.let {
+            this.placeholder(placeholder)
+            this.error(placeholder)
+            this.fallback(placeholder)
+        }
     }
 )

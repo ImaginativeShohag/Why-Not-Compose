@@ -1,5 +1,5 @@
 object Libs {
-    const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.3"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.4"
 
     const val secretsGradlePlugin =
         "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.0"
@@ -12,11 +12,20 @@ object Libs {
 
     const val gson = "com.google.code.gson:gson:2.8.9"
 
-    const val coil = "io.coil-kt:coil-compose:1.3.2"
-
     const val timber = "com.jakewharton.timber:timber:5.0.1"
 
     const val oopsNoInternet = "org.imaginativeworld.oopsnointernet:oopsnointernet:2.0.0"
+
+    object Coil {
+        private const val version = "1.4.0"
+
+        const val compose = "io.coil-kt:coil-compose:$version"
+        const val svg = "io.coil-kt:coil-svg:$version"
+    }
+
+    object Yalantis {
+        const val uCrop = "com.github.yalantis:ucrop:2.2.7"
+    }
 
     object Airbnb {
         object Lottie {

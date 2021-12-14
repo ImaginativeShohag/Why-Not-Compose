@@ -77,6 +77,16 @@ data class Tutorial(
                 route = TutorialsScreen.TutorialLottie,
                 level = TutorialLevel.Beginner,
             ),
+            Tutorial(
+                name = "Select Image and Crop for Upload",
+                route = TutorialsScreen.TutorialSelectImageAndCrop,
+                level = TutorialLevel.Intermediate,
+            ),
+            Tutorial(
+                name = "Capture Image and Crop for Upload",
+                route = TutorialsScreen.TutorialCaptureImageAndCrop,
+                level = TutorialLevel.Intermediate,
+            ),
         )
     }
 }

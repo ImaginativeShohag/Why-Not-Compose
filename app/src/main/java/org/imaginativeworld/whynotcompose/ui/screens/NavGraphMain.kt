@@ -83,6 +83,8 @@ import org.imaginativeworld.whynotcompose.ui.screens.tutorial.counterwithviewmod
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.counterwithviewmodel.CounterWithVMViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.index.TutorialIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.lottie.LottieScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.selectimageandcrop.SelectImageAndCropScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.selectimageandcrop.SelectImageAndCropViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.ui.index.UiIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.mapview.MapScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.mapview.MapViewDetailsScreen
@@ -180,6 +182,8 @@ sealed class TutorialsScreen(val route: String) {
     object TutorialCounterWithViewModel : TutorialsScreen("tutorial/counter-with-view-model")
     object TutorialAnimatedVisibility : TutorialsScreen("tutorial/animated-visibility")
     object TutorialLottie : TutorialsScreen("tutorial/lottie")
+    object TutorialSelectImageAndCrop : TutorialsScreen("tutorial/select-image-and-crop")
+    object TutorialCaptureImageAndCrop : TutorialsScreen("tutorial/capture-image-and-crop")
 }
 
 // ================================================================
@@ -617,6 +621,18 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
 
     composable(TutorialsScreen.TutorialLottie.route) {
         LottieScreen()
+    }
+
+    composable(TutorialsScreen.TutorialSelectImageAndCrop.route) {
+        val viewModel: SelectImageAndCropViewModel = hiltViewModel()
+
+        SelectImageAndCropScreen(
+            viewModel = viewModel
+        )
+    }
+
+    composable(TutorialsScreen.TutorialCaptureImageAndCrop.route) {
+        BlankScreen()
     }
 }
 

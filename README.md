@@ -52,7 +52,8 @@ Feel free to request features or suggestions for improvements.
 - [ ] Composition: Bottom Navigation
 - [ ] Composition: Dialog
 - [ ] Composition: Text
-- [ ] Tutorial: Select image for upload
+- [x] Tutorial: Select image and crop for upload
+- [ ] Tutorial: Capture image and crop for upload
 - [ ] Tutorial: Permission
 - [ ] Tutorial: ExoPlayer sample
 - [ ] Tutorial: Data fetch and LazyColumn

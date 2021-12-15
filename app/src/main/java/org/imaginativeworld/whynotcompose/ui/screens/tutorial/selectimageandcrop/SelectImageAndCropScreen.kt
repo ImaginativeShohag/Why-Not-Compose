@@ -78,10 +78,10 @@ fun SelectImageAndCropScreen(
     val uCropLauncher = rememberLauncherForActivityResult(SquireCropImage()) { uri ->
         imageUri = uri
 
-        uri?.let {
+        uri?.apply {
             viewModel.uploadPhoto(
                 context = context,
-                imageUri = uri,
+                imageUri = this,
             )
         }
     }
@@ -167,7 +167,7 @@ fun SelectImageAndCropScreenSkeleton(
                     .align(Alignment.CenterHorizontally)
                     .padding(start = 32.dp, top = 32.dp, end = 32.dp)
                     .aspectRatio(1f)
-                    .clip(RoundedCornerShape(8.dp)),
+                    .clip(RoundedCornerShape(16.dp)),
                 painter = rememberImagePainter(
                     data = photoPath,
                     placeholder = R.drawable.default_placeholder

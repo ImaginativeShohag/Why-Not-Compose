@@ -53,10 +53,10 @@ class SelectImageAndCropViewModel @Inject constructor() : ViewModel() {
 
         // Sample code for Retrofit:
 
-        var imagePart: MultipartBody.Part? = imagePath.let { picturePath ->
-            val pictureFile = File(picturePath)
+        var imagePart: MultipartBody.Part? = imagePath.let { path ->
+            val pictureFile = File(path)
             val requestBody: RequestBody =
-                pictureFile.asRequestBody(picturePath.toMediaTypeOrNull())
+                pictureFile.asRequestBody(path.toMediaTypeOrNull())
 
             MultipartBody.Part.createFormData(
                 "photo",
@@ -70,7 +70,7 @@ class SelectImageAndCropViewModel @Inject constructor() : ViewModel() {
         // Example request:
 
         // @Multipart
-        // @POST("v1/update_photo")
+        // @POST("api/v1/update_photo")
         // suspend fun updateProfilePhoto(
         //     @Header("Authorization") token: String?,
         //     @Part image: MultipartBody.Part?

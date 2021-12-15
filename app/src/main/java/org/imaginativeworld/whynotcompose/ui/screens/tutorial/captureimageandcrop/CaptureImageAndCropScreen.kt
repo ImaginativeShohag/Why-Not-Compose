@@ -24,9 +24,8 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.ui.screens.tutorial.selectimageandcrop
+package org.imaginativeworld.whynotcompose.ui.screens.tutorial.captureimageandcrop
 
-import android.Manifest
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -61,13 +60,15 @@ import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
 import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
 import org.imaginativeworld.whynotcompose.utils.SquireCropImage
 import org.imaginativeworld.whynotcompose.utils.composeutils.rememberImagePainter
+import org.imaginativeworld.whynotcompose.utils.extensions.createImageFile
+import org.imaginativeworld.whynotcompose.utils.extensions.getUriForFile
 import org.imaginativeworld.whynotcompose.utils.extensions.toast
 import java.io.File
 import java.util.Date
 
 @Composable
-fun SelectImageAndCropScreen(
-    viewModel: SelectImageAndCropViewModel
+fun CaptureImageAndCropScreen(
+    viewModel: CaptureImageAndCropViewModel
 ) {
     val context = LocalContext.current
 
@@ -86,60 +87,56 @@ fun SelectImageAndCropScreen(
         }
     }
 
-    val imageSelectorLauncher =
-        rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-            if (uri != null) {
-                uCropLauncher.launch(
-                    Pair(
-                        first = uri,
-                        second = Uri.fromFile(
-                            File(context.cacheDir, "temp_image_file_${Date().time}")
+    val cameraLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+            if (success) {
+                imageUri?.let { uri ->
+                    uCropLauncher.launch(
+                        Pair(
+                            first = uri,
+                            second = Uri.fromFile(
+                                File(context.cacheDir, "temp_image_file_${Date().time}")
+                            )
                         )
                     )
-                )
+                }
             } else {
-                context.toast("No image selected!")
-            }
-        }
-
-    val requestStoragePermission =
-        rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { permissionGranted ->
-
-            if (permissionGranted) {
-                imageSelectorLauncher.launch("image/*")
-            } else {
-                context.toast("Please allow storage permission for select image.")
+                context.toast("Cannot save the image!")
             }
         }
 
     // ----------------------------------------------------------------
 
-    SelectImageAndCropScreenSkeleton(
+    CaptureImageAndCropScreenSkeleton(
         imagePath = imageUri,
         onChooseImageClicked = {
-            requestStoragePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            val newPhotoUri = context.createImageFile().getUriForFile(context)
+
+            imageUri = newPhotoUri
+
+            cameraLauncher.launch(newPhotoUri)
         }
     )
 }
 
 @Preview
 @Composable
-fun SelectImageAndCropScreenSkeletonPreview() {
+fun CaptureImageAndCropScreenSkeletonPreview() {
     AppTheme {
-        SelectImageAndCropScreenSkeleton()
+        CaptureImageAndCropScreenSkeleton()
     }
 }
 
 @Preview
 @Composable
-fun SelectImageAndCropScreenSkeletonPreviewDark() {
+fun CaptureImageAndCropScreenSkeletonPreviewDark() {
     AppTheme(darkTheme = true) {
-        SelectImageAndCropScreenSkeleton()
+        CaptureImageAndCropScreenSkeleton()
     }
 }
 
 @Composable
-fun SelectImageAndCropScreenSkeleton(
+fun CaptureImageAndCropScreenSkeleton(
     imagePath: Uri? = null,
     onChooseImageClicked: () -> Unit = {},
 ) {
@@ -153,7 +150,7 @@ fun SelectImageAndCropScreenSkeleton(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            AppComponent.Header("Select Image and Crop for Upload")
+            AppComponent.Header("Capture Image and Crop for Upload")
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
@@ -184,7 +181,7 @@ fun SelectImageAndCropScreenSkeleton(
                     onChooseImageClicked()
                 }
             ) {
-                Text("Choose Image")
+                Text("Capture Image")
             }
 
             // ----------------------------------------------------------------

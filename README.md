@@ -51,7 +51,7 @@ Feel free to request features or suggestions for improvements.
 
 - [ ] Composition: Bottom Navigation
 - [ ] Composition: Dialog
-- [ ] Composition: Text
+- [x] Composition: Text
 - [x] Tutorial: Select image and crop for upload
 - [x] Tutorial: Capture image and crop for upload
 - [x] Tutorial: Permission

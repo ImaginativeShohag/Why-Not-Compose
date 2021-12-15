@@ -107,6 +107,10 @@ data class Composition(
                 route = CompositionsScreen.CompositionSwitch,
             ),
             Composition(
+                name = "Text",
+                route = CompositionsScreen.CompositionText,
+            ),
+            Composition(
                 name = "Text Field",
                 route = CompositionsScreen.CompositionTextField,
             ),

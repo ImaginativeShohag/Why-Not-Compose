@@ -97,6 +97,7 @@ dependencies {
     androidTestImplementation(Libs.AndroidX.Test.Ext.junit)
     androidTestImplementation(Libs.AndroidX.Test.espressoCore)
     androidTestImplementation(Libs.AndroidX.Compose.uiTest)
+    androidTestImplementation(Libs.AndroidX.Compose.uiTestManifest)
 
     // ----------------------------------------------------------------
     // Compose
@@ -171,7 +172,8 @@ dependencies {
     implementation(Libs.AndroidX.Room.ktx)
 
     // Coil
-    implementation(Libs.coil)
+    implementation(Libs.Coil.compose)
+    implementation(Libs.Coil.svg)
 
     // Paging
     implementation(Libs.AndroidX.Paging.runtime)
@@ -192,7 +194,11 @@ dependencies {
     implementation(Libs.Google.Maps.core)
     implementation(Libs.Google.Maps.utils)
 
+    // Lottie
     implementation(Libs.Airbnb.Lottie.compose)
+
+    // uCrop
+    implementation(Libs.Yalantis.uCrop)
 }
 
 kapt {

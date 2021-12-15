@@ -44,7 +44,7 @@ import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
 import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
-import org.imaginativeworld.whynotcompose.utils.composeutils.rememberImagePainterFade
+import org.imaginativeworld.whynotcompose.utils.composeutils.rememberImagePainter
 
 @Composable
 fun LazyVerticalGridScreen() {
@@ -105,7 +105,10 @@ fun LazyVerticalGridScreenSkeleton() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .aspectRatio(1f),
-                        painter = rememberImagePainterFade("https://picsum.photos/seed/$item/128"),
+                        painter = rememberImagePainter(
+                            data = "https://picsum.photos/seed/$item/128",
+                            crossFade = true
+                        ),
                         contentDescription = null
                     )
                 }
@@ -135,7 +138,10 @@ fun LazyVerticalGridScreenSkeleton() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .aspectRatio(1f),
-                        painter = rememberImagePainterFade("https://picsum.photos/seed/$item/200"),
+                        painter = rememberImagePainter(
+                            data = "https://picsum.photos/seed/$item/200",
+                            crossFade = true
+                        ),
                         contentDescription = null
                     )
                 }

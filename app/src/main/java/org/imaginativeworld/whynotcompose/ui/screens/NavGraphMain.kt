@@ -46,6 +46,7 @@ import org.imaginativeworld.whynotcompose.ui.screens.animation.runningcar.Runnin
 import org.imaginativeworld.whynotcompose.ui.screens.animation.thestory.TheStoryScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.appbar.AppBarScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.badge.BadgeScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.bottomnavigation.BottomNavigationScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.button.ButtonScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.card.CardScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.checkbox.CheckBoxScreen
@@ -74,15 +75,21 @@ import org.imaginativeworld.whynotcompose.ui.screens.composition.snackbar.Snackb
 import org.imaginativeworld.whynotcompose.ui.screens.composition.swiperefresh.SwipeRefreshScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.swipetodismiss.SwipeToDismissScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.switch.SwitchScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.text.TextScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.textfield.TextFieldScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.index.HomeIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.splash.SplashScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.animatedvisibility.AnimatedVisibilityScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.captureimageandcrop.CaptureImageAndCropScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.captureimageandcrop.CaptureImageAndCropViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.counter.CounterScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.counterwithviewmodel.CounterWithVMScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.counterwithviewmodel.CounterWithVMViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.index.TutorialIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.lottie.LottieScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.permission.PermissionScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.selectimageandcrop.SelectImageAndCropScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.selectimageandcrop.SelectImageAndCropViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.ui.index.UiIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.mapview.MapScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.mapview.MapViewDetailsScreen
@@ -157,6 +164,8 @@ sealed class CompositionsScreen(val route: String) {
     object CompositionBadge : CompositionsScreen("composition/badge")
     object CompositionFloatingActionButton : CompositionsScreen("composition/fab")
     object CompositionSlider : CompositionsScreen("composition/slider")
+    object CompositionText : CompositionsScreen("composition/text")
+    object CompositionBottomNavigation : CompositionsScreen("composition/bottomnavigation")
 }
 
 sealed class UIsScreen(val route: String) {
@@ -180,6 +189,9 @@ sealed class TutorialsScreen(val route: String) {
     object TutorialCounterWithViewModel : TutorialsScreen("tutorial/counter-with-view-model")
     object TutorialAnimatedVisibility : TutorialsScreen("tutorial/animated-visibility")
     object TutorialLottie : TutorialsScreen("tutorial/lottie")
+    object TutorialSelectImageAndCrop : TutorialsScreen("tutorial/select-image-and-crop")
+    object TutorialCaptureImageAndCrop : TutorialsScreen("tutorial/capture-image-and-crop")
+    object TutorialPermission : TutorialsScreen("tutorial/permission")
 }
 
 // ================================================================
@@ -421,6 +433,14 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionSlider.route) {
             SliderScreen()
         }
+
+        composable(CompositionsScreen.CompositionText.route) {
+            TextScreen()
+        }
+
+        composable(CompositionsScreen.CompositionBottomNavigation.route) {
+            BottomNavigationScreen()
+        }
     }
 }
 
@@ -617,6 +637,26 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
 
     composable(TutorialsScreen.TutorialLottie.route) {
         LottieScreen()
+    }
+
+    composable(TutorialsScreen.TutorialSelectImageAndCrop.route) {
+        val viewModel: SelectImageAndCropViewModel = hiltViewModel()
+
+        SelectImageAndCropScreen(
+            viewModel = viewModel
+        )
+    }
+
+    composable(TutorialsScreen.TutorialCaptureImageAndCrop.route) {
+        val viewModel: CaptureImageAndCropViewModel = hiltViewModel()
+
+        CaptureImageAndCropScreen(
+            viewModel = viewModel
+        )
+    }
+
+    composable(TutorialsScreen.TutorialPermission.route) {
+        PermissionScreen()
     }
 }
 

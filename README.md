@@ -43,14 +43,21 @@ Feel free to request features or suggestions for improvements.
 - Counter with ViewModel (Beginner)
 - AnimatedVisibility (Beginner)
 - Lottie (Beginner)
+- Select image and crop for upload (Intermediate)
+- Capture image and crop for upload (Intermediate)
+- Permission (Beginner)
 
 | ![Preview](images/counter.gif) | ![Preview](images/animated-visibility.gif) | ![Preview](images/lottie.gif) |
 | :------: | :------: | :------: |
 
 # TODO
 
-- [ ] Tutorial: Select image for upload
-- [ ] Tutorial: Permission
+- [x] Composition: Bottom Navigation
+- [ ] Composition: Dialog
+- [x] Composition: Text
+- [x] Tutorial: Select image and crop for upload
+- [x] Tutorial: Capture image and crop for upload
+- [x] Tutorial: Permission
 - [ ] Tutorial: ExoPlayer sample
 - [ ] Tutorial: Data fetch and LazyColumn
 - [ ] Tutorial: Navigation
@@ -88,6 +95,9 @@ MAPS_API_KEY=YOUR_API_KEY
 
 ## Other Interesting Repos
 
+- [Compose Material Catalog](https://github.com/androidx/androidx/tree/androidx-main/compose/integration-tests/material-catalog)
+- [Official Compose Samples](https://github.com/android/compose-samples)
+- [ChrisBanes/Tivi](https://github.com/chrisbanes/tivi)
 - [Gurupreet/ComposeCookBook](https://github.com/Gurupreet/ComposeCookBook)
 - [spencergriffin/exoplayer-compose](https://github.com/spencergriffin/exoplayer-compose)
 - [godaddy/compose-color-picker](https://github.com/godaddy/compose-color-picker)

@@ -60,7 +60,7 @@ import org.imaginativeworld.whynotcompose.models.ListItem
 import org.imaginativeworld.whynotcompose.repositories.MockData
 import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
 import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
-import org.imaginativeworld.whynotcompose.utils.composeutils.rememberImagePainterFade
+import org.imaginativeworld.whynotcompose.utils.composeutils.rememberImagePainter
 
 @Composable
 fun SwipeRefreshScreen() {
@@ -170,8 +170,9 @@ fun SwipeRefreshScreenSkeleton(
                                     modifier = Modifier
                                         .size(64.dp)
                                         .clip(RoundedCornerShape(4.dp)),
-                                    painter = rememberImagePainterFade(
-                                        data = item.image
+                                    painter = rememberImagePainter(
+                                        data = item.image,
+                                        crossFade = true
                                     ),
                                     contentDescription = item.name
                                 )

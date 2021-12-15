@@ -43,6 +43,10 @@ data class Composition(
                 route = CompositionsScreen.CompositionBadge,
             ),
             Composition(
+                name = "Bottom Navigation",
+                route = CompositionsScreen.CompositionBottomNavigation,
+            ),
+            Composition(
                 name = "Button",
                 route = CompositionsScreen.CompositionButton,
             ),
@@ -105,6 +109,10 @@ data class Composition(
             Composition(
                 name = "Switch",
                 route = CompositionsScreen.CompositionSwitch,
+            ),
+            Composition(
+                name = "Text",
+                route = CompositionsScreen.CompositionText,
             ),
             Composition(
                 name = "Text Field",

@@ -24,15 +24,25 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.template
+package org.imaginativeworld.whynotcompose.ui.screens.composition.bottomnavigation
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Divider
+import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.insets.navigationBarsWithImePadding
@@ -41,28 +51,28 @@ import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
 import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
 
 @Composable
-fun TemplateChildScreen() {
-    TemplateChildScreenSkeleton()
+fun BottomNavigationScreen() {
+    BottomNavigationScreenSkeleton()
 }
 
 @Preview
 @Composable
-fun TemplateChildScreenSkeletonPreview() {
+fun BottomNavigationScreenSkeletonPreview() {
     AppTheme {
-        TemplateChildScreenSkeleton()
+        BottomNavigationScreenSkeleton()
     }
 }
 
 @Preview
 @Composable
-fun TemplateChildScreenSkeletonPreviewDark() {
+fun BottomNavigationScreenSkeletonPreviewDark() {
     AppTheme(darkTheme = true) {
-        TemplateChildScreenSkeleton()
+        BottomNavigationScreenSkeleton()
     }
 }
 
 @Composable
-fun TemplateChildScreenSkeleton() {
+fun BottomNavigationScreenSkeleton() {
     Scaffold(
         Modifier
             .navigationBarsWithImePadding()
@@ -73,30 +83,62 @@ fun TemplateChildScreenSkeleton() {
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            AppComponent.Header("Title")
+            AppComponent.Header("Bottom Navigation")
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
 
             Divider()
 
-            AppComponent.SubHeader("Sub Title")
-
             // ----------------------------------------------------------------
 
-            // Content here...
-            // Use `padding(start = 16.dp, end = 16.dp)` for the elements.
+            BottomNavigationSample()
 
             // ----------------------------------------------------------------
 
             AppComponent.MediumSpacer()
 
-            // Content here...
+            BottomNavigationWithOnlySelectedLabelsSample()
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
 
             AppComponent.BigSpacer()
+        }
+    }
+}
+
+@Composable
+private fun BottomNavigationSample() {
+    var selectedItem by remember { mutableStateOf(0) }
+    val items = listOf("Songs", "Artists", "Playlists")
+
+    BottomNavigation {
+        items.forEachIndexed { index, item ->
+            BottomNavigationItem(
+                icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
+                label = { Text(item) },
+                selected = selectedItem == index,
+                onClick = { selectedItem = index }
+            )
+        }
+    }
+}
+
+@Composable
+private fun BottomNavigationWithOnlySelectedLabelsSample() {
+    var selectedItem by remember { mutableStateOf(0) }
+    val items = listOf("Songs", "Artists", "Playlists")
+
+    BottomNavigation {
+        items.forEachIndexed { index, item ->
+            BottomNavigationItem(
+                icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
+                label = { Text(item) },
+                selected = selectedItem == index,
+                onClick = { selectedItem = index },
+                alwaysShowLabel = false
+            )
         }
     }
 }

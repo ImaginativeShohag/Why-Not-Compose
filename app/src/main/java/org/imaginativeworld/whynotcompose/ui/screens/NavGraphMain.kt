@@ -50,6 +50,7 @@ import org.imaginativeworld.whynotcompose.ui.screens.composition.bottomnavigatio
 import org.imaginativeworld.whynotcompose.ui.screens.composition.button.ButtonScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.card.CardScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.checkbox.CheckBoxScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.dialog.DialogScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.dropdown.DropDownMenuScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.floatingactionbutton.FloatingActionButtonScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.index.CompositionIndexScreen
@@ -311,7 +312,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         }
 
         composable(CompositionsScreen.CompositionDialog.route) {
-            BlankScreen()
+            DialogScreen()
         }
 
         composable(CompositionsScreen.CompositionDropDownMenu.route) {

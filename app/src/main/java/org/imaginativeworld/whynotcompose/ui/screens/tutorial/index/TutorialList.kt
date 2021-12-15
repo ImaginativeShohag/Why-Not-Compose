@@ -87,6 +87,11 @@ data class Tutorial(
                 route = TutorialsScreen.TutorialCaptureImageAndCrop,
                 level = TutorialLevel.Intermediate,
             ),
+            Tutorial(
+                name = "Permission",
+                route = TutorialsScreen.TutorialPermission,
+                level = TutorialLevel.Beginner,
+            ),
         )
     }
 }

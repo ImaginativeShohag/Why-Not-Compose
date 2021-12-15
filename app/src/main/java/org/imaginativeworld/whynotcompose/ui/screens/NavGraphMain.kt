@@ -85,6 +85,7 @@ import org.imaginativeworld.whynotcompose.ui.screens.tutorial.counterwithviewmod
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.counterwithviewmodel.CounterWithVMViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.index.TutorialIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.lottie.LottieScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.permission.PermissionScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.selectimageandcrop.SelectImageAndCropScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.selectimageandcrop.SelectImageAndCropViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.ui.index.UiIndexScreen
@@ -186,6 +187,7 @@ sealed class TutorialsScreen(val route: String) {
     object TutorialLottie : TutorialsScreen("tutorial/lottie")
     object TutorialSelectImageAndCrop : TutorialsScreen("tutorial/select-image-and-crop")
     object TutorialCaptureImageAndCrop : TutorialsScreen("tutorial/capture-image-and-crop")
+    object TutorialPermission : TutorialsScreen("tutorial/permission")
 }
 
 // ================================================================
@@ -639,6 +641,10 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
         CaptureImageAndCropScreen(
             viewModel = viewModel
         )
+    }
+
+    composable(TutorialsScreen.TutorialPermission.route) {
+        PermissionScreen()
     }
 }
 

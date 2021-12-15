@@ -52,7 +52,7 @@ Feel free to request features or suggestions for improvements.
 
 # TODO
 
-- [ ] Composition: Bottom Navigation
+- [x] Composition: Bottom Navigation
 - [ ] Composition: Dialog
 - [x] Composition: Text
 - [x] Tutorial: Select image and crop for upload

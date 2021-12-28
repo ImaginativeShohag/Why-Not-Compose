@@ -55,6 +55,7 @@ object Libs {
         const val flowlayout = "com.google.accompanist:accompanist-flowlayout:$version"
         const val pager = "com.google.accompanist:accompanist-pager:$version"
         const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:$version"
+        const val placeholder = "com.google.accompanist:accompanist-placeholder-material:$version"
     }
 
     object Kotlin {

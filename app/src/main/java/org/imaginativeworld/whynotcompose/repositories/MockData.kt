@@ -28,6 +28,8 @@ package org.imaginativeworld.whynotcompose.repositories
 
 import org.imaginativeworld.whynotcompose.models.ListItem
 import org.imaginativeworld.whynotcompose.models.User
+import org.imaginativeworld.whynotcompose.models.github.GithubRepo
+import org.imaginativeworld.whynotcompose.models.github.Owner
 
 object MockData {
     val dummyUser = User(
@@ -50,5 +52,19 @@ object MockData {
         ListItem(id = 12, name = "Nougat"),
         ListItem(id = 13, name = "Oreo"),
         ListItem(id = 14, name = "Pie"),
+    )
+
+    val dummyGithubRepo = GithubRepo(
+        id = 1,
+        name = "Why-Not-Compose",
+        fullName = "ImaginativeShohag/Why-Not-Compose",
+        owner = Owner(
+            login = "ImaginativeShohag",
+            avatarUrl = ""
+        ),
+        description = "A collection of animations, compositions, UIs using Jetpack Compose. You can say Jetpack Compose cookbook or play-ground if you want!",
+        stargazersCount = 100,
+        watchersCount = 200,
+        forksCount = 300,
     )
 }

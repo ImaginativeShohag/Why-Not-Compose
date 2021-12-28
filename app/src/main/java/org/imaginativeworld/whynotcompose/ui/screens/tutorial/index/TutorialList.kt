@@ -92,6 +92,11 @@ data class Tutorial(
                 route = TutorialsScreen.TutorialPermission,
                 level = TutorialLevel.Beginner,
             ),
+            Tutorial(
+                name = "Data Fetch and Paging",
+                route = TutorialsScreen.TutorialDataFetchAndPaging,
+                level = TutorialLevel.Advanced,
+            ),
         )
     }
 }

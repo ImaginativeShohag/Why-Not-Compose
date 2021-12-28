@@ -46,6 +46,7 @@ Feel free to request features or suggestions for improvements.
 - Select image and crop for upload (Intermediate)
 - Capture image and crop for upload (Intermediate)
 - Permission (Beginner)
+- Data Fetch and Paging (Advanced)
 
 | ![Preview](images/counter.gif) | ![Preview](images/animated-visibility.gif) | ![Preview](images/lottie.gif) |
 | :------: | :------: | :------: |
@@ -59,7 +60,7 @@ Feel free to request features or suggestions for improvements.
 - [x] Tutorial: Capture image and crop for upload
 - [x] Tutorial: Permission
 - [ ] Tutorial: ExoPlayer sample
-- [ ] Tutorial: Data fetch and LazyColumn
+- [x] Tutorial: Data Fetch and Paging
 - [ ] Tutorial: Navigation
 - [ ] Tutorial: Navigation with Data pass
 - [ ] Tutorial: Material You

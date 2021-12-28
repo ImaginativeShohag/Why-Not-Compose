@@ -86,6 +86,8 @@ import org.imaginativeworld.whynotcompose.ui.screens.tutorial.captureimageandcro
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.counter.CounterScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.counterwithviewmodel.CounterWithVMScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.counterwithviewmodel.CounterWithVMViewModel
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging.DataFetchAndPagingScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging.DataFetchAndPagingViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.index.TutorialIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.lottie.LottieScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.permission.PermissionScreen
@@ -193,6 +195,7 @@ sealed class TutorialsScreen(val route: String) {
     object TutorialSelectImageAndCrop : TutorialsScreen("tutorial/select-image-and-crop")
     object TutorialCaptureImageAndCrop : TutorialsScreen("tutorial/capture-image-and-crop")
     object TutorialPermission : TutorialsScreen("tutorial/permission")
+    object TutorialDataFetchAndPaging : TutorialsScreen("tutorial/data-fetch-and-paging")
 }
 
 // ================================================================
@@ -658,6 +661,14 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
 
     composable(TutorialsScreen.TutorialPermission.route) {
         PermissionScreen()
+    }
+
+    composable(TutorialsScreen.TutorialDataFetchAndPaging.route) {
+        val viewModel: DataFetchAndPagingViewModel = hiltViewModel()
+
+        DataFetchAndPagingScreen(
+            viewModel = viewModel
+        )
     }
 }
 

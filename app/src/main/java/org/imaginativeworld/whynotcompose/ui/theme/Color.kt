@@ -40,7 +40,7 @@ val Colors.onInputBackground: Color
     @Composable get() = if (isLight) TailwindCSSColor.Gray900 else TailwindCSSColor.Gray50
 
 val Colors.errorInputBackground: Color
-    @Composable get() = TailwindCSSColor.Red500.copy(.15f)
+    @Composable get() = if (isLight) TailwindCSSColor.Red500.copy(.1f) else TailwindCSSColor.Red900.copy(.95f)
 
 object AppColor {
 //    val ExampleColor = Color(0xff123456)

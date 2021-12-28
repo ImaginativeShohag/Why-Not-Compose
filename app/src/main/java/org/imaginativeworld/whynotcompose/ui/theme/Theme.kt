@@ -40,7 +40,7 @@ private val DarkColorPalette = darkColors(
     secondaryVariant = TailwindCSSColor.Pink900,
     background = TailwindCSSColor.Gray900,
     surface = Color.Black,
-    error = TailwindCSSColor.Red500,
+    error = TailwindCSSColor.Red700,
 
     onPrimary = TailwindCSSColor.Gray50,
     onSecondary = TailwindCSSColor.Gray50,

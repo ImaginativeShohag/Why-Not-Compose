@@ -432,7 +432,6 @@ fun ErrorItemPreview() {
         ErrorItem(
             "Something went wrong!"
         ) {
-
         }
     }
 }
@@ -444,7 +443,6 @@ fun ErrorItemPreviewDark() {
         ErrorItem(
             "Something went wrong!"
         ) {
-
         }
     }
 }

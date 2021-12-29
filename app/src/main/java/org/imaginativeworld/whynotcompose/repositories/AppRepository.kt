@@ -57,6 +57,5 @@ class AppRepository @Inject constructor(
                 query = query,
             )
         }
-
     }
 }

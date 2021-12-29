@@ -39,7 +39,7 @@ import androidx.compose.ui.unit.dp
  * A workaround for custom colored shadow.
  */
 fun Modifier.shadow(
-    spread: Dp = 4.dp,
+    spread: Dp = 8.dp,
     @FloatRange(from = 0.0, to = 1.0) alpha: Float = .25f,
     color: Color = Color.Gray,
     radius: Dp = 8.dp,

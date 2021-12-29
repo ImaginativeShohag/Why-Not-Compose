@@ -61,9 +61,6 @@ Feel free to request features or suggestions for improvements.
 - [x] Tutorial: Permission
 - [ ] Tutorial: ExoPlayer sample
 - [x] Tutorial: Data Fetch and Paging
-- [ ] Tutorial: Navigation
-- [ ] Tutorial: Navigation with Data pass
-- [ ] Tutorial: Material You
 - [ ] Tutorial: OneSignal with broadcast at notification
 
 # Note

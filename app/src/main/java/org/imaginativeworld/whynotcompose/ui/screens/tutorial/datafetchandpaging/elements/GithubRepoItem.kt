@@ -56,10 +56,10 @@ import androidx.compose.ui.unit.sp
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.material.shimmer
+import org.imaginativeworld.whynotcompose.common.compose.composeutils.rememberImagePainter
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.models.github.GithubRepo
 import org.imaginativeworld.whynotcompose.repositories.MockData
-import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
-import org.imaginativeworld.whynotcompose.common.compose.composeutils.rememberImagePainter
 
 @Composable
 fun GithubRepoItem(

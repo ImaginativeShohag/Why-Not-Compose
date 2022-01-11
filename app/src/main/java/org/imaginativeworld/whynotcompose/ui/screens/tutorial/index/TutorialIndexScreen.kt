@@ -48,8 +48,8 @@ import androidx.compose.ui.unit.sp
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent.Header
-import org.imaginativeworld.whynotcompose.ui.screens.TutorialsScreen
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
+import org.imaginativeworld.whynotcompose.ui.screens.TutorialsScreen
 
 @Composable
 fun TutorialIndexScreen(

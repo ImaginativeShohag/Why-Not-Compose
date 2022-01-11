@@ -47,12 +47,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
-import org.imaginativeworld.whynotcompose.models.Event
-import org.imaginativeworld.whynotcompose.models.MapPlace
-import org.imaginativeworld.whynotcompose.repositories.MapPlaceRepo
 import org.imaginativeworld.whynotcompose.common.compose.composeutils.deselectMarker
 import org.imaginativeworld.whynotcompose.common.compose.composeutils.selectMarker
 import org.imaginativeworld.whynotcompose.common.compose.composeutils.setZoom
+import org.imaginativeworld.whynotcompose.models.Event
+import org.imaginativeworld.whynotcompose.models.MapPlace
+import org.imaginativeworld.whynotcompose.repositories.MapPlaceRepo
 import org.imaginativeworld.whynotcompose.utils.extensions.dpToPx
 import timber.log.Timber
 import java.util.Locale

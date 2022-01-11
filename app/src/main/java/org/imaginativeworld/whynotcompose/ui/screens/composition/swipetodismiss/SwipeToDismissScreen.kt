@@ -77,10 +77,10 @@ import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.imaginativeworld.whynotcompose.models.ListItem
-import org.imaginativeworld.whynotcompose.repositories.MockData
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
+import org.imaginativeworld.whynotcompose.models.ListItem
+import org.imaginativeworld.whynotcompose.repositories.MockData
 
 // Source:
 // https://cs.android.com/androidx/platform/tools/dokka-devsite-plugin/+/master:testData/compose/samples/material/samples/SwipeToDismissSamples.kt

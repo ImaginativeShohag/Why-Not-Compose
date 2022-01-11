@@ -74,9 +74,9 @@ import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
-import org.imaginativeworld.whynotcompose.ui.screens.Screen
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
+import org.imaginativeworld.whynotcompose.ui.screens.Screen
 import org.imaginativeworld.whynotcompose.utils.extensions.openUrl
 import org.imaginativeworld.whynotcompose.utils.extensions.shadow
 

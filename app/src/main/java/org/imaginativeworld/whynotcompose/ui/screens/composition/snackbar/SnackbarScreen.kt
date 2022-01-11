@@ -61,10 +61,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
-import org.imaginativeworld.whynotcompose.models.Event
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
-import org.imaginativeworld.whynotcompose.ui.screens.CompositionsScreen
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
+import org.imaginativeworld.whynotcompose.models.Event
+import org.imaginativeworld.whynotcompose.ui.screens.CompositionsScreen
 
 @Composable
 fun SnackbarScreen(

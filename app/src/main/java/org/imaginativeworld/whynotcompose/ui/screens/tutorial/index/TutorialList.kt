@@ -27,8 +27,8 @@
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.index
 
 import androidx.compose.ui.graphics.Color
-import org.imaginativeworld.whynotcompose.ui.screens.TutorialsScreen
 import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
+import org.imaginativeworld.whynotcompose.ui.screens.TutorialsScreen
 
 sealed class TutorialLevel(
     val name: String,

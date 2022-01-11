@@ -81,13 +81,13 @@ import com.google.android.gms.maps.MapView
 import com.google.maps.android.ktx.awaitMap
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.R
-import org.imaginativeworld.whynotcompose.models.MapPlace
-import org.imaginativeworld.whynotcompose.ui.compositions.CustomSnackbarHost
-import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
-import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
 import org.imaginativeworld.whynotcompose.common.compose.composeutils.deselectMarker
 import org.imaginativeworld.whynotcompose.common.compose.composeutils.rememberMapViewWithLifecycle
 import org.imaginativeworld.whynotcompose.common.compose.composeutils.selectMarker
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
+import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
+import org.imaginativeworld.whynotcompose.models.MapPlace
+import org.imaginativeworld.whynotcompose.ui.compositions.CustomSnackbarHost
 
 // TODO: add location permission
 // TODO: add current location request

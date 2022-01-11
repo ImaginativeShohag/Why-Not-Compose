@@ -1,5 +1,5 @@
 object Libs {
-    const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.4"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:7.1.0-rc01"
 
     const val secretsGradlePlugin =
         "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.0"
@@ -35,7 +35,7 @@ object Libs {
 
     object Google {
         object PlayService {
-            const val maps = "com.google.android.gms:play-services-maps:18.0.1"
+            const val maps = "com.google.android.gms:play-services-maps:18.0.2"
         }
 
         object Maps {
@@ -47,7 +47,7 @@ object Libs {
     }
 
     object Accompanist {
-        private const val version = "0.21.4-beta"
+        private const val version = "0.22.0-rc"
 
         const val insets = "com.google.accompanist:accompanist-insets:$version"
         const val systemuicontroller =
@@ -59,7 +59,7 @@ object Libs {
     }
 
     object Kotlin {
-        private const val version = "1.6.0"
+        private const val version = "1.6.10"
 
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$version"
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
@@ -67,7 +67,7 @@ object Libs {
     }
 
     object Coroutines {
-        private const val version = "1.5.2"
+        private const val version = "1.6.0"
 
         const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
         const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
@@ -80,7 +80,7 @@ object Libs {
         const val androidGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:$version"
         const val core = "com.google.dagger:hilt-android:$version"
         const val compiler = "com.google.dagger:hilt-compiler:$version"
-        const val navigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0-beta01"
+        const val navigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0-rc01"
     }
 
     object AndroidX {
@@ -93,7 +93,10 @@ object Libs {
         }
 
         object Compose {
-            const val version = "1.1.0-beta04"
+            const val version = "1.1.0-rc01"
+            const val compilerVersion = "1.1.0-rc02"
+
+            const val compiler = "androidx.compose.compiler:compiler:$compilerVersion"
 
             const val foundation = "androidx.compose.foundation:foundation:$version"
             const val layout = "androidx.compose.foundation:foundation-layout:$version"
@@ -138,7 +141,7 @@ object Libs {
         }
 
         object Navigation {
-            private const val version = "2.4.0-beta02"
+            private const val version = "2.4.0-rc01"
 
             const val fragment = "androidx.navigation:navigation-fragment-ktx:$version"
             const val uiKtx = "androidx.navigation:navigation-ui-ktx:$version"
@@ -154,7 +157,7 @@ object Libs {
         }
 
         object Room {
-            private const val version = "2.3.0"
+            private const val version = "2.4.0"
 
             const val runtime = "androidx.room:room-runtime:$version"
             const val compiler = "androidx.room:room-compiler:$version"

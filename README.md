@@ -62,6 +62,7 @@ Feel free to request features or suggestions for improvements.
 - [ ] Tutorial: ExoPlayer sample
 - [x] Tutorial: Data Fetch and Paging
 - [ ] Tutorial: OneSignal with broadcast at notification
+- [ ] Tutorial: Tic-Tac-Toe
 
 # Note
 

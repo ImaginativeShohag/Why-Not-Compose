@@ -26,6 +26,7 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.ui.otpcodeverify
 
+import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.fadeIn
@@ -140,10 +141,10 @@ fun OtpCodeVerifyScreenSkeletonPreview() {
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun OtpCodeVerifyScreenSkeletonPreviewDark() {
-    AppTheme(darkTheme = true) {
+    AppTheme {
         OtpCodeVerifyScreenSkeleton(
             phoneNumber = "+8801234567891",
             counterValue = MutableLiveData(),
@@ -334,10 +335,10 @@ fun VirtualNumberKeyboardPreview() {
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun VirtualNumberKeyboardPreviewDark() {
-    AppTheme(darkTheme = true) {
+    AppTheme {
         VirtualNumberKeyboard(
             codeState = remember { mutableStateOf("") },
             isValidInputs = { true },

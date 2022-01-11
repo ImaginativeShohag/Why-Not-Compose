@@ -26,6 +26,7 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.animatedvisibility
 
+import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -70,10 +71,10 @@ fun AnimatedVisibilityScreenSkeletonPreview() {
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun AnimatedVisibilityScreenSkeletonPreviewDark() {
-    AppTheme(darkTheme = true) {
+    AppTheme {
         AnimatedVisibilityScreenSkeleton()
     }
 }

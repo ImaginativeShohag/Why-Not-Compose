@@ -106,7 +106,7 @@ fun EmptyViewPreview() {
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun EmptyViewPreviewDark() {
-    AppTheme(darkTheme = true) {
+    AppTheme {
         EmptyView(
             modifier = Modifier,
             show = true,

@@ -26,6 +26,7 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.ui.webview.components
 
+import android.content.res.Configuration
 import android.webkit.WebViewClient.ERROR_HOST_LOOKUP
 import android.webkit.WebViewClient.ERROR_TIMEOUT
 import androidx.compose.foundation.Image
@@ -66,10 +67,10 @@ fun ErrorViewPreview() {
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun ErrorViewPreviewDark() {
-    AppTheme(darkTheme = true) {
+    AppTheme {
         ErrorView(
             errorCode = ERROR_HOST_LOOKUP,
             description = "Webpage not available",

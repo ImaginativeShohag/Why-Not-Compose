@@ -26,6 +26,7 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.animation.emudi
 
+import android.content.res.Configuration
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.spring
@@ -123,10 +124,10 @@ fun EmudiScreenSkeletonPreview() {
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun EmudiScreenSkeletonPreviewDark() {
-    AppTheme(darkTheme = true) {
+    AppTheme {
         EmudiScreenSkeleton(
             MutableStateFlow(true),
             MutableStateFlow(true),

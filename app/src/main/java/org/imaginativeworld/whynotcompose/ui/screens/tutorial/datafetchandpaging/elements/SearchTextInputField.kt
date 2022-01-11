@@ -26,6 +26,7 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging.elements
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
@@ -247,10 +248,10 @@ fun SearchTextInputFieldPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun SearchTextInputFieldPreviewDark() {
-    AppTheme(darkTheme = true) {
+    AppTheme {
         Column(Modifier.fillMaxWidth()) {
             SearchTextInputField(
                 textFieldValue = remember { mutableStateOf(TextFieldValue()) },

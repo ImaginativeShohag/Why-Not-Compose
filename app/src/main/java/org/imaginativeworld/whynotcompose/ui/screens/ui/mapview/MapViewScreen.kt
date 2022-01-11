@@ -27,6 +27,7 @@
 package org.imaginativeworld.whynotcompose.ui.screens.ui.mapview
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -196,10 +197,10 @@ fun MapSkeletonPreview() {
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun MapSkeletonPreviewDark() {
-    AppTheme(darkTheme = true) {
+    AppTheme {
         MapSkeleton(
             mapView = {
                 Box(

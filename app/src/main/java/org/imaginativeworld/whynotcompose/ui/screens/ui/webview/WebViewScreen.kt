@@ -26,6 +26,7 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.ui.webview
 
+import android.content.res.Configuration
 import android.view.ViewGroup
 import android.webkit.WebView
 import androidx.activity.compose.BackHandler
@@ -152,10 +153,10 @@ fun WebViewSkeletonPreview() {
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun WebViewSkeletonPreviewDark() {
-    AppTheme(darkTheme = true) {
+    AppTheme {
         WebViewSkeleton(
             title = WebViewTarget.AboutMe.name,
             goBack = {},

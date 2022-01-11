@@ -26,6 +26,7 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.animation.thestory
 
+import android.content.res.Configuration
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -81,10 +82,10 @@ fun TheStoryScreenSkeletonPreview() {
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun TheStoryScreenSkeletonPreviewDark() {
-    AppTheme(darkTheme = true) {
+    AppTheme {
         TheStoryScreenSkeleton()
     }
 }

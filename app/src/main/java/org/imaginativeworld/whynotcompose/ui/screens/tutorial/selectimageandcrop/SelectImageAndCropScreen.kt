@@ -27,6 +27,7 @@
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.selectimageandcrop
 
 import android.Manifest
+import android.content.res.Configuration
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -130,10 +131,10 @@ fun SelectImageAndCropScreenSkeletonPreview() {
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun SelectImageAndCropScreenSkeletonPreviewDark() {
-    AppTheme(darkTheme = true) {
+    AppTheme {
         SelectImageAndCropScreenSkeleton()
     }
 }

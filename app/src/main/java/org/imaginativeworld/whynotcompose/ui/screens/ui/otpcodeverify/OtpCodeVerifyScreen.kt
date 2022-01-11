@@ -87,7 +87,7 @@ import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.models.Event
 import org.imaginativeworld.whynotcompose.ui.compositions.CustomSnackbarHost
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
 fun OtpCodeVerifyScreen(

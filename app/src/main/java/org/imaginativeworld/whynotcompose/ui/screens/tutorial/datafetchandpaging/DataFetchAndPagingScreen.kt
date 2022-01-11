@@ -87,14 +87,14 @@ import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.models.Event
 import org.imaginativeworld.whynotcompose.models.github.GithubRepo
 import org.imaginativeworld.whynotcompose.repositories.MockData
-import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
+import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging.elements.EmptyView
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging.elements.GithubRepoItem
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging.elements.LoadingGithubRepoItem
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging.elements.SearchTextInputField
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
-import org.imaginativeworld.whynotcompose.ui.theme.TailwindCSSColor
-import org.imaginativeworld.whynotcompose.utils.compositions.LoadingContainer
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
+import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
+import org.imaginativeworld.whynotcompose.common.compose.compositions.LoadingContainer
 
 val Colors.searchErrorInputBackground: Color
     @Composable get() = if (isLight) TailwindCSSColor.Red500 else TailwindCSSColor.Red900

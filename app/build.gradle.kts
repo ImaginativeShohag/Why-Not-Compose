@@ -10,14 +10,14 @@ plugins {
 }
 
 android {
-    compileSdk = 31
+    compileSdk = BuildConfigConst.compileSdk
 
     defaultConfig {
         applicationId = "org.imaginativeworld.whynotcompose"
-        minSdk = 21
-        targetSdk = 31
+        minSdk = BuildConfigConst.minSdk
+        targetSdk = BuildConfigConst.targetSdk
         versionCode = 1
-        versionName = "0.0.0.000000" // Major.Minor.Patch.YYMMDD
+        versionName = "3.0.0.000000" // Major.Minor.Patch.YYMMDD
         vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -88,6 +88,9 @@ android {
 }
 
 dependencies {
+    implementation(project(":common-ui-compose"))
+    implementation(project(":tictactoe"))
+
     implementation(Libs.Kotlin.stdlib)
     implementation(Libs.AndroidX.coreKtx)
     implementation(Libs.AndroidX.appcompat)

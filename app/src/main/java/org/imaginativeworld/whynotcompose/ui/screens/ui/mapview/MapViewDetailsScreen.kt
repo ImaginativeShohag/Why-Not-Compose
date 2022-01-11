@@ -52,7 +52,7 @@ import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.models.MapPlace
 import org.imaginativeworld.whynotcompose.repositories.MapPlaceRepo
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
 fun MapViewDetailsScreen(

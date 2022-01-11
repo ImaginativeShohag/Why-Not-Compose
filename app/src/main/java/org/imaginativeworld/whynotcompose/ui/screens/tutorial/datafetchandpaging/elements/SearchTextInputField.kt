@@ -67,8 +67,8 @@ import androidx.compose.ui.unit.sp
 import com.google.accompanist.insets.LocalWindowInsets
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
-import org.imaginativeworld.whynotcompose.ui.theme.errorInputBackground
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
+import org.imaginativeworld.whynotcompose.common.compose.theme.errorInputBackground
 
 @Composable
 fun SearchTextInputField(

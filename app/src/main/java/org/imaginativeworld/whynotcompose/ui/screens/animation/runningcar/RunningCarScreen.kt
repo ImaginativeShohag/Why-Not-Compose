@@ -66,7 +66,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.imaginativeworld.whynotcompose.R
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
 fun RunningCarScreen() {

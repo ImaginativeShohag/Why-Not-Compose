@@ -24,25 +24,14 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.utils.composeutils
+package org.imaginativeworld.whynotcompose.common.compose.theme
 
-import androidx.annotation.DrawableRes
-import androidx.compose.runtime.Composable
-import coil.compose.rememberImagePainter
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Shapes
+import androidx.compose.ui.unit.dp
 
-@Composable
-fun rememberImagePainter(
-    data: Any?,
-    @DrawableRes placeholder: Int? = null,
-    crossFade: Boolean = true,
-) = rememberImagePainter(
-    data = data,
-    builder = {
-        crossfade(crossFade)
-        placeholder?.let {
-            this.placeholder(placeholder)
-            this.error(placeholder)
-            this.fallback(placeholder)
-        }
-    }
+val Shapes = Shapes(
+    small = RoundedCornerShape(4.dp),
+    medium = RoundedCornerShape(8.dp),
+    large = RoundedCornerShape(16.dp)
 )

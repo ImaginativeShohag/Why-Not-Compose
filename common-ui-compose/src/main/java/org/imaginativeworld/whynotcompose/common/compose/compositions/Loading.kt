@@ -24,7 +24,7 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.utils.compositions
+package org.imaginativeworld.whynotcompose.common.compose.compositions
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn

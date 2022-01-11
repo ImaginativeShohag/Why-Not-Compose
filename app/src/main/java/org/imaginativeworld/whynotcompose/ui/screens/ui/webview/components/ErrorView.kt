@@ -52,7 +52,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.imaginativeworld.whynotcompose.R
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Preview
 @Composable

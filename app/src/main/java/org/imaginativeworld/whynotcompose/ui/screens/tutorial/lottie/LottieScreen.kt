@@ -66,8 +66,8 @@ import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.R
-import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
+import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
 fun LottieScreen() {

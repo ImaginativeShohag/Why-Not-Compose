@@ -43,8 +43,8 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.ui.screens.AnimationsScreen
-import org.imaginativeworld.whynotcompose.ui.screens.AppComponent.Header
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
+import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent.Header
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
 fun AnimationIndexScreen(

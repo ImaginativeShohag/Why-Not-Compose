@@ -78,8 +78,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.models.ListItem
 import org.imaginativeworld.whynotcompose.repositories.MockData
-import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
+import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 // Source:
 // https://cs.android.com/androidx/platform/tools/dokka-devsite-plugin/+/master:testData/compose/samples/material/samples/SwipeToDismissSamples.kt

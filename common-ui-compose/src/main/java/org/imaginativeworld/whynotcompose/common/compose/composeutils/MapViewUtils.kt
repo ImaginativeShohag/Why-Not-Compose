@@ -24,7 +24,7 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.utils.composeutils
+package org.imaginativeworld.whynotcompose.common.compose.composeutils
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -44,7 +44,7 @@ import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import org.imaginativeworld.whynotcompose.R
+import org.imaginativeworld.whynotcompose.common.compose.R
 import timber.log.Timber
 
 // Help source code from:

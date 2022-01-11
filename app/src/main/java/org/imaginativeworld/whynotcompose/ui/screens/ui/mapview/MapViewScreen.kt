@@ -82,11 +82,11 @@ import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.models.MapPlace
 import org.imaginativeworld.whynotcompose.ui.compositions.CustomSnackbarHost
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
-import org.imaginativeworld.whynotcompose.ui.theme.TailwindCSSColor
-import org.imaginativeworld.whynotcompose.utils.composeutils.deselectMarker
-import org.imaginativeworld.whynotcompose.utils.composeutils.rememberMapViewWithLifecycle
-import org.imaginativeworld.whynotcompose.utils.composeutils.selectMarker
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
+import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
+import org.imaginativeworld.whynotcompose.common.compose.composeutils.deselectMarker
+import org.imaginativeworld.whynotcompose.common.compose.composeutils.rememberMapViewWithLifecycle
+import org.imaginativeworld.whynotcompose.common.compose.composeutils.selectMarker
 
 // TODO: add location permission
 // TODO: add current location request

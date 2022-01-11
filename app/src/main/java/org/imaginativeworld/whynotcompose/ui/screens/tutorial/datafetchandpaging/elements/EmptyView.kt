@@ -54,7 +54,7 @@ import androidx.compose.ui.unit.sp
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import org.imaginativeworld.whynotcompose.R
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import timber.log.Timber
 
 @Composable

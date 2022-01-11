@@ -61,8 +61,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import org.imaginativeworld.whynotcompose.R
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
-import org.imaginativeworld.whynotcompose.ui.theme.composeThemeColor
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
+import org.imaginativeworld.whynotcompose.common.compose.theme.composeThemeColor
 
 // This animation is inspired by the video:
 // "Compose Multiplatform Alpha: The Story"

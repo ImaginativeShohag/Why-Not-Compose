@@ -80,8 +80,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.components.ErrorView
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
-import org.imaginativeworld.whynotcompose.ui.theme.TailwindCSSColor
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
+import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
 import timber.log.Timber
 
 // TODO: Swipe to refresh

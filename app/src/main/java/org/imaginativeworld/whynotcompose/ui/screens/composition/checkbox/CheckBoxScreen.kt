@@ -50,8 +50,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
-import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
+import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 private val ELEMENT_HEIGHT = 56.dp
 

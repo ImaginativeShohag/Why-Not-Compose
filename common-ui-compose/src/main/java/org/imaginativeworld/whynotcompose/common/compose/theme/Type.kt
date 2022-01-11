@@ -24,7 +24,7 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.ui.theme
+package org.imaginativeworld.whynotcompose.common.compose.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
@@ -33,7 +33,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import org.imaginativeworld.whynotcompose.R
+import org.imaginativeworld.whynotcompose.common.compose.R
 
 object AppFont {
     val TitilliumWeb = FontFamily(

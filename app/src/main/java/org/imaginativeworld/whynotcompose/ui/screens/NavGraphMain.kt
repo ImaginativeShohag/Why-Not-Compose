@@ -39,6 +39,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import org.imaginativeworld.whynotcompose.models.MapPlace
+import org.imaginativeworld.whynotcompose.tictactoe.TicTacToeScreen
+import org.imaginativeworld.whynotcompose.tictactoe.TicTacToeViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.animation.composeone.ComposeOneScreen
 import org.imaginativeworld.whynotcompose.ui.screens.animation.emudi.EmudiScreen
 import org.imaginativeworld.whynotcompose.ui.screens.animation.index.AnimationIndexScreen
@@ -196,6 +198,7 @@ sealed class TutorialsScreen(val route: String) {
     object TutorialCaptureImageAndCrop : TutorialsScreen("tutorial/capture-image-and-crop")
     object TutorialPermission : TutorialsScreen("tutorial/permission")
     object TutorialDataFetchAndPaging : TutorialsScreen("tutorial/data-fetch-and-paging")
+    object TutorialTicTacToe : TutorialsScreen("tutorial/tic-tac-toe")
 }
 
 // ================================================================
@@ -667,6 +670,14 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
         val viewModel: DataFetchAndPagingViewModel = hiltViewModel()
 
         DataFetchAndPagingScreen(
+            viewModel = viewModel
+        )
+    }
+
+    composable(TutorialsScreen.TutorialTicTacToe.route) {
+        val viewModel: TicTacToeViewModel = hiltViewModel()
+
+        TicTacToeScreen(
             viewModel = viewModel
         )
     }

@@ -97,4 +97,12 @@ dependencies {
     implementation(Libs.Accompanist.placeholder)
 
     // ----------------------------------------------------------------
+
+    // Timber
+    implementation(Libs.timber)
+
+    // Hilt
+    implementation(Libs.Hilt.core)
+    kapt(Libs.Hilt.compiler)
+    implementation(Libs.Hilt.navigationCompose)
 }

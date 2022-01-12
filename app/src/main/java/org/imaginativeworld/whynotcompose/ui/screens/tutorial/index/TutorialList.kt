@@ -97,6 +97,11 @@ data class Tutorial(
                 route = TutorialsScreen.TutorialDataFetchAndPaging,
                 level = TutorialLevel.Advanced,
             ),
+            Tutorial(
+                name = "Tic-Tac-Toe",
+                route = TutorialsScreen.TutorialTicTacToe,
+                level = TutorialLevel.Intermediate,
+            ),
         )
     }
 }

@@ -100,7 +100,7 @@ data class Tutorial(
             Tutorial(
                 name = "Tic-Tac-Toe",
                 route = TutorialsScreen.TutorialTicTacToe,
-                level = TutorialLevel.Intermediate,
+                level = TutorialLevel.Advanced,
             ),
         )
     }

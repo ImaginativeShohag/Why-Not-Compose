@@ -11,22 +11,8 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.base.extensions.combine
 import org.imaginativeworld.whynotcompose.base.models.Event
-import timber.log.Timber
 import javax.inject.Inject
 import kotlin.random.Random
-
-sealed class WinPosition(val places: List<Int>) {
-    object H1 : WinPosition(listOf(1, 2, 3))
-    object H2 : WinPosition(listOf(4, 5, 6))
-    object H3 : WinPosition(listOf(7, 8, 9))
-
-    object V1 : WinPosition(listOf(1, 4, 7))
-    object V2 : WinPosition(listOf(2, 5, 8))
-    object V3 : WinPosition(listOf(3, 6, 9))
-
-    object D1 : WinPosition(listOf(1, 5, 9))
-    object D2 : WinPosition(listOf(3, 5, 7))
-}
 
 @HiltViewModel
 class TicTacToeViewModel @Inject constructor(
@@ -34,6 +20,8 @@ class TicTacToeViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val winPlayingMoves = mutableSetOf<String>()
+
+    // ----------------------------------------------------------------
 
     private val _eventShowLoading = MutableStateFlow(false)
     private val _eventShowMessage = MutableStateFlow<Event<String>?>(null)
@@ -92,47 +80,43 @@ class TicTacToeViewModel @Inject constructor(
         _totalNeurons.value = winPlayingMoves.size
     }
 
-    /**
-     *  1  2  3
-     *  4  5  6
-     *  7  8  9
-     */
     fun act(position: Int) = viewModelScope.launch {
+        // ----------------------------------------------------------------
+        // User's Move
+        // ----------------------------------------------------------------
+
+        // Step 1: Apply user move
         _currentPlayingMoves.value += "$position${Piece.X.value}"
 
         // Wait for the animation to finish
         delay(300)
 
-        // Check winning positions
-        val isWin = isWin(_currentPlayingMoves.value)
+        // Step 2: Check winning positions for User
+        TicTacToeEngine.isWin(_currentPlayingMoves.value)?.let { winPosition ->
 
-        // - If user win: save and notify
-        if (isWin) {
-            // User Win!!!!
-
+            // Save the win moves (We will call them Neuron ;) )
             winPlayingMoves.add(_currentPlayingMoves.value)
             _totalNeurons.value = winPlayingMoves.size
 
-            _userWinCount.value++
-
-            _eventPaused.value = true
-            _eventShowMessage.value = Event("Win: User")
+            notifyWon(winPosition)
 
             return@launch
         }
 
-        // Is it draw?
+        // Step 3: Is it a draw?
         if (_currentPlayingMoves.value.length >= 18) {
 
             _eventPaused.value = true
-            _eventShowMessage.value = Event("Win: Draw")
+            _eventShowMessage.value = Event("It is a draw!")
 
             return@launch
         }
 
-        // - If ai win: save and notify
+        // ----------------------------------------------------------------
+        // AI's Move
+        // ----------------------------------------------------------------
 
-        // Check database if current flow match any win move
+        // Step 4: Check database if current flow match any win move
         val matchedNeuron =
             winPlayingMoves.find { item -> item.startsWith(_currentPlayingMoves.value) }
 
@@ -147,18 +131,14 @@ class TicTacToeViewModel @Inject constructor(
             _eventShowToast.value = Event("Neuron used.")
 
             // Check if AI win?
-            if (isWin(_currentPlayingMoves.value)) {
-
-                _aiWinCount.value++
-
-                _eventPaused.value = true
-                _eventShowMessage.value = Event("Win: AI (Using Neuron)")
+            TicTacToeEngine.isWin(_currentPlayingMoves.value)?.let { winPosition ->
+                notifyWon(winPosition)
             }
 
             return@launch
         }
 
-        // - else: send random move
+        // - Else: send random move
         while (true) {
             val randInt = Random.nextInt(1, 10)
             if (!_currentPlayingMoves.value.contains(randInt.toString())) {
@@ -167,92 +147,31 @@ class TicTacToeViewModel @Inject constructor(
             }
         }
 
-        // Check if AI win?
-        if (isWin(_currentPlayingMoves.value)) {
+        // Step 5: Check if AI win?
+        TicTacToeEngine.isWin(_currentPlayingMoves.value)?.let { winPosition ->
+            notifyWon(winPosition)
+        }
+    }
 
+    // ----------------------------------------------------------------
+
+    private fun notifyWon(winPosition: WinPosition) {
+        _eventPaused.value = true
+
+        val winPiece = TicTacToeEngine.whoWin(
+            _currentPlayingMoves.value,
+            winPosition
+        )
+
+        if (winPiece == Piece.X) {
+            _eventShowMessage.value = Event("You won!")
+            _userWinCount.value++
+        } else {
+            _eventShowMessage.value = Event("AI won!")
             _aiWinCount.value++
-
-            _eventPaused.value = true
-            _eventShowMessage.value = Event("Win: AI")
-        }
-    }
-
-    /**
-     * 1X2X3X4X5X6X7X8X9X
-     */
-    private fun isWin(playingMoves: String): Boolean {
-        Timber.e("Moves: $playingMoves")
-
-        // Horizontals
-        if (playingMoves.findOrNull(1) != null &&
-            playingMoves.findOrNull(1) == playingMoves.findOrNull(2) &&
-            playingMoves.findOrNull(2) == playingMoves.findOrNull(3)
-        ) {
-            _winPosition.value = WinPosition.H1
-            return true
-        }
-        if (playingMoves.findOrNull(4) != null &&
-            playingMoves.findOrNull(4) == playingMoves.findOrNull(5) &&
-            playingMoves.findOrNull(5) == playingMoves.findOrNull(6)
-        ) {
-            _winPosition.value = WinPosition.H2
-            return true
-        }
-        if (playingMoves.findOrNull(7) != null &&
-            playingMoves.findOrNull(7) == playingMoves.findOrNull(8) &&
-            playingMoves.findOrNull(8) == playingMoves.findOrNull(9)
-        ) {
-            _winPosition.value = WinPosition.H3
-            return true
         }
 
-        // Verticals
-        if (playingMoves.findOrNull(1) != null &&
-            playingMoves.findOrNull(1) == playingMoves.findOrNull(4) &&
-            playingMoves.findOrNull(4) == playingMoves.findOrNull(7)
-        ) {
-            _winPosition.value = WinPosition.V1
-            return true
-        }
-        if (playingMoves.findOrNull(2) != null &&
-            playingMoves.findOrNull(2) == playingMoves.findOrNull(5) &&
-            playingMoves.findOrNull(5) == playingMoves.findOrNull(8)
-        ) {
-            _winPosition.value = WinPosition.V2
-            return true
-        }
-        if (playingMoves.findOrNull(3) != null &&
-            playingMoves.findOrNull(3) == playingMoves.findOrNull(6) &&
-            playingMoves.findOrNull(6) == playingMoves.findOrNull(9)
-        ) {
-            _winPosition.value = WinPosition.V3
-            return true
-        }
-
-        // Diagonals
-        if (playingMoves.findOrNull(1) != null &&
-            playingMoves.findOrNull(1) == playingMoves.findOrNull(5) &&
-            playingMoves.findOrNull(5) == playingMoves.findOrNull(9)
-        ) {
-            _winPosition.value = WinPosition.D1
-            return true
-        }
-        if (playingMoves.findOrNull(3) != null &&
-            playingMoves.findOrNull(3) == playingMoves.findOrNull(5) &&
-            playingMoves.findOrNull(5) == playingMoves.findOrNull(7)
-        ) {
-            _winPosition.value = WinPosition.D2
-            return true
-        }
-
-        return false
-    }
-
-    private fun String.findOrNull(position: Int): String? {
-        val found = this.indexOf(position.toString())
-
-        return if (found == -1) null
-        else getOrNull(found + 1)?.toString()
+        _winPosition.value = winPosition
     }
 
     // ----------------------------------------------------------------
@@ -280,3 +199,4 @@ data class UiState(
     val totalNeurons: Int = 0,
     val winPosition: WinPosition? = null,
 )
+

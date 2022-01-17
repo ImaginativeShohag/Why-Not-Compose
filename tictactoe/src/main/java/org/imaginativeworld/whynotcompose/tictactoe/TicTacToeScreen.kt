@@ -27,7 +27,12 @@
 package org.imaginativeworld.whynotcompose.tictactoe
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.LocalIndication
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -44,7 +49,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarDuration
+import androidx.compose.material.SnackbarHostState
+import androidx.compose.material.SnackbarResult
 import androidx.compose.material.Text
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -54,12 +63,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
+import org.imaginativeworld.whynotcompose.base.models.Event
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
@@ -67,19 +79,23 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 fun TicTacToeScreen(
     viewModel: TicTacToeViewModel
 ) {
-
-    val currentPlayingMoves by viewModel.currentPlayingMoves.collectAsState()
-    val userWinCount by viewModel.userWinCount.collectAsState()
-    val aiWinCount by viewModel.aiWinCount.collectAsState()
+    val state by viewModel.state.collectAsState()
 
     TicTacToeScreenSkeleton(
-        userWinCount = userWinCount,
-        aiWinCount = aiWinCount,
-        currentPlayingMoves = currentPlayingMoves,
+        loading = state.loading,
+        message = state.message,
+        paused = state.paused,
+        userWinCount = state.userWinCount,
+        aiWinCount = state.aiWinCount,
+        currentPlayingMoves = state.currentPlayingMoves,
+        totalNeurons = state.totalNeurons,
         onBoxClicked = { position ->
             viewModel.act(
                 position = position,
             )
+        },
+        onRestartClicked = {
+            viewModel.restart()
         }
     )
 }
@@ -89,7 +105,7 @@ fun TicTacToeScreen(
 fun TicTacToeScreenSkeletonPreview() {
     AppTheme {
         TicTacToeScreenSkeleton(
-            currentPlayingMoves = "1⭕3⭕5❌7❌9⭕2❌4❌6❌8⭕"
+            currentPlayingMoves = "1O3O5X7X9O2X4X6X8O"
         )
     }
 }
@@ -99,25 +115,49 @@ fun TicTacToeScreenSkeletonPreview() {
 fun TicTacToeScreenSkeletonPreviewDark() {
     AppTheme {
         TicTacToeScreenSkeleton(
-            currentPlayingMoves = "1⭕3⭕5❌7❌9⭕2❌4❌6❌8⭕"
+            currentPlayingMoves = "1O3O5X7X9O2X4X6X8O"
         )
     }
 }
 
 @Composable
 fun TicTacToeScreenSkeleton(
+    loading: Boolean = false,
+    message: Event<String>? = null,
+    paused: Boolean = false,
     userWinCount: Int = 0,
     aiWinCount: Int = 0,
     currentPlayingMoves: String = "",
-    onBoxClicked: (position: Int) -> Unit = { }
+    totalNeurons: Int = 0,
+    onBoxClicked: (position: Int) -> Unit = { },
+    onRestartClicked: () -> Unit = {},
 ) {
+    val snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
+    val scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState)
+
+    LaunchedEffect(message) {
+        message?.getValueOnce()?.let { value ->
+            val result = snackbarHostState.showSnackbar(
+                message = value,
+                actionLabel = "Play Again",
+                duration = SnackbarDuration.Indefinite
+            )
+
+            if (result == SnackbarResult.ActionPerformed) {
+                onRestartClicked()
+            }
+        }
+    }
+
     Scaffold(
         Modifier
             .navigationBarsWithImePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        scaffoldState = scaffoldState,
     ) {
         Column(
             Modifier
+                .padding(it)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
@@ -174,80 +214,73 @@ fun TicTacToeScreenSkeleton(
                     .fillMaxWidth()
             ) {
                 Row(Modifier.fillMaxWidth()) {
-                    Block(
-                        position = 1,
-                        currentPlayingMoves = currentPlayingMoves,
-                        onClick = {
-                            onBoxClicked(1)
-                        }
-                    )
-                    Block(
-                        position = 2,
-                        currentPlayingMoves = currentPlayingMoves,
-                        onClick = {
-                            onBoxClicked(2)
-                        }
-                    )
-                    Block(
-                        position = 3,
-                        currentPlayingMoves = currentPlayingMoves,
-                        onClick = {
-                            onBoxClicked(3)
-                        }
-                    )
+                    for (i in 1..3) {
+                        Block(
+                            position = i,
+                            currentPlayingMoves = currentPlayingMoves,
+                            enabled = !paused,
+                            onClick = {
+                                onBoxClicked(i)
+                            }
+                        )
+                    }
                 }
                 Row(Modifier.fillMaxWidth()) {
-                    Block(
-                        position = 4,
-                        currentPlayingMoves = currentPlayingMoves,
-                        onClick = {
-                            onBoxClicked(4)
-                        }
-                    )
-                    Block(
-                        position = 5,
-                        currentPlayingMoves = currentPlayingMoves,
-                        onClick = {
-                            onBoxClicked(5)
-                        }
-                    )
-                    Block(
-                        position = 6,
-                        currentPlayingMoves = currentPlayingMoves,
-                        onClick = {
-                            onBoxClicked(6)
-                        }
-                    )
+                    for (i in 4..6) {
+                        Block(
+                            position = i,
+                            currentPlayingMoves = currentPlayingMoves,
+                            enabled = !paused,
+                            onClick = {
+                                onBoxClicked(i)
+                            }
+                        )
+                    }
                 }
                 Row(Modifier.fillMaxWidth()) {
-                    Block(
-                        position = 7,
-                        currentPlayingMoves = currentPlayingMoves,
-                        onClick = {
-                            onBoxClicked(7)
-                        }
-                    )
-                    Block(
-                        position = 8,
-                        currentPlayingMoves = currentPlayingMoves,
-                        onClick = {
-                            onBoxClicked(8)
-                        }
-                    )
-                    Block(
-                        position = 9,
-                        currentPlayingMoves = currentPlayingMoves,
-                        onClick = {
-                            onBoxClicked(9)
-                        }
-                    )
+                    for (i in 7..9) {
+                        Block(
+                            position = i,
+                            currentPlayingMoves = currentPlayingMoves,
+                            enabled = !paused,
+                            onClick = {
+                                onBoxClicked(i)
+                            }
+                        )
+                    }
                 }
             }
+
+            // ----------------------------------------------------------------
+
+            AppComponent.MediumSpacer()
+
+            Text(
+                modifier = Modifier
+                    .padding(start = 32.dp, end = 32.dp)
+                    .fillMaxWidth(),
+                text = "Total Neurons: $totalNeurons"
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
 
             AppComponent.BigSpacer()
+        }
+
+        AnimatedVisibility(
+            visible = loading,
+            enter = fadeIn(),
+            exit = fadeOut(),
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colors.onBackground.copy(.5f)),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text("Working...")
+            }
         }
     }
 }
@@ -256,6 +289,7 @@ fun TicTacToeScreenSkeleton(
 fun RowScope.Block(
     position: Int,
     currentPlayingMoves: String,
+    enabled: Boolean,
     onClick: () -> Unit = {},
 ) {
     var currentPiece by remember { mutableStateOf<String?>(null) }
@@ -271,24 +305,36 @@ fun RowScope.Block(
             .border(1.dp, MaterialTheme.colors.onBackground.copy(.15f))
             .clickable(
                 indication = if (currentPiece == null) LocalIndication.current else null,
-                interactionSource = remember { MutableInteractionSource() }
+                interactionSource = remember { MutableInteractionSource() },
+                enabled = enabled,
             ) {
                 if (currentPiece == null)
                     onClick()
             },
         contentAlignment = Alignment.Center
     ) {
-        Text(
-            text = currentPiece ?: "",
-            fontSize = 32.sp,
-        )
+        if (currentPiece != null) {
+            Image(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxSize(),
+                painter = painterResource(
+                    id = when (currentPiece) {
+                        Piece.X.value -> R.drawable.ic_x
+                        else -> R.drawable.ic_o
+                    }
+                ),
+                contentDescription = currentPiece,
+                colorFilter = ColorFilter.tint(MaterialTheme.colors.onBackground)
+            )
+        }
     }
 }
 
 /**
  * Example [currentPlayingMoves]:
  *
- * 1⭕3⭕5❌7❌9⭕2❌4❌6❌8⭕
+ * 1O3O5X7X9O2X4X6X8O
  */
 private fun getPiece(position: Int, currentPlayingMoves: String): String? {
     val targetPosition = currentPlayingMoves.indexOf(position.toString())

@@ -49,7 +49,7 @@ import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
-import org.imaginativeworld.whynotcompose.utils.extensions.toast
+import org.imaginativeworld.whynotcompose.base.extensions.toast
 
 // Note: Clear Storage will clear the permissions.
 

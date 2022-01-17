@@ -11,6 +11,7 @@ android {
         minSdk = BuildConfigConst.minSdk
         targetSdk = BuildConfigConst.targetSdk
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -18,22 +19,6 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
-
-        freeCompilerArgs = freeCompilerArgs + "-Xallow-jvm-ir-dependencies"
-        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
-
-        // Enable experimental coroutines APIs, including Flow
-        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.Experimental"
-
-        // Enable experimental compose APIs
-        freeCompilerArgs =
-            freeCompilerArgs + "-Xopt-in=androidx.compose.material.ExperimentalMaterialApi"
-        freeCompilerArgs =
-            freeCompilerArgs + "-Xopt-in=androidx.compose.animation.ExperimentalAnimationApi"
-        freeCompilerArgs =
-            freeCompilerArgs + "-Xopt-in=androidx.compose.ui.ExperimentalComposeUiApi"
-        freeCompilerArgs =
-            freeCompilerArgs + "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi"
     }
 
     buildFeatures {
@@ -46,13 +31,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":base"))
-    implementation(project(":common-ui-compose"))
-
     implementation(Libs.Kotlin.stdlib)
-    implementation(Libs.AndroidX.coreKtx)
-    implementation(Libs.AndroidX.appcompat)
-    implementation(Libs.AndroidX.swipeRefreshLayout)
 
     // ----------------------------------------------------------------
     // Compose
@@ -99,11 +78,21 @@ dependencies {
 
     // ----------------------------------------------------------------
 
+    // Retrofit
+    implementation(Libs.Square.Retrofit.core)
+    implementation(Libs.Square.okhttpLoggingInterceptor)
+
+    // Moshi
+    implementation(Libs.Square.Retrofit.converterMoshi)
+    implementation(Libs.Square.Moshi.core)
+    kapt(Libs.Square.Moshi.codegen)
+
+    // ViewModel and LiveData
+    implementation(Libs.AndroidX.Lifecycle.viewmodel)
+    implementation(Libs.AndroidX.Lifecycle.livedata)
+    implementation(Libs.AndroidX.Lifecycle.common)
+    implementation(Libs.AndroidX.Lifecycle.runtime)
+
     // Timber
     implementation(Libs.timber)
-
-    // Hilt
-    implementation(Libs.Hilt.core)
-    kapt(Libs.Hilt.compiler)
-    implementation(Libs.Hilt.navigationCompose)
 }

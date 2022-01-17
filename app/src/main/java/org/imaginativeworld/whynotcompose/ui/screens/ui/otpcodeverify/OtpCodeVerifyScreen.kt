@@ -87,7 +87,7 @@ import com.google.accompanist.insets.navigationBarsPadding
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
-import org.imaginativeworld.whynotcompose.models.Event
+import org.imaginativeworld.whynotcompose.base.models.Event
 import org.imaginativeworld.whynotcompose.ui.compositions.CustomSnackbarHost
 
 @Composable

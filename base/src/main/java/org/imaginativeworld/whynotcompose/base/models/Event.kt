@@ -24,23 +24,37 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.utils.extensions
+package org.imaginativeworld.whynotcompose.base.models
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
-import kotlinx.coroutines.flow.Flow
+/**
+ * The observer/collector of LiveData, Channel, Flow etc. ignored consequent identical values.
+ * So, before we send an event we update the `id` with an unique value. Which makes it
+ * non-identical.
+ *
+ * @param value T The target value.
+ * @param id Int The unique event id. It will be auto generated.
+ */
+data class Event<out T>(
+    val value: T,
+    private val id: Int = if (lastId == Int.MAX_VALUE) {
+        lastId = Int.MIN_VALUE
+        Int.MAX_VALUE
+    } else lastId++,
+) {
+    companion object {
+        private var lastId = Int.MAX_VALUE
+    }
 
-@Composable
-fun <T> Flow<T>.rememberFlowWithLifecycle(): Flow<T> {
-    val lifecycleOwner = LocalLifecycleOwner.current
+    private var valueSent = false
 
-    return remember(this, lifecycleOwner) {
-        this.flowWithLifecycle(
-            lifecycleOwner.lifecycle,
-            Lifecycle.State.STARTED
-        )
+    /**
+     * Get the [value] only once.
+     */
+    fun getValueOnce(): T? {
+        return if (!valueSent) {
+            valueSent = true
+
+            value
+        } else null
     }
 }

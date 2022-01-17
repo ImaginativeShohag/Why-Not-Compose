@@ -42,7 +42,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.utils.SharedPref
-import org.imaginativeworld.whynotcompose.utils.extensions.toast
+import org.imaginativeworld.whynotcompose.base.extensions.toast
 import javax.inject.Inject
 
 @AndroidEntryPoint

@@ -24,23 +24,20 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.utils.extensions
+package org.imaginativeworld.whynotcompose.base.extensions
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
+import android.icu.text.MessageFormat
+import android.os.Build
+import java.util.Locale
 
-/**
- * Open given [url] to a browser.
- */
-fun Context.openUrl(url: String) {
-    try {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
-    } catch (e: Exception) {
-        e.printStackTrace()
-
-        longToast("Cannot open the link!")
+fun Int.toWords(language: String = "en", country: String = "US"): String {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        val formatter = MessageFormat(
+            "{0,spellout,currency}",
+            Locale(language, country)
+        )
+        formatter.format(arrayOf(this))
+    } else {
+        this.toString()
     }
 }

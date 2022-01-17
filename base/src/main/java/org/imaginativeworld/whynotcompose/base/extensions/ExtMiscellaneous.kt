@@ -24,37 +24,23 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.models
+package org.imaginativeworld.whynotcompose.base.extensions
+
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 
 /**
- * The observer/collector of LiveData, Channel, Flow etc. ignored consequent identical values.
- * So, before we send an event we update the `id` with an unique value. Which makes it
- * non-identical.
- *
- * @param value T The target value.
- * @param id Int The unique event id. It will be auto generated.
+ * Open given [url] to a browser.
  */
-data class Event<out T>(
-    val value: T,
-    private val id: Int = if (lastId == Int.MAX_VALUE) {
-        lastId = Int.MIN_VALUE
-        Int.MAX_VALUE
-    } else lastId++,
-) {
-    companion object {
-        private var lastId = Int.MAX_VALUE
-    }
+fun Context.openUrl(url: String) {
+    try {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+    } catch (e: Exception) {
+        e.printStackTrace()
 
-    private var valueSent = false
-
-    /**
-     * Get the [value] only once.
-     */
-    fun getValueOnce(): T? {
-        return if (!valueSent) {
-            valueSent = true
-
-            value
-        } else null
+        longToast("Cannot open the link!")
     }
 }

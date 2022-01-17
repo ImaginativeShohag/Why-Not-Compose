@@ -5,7 +5,11 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.imaginativeworld.whynotcompose.base.extensions.combine
+import org.imaginativeworld.whynotcompose.base.models.Event
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.random.Random
@@ -17,22 +21,53 @@ class TicTacToeViewModel @Inject constructor(
 
     private val winPlayingMoves = mutableSetOf<String>()
 
+    private val _eventShowLoading = MutableStateFlow(false)
+    private val _eventShowMessage = MutableStateFlow<Event<String>?>(null)
+    private val _eventPaused = MutableStateFlow(false)
     private val _userWinCount = MutableStateFlow(0)
-    val userWinCount: StateFlow<Int>
-        get() = _userWinCount
-
     private val _aiWinCount = MutableStateFlow(0)
-    val aiWinCount: StateFlow<Int>
-        get() = _aiWinCount
-
     private val _currentPlayingMoves = MutableStateFlow("")
-    val currentPlayingMoves: StateFlow<String>
-        get() = _currentPlayingMoves
+    private val _totalNeurons = MutableStateFlow(0)
+
+    // ----------------------------------------------------------------
+
+    private val _state = MutableStateFlow(UiState())
+    val state: StateFlow<UiState>
+        get() = _state
+
+    // ----------------------------------------------------------------
 
     init {
+        viewModelScope.launch {
+            combine(
+                _eventShowLoading,
+                _eventShowMessage,
+                _eventPaused,
+                _userWinCount,
+                _aiWinCount,
+                _currentPlayingMoves,
+                _totalNeurons,
+            ) { showLoading, showMessage, paused, userWinCount, aiWinCount, currentPlayingMoves, totalNeurons ->
+                UiState(
+                    loading = showLoading,
+                    message = showMessage,
+                    paused = paused,
+                    userWinCount = userWinCount,
+                    aiWinCount = aiWinCount,
+                    currentPlayingMoves = currentPlayingMoves,
+                    totalNeurons = totalNeurons,
+                )
+            }.catch { throwable ->
+                // TODO: emit a UI error here. For now we'll just rethrow
+                throw throwable
+            }.collect {
+                _state.value = it
+            }
+        }
+
         winPlayingMoves.addAll(sharedPref.getData())
 
-        Timber.e("Moves: DB count: ${winPlayingMoves.size}")
+        _totalNeurons.value = winPlayingMoves.size
     }
 
     /**
@@ -51,12 +86,12 @@ class TicTacToeViewModel @Inject constructor(
             // User Win!!!!
 
             winPlayingMoves.add(_currentPlayingMoves.value)
-
-            _currentPlayingMoves.value = ""
+            _totalNeurons.value = winPlayingMoves.size
 
             _userWinCount.value++
 
-            Timber.e("Win: User")
+            _eventPaused.value = true
+            _eventShowMessage.value = Event("Win: User")
 
             return@launch
         }
@@ -64,9 +99,8 @@ class TicTacToeViewModel @Inject constructor(
         // Is it draw?
         if (_currentPlayingMoves.value.length >= 18) {
 
-            _currentPlayingMoves.value = ""
-
-            Timber.e("Win: Draw")
+            _eventPaused.value = true
+            _eventShowMessage.value = Event("Win: Draw")
 
             return@launch
         }
@@ -88,11 +122,10 @@ class TicTacToeViewModel @Inject constructor(
             // Check if AI win?
             if (isWin(_currentPlayingMoves.value)) {
 
-                _currentPlayingMoves.value = ""
-
                 _aiWinCount.value++
 
-                Timber.e("Win: AI")
+                _eventPaused.value = true
+                _eventShowMessage.value = Event("Win: AI")
             }
 
             return@launch
@@ -110,11 +143,10 @@ class TicTacToeViewModel @Inject constructor(
         // Check if AI win?
         if (isWin(_currentPlayingMoves.value)) {
 
-            _currentPlayingMoves.value = ""
-
             _aiWinCount.value++
 
-            Timber.e("Win: AI")
+            _eventPaused.value = true
+            _eventShowMessage.value = Event("Win: AI")
         }
     }
 
@@ -188,8 +220,27 @@ class TicTacToeViewModel @Inject constructor(
         else getOrNull(found + 1)?.toString()
     }
 
+    // ----------------------------------------------------------------
+
+    fun restart() {
+        _eventPaused.value = false
+        _currentPlayingMoves.value = ""
+    }
+
+    // ----------------------------------------------------------------
+
     override fun onCleared() {
         sharedPref.setData(winPlayingMoves)
     }
 
 }
+
+data class UiState(
+    val loading: Boolean = false,
+    val message: Event<String>? = null,
+    val paused: Boolean = true,
+    val userWinCount: Int = 0,
+    val aiWinCount: Int = 0,
+    val currentPlayingMoves: String = "",
+    val totalNeurons: Int = 0,
+)

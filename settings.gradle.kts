@@ -11,3 +11,4 @@ rootProject.name = "Why Not Compose!"
 include(":app")
 include(":tictactoe")
 include(":common-ui-compose")
+include(":base")

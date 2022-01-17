@@ -26,7 +26,7 @@
 
 @file:Suppress("NOTHING_TO_INLINE", "unused")
 
-package org.imaginativeworld.whynotcompose.utils.extensions
+package org.imaginativeworld.whynotcompose.base.extensions
 
 import android.content.Context
 import android.widget.Toast

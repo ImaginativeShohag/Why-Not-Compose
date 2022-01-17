@@ -88,6 +88,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":base"))
     implementation(project(":common-ui-compose"))
     implementation(project(":tictactoe"))
 

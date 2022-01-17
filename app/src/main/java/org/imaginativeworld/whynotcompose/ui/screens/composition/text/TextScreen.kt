@@ -58,7 +58,7 @@ import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppFont
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
-import org.imaginativeworld.whynotcompose.utils.extensions.toast
+import org.imaginativeworld.whynotcompose.base.extensions.toast
 
 // Help: https://developer.android.com/jetpack/compose/text
 

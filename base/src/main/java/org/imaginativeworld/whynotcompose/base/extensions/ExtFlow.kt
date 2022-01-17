@@ -24,20 +24,23 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.utils.extensions
+package org.imaginativeworld.whynotcompose.base.extensions
 
-import android.icu.text.MessageFormat
-import android.os.Build
-import java.util.Locale
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import kotlinx.coroutines.flow.Flow
 
-fun Int.toWords(language: String = "en", country: String = "US"): String {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        val formatter = MessageFormat(
-            "{0,spellout,currency}",
-            Locale(language, country)
+@Composable
+fun <T> Flow<T>.rememberFlowWithLifecycle(): Flow<T> {
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    return remember(this, lifecycleOwner) {
+        this.flowWithLifecycle(
+            lifecycleOwner.lifecycle,
+            Lifecycle.State.STARTED
         )
-        formatter.format(arrayOf(this))
-    } else {
-        this.toString()
     }
 }

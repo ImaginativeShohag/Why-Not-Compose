@@ -63,7 +63,7 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.utils.SquireCropImage
 import org.imaginativeworld.whynotcompose.utils.extensions.createImageFile
 import org.imaginativeworld.whynotcompose.utils.extensions.getUriForFile
-import org.imaginativeworld.whynotcompose.utils.extensions.toast
+import org.imaginativeworld.whynotcompose.base.extensions.toast
 import java.io.File
 import java.util.Date
 

@@ -77,8 +77,8 @@ import org.imaginativeworld.whynotcompose.common.compose.compositions.AppCompone
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
 import org.imaginativeworld.whynotcompose.ui.screens.Screen
-import org.imaginativeworld.whynotcompose.utils.extensions.openUrl
-import org.imaginativeworld.whynotcompose.utils.extensions.shadow
+import org.imaginativeworld.whynotcompose.base.extensions.openUrl
+import org.imaginativeworld.whynotcompose.base.extensions.shadow
 
 private val menuItems = listOf(
     MenuItem(

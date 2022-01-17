@@ -44,8 +44,8 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
-import org.imaginativeworld.whynotcompose.datasource.GithubRepoDataSource
 import org.imaginativeworld.whynotcompose.base.models.Event
+import org.imaginativeworld.whynotcompose.datasource.GithubRepoDataSource
 import org.imaginativeworld.whynotcompose.models.github.GithubRepo
 import org.imaginativeworld.whynotcompose.repositories.AppRepository
 import timber.log.Timber

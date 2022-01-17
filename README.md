@@ -47,6 +47,7 @@ Feel free to request features or suggestions for improvements.
 - Capture image and crop for upload (Intermediate)
 - Permission (Beginner)
 - Data Fetch and Paging (Advanced)
+- Tutorial: Tic-Tac-Toe (Advanced)
 
 | ![Preview](images/counter.gif) | ![Preview](images/animated-visibility.gif) | ![Preview](images/lottie.gif) |
 | :------: | :------: | :------: |
@@ -62,7 +63,7 @@ Feel free to request features or suggestions for improvements.
 - [ ] Tutorial: ExoPlayer sample
 - [x] Tutorial: Data Fetch and Paging
 - [ ] Tutorial: OneSignal with broadcast at notification
-- [ ] Tutorial: Tic-Tac-Toe
+- [x] Tutorial: Tic-Tac-Toe
 
 # Note
 

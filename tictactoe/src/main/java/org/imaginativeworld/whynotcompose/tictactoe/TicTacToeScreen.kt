@@ -27,7 +27,9 @@
 package org.imaginativeworld.whynotcompose.tictactoe
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
@@ -45,6 +47,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
@@ -63,14 +66,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
+import org.imaginativeworld.whynotcompose.base.extensions.toast
 import org.imaginativeworld.whynotcompose.base.models.Event
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
@@ -79,7 +89,15 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 fun TicTacToeScreen(
     viewModel: TicTacToeViewModel
 ) {
+    val context = LocalContext.current
+
     val state by viewModel.state.collectAsState()
+
+    LaunchedEffect(state.toast) {
+        state.toast?.getValueOnce()?.let { message ->
+            context.toast(message)
+        }
+    }
 
     TicTacToeScreenSkeleton(
         loading = state.loading,
@@ -89,6 +107,7 @@ fun TicTacToeScreen(
         aiWinCount = state.aiWinCount,
         currentPlayingMoves = state.currentPlayingMoves,
         totalNeurons = state.totalNeurons,
+        winPosition = state.winPosition,
         onBoxClicked = { position ->
             viewModel.act(
                 position = position,
@@ -129,6 +148,7 @@ fun TicTacToeScreenSkeleton(
     aiWinCount: Int = 0,
     currentPlayingMoves: String = "",
     totalNeurons: Int = 0,
+    winPosition: WinPosition? = null,
     onBoxClicked: (position: Int) -> Unit = { },
     onRestartClicked: () -> Unit = {},
 ) {
@@ -161,7 +181,7 @@ fun TicTacToeScreenSkeleton(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            AppComponent.Header("Tic Tac Toe")
+            AppComponent.Header("Tic-Tac-Toe")
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
@@ -208,45 +228,52 @@ fun TicTacToeScreenSkeleton(
 
             AppComponent.MediumSpacer()
 
-            Column(
-                Modifier
-                    .padding(start = 32.dp, end = 32.dp)
-                    .fillMaxWidth()
-            ) {
-                Row(Modifier.fillMaxWidth()) {
-                    for (i in 1..3) {
-                        Block(
-                            position = i,
-                            currentPlayingMoves = currentPlayingMoves,
-                            enabled = !paused,
-                            onClick = {
-                                onBoxClicked(i)
-                            }
-                        )
+            Box(Modifier.fillMaxWidth()) {
+                Column(
+                    Modifier
+                        .padding(start = 32.dp, end = 32.dp)
+                        .fillMaxWidth()
+                ) {
+                    Row(
+                        Modifier.fillMaxWidth()
+                    ) {
+                        for (i in 1..3) {
+                            Block(
+                                position = i,
+                                currentPlayingMoves = currentPlayingMoves,
+                                enabled = !paused,
+                                isMarked = winPosition != null && i in winPosition.places,
+                                onClick = {
+                                    onBoxClicked(i)
+                                }
+                            )
+                        }
                     }
-                }
-                Row(Modifier.fillMaxWidth()) {
-                    for (i in 4..6) {
-                        Block(
-                            position = i,
-                            currentPlayingMoves = currentPlayingMoves,
-                            enabled = !paused,
-                            onClick = {
-                                onBoxClicked(i)
-                            }
-                        )
+                    Row(Modifier.fillMaxWidth()) {
+                        for (i in 4..6) {
+                            Block(
+                                position = i,
+                                currentPlayingMoves = currentPlayingMoves,
+                                enabled = !paused,
+                                isMarked = winPosition != null && i in winPosition.places,
+                                onClick = {
+                                    onBoxClicked(i)
+                                }
+                            )
+                        }
                     }
-                }
-                Row(Modifier.fillMaxWidth()) {
-                    for (i in 7..9) {
-                        Block(
-                            position = i,
-                            currentPlayingMoves = currentPlayingMoves,
-                            enabled = !paused,
-                            onClick = {
-                                onBoxClicked(i)
-                            }
-                        )
+                    Row(Modifier.fillMaxWidth()) {
+                        for (i in 7..9) {
+                            Block(
+                                position = i,
+                                currentPlayingMoves = currentPlayingMoves,
+                                enabled = !paused,
+                                isMarked = winPosition != null && i in winPosition.places,
+                                onClick = {
+                                    onBoxClicked(i)
+                                }
+                            )
+                        }
                     }
                 }
             }
@@ -259,7 +286,14 @@ fun TicTacToeScreenSkeleton(
                 modifier = Modifier
                     .padding(start = 32.dp, end = 32.dp)
                     .fillMaxWidth(),
-                text = "Total Neurons: $totalNeurons"
+                text = buildAnnotatedString {
+                    append("Total Neurons: ")
+
+                    withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                        append("$totalNeurons")
+                    }
+                },
+                textAlign = TextAlign.Center,
             )
 
             // ----------------------------------------------------------------
@@ -279,7 +313,10 @@ fun TicTacToeScreenSkeleton(
                     .background(MaterialTheme.colors.onBackground.copy(.5f)),
                 contentAlignment = Alignment.Center,
             ) {
-                Text("Working...")
+                Text(
+                    text = "Working...",
+                    color = MaterialTheme.colors.background
+                )
             }
         }
     }
@@ -290,6 +327,7 @@ fun RowScope.Block(
     position: Int,
     currentPlayingMoves: String,
     enabled: Boolean,
+    isMarked: Boolean,
     onClick: () -> Unit = {},
 ) {
     var currentPiece by remember { mutableStateOf<String?>(null) }
@@ -298,11 +336,31 @@ fun RowScope.Block(
         currentPiece = getPiece(position, currentPlayingMoves)
     }
 
+    val backgroundColor by animateColorAsState(
+        targetValue = if (isMarked) MaterialTheme.colors.error
+        else MaterialTheme.colors.background
+    )
+
+    val iconColor by animateColorAsState(
+        targetValue = if (isMarked) MaterialTheme.colors.onError
+        else MaterialTheme.colors.onBackground
+    )
+
     Box(
         Modifier
+            .padding(4.dp)
+            .clip(CircleShape)
             .weight(1f)
             .aspectRatio(1f)
-            .border(1.dp, MaterialTheme.colors.onBackground.copy(.15f))
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colors.onBackground.copy(.15f),
+                shape = CircleShape
+            )
+            .background(
+                color = backgroundColor,
+                shape = CircleShape
+            )
             .clickable(
                 indication = if (currentPiece == null) LocalIndication.current else null,
                 interactionSource = remember { MutableInteractionSource() },
@@ -313,26 +371,29 @@ fun RowScope.Block(
             },
         contentAlignment = Alignment.Center
     ) {
-        if (currentPiece != null) {
+        AnimatedContent(
+            targetState = currentPiece,
+        ) { targetCurrentPiece ->
             Image(
                 modifier = Modifier
                     .padding(16.dp)
                     .fillMaxSize(),
                 painter = painterResource(
-                    id = when (currentPiece) {
+                    id = when (targetCurrentPiece) {
                         Piece.X.value -> R.drawable.ic_x
-                        else -> R.drawable.ic_o
+                        Piece.O.value -> R.drawable.ic_o
+                        else -> R.drawable.ic_blank
                     }
                 ),
-                contentDescription = currentPiece,
-                colorFilter = ColorFilter.tint(MaterialTheme.colors.onBackground)
+                contentDescription = targetCurrentPiece,
+                colorFilter = ColorFilter.tint(iconColor)
             )
         }
     }
 }
 
 /**
- * Example [currentPlayingMoves]:
+ * Example of [currentPlayingMoves]:
  *
  * 1O3O5X7X9O2X4X6X8O
  */

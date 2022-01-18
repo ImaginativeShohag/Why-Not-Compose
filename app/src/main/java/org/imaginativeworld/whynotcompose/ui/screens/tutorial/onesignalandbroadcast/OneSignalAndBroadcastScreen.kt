@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Md. Mahmudul Hasan Shohag
+ * Copyright 2022 Md. Mahmudul Hasan Shohag
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -131,22 +131,20 @@ private fun sendNewNotification(value: String) {
     "$userId"
   ]
 }
-                """.trimIndent(),
+            """.trimIndent(),
             object : OneSignal.PostNotificationResponseHandler {
                 override fun onSuccess(response: JSONObject?) {
-                    Timber.i("postNotification Success: " + response.toString());
+                    Timber.i("postNotification Success: " + response.toString())
                 }
 
                 override fun onFailure(response: JSONObject?) {
-                    Timber.e("postNotification Failure: " + response.toString());
+                    Timber.e("postNotification Failure: " + response.toString())
                 }
-
             }
         )
     } else {
         throw Exception("OneSignal is not initialized yet or user is not subscribed!")
     }
-
 }
 
 @Preview
@@ -207,7 +205,6 @@ fun OneSignalAndBroadcastScreenSkeleton(
                 }) {
                     Text("Post New Value")
                 }
-
             }
 
             // ----------------------------------------------------------------

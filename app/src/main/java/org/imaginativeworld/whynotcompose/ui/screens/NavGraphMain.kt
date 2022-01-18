@@ -92,6 +92,7 @@ import org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging.DataFetchAndPagingViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.index.TutorialIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.lottie.LottieScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.onesignalandbroadcast.OneSignalAndBroadcastScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.permission.PermissionScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.selectimageandcrop.SelectImageAndCropScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.selectimageandcrop.SelectImageAndCropViewModel
@@ -199,6 +200,7 @@ sealed class TutorialsScreen(val route: String) {
     object TutorialPermission : TutorialsScreen("tutorial/permission")
     object TutorialDataFetchAndPaging : TutorialsScreen("tutorial/data-fetch-and-paging")
     object TutorialTicTacToe : TutorialsScreen("tutorial/tic-tac-toe")
+    object TutorialOneSignalAndBroadcast : TutorialsScreen("tutorial/onesignal-and-broadcast")
 }
 
 // ================================================================
@@ -680,6 +682,10 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
         TicTacToeScreen(
             viewModel = viewModel
         )
+    }
+
+    composable(TutorialsScreen.TutorialOneSignalAndBroadcast.route) {
+        OneSignalAndBroadcastScreen()
     }
 }
 

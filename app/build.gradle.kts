@@ -208,6 +208,14 @@ dependencies {
 
     // uCrop
     implementation(Libs.Yalantis.uCrop)
+
+    // OneSignal
+    implementation(Libs.OneSignal.core)
+
+    // Firebase
+    implementation(platform(Libs.Google.Firebase.bom))
+    
+    implementation(Libs.Google.Firebase.analytics)
 }
 
 kapt {

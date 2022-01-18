@@ -102,6 +102,11 @@ data class Tutorial(
                 route = TutorialsScreen.TutorialTicTacToe,
                 level = TutorialLevel.Advanced,
             ),
+            Tutorial(
+                name = "OneSignal and Broadcast",
+                route = TutorialsScreen.TutorialOneSignalAndBroadcast,
+                level = TutorialLevel.Intermediate,
+            ),
         )
     }
 }

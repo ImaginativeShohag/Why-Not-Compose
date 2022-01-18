@@ -29,7 +29,10 @@ package org.imaginativeworld.whynotcompose
 import android.app.Application
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.OnMapsSdkInitializedCallback
+import com.onesignal.OneSignal
 import dagger.hilt.android.HiltAndroidApp
+import org.imaginativeworld.whynotcompose.utils.onesignal.MyNotificationOpenedHandler
+import org.imaginativeworld.whynotcompose.utils.onesignal.MyNotificationWillShowInForegroundHandler
 import timber.log.Timber
 
 @HiltAndroidApp
@@ -44,6 +47,14 @@ class App : Application(), OnMapsSdkInitializedCallback {
 
         // New Map Renderer
         MapsInitializer.initialize(applicationContext, MapsInitializer.Renderer.LATEST, this)
+
+        // OneSignal
+        OneSignal.initWithContext(this)
+        OneSignal.setAppId(ONESIGNAL_APP_ID)
+        OneSignal.setNotificationWillShowInForegroundHandler(
+            MyNotificationWillShowInForegroundHandler(this)
+        )
+        OneSignal.setNotificationOpenedHandler(MyNotificationOpenedHandler(this))
     }
 
     override fun onMapsSdkInitialized(renderer: MapsInitializer.Renderer) {
@@ -51,5 +62,9 @@ class App : Application(), OnMapsSdkInitializedCallback {
             MapsInitializer.Renderer.LATEST -> Timber.d("The latest version of the renderer is used.")
             MapsInitializer.Renderer.LEGACY -> Timber.d("The legacy version of the renderer is used.")
         }
+    }
+
+    companion object {
+        private const val ONESIGNAL_APP_ID = "54cc32c5-ab13-4b7e-a929-7a623a572ad6"
     }
 }

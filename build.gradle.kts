@@ -8,7 +8,11 @@ buildscript {
     dependencies {
         classpath(Libs.androidGradlePlugin)
 
+        classpath(Libs.Google.service)
+
         classpath(Libs.Kotlin.gradlePlugin)
+
+        classpath(Libs.OneSignal.gradlePlugin)
 
         classpath(Libs.Hilt.androidGradlePlugin)
 

@@ -34,6 +34,14 @@ object Libs {
     }
 
     object Google {
+        const val service = "com.google.gms:google-services:4.3.10"
+
+        object Firebase {
+            const val bom = "com.google.firebase:firebase-bom:29.0.3"
+
+            const val analytics = "com.google.firebase:firebase-analytics-ktx"
+        }
+
         object PlayService {
             const val maps = "com.google.android.gms:play-services-maps:18.0.2"
         }
@@ -178,6 +186,12 @@ object Libs {
 
             const val espressoCore = "androidx.test.espresso:espresso-core:3.4.0"
         }
+    }
+
+    object OneSignal {
+        const val gradlePlugin = "gradle.plugin.com.onesignal:onesignal-gradle-plugin:0.14.0"
+
+        const val core = "com.onesignal:OneSignal:4.6.3"
     }
 
     object Square {

@@ -99,17 +99,18 @@ fun TutorialIndexSkeleton(
                         Divider(Modifier.padding(16.dp, 0.dp))
                     }
 
-                    Column(Modifier
-                        .clickable {
-                            navigate(item.route)
-                        }
-                        .padding(
-                            start = 16.dp,
-                            top = 8.dp,
-                            end = 16.dp,
-                            bottom = 8.dp,
-                        )
-                        .fillMaxWidth()
+                    Column(
+                        Modifier
+                            .clickable {
+                                navigate(item.route)
+                            }
+                            .padding(
+                                start = 16.dp,
+                                top = 8.dp,
+                                end = 16.dp,
+                                bottom = 8.dp,
+                            )
+                            .fillMaxWidth()
                     ) {
 
                         Text(
@@ -132,7 +133,7 @@ fun TutorialIndexSkeleton(
                         )
 
                         if (item.description != null) {
-                            //val description = remember { getSections(item.description) }
+                            // val description = remember { getSections(item.description) }
                             Text(
                                 modifier = Modifier.padding(
                                     top = 4.dp,

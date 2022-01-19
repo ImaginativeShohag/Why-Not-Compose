@@ -123,7 +123,7 @@ fun RadioGroupSample() {
 fun <T> GeneralRadioButton(
     modifier: Modifier = Modifier,
     text: String,
-    value : T,
+    value: T,
     selectedOption: T,
     onOptionSelected: (T) -> Unit
 ) {

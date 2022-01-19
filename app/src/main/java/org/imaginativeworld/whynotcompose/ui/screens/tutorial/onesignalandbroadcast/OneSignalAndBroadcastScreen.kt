@@ -116,6 +116,7 @@ fun OneSignalAndBroadcastScreen() {
  */
 private fun sendNewNotification(value: String) {
     if (OneSignal.getDeviceState() != null && OneSignal.getDeviceState()!!.isSubscribed) {
+        // This is the current device OneSignal userId.
         val userId = OneSignal.getDeviceState()!!.userId
 
         OneSignal.postNotification(

@@ -118,6 +118,12 @@ data class Tutorial(
                 route = TutorialsScreen.TutorialOneSignalAndBroadcast,
                 level = TutorialLevel.Intermediate,
             ),
+            Tutorial(
+                name = "ExoPlayer",
+                description = "Example usage of `ExoPlayer` with Compose.",
+                route = TutorialsScreen.TutorialExoPlayer,
+                level = TutorialLevel.Advanced,
+            ),
         )
     }
 }

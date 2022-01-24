@@ -36,6 +36,8 @@ object Libs {
     object Google {
         const val service = "com.google.gms:google-services:4.3.10"
 
+        const val exoplayer = "com.google.android.exoplayer:exoplayer:2.16.1"
+
         object Firebase {
             const val bom = "com.google.firebase:firebase-bom:29.0.3"
 

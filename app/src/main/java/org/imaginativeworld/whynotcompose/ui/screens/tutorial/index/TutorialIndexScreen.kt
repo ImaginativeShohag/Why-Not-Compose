@@ -186,7 +186,6 @@ fun TutorialIndexSkeleton(
  * @return sections from [text] with "is a code section" flag.
  */
 private fun getSections(text: String): List<Pair<String, Boolean>> {
-    Timber.e("text: $text")
     // List of sections with "is code section" flag.
     val tokens = mutableListOf<Pair<String, Boolean>>()
 
@@ -230,8 +229,6 @@ private fun getSections(text: String): List<Pair<String, Boolean>> {
             tokens.add(Pair(currentPart, false))
         }
     }
-
-    print(" Section: ${tokens.size}")
 
     return tokens
 }

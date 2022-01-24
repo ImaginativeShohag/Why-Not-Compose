@@ -65,6 +65,7 @@ Feel free to request features or suggestions for improvements.
 - [x] Tutorial: OneSignal and Broadcast
 - [x] Tutorial: Tic-Tac-Toe
 - [ ] Tutorial: ExoPlayer sample
+- [ ] Test: TutorialIndexScreenKt#getSections()
 
 # Note
 

@@ -38,6 +38,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import org.imaginativeworld.whynotcompose.exoplayer.ExoPlayerScreen
 import org.imaginativeworld.whynotcompose.models.MapPlace
 import org.imaginativeworld.whynotcompose.tictactoe.TicTacToeScreen
 import org.imaginativeworld.whynotcompose.tictactoe.TicTacToeViewModel
@@ -201,6 +202,7 @@ sealed class TutorialsScreen(val route: String) {
     object TutorialDataFetchAndPaging : TutorialsScreen("tutorial/data-fetch-and-paging")
     object TutorialTicTacToe : TutorialsScreen("tutorial/tic-tac-toe")
     object TutorialOneSignalAndBroadcast : TutorialsScreen("tutorial/onesignal-and-broadcast")
+    object TutorialExoPlayer : TutorialsScreen("tutorial/exoplayer")
 }
 
 // ================================================================
@@ -686,6 +688,10 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
 
     composable(TutorialsScreen.TutorialOneSignalAndBroadcast.route) {
         OneSignalAndBroadcastScreen()
+    }
+
+    composable(TutorialsScreen.TutorialExoPlayer.route) {
+        ExoPlayerScreen()
     }
 }
 

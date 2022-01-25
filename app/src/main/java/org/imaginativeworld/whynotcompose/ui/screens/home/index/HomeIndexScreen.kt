@@ -44,12 +44,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
@@ -182,29 +184,65 @@ fun HomeIndexScreen(
                 }
             }
 
-            Column(
+            Row(
                 Modifier
                     .fillMaxWidth()
                     .padding(top = 16.dp, bottom = 12.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text(
-                    text = "Developed By —",
-                    fontSize = 12.sp,
-                    color = MaterialTheme.colors.onBackground.copy(.75f)
+                Column(
+                    Modifier
+                        .weight(1f),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "Developed By —",
+                        fontSize = 12.sp,
+                        color = MaterialTheme.colors.onBackground.copy(.75f)
+                    )
+
+                    Text(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .clickable {
+                                context.openUrl("https://imaginativeshohag.github.io/")
+                            }
+                            .padding(4.dp),
+                        text = "@ImaginativeShohag",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+
+                Divider(
+                    Modifier
+                        .width(1.dp)
+                        .height(24.dp)
                 )
 
-                Text(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(8.dp))
-                        .clickable {
-                            context.openUrl("https://imaginativeshohag.github.io/")
-                        }
-                        .padding(4.dp),
-                    text = "@ImaginativeShohag",
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold
-                )
+                Column(
+                    Modifier
+                        .weight(1f),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "Source Code —",
+                        fontSize = 12.sp,
+                        color = MaterialTheme.colors.onBackground.copy(.75f)
+                    )
+
+                    Text(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .clickable {
+                                context.openUrl("https://github.com/ImaginativeShohag/Why-Not-Compose")
+                            }
+                            .padding(4.dp),
+                        text = "GitHub",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
         }
     }

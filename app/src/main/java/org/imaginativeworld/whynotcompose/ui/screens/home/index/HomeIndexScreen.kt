@@ -68,16 +68,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
+import org.imaginativeworld.whynotcompose.BuildConfig
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.base.extensions.openUrl
 import org.imaginativeworld.whynotcompose.base.extensions.shadow
-import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
 import org.imaginativeworld.whynotcompose.ui.screens.Screen
@@ -128,8 +129,30 @@ fun HomeIndexScreen(
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            AppComponent.Header(
-                text = stringResource(id = R.string.app_name)
+            Text(
+                modifier = Modifier
+                    .padding(
+                        start = 16.dp,
+                        top = 32.dp,
+                        end = 16.dp
+                    )
+                    .fillMaxWidth(),
+                text = stringResource(id = R.string.app_name),
+                style = MaterialTheme.typography.h1,
+                textAlign = TextAlign.Center,
+            )
+
+            Text(
+                modifier = Modifier
+                    .padding(
+                        start = 16.dp,
+                        top = 4.dp,
+                        end = 16.dp,
+                        bottom = 32.dp
+                    ),
+                text = "Version ${BuildConfig.VERSION_NAME}",
+                textAlign = TextAlign.Center,
+                fontSize = 12.sp,
             )
 
             val isDark = !MaterialTheme.colors.isLight

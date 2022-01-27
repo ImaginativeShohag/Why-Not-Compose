@@ -5,6 +5,7 @@ plugins {
 }
 
 android {
+    namespace = "org.imaginativeworld.whynotcompose.tictactoe"
     compileSdk = BuildConfigConst.compileSdk
 
     defaultConfig {

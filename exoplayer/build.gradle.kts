@@ -5,6 +5,7 @@ plugins {
 }
 
 android {
+    namespace = "org.imaginativeworld.whynotcompose.exoplayer"
     compileSdk = BuildConfigConst.compileSdk
 
     defaultConfig {

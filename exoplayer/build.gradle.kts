@@ -110,4 +110,8 @@ dependencies {
 
     // ExoPlayer
     implementation(Libs.Google.exoplayer)
+
+    // Coil
+    implementation(Libs.Coil.compose)
+    implementation(Libs.Coil.svg)
 }

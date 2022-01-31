@@ -10,7 +10,6 @@ plugins {
 }
 
 android {
-    namespace = "org.imaginativeworld.whynotcompose"
     compileSdk = BuildConfigConst.compileSdk
 
     defaultConfig {

@@ -7,6 +7,7 @@ import androidx.core.util.Pools
 import com.google.android.exoplayer2.ui.PlayerView
 
 object PlayerViewPool {
+    @SuppressLint("StaticFieldLeak")
     var currentPlayerView: PlayerView? = null
 
     private val playerViewPool = Pools.SimplePool<PlayerView>(2)

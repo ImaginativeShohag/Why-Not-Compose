@@ -11,4 +11,4 @@
     app:show_buffering="when_playing"
     app:shutter_background_color="@android:color/black"
     app:surface_type="surface_view"
-    app:use_controller="false" />
+    app:use_controller="true" />

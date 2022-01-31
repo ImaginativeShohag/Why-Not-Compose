@@ -57,7 +57,7 @@ object Libs {
     }
 
     object Accompanist {
-        private const val version = "0.22.0-rc"
+        private const val version = "0.22.1-rc"
 
         const val insets = "com.google.accompanist:accompanist-insets:$version"
         const val systemuicontroller =
@@ -103,8 +103,8 @@ object Libs {
         }
 
         object Compose {
-            const val version = "1.1.0-rc01"
-            const val compilerVersion = "1.1.0-rc02"
+            const val version = "1.1.0-rc03"
+            const val compilerVersion = version
 
             const val compiler = "androidx.compose.compiler:compiler:$compilerVersion"
 

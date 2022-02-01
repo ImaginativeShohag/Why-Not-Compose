@@ -49,6 +49,7 @@ Feel free to request features or suggestions for improvements.
 - Data Fetch and Paging (Advanced)
 - Tutorial: Tic-Tac-Toe (Advanced)
 - Tutorial: OneSignal and Broadcast (Intermediate)
+- Tutorial: ExoPlayer (Advanced)
 
 | ![Preview](images/counter.gif) | ![Preview](images/animated-visibility.gif) | ![Preview](images/lottie.gif) |
 | :------: | :------: | :------: |
@@ -64,7 +65,7 @@ Feel free to request features or suggestions for improvements.
 - [x] Tutorial: Data Fetch and Paging
 - [x] Tutorial: OneSignal and Broadcast
 - [x] Tutorial: Tic-Tac-Toe
-- [ ] Tutorial: ExoPlayer sample
+- [x] Tutorial: ExoPlayer sample
 - [ ] Test: TutorialIndexScreenKt#getSections()
 
 # Note

@@ -44,7 +44,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
@@ -83,11 +82,6 @@ import org.imaginativeworld.whynotcompose.common.compose.composeutils.rememberIm
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
-
-// TODO#1: BUG: Last item is not playing!
-// DONE#2: use video.thumb data
-// TODO#3: Infinite list
-// TODO#4: Crash on quick scroll
 
 @Composable
 fun ExoPlayerScreen() {
@@ -130,11 +124,6 @@ fun ExoPlayerScreenSkeleton() {
 
             // ----------------------------------------------------------------
 
-            // Content here...
-            // Use `padding(start = 16.dp, end = 16.dp)` for the elements.
-
-            // ----------------------------------------------------------------
-
             VideoList(
                 modifier = Modifier
                     .weight(1f)
@@ -162,9 +151,11 @@ private fun VideoList(
         state = lazyListState,
         contentPadding = PaddingValues(top = 4.dp, bottom = 4.dp)
     ) {
-        itemsIndexed(videos) { index, video ->
+        items(count = Int.MAX_VALUE) { index ->
+            val videoIndex = index % videos.size
+
             VideoItem(
-                video = video,
+                video = videos[videoIndex],
                 focusedVideo = (index == 0 && focusIndexOffset <= with(density) { 48.dp.toPx() }) ||
                     (index == focusIndex + 1 && focusIndexOffset > with(density) { 48.dp.toPx() })
             )
@@ -250,6 +241,7 @@ private fun Player(modifier: Modifier = Modifier, video: Video, focusedVideo: Bo
 
     if (focusedVideo) {
         LaunchedEffect(video.url) {
+            // Start playing current video.
             val videoUri = Uri.parse(video.url)
             val dataSourceFactory = DataSourceHolder.getCacheFactory(context)
             val type = Util.inferContentType(videoUri)
@@ -270,12 +262,6 @@ private fun Player(modifier: Modifier = Modifier, video: Video, focusedVideo: Bo
         modifier = modifier,
         factory = { ctx ->
             val frameLayout = FrameLayout(ctx)
-//            frameLayout.setBackgroundColor(
-//                ContextCompat.getColor(
-//                    ctx,
-//                    android.R.color.darker_gray
-//                )
-//            )
             frameLayout
         },
         update = { frameLayout ->
@@ -288,8 +274,8 @@ private fun Player(modifier: Modifier = Modifier, video: Video, focusedVideo: Bo
                     playerView
                 )
                 PlayerViewPool.currentPlayerView = playerView
-                playerView!!.apply {
-                    player!!.playWhenReady = true
+                playerView?.apply {
+                    player?.playWhenReady = true
                 }
 
                 playerView?.apply {

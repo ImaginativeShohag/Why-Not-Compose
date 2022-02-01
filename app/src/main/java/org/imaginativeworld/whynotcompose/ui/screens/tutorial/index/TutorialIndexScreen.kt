@@ -53,6 +53,7 @@ import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent.Header
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.ui.screens.TutorialsScreen
+import org.imaginativeworld.whynotcompose.utils.LiteMarkdown
 import timber.log.Timber
 
 @Composable
@@ -76,13 +77,11 @@ fun TutorialIndexSkeletonPreview() {
 fun TutorialIndexSkeleton(
     navigate: (TutorialsScreen) -> Unit = {},
 ) {
-
     Scaffold(
         Modifier
             .navigationBarsWithImePadding()
             .statusBarsPadding()
     ) {
-
         Column(Modifier.fillMaxSize()) {
             Header("Tutorials")
 
@@ -139,7 +138,7 @@ fun TutorialIndexSkeleton(
                                     top = 4.dp,
                                 ),
                                 text = buildAnnotatedString {
-                                    for (section in getSections(item.description)) {
+                                    for (section in LiteMarkdown.getSections(item.description)) {
                                         if (section.second) {
                                             withStyle(
                                                 SpanStyle(
@@ -167,68 +166,3 @@ fun TutorialIndexSkeleton(
     }
 }
 
-/**
- * Split a [text] into multiple sections.
- * Code sections are separated by pair of backtick (`) characters.
- *
- * Example [text]:
- *
- * > "The quick `brown fox` jumps over the `lazy dog`."
- *
- * Here total section is 5:
- *
- * 1. subText = "The quick ",       isCodeSection = false,
- * 2. subText = "brown fox",        isCodeSection = true
- * 3. subText = " jumps over the ", isCodeSection = false
- * 4. subText = "lazy dog",         isCodeSection = true
- * 5. subText = ".",                isCodeSection = false
- *
- * @return sections from [text] with "is a code section" flag.
- */
-private fun getSections(text: String): List<Pair<String, Boolean>> {
-    // List of sections with "is code section" flag.
-    val tokens = mutableListOf<Pair<String, Boolean>>()
-
-    var currentPart = ""
-    var isCode = false
-
-    for (letter in text) {
-        if (letter == '`') {
-            // End of a code section.
-            if (isCode) {
-                isCode = false
-
-                if (currentPart.isNotEmpty()) {
-                    tokens.add(Pair(currentPart, true))
-                }
-            }
-            // Start of a code section.
-            else {
-                isCode = true
-
-                if (currentPart.isNotEmpty()) {
-                    tokens.add(Pair(currentPart, false))
-                }
-            }
-
-            currentPart = ""
-
-            continue
-        }
-
-        currentPart += letter
-    }
-
-    if (currentPart != "") {
-        // Inside a code section.
-        if (isCode) {
-            tokens.add(Pair(currentPart, true))
-        }
-        // Not a code section.
-        else {
-            tokens.add(Pair(currentPart, false))
-        }
-    }
-
-    return tokens
-}

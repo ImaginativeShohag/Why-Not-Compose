@@ -26,6 +26,7 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.ui.otpcodeverify
 
+import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.fadeIn
@@ -85,9 +86,9 @@ import androidx.lifecycle.MutableLiveData
 import com.google.accompanist.insets.navigationBarsPadding
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.R
-import org.imaginativeworld.whynotcompose.models.Event
+import org.imaginativeworld.whynotcompose.base.models.Event
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.ui.compositions.CustomSnackbarHost
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
 
 @Composable
 fun OtpCodeVerifyScreen(
@@ -140,10 +141,10 @@ fun OtpCodeVerifyScreenSkeletonPreview() {
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun OtpCodeVerifyScreenSkeletonPreviewDark() {
-    AppTheme(darkTheme = true) {
+    AppTheme {
         OtpCodeVerifyScreenSkeleton(
             phoneNumber = "+8801234567891",
             counterValue = MutableLiveData(),
@@ -334,10 +335,10 @@ fun VirtualNumberKeyboardPreview() {
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun VirtualNumberKeyboardPreviewDark() {
-    AppTheme(darkTheme = true) {
+    AppTheme {
         VirtualNumberKeyboard(
             codeState = remember { mutableStateOf("") },
             isValidInputs = { true },

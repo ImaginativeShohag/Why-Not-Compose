@@ -26,6 +26,7 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.lottie
 
+import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -66,8 +67,8 @@ import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.R
-import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
+import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
 fun LottieScreen() {
@@ -82,10 +83,10 @@ fun LottieScreenSkeletonPreview() {
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun LottieScreenSkeletonPreviewDark() {
-    AppTheme(darkTheme = true) {
+    AppTheme {
         LottieScreenSkeleton()
     }
 }

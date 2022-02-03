@@ -26,6 +26,7 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.ui.webview
 
+import android.content.res.Configuration
 import android.view.ViewGroup
 import android.webkit.WebView
 import androidx.activity.compose.BackHandler
@@ -79,9 +80,9 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.R
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
+import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
 import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.components.ErrorView
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
-import org.imaginativeworld.whynotcompose.ui.theme.TailwindCSSColor
 import timber.log.Timber
 
 // TODO: Swipe to refresh
@@ -152,10 +153,10 @@ fun WebViewSkeletonPreview() {
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun WebViewSkeletonPreviewDark() {
-    AppTheme(darkTheme = true) {
+    AppTheme {
         WebViewSkeleton(
             title = WebViewTarget.AboutMe.name,
             goBack = {},

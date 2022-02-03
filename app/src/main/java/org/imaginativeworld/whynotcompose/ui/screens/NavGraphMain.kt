@@ -38,7 +38,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import org.imaginativeworld.whynotcompose.exoplayer.ExoPlayerScreen
 import org.imaginativeworld.whynotcompose.models.MapPlace
+import org.imaginativeworld.whynotcompose.tictactoe.TicTacToeScreen
+import org.imaginativeworld.whynotcompose.tictactoe.TicTacToeViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.animation.composeone.ComposeOneScreen
 import org.imaginativeworld.whynotcompose.ui.screens.animation.emudi.EmudiScreen
 import org.imaginativeworld.whynotcompose.ui.screens.animation.index.AnimationIndexScreen
@@ -50,6 +53,7 @@ import org.imaginativeworld.whynotcompose.ui.screens.composition.bottomnavigatio
 import org.imaginativeworld.whynotcompose.ui.screens.composition.button.ButtonScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.card.CardScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.checkbox.CheckBoxScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.dialog.DialogScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.dropdown.DropDownMenuScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.floatingactionbutton.FloatingActionButtonScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.index.CompositionIndexScreen
@@ -85,8 +89,11 @@ import org.imaginativeworld.whynotcompose.ui.screens.tutorial.captureimageandcro
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.counter.CounterScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.counterwithviewmodel.CounterWithVMScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.counterwithviewmodel.CounterWithVMViewModel
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging.DataFetchAndPagingScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging.DataFetchAndPagingViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.index.TutorialIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.lottie.LottieScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.onesignalandbroadcast.OneSignalAndBroadcastScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.permission.PermissionScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.selectimageandcrop.SelectImageAndCropScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.selectimageandcrop.SelectImageAndCropViewModel
@@ -192,6 +199,10 @@ sealed class TutorialsScreen(val route: String) {
     object TutorialSelectImageAndCrop : TutorialsScreen("tutorial/select-image-and-crop")
     object TutorialCaptureImageAndCrop : TutorialsScreen("tutorial/capture-image-and-crop")
     object TutorialPermission : TutorialsScreen("tutorial/permission")
+    object TutorialDataFetchAndPaging : TutorialsScreen("tutorial/data-fetch-and-paging")
+    object TutorialTicTacToe : TutorialsScreen("tutorial/tic-tac-toe")
+    object TutorialOneSignalAndBroadcast : TutorialsScreen("tutorial/onesignal-and-broadcast")
+    object TutorialExoPlayer : TutorialsScreen("tutorial/exoplayer")
 }
 
 // ================================================================
@@ -311,7 +322,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         }
 
         composable(CompositionsScreen.CompositionDialog.route) {
-            BlankScreen()
+            DialogScreen()
         }
 
         composable(CompositionsScreen.CompositionDropDownMenu.route) {
@@ -657,6 +668,30 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
 
     composable(TutorialsScreen.TutorialPermission.route) {
         PermissionScreen()
+    }
+
+    composable(TutorialsScreen.TutorialDataFetchAndPaging.route) {
+        val viewModel: DataFetchAndPagingViewModel = hiltViewModel()
+
+        DataFetchAndPagingScreen(
+            viewModel = viewModel
+        )
+    }
+
+    composable(TutorialsScreen.TutorialTicTacToe.route) {
+        val viewModel: TicTacToeViewModel = hiltViewModel()
+
+        TicTacToeScreen(
+            viewModel = viewModel
+        )
+    }
+
+    composable(TutorialsScreen.TutorialOneSignalAndBroadcast.route) {
+        OneSignalAndBroadcastScreen()
+    }
+
+    composable(TutorialsScreen.TutorialExoPlayer.route) {
+        ExoPlayerScreen()
     }
 }
 

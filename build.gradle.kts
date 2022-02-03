@@ -8,7 +8,11 @@ buildscript {
     dependencies {
         classpath(Libs.androidGradlePlugin)
 
+        classpath(Libs.Google.service)
+
         classpath(Libs.Kotlin.gradlePlugin)
+
+        classpath(Libs.OneSignal.gradlePlugin)
 
         classpath(Libs.Hilt.androidGradlePlugin)
 
@@ -17,7 +21,7 @@ buildscript {
 }
 
 plugins {
-    id("com.diffplug.spotless") version "6.0.1"
+    id("com.diffplug.spotless") version "6.1.2"
 }
 
 subprojects {
@@ -29,7 +33,7 @@ subprojects {
             targetExclude("$buildDir/**/*.kt")
             targetExclude("bin/**/*.kt")
 
-            ktlint("0.43.0").userData(
+            ktlint("0.43.2").userData(
                 mapOf("disabled_rules" to "filename")
             )
             licenseHeaderFile(rootProject.file("spotless/copyright.kt"))

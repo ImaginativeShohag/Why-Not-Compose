@@ -26,6 +26,7 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.animatedvisibility
 
+import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -54,8 +55,8 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.R
-import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
+import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
 fun AnimatedVisibilityScreen() {
@@ -70,10 +71,10 @@ fun AnimatedVisibilityScreenSkeletonPreview() {
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun AnimatedVisibilityScreenSkeletonPreviewDark() {
-    AppTheme(darkTheme = true) {
+    AppTheme {
         AnimatedVisibilityScreenSkeleton()
     }
 }

@@ -27,6 +27,7 @@
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.permission
 
 import android.Manifest
+import android.content.res.Configuration
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
@@ -46,9 +47,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
-import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
-import org.imaginativeworld.whynotcompose.utils.extensions.toast
+import org.imaginativeworld.whynotcompose.base.extensions.toast
+import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 // Note: Clear Storage will clear the permissions.
 
@@ -99,10 +100,10 @@ fun PermissionScreenSkeletonPreview() {
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun PermissionScreenSkeletonPreviewDark() {
-    AppTheme(darkTheme = true) {
+    AppTheme {
         PermissionScreenSkeleton()
     }
 }

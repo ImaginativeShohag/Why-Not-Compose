@@ -26,6 +26,7 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.animation.runningcar
 
+import android.content.res.Configuration
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
@@ -66,7 +67,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.imaginativeworld.whynotcompose.R
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
 fun RunningCarScreen() {
@@ -101,10 +102,10 @@ fun RunningCarScreenSkeletonPreview() {
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun RunningCarScreenSkeletonPreviewDark() {
-    AppTheme(darkTheme = true) {
+    AppTheme {
         RunningCarScreenSkeleton(
             MutableStateFlow(true)
         )

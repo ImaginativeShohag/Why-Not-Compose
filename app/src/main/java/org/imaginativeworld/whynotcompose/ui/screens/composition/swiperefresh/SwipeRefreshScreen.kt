@@ -26,6 +26,7 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.composition.swiperefresh
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -56,11 +57,11 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.imaginativeworld.whynotcompose.common.compose.composeutils.rememberImagePainter
+import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.models.ListItem
 import org.imaginativeworld.whynotcompose.repositories.MockData
-import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
-import org.imaginativeworld.whynotcompose.utils.composeutils.rememberImagePainter
 
 @Composable
 fun SwipeRefreshScreen() {
@@ -103,10 +104,10 @@ fun SwipeRefreshScreenSkeletonPreview() {
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun SwipeRefreshScreenSkeletonPreviewDark() {
-    AppTheme(darkTheme = true) {
+    AppTheme {
         val items = remember { mutableStateOf(MockData.dummyListItem.toMutableList()) }
 
         SwipeRefreshScreenSkeleton(

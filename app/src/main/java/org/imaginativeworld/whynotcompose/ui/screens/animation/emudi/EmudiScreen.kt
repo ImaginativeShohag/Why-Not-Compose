@@ -26,6 +26,7 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.animation.emudi
 
+import android.content.res.Configuration
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.spring
@@ -58,7 +59,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.imaginativeworld.whynotcompose.R
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 /**
  * Emudi is a trademark of Softzino Technologies (softzino.com).
@@ -123,10 +124,10 @@ fun EmudiScreenSkeletonPreview() {
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun EmudiScreenSkeletonPreviewDark() {
-    AppTheme(darkTheme = true) {
+    AppTheme {
         EmudiScreenSkeleton(
             MutableStateFlow(true),
             MutableStateFlow(true),

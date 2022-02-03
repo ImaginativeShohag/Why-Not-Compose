@@ -26,6 +26,7 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.composition.text
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -36,13 +37,11 @@ import androidx.compose.foundation.text.selection.DisableSelection
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
-import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ParagraphStyle
@@ -56,10 +55,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
-import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
-import org.imaginativeworld.whynotcompose.ui.theme.AppFont
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
-import org.imaginativeworld.whynotcompose.utils.extensions.toast
+import org.imaginativeworld.whynotcompose.base.extensions.toast
+import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppFont
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 // Help: https://developer.android.com/jetpack/compose/text
 
@@ -76,10 +75,10 @@ fun TextScreenSkeletonPreview() {
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun TextScreenSkeletonPreviewDark() {
-    AppTheme(darkTheme = true) {
+    AppTheme {
         TextScreenSkeleton()
     }
 }
@@ -128,20 +127,22 @@ fun TextScreenSkeleton() {
 
                 AppComponent.MediumSpacer()
 
-                Text(buildAnnotatedString {
-                    append("This is an ")
+                Text(
+                    buildAnnotatedString {
+                        append("This is an ")
 
-                    withStyle(
-                        style = SpanStyle(
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colors.primary
-                        )
-                    ) {
-                        append("annotated")
+                        withStyle(
+                            style = SpanStyle(
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colors.primary
+                            )
+                        ) {
+                            append("annotated")
+                        }
+
+                        append(" text.")
                     }
-
-                    append(" text.")
-                })
+                )
 
                 // ----------------------------------------------------------------
 
@@ -174,8 +175,8 @@ fun TextScreenSkeleton() {
 
                 val text =
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor " +
-                            "incididunt ut labore et dolore magna aliqua.\nUt enim ad minim veniam, quis " +
-                            "nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+                        "incididunt ut labore et dolore magna aliqua.\nUt enim ad minim veniam, quis " +
+                        "nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
 
                 val paragraphStyle1 = ParagraphStyle(
                     textIndent = TextIndent(firstLine = 14.sp)

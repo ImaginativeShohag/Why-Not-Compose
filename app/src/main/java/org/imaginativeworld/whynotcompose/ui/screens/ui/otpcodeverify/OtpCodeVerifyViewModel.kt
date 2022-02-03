@@ -34,10 +34,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
-import org.imaginativeworld.whynotcompose.models.Event
+import org.imaginativeworld.whynotcompose.base.models.Event
 import javax.inject.Inject
 import kotlin.random.Random
 

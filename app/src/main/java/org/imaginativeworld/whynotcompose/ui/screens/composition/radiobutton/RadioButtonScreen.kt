@@ -49,8 +49,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
-import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
+import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 private val ELEMENT_HEIGHT = 56.dp
 
@@ -101,14 +101,17 @@ fun RadioButtonScreenSkeleton() {
 
 @Composable
 fun RadioGroupSample() {
-    val radioOptions = listOf("Happiness", "Money", "Both")
-    val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[0]) }
+    // The first item of Pair is the caption and the second item is the value
+    // that can be sent to the server or used for other logic.
+    val radioOptions = listOf("Happiness" to 1, "Money" to 2, "Both" to 3)
+    val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[0].second) }
+
     // Note that Modifier.selectableGroup() is essential to ensure correct accessibility behavior
     Column(Modifier.selectableGroup()) {
         radioOptions.forEach { text ->
-
             GeneralRadioButton(
-                text = text,
+                text = text.first,
+                value = text.second,
                 selectedOption = selectedOption,
                 onOptionSelected = onOptionSelected
             )
@@ -117,25 +120,27 @@ fun RadioGroupSample() {
 }
 
 @Composable
-fun GeneralRadioButton(
+fun <T> GeneralRadioButton(
+    modifier: Modifier = Modifier,
     text: String,
-    selectedOption: String,
-    onOptionSelected: (String) -> Unit
+    value: T,
+    selectedOption: T,
+    onOptionSelected: (T) -> Unit
 ) {
     Row(
-        Modifier
+        modifier
             .fillMaxWidth()
             .height(ELEMENT_HEIGHT)
             .selectable(
-                selected = (text == selectedOption),
-                onClick = { onOptionSelected(text) },
+                selected = (value == selectedOption),
+                onClick = { onOptionSelected(value) },
                 role = Role.RadioButton
             )
             .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         RadioButton(
-            selected = (text == selectedOption),
+            selected = (value == selectedOption),
             onClick = null // null recommended for accessibility with screenreaders
         )
         Text(

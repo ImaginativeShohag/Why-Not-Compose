@@ -28,18 +28,21 @@ package org.imaginativeworld.whynotcompose.ui.screens.tutorial.index
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Divider
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -47,9 +50,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
-import org.imaginativeworld.whynotcompose.ui.screens.AppComponent.Header
+import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent.Header
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.ui.screens.TutorialsScreen
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
+import org.imaginativeworld.whynotcompose.utils.LiteMarkdown
 
 @Composable
 fun TutorialIndexScreen(
@@ -72,17 +76,20 @@ fun TutorialIndexSkeletonPreview() {
 fun TutorialIndexSkeleton(
     navigate: (TutorialsScreen) -> Unit = {},
 ) {
-
     Scaffold(
         Modifier
             .navigationBarsWithImePadding()
             .statusBarsPadding()
     ) {
-
         Column(Modifier.fillMaxSize()) {
             Header("Tutorials")
 
-            LazyColumn(Modifier.fillMaxSize()) {
+            LazyColumn(
+                Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
+                contentPadding = PaddingValues(bottom = 8.dp)
+            ) {
 
                 itemsIndexed(Tutorial.tutorialList) { index, item ->
 
@@ -90,8 +97,8 @@ fun TutorialIndexSkeleton(
                         Divider(Modifier.padding(16.dp, 0.dp))
                     }
 
-                    Text(
-                        modifier = Modifier
+                    Column(
+                        Modifier
                             .clickable {
                                 navigate(item.route)
                             }
@@ -99,24 +106,59 @@ fun TutorialIndexSkeleton(
                                 start = 16.dp,
                                 top = 8.dp,
                                 end = 16.dp,
-                                bottom = 8.dp
+                                bottom = 8.dp,
                             )
-                            .fillMaxWidth(),
-                        text = buildAnnotatedString {
-                            append(item.name)
-                            append(" ")
+                            .fillMaxWidth()
+                    ) {
 
-                            withStyle(
-                                SpanStyle(
-                                    color = item.level.color,
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 12.sp,
-                                )
-                            ) {
-                                append(item.level.name.uppercase())
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            text = buildAnnotatedString {
+                                append(item.name)
+                                append(" ")
+
+                                withStyle(
+                                    SpanStyle(
+                                        color = item.level.color,
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 12.sp,
+                                    )
+                                ) {
+                                    append(item.level.name.uppercase())
+                                }
                             }
+                        )
+
+                        if (item.description != null) {
+                            // val description = remember { getSections(item.description) }
+                            Text(
+                                modifier = Modifier.padding(
+                                    top = 4.dp,
+                                ),
+                                text = buildAnnotatedString {
+                                    for (section in LiteMarkdown.getSections(item.description)) {
+                                        if (section.second) {
+                                            withStyle(
+                                                SpanStyle(
+                                                    fontFamily = FontFamily.Monospace,
+                                                    fontSize = 11.sp,
+                                                    background = MaterialTheme.colors.onBackground.copy(
+                                                        .05f
+                                                    )
+                                                )
+                                            ) {
+                                                append(section.first)
+                                            }
+                                        } else {
+                                            append(section.first)
+                                        }
+                                    }
+                                },
+                                fontSize = 12.sp,
+                            )
                         }
-                    )
+                    }
                 }
             }
         }

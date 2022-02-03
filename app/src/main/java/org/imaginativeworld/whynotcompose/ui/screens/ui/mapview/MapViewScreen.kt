@@ -27,6 +27,7 @@
 package org.imaginativeworld.whynotcompose.ui.screens.ui.mapview
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -80,13 +81,13 @@ import com.google.android.gms.maps.MapView
 import com.google.maps.android.ktx.awaitMap
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.R
+import org.imaginativeworld.whynotcompose.common.compose.composeutils.deselectMarker
+import org.imaginativeworld.whynotcompose.common.compose.composeutils.rememberMapViewWithLifecycle
+import org.imaginativeworld.whynotcompose.common.compose.composeutils.selectMarker
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
+import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
 import org.imaginativeworld.whynotcompose.models.MapPlace
 import org.imaginativeworld.whynotcompose.ui.compositions.CustomSnackbarHost
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
-import org.imaginativeworld.whynotcompose.ui.theme.TailwindCSSColor
-import org.imaginativeworld.whynotcompose.utils.composeutils.deselectMarker
-import org.imaginativeworld.whynotcompose.utils.composeutils.rememberMapViewWithLifecycle
-import org.imaginativeworld.whynotcompose.utils.composeutils.selectMarker
 
 // TODO: add location permission
 // TODO: add current location request
@@ -196,10 +197,10 @@ fun MapSkeletonPreview() {
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun MapSkeletonPreviewDark() {
-    AppTheme(darkTheme = true) {
+    AppTheme {
         MapSkeleton(
             mapView = {
                 Box(

@@ -27,6 +27,7 @@
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.selectimageandcrop
 
 import android.Manifest
+import android.content.res.Configuration
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -57,11 +58,11 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.R
-import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
+import org.imaginativeworld.whynotcompose.base.extensions.toast
+import org.imaginativeworld.whynotcompose.common.compose.composeutils.rememberImagePainter
+import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.utils.SquireCropImage
-import org.imaginativeworld.whynotcompose.utils.composeutils.rememberImagePainter
-import org.imaginativeworld.whynotcompose.utils.extensions.toast
 import java.io.File
 import java.util.Date
 
@@ -130,10 +131,10 @@ fun SelectImageAndCropScreenSkeletonPreview() {
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun SelectImageAndCropScreenSkeletonPreviewDark() {
-    AppTheme(darkTheme = true) {
+    AppTheme {
         SelectImageAndCropScreenSkeleton()
     }
 }

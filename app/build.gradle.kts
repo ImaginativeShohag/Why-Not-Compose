@@ -10,20 +10,23 @@ plugins {
 }
 
 android {
-    compileSdk = 31
+    compileSdk = BuildConfigConst.compileSdk
 
     defaultConfig {
         applicationId = "org.imaginativeworld.whynotcompose"
-        minSdk = 21
-        targetSdk = 31
+        minSdk = BuildConfigConst.minSdk
+        targetSdk = BuildConfigConst.targetSdk
         versionCode = 1
-        versionName = "0.0.0.000000" // Major.Minor.Patch.YYMMDD
+        versionName = "4.0.0.000000" // Major.Minor.Patch.YYMMDD
         vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
+        getByName("release") {
+            signingConfig = signingConfigs.getByName("debug")
+        }
         named("debug") {
             isDebuggable = true
             applicationIdSuffix = ".debug"
@@ -80,11 +83,16 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Libs.AndroidX.Compose.version
+        kotlinCompilerExtensionVersion = Libs.AndroidX.Compose.compilerVersion
     }
 }
 
 dependencies {
+    implementation(project(":base"))
+    implementation(project(":common-ui-compose"))
+    implementation(project(":tictactoe"))
+    implementation(project(":exoplayer"))
+
     implementation(Libs.Kotlin.stdlib)
     implementation(Libs.AndroidX.coreKtx)
     implementation(Libs.AndroidX.appcompat)
@@ -102,6 +110,7 @@ dependencies {
     // ----------------------------------------------------------------
     // Compose
     // ----------------------------------------------------------------
+    implementation(Libs.AndroidX.Compose.compiler)
     implementation(Libs.AndroidX.Compose.ui)
     implementation(Libs.AndroidX.Compose.uiUtil)
     // Tooling support (Previews, etc.)
@@ -139,6 +148,7 @@ dependencies {
     implementation(Libs.Accompanist.flowlayout)
     implementation(Libs.Accompanist.pager)
     implementation(Libs.Accompanist.swipeRefresh)
+    implementation(Libs.Accompanist.placeholder)
 
     // ----------------------------------------------------------------
 
@@ -199,6 +209,14 @@ dependencies {
 
     // uCrop
     implementation(Libs.Yalantis.uCrop)
+
+    // OneSignal
+    implementation(Libs.OneSignal.core)
+
+    // Firebase
+    implementation(platform(Libs.Google.Firebase.bom))
+
+    implementation(Libs.Google.Firebase.analytics)
 }
 
 kapt {

@@ -26,6 +26,7 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.composition.textfield
 
+import android.content.res.Configuration
 import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
@@ -115,11 +116,11 @@ import com.google.accompanist.insets.statusBarsPadding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.R
-import org.imaginativeworld.whynotcompose.ui.screens.AppComponent
-import org.imaginativeworld.whynotcompose.ui.theme.AppTheme
-import org.imaginativeworld.whynotcompose.ui.theme.errorInputBackground
-import org.imaginativeworld.whynotcompose.ui.theme.inputBackground
-import org.imaginativeworld.whynotcompose.ui.theme.onInputBackground
+import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
+import org.imaginativeworld.whynotcompose.common.compose.theme.errorInputBackground
+import org.imaginativeworld.whynotcompose.common.compose.theme.inputBackground
+import org.imaginativeworld.whynotcompose.common.compose.theme.onInputBackground
 
 /**
  * Official Samples Source;
@@ -141,10 +142,10 @@ fun TextFieldScreenSkeletonPreview() {
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun TextFieldScreenSkeletonPreviewDark() {
-    AppTheme(darkTheme = true) {
+    AppTheme {
         TextFieldScreenSkeleton()
     }
 }

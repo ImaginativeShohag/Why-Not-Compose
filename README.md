@@ -5,6 +5,10 @@ cookbook or play-ground if you want!
 
 Feel free to request features or suggestions for improvements.
 
+[![Developer](https://img.shields.io/badge/Maintainer-ImaginativeShohag-green)](https://github.com/ImaginativeShohag)
+[![GitHub release](https://img.shields.io/github/release/ImaginativeShohag/Why-Not-Compose.svg)](https://github.com/ImaginativeShohag/Why-Not-Compose/releases)
+![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat)
+
 ## Notable Features & Libraries
 
 - MVI Pattern
@@ -18,9 +22,9 @@ Feel free to request features or suggestions for improvements.
 
 ### Animations
 
-| <img src="images/animated-text-and-bubbles.gif" style="width:320px"> | <img src="images/the-story.gif" style="width:320px"> | <img src="images/running-car.png" style="width:320px"> |
+| <img src="images/animated-text-and-bubbles.gif" style="width:320px"> | <img src="images/the-story.gif" style="width:320px"> | <img src="images/running-car.gif" style="width:320px"> |
 | :------: | :------: | :------: |
-| <img src="images/emudi.png" style="width:320px"> |  |  |
+| <img src="images/emudi.gif" style="width:320px"> |  |  |
 
 ### Compositions
 
@@ -46,24 +50,18 @@ Feel free to request features or suggestions for improvements.
 - Select image and crop for upload (Intermediate)
 - Capture image and crop for upload (Intermediate)
 - Permission (Beginner)
+- Data Fetch and Paging (Advanced)
+- Tic-Tac-Toe (Advanced)
+- OneSignal and Broadcast (Intermediate)
+- ExoPlayer (Advanced)
 
 | ![Preview](images/counter.gif) | ![Preview](images/animated-visibility.gif) | ![Preview](images/lottie.gif) |
 | :------: | :------: | :------: |
+| ![Preview](images/exo-player.gif) | ![Preview](images/tic-tac-toe.gif) |  |
 
 # TODO
 
-- [x] Composition: Bottom Navigation
-- [ ] Composition: Dialog
-- [x] Composition: Text
-- [x] Tutorial: Select image and crop for upload
-- [x] Tutorial: Capture image and crop for upload
-- [x] Tutorial: Permission
-- [ ] Tutorial: ExoPlayer sample
-- [ ] Tutorial: Data fetch and LazyColumn
-- [ ] Tutorial: Navigation
-- [ ] Tutorial: Navigation with Data pass
-- [ ] Tutorial: Material You
-- [ ] Tutorial: OneSignal with broadcast at notification
+Thinking... 🤔
 
 # Note
 
@@ -101,6 +99,7 @@ MAPS_API_KEY=YOUR_API_KEY
 - [Gurupreet/ComposeCookBook](https://github.com/Gurupreet/ComposeCookBook)
 - [spencergriffin/exoplayer-compose](https://github.com/spencergriffin/exoplayer-compose)
 - [godaddy/compose-color-picker](https://github.com/godaddy/compose-color-picker)
+- [Jetpack Compose Awesome](https://github.com/jetpack-compose/jetpack-compose-awesome)
 
 ## Credits
 
@@ -113,7 +112,7 @@ MAPS_API_KEY=YOUR_API_KEY
 - **Emudi** is a trademark of [Softzino Technologies](https://softzino.com/).
 
 ```
-Copyright 2021 Md. Mahmudul Hasan Shohag
+Copyright 2021 Md. Mahmudul Hasan Shohagm
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

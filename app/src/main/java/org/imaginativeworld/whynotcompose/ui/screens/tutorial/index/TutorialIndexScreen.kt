@@ -54,7 +54,6 @@ import org.imaginativeworld.whynotcompose.common.compose.compositions.AppCompone
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.ui.screens.TutorialsScreen
 import org.imaginativeworld.whynotcompose.utils.LiteMarkdown
-import timber.log.Timber
 
 @Composable
 fun TutorialIndexScreen(
@@ -165,4 +164,3 @@ fun TutorialIndexSkeleton(
         }
     }
 }
-

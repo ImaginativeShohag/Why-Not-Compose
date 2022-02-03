@@ -215,7 +215,7 @@ dependencies {
 
     // Firebase
     implementation(platform(Libs.Google.Firebase.bom))
-    
+
     implementation(Libs.Google.Firebase.analytics)
 }
 

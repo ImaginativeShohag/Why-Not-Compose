@@ -67,6 +67,7 @@ Feel free to request features or suggestions for improvements.
 - [x] Tutorial: Tic-Tac-Toe
 - [x] Tutorial: ExoPlayer sample
 - [x] Test: LiteMarkdown#getSections()
+- [x] Optimize home UI
 
 # Note
 

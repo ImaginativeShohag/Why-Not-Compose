@@ -17,7 +17,7 @@ android {
         minSdk = BuildConfigConst.minSdk
         targetSdk = BuildConfigConst.targetSdk
         versionCode = 1
-        versionName = "4.0.0.000000" // Major.Minor.Patch.YYMMDD
+        versionName = "4.0.0.220210" // Major.Minor.Patch.YYMMDD
         vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

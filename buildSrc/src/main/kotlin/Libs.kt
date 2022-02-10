@@ -1,5 +1,5 @@
 object Libs {
-    const val androidGradlePlugin = "com.android.tools.build:gradle:7.2.0-beta01"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:7.2.0-beta02"
 
     const val secretsGradlePlugin =
         "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.0"
@@ -24,7 +24,7 @@ object Libs {
     }
 
     object Yalantis {
-        const val uCrop = "com.github.yalantis:ucrop:2.2.7"
+        const val uCrop = "com.github.yalantis:ucrop:2.2.8"
     }
 
     object Airbnb {
@@ -39,7 +39,7 @@ object Libs {
         const val exoplayer = "com.google.android.exoplayer:exoplayer:2.16.1"
 
         object Firebase {
-            const val bom = "com.google.firebase:firebase-bom:29.0.3"
+            const val bom = "com.google.firebase:firebase-bom:29.0.4"
 
             const val analytics = "com.google.firebase:firebase-analytics-ktx"
         }
@@ -57,7 +57,7 @@ object Libs {
     }
 
     object Accompanist {
-        private const val version = "0.22.1-rc"
+        private const val version = "0.23.0"
 
         const val insets = "com.google.accompanist:accompanist-insets:$version"
         const val systemuicontroller =
@@ -90,11 +90,12 @@ object Libs {
         const val androidGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:$version"
         const val core = "com.google.dagger:hilt-android:$version"
         const val compiler = "com.google.dagger:hilt-compiler:$version"
-        const val navigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0-rc01"
+
+        const val navigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0"
     }
 
     object AndroidX {
-        const val appcompat = "androidx.appcompat:appcompat:1.4.0"
+        const val appcompat = "androidx.appcompat:appcompat:1.4.1"
         const val coreKtx = "androidx.core:core-ktx:1.7.0"
         const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
@@ -103,7 +104,7 @@ object Libs {
         }
 
         object Compose {
-            const val version = "1.1.0-rc03"
+            const val version = "1.1.0"
             const val compilerVersion = version
 
             const val compiler = "androidx.compose.compiler:compiler:$compilerVersion"
@@ -134,13 +135,13 @@ object Libs {
         }
 
         object ConstraintLayout {
-            private const val version = "1.0.0-rc02"
+            private const val version = "1.0.0"
 
             const val compose = "androidx.constraintlayout:constraintlayout-compose:$version"
         }
 
         object Lifecycle {
-            private const val version = "2.4.0"
+            private const val version = "2.4.1"
 
             const val extensions = "androidx.lifecycle:lifecycle-extensions:$version"
             const val livedata = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
@@ -151,7 +152,7 @@ object Libs {
         }
 
         object Navigation {
-            private const val version = "2.4.0-rc01"
+            private const val version = "2.4.1"
 
             const val fragment = "androidx.navigation:navigation-fragment-ktx:$version"
             const val uiKtx = "androidx.navigation:navigation-ui-ktx:$version"
@@ -167,7 +168,7 @@ object Libs {
         }
 
         object Room {
-            private const val version = "2.4.0"
+            private const val version = "2.4.1"
 
             const val runtime = "androidx.room:room-runtime:$version"
             const val compiler = "androidx.room:room-compiler:$version"
@@ -193,7 +194,7 @@ object Libs {
     object OneSignal {
         const val gradlePlugin = "gradle.plugin.com.onesignal:onesignal-gradle-plugin:0.14.0"
 
-        const val core = "com.onesignal:OneSignal:4.6.3"
+        const val core = "com.onesignal:OneSignal:4.6.7"
     }
 
     object Square {
@@ -204,7 +205,7 @@ object Libs {
             const val converterMoshi = "com.squareup.retrofit2:converter-moshi:$version"
         }
 
-        const val okhttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:4.9.1"
+        const val okhttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:4.9.3"
 
         object Moshi {
             private const val version = "1.13.0"

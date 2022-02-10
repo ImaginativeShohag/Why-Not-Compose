@@ -67,7 +67,7 @@ import org.imaginativeworld.whynotcompose.repositories.MockData
 fun SwipeRefreshScreen() {
     val scope = rememberCoroutineScope()
 
-    val items = remember { mutableStateOf(MockData.dummyListItem.toMutableList()) }
+    val items = remember { mutableStateOf(MockData.dummyListItem) }
 
     val isRefreshing = remember { mutableStateOf(false) }
 
@@ -80,11 +80,7 @@ fun SwipeRefreshScreen() {
 
                 delay(2000)
 
-                items.value = items.value.run {
-                    shuffle()
-
-                    toMutableList()
-                }
+                items.value = items.value.shuffled()
 
                 isRefreshing.value = false
             }
@@ -96,7 +92,7 @@ fun SwipeRefreshScreen() {
 @Composable
 fun SwipeRefreshScreenSkeletonPreview() {
     AppTheme {
-        val items = remember { mutableStateOf(MockData.dummyListItem.toMutableList()) }
+        val items = remember { mutableStateOf(MockData.dummyListItem) }
 
         SwipeRefreshScreenSkeleton(
             items = items.value,
@@ -108,7 +104,7 @@ fun SwipeRefreshScreenSkeletonPreview() {
 @Composable
 fun SwipeRefreshScreenSkeletonPreviewDark() {
     AppTheme {
-        val items = remember { mutableStateOf(MockData.dummyListItem.toMutableList()) }
+        val items = remember { mutableStateOf(MockData.dummyListItem) }
 
         SwipeRefreshScreenSkeleton(
             items = items.value,
@@ -156,10 +152,10 @@ fun SwipeRefreshScreenSkeleton(
                         .fillMaxSize(),
                     contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 8.dp)
                 ) {
-                    items(items) { item ->
-
+                    items(items, key = { it.id }) { item ->
                         ListItem(
                             modifier = Modifier
+                                .animateItemPlacement()
                                 .padding(top = 8.dp)
                                 .background(
                                     color = MaterialTheme.colors.onBackground.copy(alpha = .1f),

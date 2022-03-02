@@ -35,8 +35,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.util.Locale
-import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -47,6 +45,8 @@ import org.imaginativeworld.whynotcompose.base.models.Event
 import org.imaginativeworld.whynotcompose.models.MapPlace
 import org.imaginativeworld.whynotcompose.repositories.MapPlaceRepo
 import timber.log.Timber
+import java.util.Locale
+import javax.inject.Inject
 
 @HiltViewModel
 class MapViewModel @Inject constructor() : ViewModel() {

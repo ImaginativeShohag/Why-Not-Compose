@@ -61,7 +61,8 @@ Feel free to request features or suggestions for improvements.
 
 # TODO
 
-Thinking... 🤔
+- [ ] Add accompanist WebView
+- [x] Add new Google Map Compose library
 
 # Note
 

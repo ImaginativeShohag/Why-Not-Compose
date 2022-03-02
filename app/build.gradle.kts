@@ -203,6 +203,7 @@ dependencies {
     implementation(Libs.Google.PlayService.maps)
     implementation(Libs.Google.Maps.core)
     implementation(Libs.Google.Maps.utils)
+    implementation(Libs.Google.Maps.compose)
 
     // Lottie
     implementation(Libs.Airbnb.Lottie.compose)

@@ -26,13 +26,13 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.ui.mapview
 
-import android.annotation.SuppressLint
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -61,29 +61,32 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.MapView
-import com.google.maps.android.ktx.awaitMap
-import kotlinx.coroutines.launch
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMapOptions
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.MapProperties
+import com.google.maps.android.compose.MapUiSettings
+import com.google.maps.android.compose.MarkerInfoWindow
+import com.google.maps.android.compose.rememberCameraPositionState
 import org.imaginativeworld.whynotcompose.R
-import org.imaginativeworld.whynotcompose.common.compose.composeutils.deselectMarker
-import org.imaginativeworld.whynotcompose.common.compose.composeutils.rememberMapViewWithLifecycle
-import org.imaginativeworld.whynotcompose.common.compose.composeutils.selectMarker
+import org.imaginativeworld.whynotcompose.base.extensions.dpToPx
+import org.imaginativeworld.whynotcompose.common.compose.composeutils.bitmapDescriptorFromVector
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
 import org.imaginativeworld.whynotcompose.models.MapPlace
@@ -91,8 +94,9 @@ import org.imaginativeworld.whynotcompose.ui.compositions.CustomSnackbarHost
 
 // TODO: add location permission
 // TODO: add current location request
+// TODO: Displaying info window if the place is selected:
+// https://github.com/googlemaps/android-maps-compose/issues/16
 
-@SuppressLint("PotentialBehaviorOverride")
 @Composable
 fun MapScreen(
     viewModel: MapViewModel,
@@ -101,82 +105,108 @@ fun MapScreen(
 ) {
     val context = LocalContext.current
 
-    val scope = rememberCoroutineScope()
+    val cameraPositionState = rememberCameraPositionState()
 
     val state by viewModel.state.collectAsState()
 
     LaunchedEffect(Unit) {
-        viewModel.loadMapPlaces(context)
+        viewModel.loadMapPlaces()
     }
 
-    // ================================================================
-    // Map related things
-    // ================================================================
+    LaunchedEffect(state.places) {
+        if (viewModel.isFirstTime()) {
+            val boundsBuilder = LatLngBounds.Builder()
+
+            for (place in state.places) {
+                boundsBuilder.include(place.location)
+            }
+
+            cameraPositionState.animate(
+                CameraUpdateFactory.newLatLngBounds(
+                    boundsBuilder.build(),
+                    48.dpToPx()
+                )
+            )
+        }
+    }
 
     MapSkeleton(
         showLoadingView = state.loading,
         showEmptyView = state.empty && !state.loading,
         goBack = goBack,
         onRetryClicked = {
-            viewModel.loadMapPlaces(context)
+            viewModel.loadMapPlaces()
         },
         mapView = { modifier ->
-            MapPlaceMapView(
+
+            GoogleMap(
                 modifier = modifier,
-                mapViewUpdateCallback = { gMap ->
-
-                    viewModel.setGoogleMap(context, gMap)
-
-                    gMap.setOnCameraIdleListener {
-                        viewModel.saveMapState()
-                    }
-
-                    gMap.setOnMarkerClickListener { marker ->
-                        if (!marker.isInfoWindowShown) {
-                            val mapPlace = marker.tag as MapPlace?
-
-                            mapPlace?.let {
-                                // deselect previous selected marker
-                                viewModel.getSelectedMarker()?.deselectMarker(context)
-
-                                // select new marker
-                                marker.selectMarker(context)
-
-                                viewModel.setSelectedMarker(marker)
-                                viewModel.setSelectedMapPlace(mapPlace)
-
-                                viewModel.saveMapState()
-                            }
-                        }
-
-                        false
-                    }
-
-                    gMap.setOnMapClickListener {
-                        viewModel.getSelectedMarker()?.deselectMarker(context)
-                        viewModel.setSelectedMarker(null)
-
-                        viewModel.setSelectedMapPlace(null)
-
-                        viewModel.clearSelectedMapPlaceCache()
-                    }
-
-                    gMap.setOnInfoWindowClickListener { marker ->
-                        val mapPlace = marker.tag as MapPlace?
-
-                        mapPlace?.let { place ->
-                            viewModel.setSelectedMarker(marker)
+                cameraPositionState = cameraPositionState,
+                googleMapOptionsFactory = {
+                    GoogleMapOptions()
+                },
+                properties = MapProperties(
+                    isMyLocationEnabled = viewModel.hasLocationPermission(context),
+                    minZoomPreference = 2f,
+                    maxZoomPreference = 15f
+                ),
+                uiSettings = MapUiSettings(
+                    myLocationButtonEnabled = false,
+                    mapToolbarEnabled = false,
+                    rotationGesturesEnabled = true,
+                    zoomControlsEnabled = false,
+                )
+            ) {
+                for (place in state.places) {
+                    MarkerInfoWindow(
+                        position = place.location,
+                        anchor = if (state.selectedPlace == place) Offset(.5f, .7f)
+                        else Offset(.5f, 1f),
+                        title = place.name,
+                        snippet = "Click for details",
+                        icon = if (state.selectedPlace == place)
+                            bitmapDescriptorFromVector(
+                                context,
+                                R.drawable.ic_location_on_map_selected
+                            )
+                        else bitmapDescriptorFromVector(context, R.drawable.ic_location_on_map),
+                        onClick = {
                             viewModel.setSelectedMapPlace(place)
 
-                            viewModel.saveMapState()
-
-                            scope.launch {
-                                gotoDetailsScreen(place)
-                            }
+                            false
+                        },
+                        onInfoWindowClick = {
+                            gotoDetailsScreen(place)
+                        },
+                        onInfoWindowClose = {
+                            viewModel.clearSelectedMapPlace()
+                        }
+                    ) { market ->
+                        Column(
+                            Modifier
+                                .clip(RoundedCornerShape(8.dp))
+                                .border(
+                                    1.dp,
+                                    MaterialTheme.colors.primary,
+                                    RoundedCornerShape(8.dp)
+                                )
+                                .background(MaterialTheme.colors.background)
+                                .padding(8.dp, 2.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text(
+                                text = market.title ?: "",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Text(
+                                text = market.snippet ?: "",
+                                fontSize = 14.sp
+                            )
                         }
                     }
                 }
-            )
+            }
         }
     )
 }
@@ -269,38 +299,6 @@ fun MapSkeleton(
             }
         }
     }
-}
-
-@Composable
-private fun MapPlaceMapView(
-    modifier: Modifier,
-    mapViewUpdateCallback: suspend (GoogleMap) -> Unit,
-) {
-    // The MapView lifecycle is handled by this composable. As the MapView also needs to be updated
-    // with input from Compose UI, those updates are encapsulated into the MapViewContainer
-    // composable. In this way, when an update to the MapView happens, this composable won't
-    // recompose and the MapView won't need to be recreated.
-    val mapView = rememberMapViewWithLifecycle()
-    MapPlaceMapViewContainer(modifier, mapView, mapViewUpdateCallback)
-}
-
-@Composable
-private fun MapPlaceMapViewContainer(
-    modifier: Modifier,
-    map: MapView,
-    mapViewUpdateCallback: suspend (GoogleMap) -> Unit,
-) {
-    LaunchedEffect(map) {
-        val googleMap = map.awaitMap()
-
-        mapViewUpdateCallback(googleMap)
-    }
-
-    AndroidView(
-        modifier = modifier,
-        factory = { map },
-        update = {}
-    )
 }
 
 @Composable

@@ -21,7 +21,7 @@ buildscript {
 }
 
 plugins {
-    id("com.diffplug.spotless") version "6.2.2"
+    id("com.diffplug.spotless") version "6.3.0"
 }
 
 subprojects {
@@ -33,7 +33,7 @@ subprojects {
             targetExclude("$buildDir/**/*.kt")
             targetExclude("bin/**/*.kt")
 
-            ktlint("0.43.2").userData(
+            ktlint("0.44.0").userData(
                 mapOf("disabled_rules" to "filename")
             )
             licenseHeaderFile(rootProject.file("spotless/copyright.kt"))

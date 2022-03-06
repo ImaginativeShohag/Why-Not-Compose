@@ -28,112 +28,12 @@ package org.imaginativeworld.whynotcompose.common.compose.composeutils
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.os.Bundle
-import androidx.annotation.FloatRange
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
-import org.imaginativeworld.whynotcompose.common.compose.R
-import timber.log.Timber
 
-// Help source code from:
-// https://github.com/android/compose-samples/tree/main/Crane
-
-const val MinZoom = 2f
-const val MaxZoom = 15f
-
-/**
- * Remembers a MapView and gives it the lifecycle of the current LifecycleOwner
- */
-@Composable
-fun rememberMapViewWithLifecycle(): MapView {
-    val context = LocalContext.current
-    val mapView = remember {
-        MapView(context).apply {
-            id = R.id.map
-        }
-    }
-
-    val lifecycle = LocalLifecycleOwner.current.lifecycle
-    DisposableEffect(lifecycle, mapView) {
-        // Make MapView follow the current lifecycle
-        val lifecycleObserver = getMapLifecycleObserver(mapView)
-        lifecycle.addObserver(lifecycleObserver)
-        onDispose {
-            lifecycle.removeObserver(lifecycleObserver)
-        }
-    }
-
-    return mapView
-}
-
-private fun getMapLifecycleObserver(mapView: MapView): LifecycleEventObserver =
-    LifecycleEventObserver { _, event ->
-        when (event) {
-            Lifecycle.Event.ON_CREATE -> mapView.onCreate(Bundle())
-            Lifecycle.Event.ON_START -> mapView.onStart()
-            Lifecycle.Event.ON_RESUME -> mapView.onResume()
-            Lifecycle.Event.ON_PAUSE -> mapView.onPause()
-            Lifecycle.Event.ON_STOP -> mapView.onStop()
-            Lifecycle.Event.ON_DESTROY -> mapView.onDestroy()
-            else -> throw IllegalStateException()
-        }
-    }
-
-fun GoogleMap.setZoom(
-    @FloatRange(from = MinZoom.toDouble(), to = MaxZoom.toDouble()) zoom: Float
-) {
-    resetMinMaxZoomPreference()
-    setMinZoomPreference(zoom)
-    setMaxZoomPreference(zoom)
-}
-
-fun GoogleMap.setZoom() {
-    resetMinMaxZoomPreference()
-    setMinZoomPreference(MinZoom)
-    setMaxZoomPreference(MaxZoom)
-}
-
-// ----------------------------------------------------------------
-
-fun Marker.selectMarker(context: Context) {
-    Timber.e("A marker selected")
-    setIcon(bitmapDescriptorFromVector(context, R.drawable.ic_location_on_map_selected))
-    setAnchor(.5f, .7f)
-}
-
-fun MarkerOptions.selectMarker(context: Context) {
-    Timber.e("A marker selected (with MarkerOptions)")
-    icon(bitmapDescriptorFromVector(context, R.drawable.ic_location_on_map_selected))
-    anchor(.5f, .7f)
-}
-
-fun Marker?.deselectMarker(context: Context) {
-    Timber.e("A marker de-selected")
-    this?.apply {
-        setIcon(bitmapDescriptorFromVector(context, R.drawable.ic_location_on_map))
-        setAnchor(.5f, 1f)
-    }
-}
-
-fun MarkerOptions.deselectMarker(context: Context) {
-    Timber.e("A marker de-selected (with MarkerOptions)")
-    icon(bitmapDescriptorFromVector(context, R.drawable.ic_location_on_map))
-    anchor(.5f, 1f)
-}
-
-fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescriptor? {
+fun bitmapDescriptorFromVector(context: Context, @DrawableRes vectorResId: Int): BitmapDescriptor {
     // below line is use to generate a drawable.
     val vectorDrawable = ContextCompat.getDrawable(context, vectorResId)
 

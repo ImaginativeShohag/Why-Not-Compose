@@ -7,7 +7,9 @@ Feel free to request features or suggestions for improvements.
 
 [![Developer](https://img.shields.io/badge/Maintainer-ImaginativeShohag-green)](https://github.com/ImaginativeShohag)
 [![GitHub release](https://img.shields.io/github/release/ImaginativeShohag/Why-Not-Compose.svg)](https://github.com/ImaginativeShohag/Why-Not-Compose/releases)
+[![Google Play](https://img.shields.io/badge/GET%20IT%20ON-Google%20Play-brightgreen)](https://play.google.com/store/apps/details?id=org.imaginativeworld.whynotcompose)
 ![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat)
+[![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/)
 
 ## Notable Features & Libraries
 
@@ -17,6 +19,8 @@ Feel free to request features or suggestions for improvements.
 - Everywhere dark mode support
 - A lot of Ready to use compositions
 - Gradle Kotlin DSL
+
+[<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" style="width:256px">](https://play.google.com/store/apps/details?id=org.imaginativeworld.whynotcompose)
 
 ## Screenshots
 

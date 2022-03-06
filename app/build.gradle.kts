@@ -16,7 +16,7 @@ android {
         applicationId = "org.imaginativeworld.whynotcompose"
         minSdk = BuildConfigConst.minSdk
         targetSdk = BuildConfigConst.targetSdk
-        versionCode = 1
+        versionCode = 2
         versionName = "4.1.0.220307" // Major.Minor.Patch.YYMMDD
         vectorDrawables.useSupportLibrary = true
 

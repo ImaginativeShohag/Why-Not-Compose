@@ -1,5 +1,5 @@
 object Libs {
-    const val androidGradlePlugin = "com.android.tools.build:gradle:7.2.0-beta03"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:7.2.0-beta04"
 
     const val secretsGradlePlugin =
         "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1"

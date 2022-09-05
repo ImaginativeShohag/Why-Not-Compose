@@ -97,7 +97,7 @@ Open the `local.properties` in your project level directory, and then add the fo
 Replace `YOUR_API_KEY` with your API key.
 
 ```groovy
-MAPS_API_KEY = YOUR_API_KEY
+MAPS_API_KEY=YOUR_API_KEY
 ```
 
 ## Other Interesting Repos

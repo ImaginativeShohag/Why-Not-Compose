@@ -27,23 +27,23 @@ Feel free to request features or suggestions for improvements.
 ### Animations
 
 | <img src="images/animated-text-and-bubbles.gif" style="width:320px"> | <img src="images/the-story.gif" style="width:320px"> | <img src="images/running-car.gif" style="width:320px"> |
-| :------: | :------: | :------: |
-| <img src="images/emudi.gif" style="width:320px"> |  |  |
+|:--------------------------------------------------------------------:|:----------------------------------------------------:|:------------------------------------------------------:|
+|           <img src="images/emudi.gif" style="width:320px">           |                                                      |                                                        |
 
 ### Compositions
 
-| ![Preview](images/app-bar.png) | ![Preview](images/button.png) | ![Preview](images/card.png) |
-| :------: | :------: | :------: |
-| ![Preview](images/check-box.png) | ![Preview](images/drop-down.png) | ![Preview](images/grid.png) |
-| ![Preview](images/list-item.png) | ![Preview](images/lists.png) | ![Preview](images/loading-indicator.png) |
-| ![Preview](images/radio-button.png) | ![Preview](images/scaffold.png) | ![Preview](images/snackbar.png) |
-| ![Preview](images/switch.png) | ![Preview](images/text-fields.png) | ![Preview](images/swipe-refresh.gif) |
-| ![Preview](images/swipe-to-dismiss.gif) |  |  |
+|     ![Preview](images/app-bar.png)      |   ![Preview](images/button.png)    |       ![Preview](images/card.png)        |
+|:---------------------------------------:|:----------------------------------:|:----------------------------------------:|
+|    ![Preview](images/check-box.png)     |  ![Preview](images/drop-down.png)  |       ![Preview](images/grid.png)        |
+|    ![Preview](images/list-item.png)     |    ![Preview](images/lists.png)    | ![Preview](images/loading-indicator.png) |
+|   ![Preview](images/radio-button.png)   |  ![Preview](images/scaffold.png)   |     ![Preview](images/snackbar.png)      |
+|      ![Preview](images/switch.png)      | ![Preview](images/text-fields.png) |   ![Preview](images/swipe-refresh.gif)   |
+| ![Preview](images/swipe-to-dismiss.gif) |                                    |                                          |
 
 ### UIs
 
 | ![Preview](images/map-view.png) | ![Preview](images/otp-code-verify.png) | ![Preview](images/web-view.png) |
-| :------: | :------: | :------: |
+|:-------------------------------:|:--------------------------------------:|:-------------------------------:|
 
 ### Tutorials
 
@@ -59,14 +59,18 @@ Feel free to request features or suggestions for improvements.
 - OneSignal and Broadcast (Intermediate)
 - ExoPlayer (Advanced)
 
-| ![Preview](images/counter.gif) | ![Preview](images/animated-visibility.gif) | ![Preview](images/lottie.gif) |
-| :------: | :------: | :------: |
-| ![Preview](images/exo-player.gif) | ![Preview](images/tic-tac-toe.gif) |  |
+|  ![Preview](images/counter.gif)   | ![Preview](images/animated-visibility.gif) | ![Preview](images/lottie.gif) |
+|:---------------------------------:|:------------------------------------------:|:-----------------------------:|
+| ![Preview](images/exo-player.gif) |     ![Preview](images/tic-tac-toe.gif)     |                               |
 
 # TODO
 
 - [ ] Add accompanist WebView
 - [x] Add new Google Map Compose library
+- [ ] x, y, z translation simulation
+- [ ] Shadow manipulation with device gyroscope
+- [ ] Composition: Bottom Sheet
+- [ ] Fix custom `LazyGridScope.items`
 
 # Note
 
@@ -93,7 +97,7 @@ Open the `local.properties` in your project level directory, and then add the fo
 Replace `YOUR_API_KEY` with your API key.
 
 ```groovy
-MAPS_API_KEY=YOUR_API_KEY
+MAPS_API_KEY = YOUR_API_KEY
 ```
 
 ## Other Interesting Repos

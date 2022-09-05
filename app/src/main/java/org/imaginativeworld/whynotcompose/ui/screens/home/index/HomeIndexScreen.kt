@@ -44,10 +44,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.GridItemSpan
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -108,14 +108,14 @@ private val menuItems = listOf(
         icon = R.drawable.ic_round_sticky_note_2_24,
         color = TailwindCSSColor.Purple500,
         route = Screen.Tutorials
-    ),
+    )
 )
 
 @ExperimentalFoundationApi
 @Composable
 fun HomeIndexScreen(
     navigate: (Screen) -> Unit = {},
-    turnOnDarkMode: (Boolean) -> Unit = {},
+    turnOnDarkMode: (Boolean) -> Unit = {}
 ) {
     val context = LocalContext.current
 
@@ -132,13 +132,13 @@ fun HomeIndexScreen(
             ) {
                 LazyVerticalGrid(
                     modifier = Modifier.fillMaxSize(),
-                    cells = GridCells.Fixed(2),
+                    columns = GridCells.Fixed(2),
                     contentPadding = PaddingValues(24.dp, 8.dp, 24.dp, 24.dp)
                 ) {
                     item(span = { GridItemSpan(maxCurrentLineSpan) }) {
                         Column(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalAlignment = Alignment.CenterHorizontally,
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Spacer(Modifier.statusBarsHeight())
 
@@ -152,7 +152,7 @@ fun HomeIndexScreen(
                                     .fillMaxWidth(),
                                 text = stringResource(id = R.string.app_name),
                                 style = MaterialTheme.typography.h1,
-                                textAlign = TextAlign.Center,
+                                textAlign = TextAlign.Center
                             )
 
                             Text(
@@ -165,7 +165,7 @@ fun HomeIndexScreen(
                                     ),
                                 text = "Version ${BuildConfig.VERSION_NAME}",
                                 textAlign = TextAlign.Center,
-                                fontSize = 12.sp,
+                                fontSize = 12.sp
                             )
                         }
                     }
@@ -213,7 +213,7 @@ fun HomeIndexScreen(
                 Modifier
                     .fillMaxWidth()
                     .padding(top = 16.dp, bottom = 12.dp),
-                verticalAlignment = Alignment.CenterVertically,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(
                     Modifier
@@ -278,7 +278,7 @@ fun ModuleButton(
     name: String,
     @DrawableRes icon: Int,
     color: Color,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     Button(
         modifier = Modifier
@@ -288,7 +288,7 @@ fun ModuleButton(
                 spread = 8.dp,
                 alpha = .25f,
                 color = color,
-                radius = 8.dp,
+                radius = 8.dp
             ),
         shape = MaterialTheme.shapes.medium,
         colors = ButtonDefaults.buttonColors(
@@ -297,27 +297,27 @@ fun ModuleButton(
         ),
         onClick = onClick,
         contentPadding = PaddingValues(8.dp),
-        elevation = null,
+        elevation = null
     ) {
         Column(
             Modifier
                 .fillMaxWidth()
                 .aspectRatio(1f),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Center
         ) {
             Icon(
                 modifier = Modifier.size(32.dp),
                 painter = painterResource(id = icon),
                 contentDescription = name,
-                tint = LocalContentColor.current,
+                tint = LocalContentColor.current
             )
             Text(
                 modifier = Modifier.padding(top = 8.dp),
                 text = name,
                 color = LocalContentColor.current,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }
@@ -343,5 +343,5 @@ data class MenuItem(
     val name: String,
     @DrawableRes val icon: Int,
     val color: Color,
-    val route: Screen,
+    val route: Screen
 )

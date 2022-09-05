@@ -31,9 +31,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -96,9 +96,9 @@ fun LazyVerticalGridScreenSkeleton() {
             val itemsList = (1..102).toList()
 
             LazyVerticalGrid(
-                cells = GridCells.Adaptive(64.dp),
+                columns = GridCells.Adaptive(64.dp),
                 modifier = Modifier
-                    .weight(1f),
+                    .weight(1f)
             ) {
                 items(itemsList) { item ->
                     Image(
@@ -129,9 +129,9 @@ fun LazyVerticalGridScreenSkeleton() {
             Divider()
 
             LazyVerticalGrid(
-                cells = GridCells.Fixed(3),
+                columns = GridCells.Fixed(3),
                 modifier = Modifier
-                    .weight(1f),
+                    .weight(1f)
             ) {
                 items(itemsList) { item ->
                     Image(

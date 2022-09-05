@@ -1,5 +1,5 @@
 object Libs {
-    const val androidGradlePlugin = "com.android.tools.build:gradle:7.2.0-beta03"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:7.2.2"
 
     const val secretsGradlePlugin =
         "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1"
@@ -36,7 +36,7 @@ object Libs {
     object Google {
         const val service = "com.google.gms:google-services:4.3.10"
 
-        const val exoplayer = "com.google.android.exoplayer:exoplayer:2.17.0"
+        const val exoplayer = "com.google.android.exoplayer:exoplayer:2.18.1"
 
         object Firebase {
             const val bom = "com.google.firebase:firebase-bom:29.1.0"
@@ -70,7 +70,7 @@ object Libs {
     }
 
     object Kotlin {
-        private const val version = "1.6.10"
+        private const val version = "1.7.10"
 
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$version"
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
@@ -86,7 +86,7 @@ object Libs {
     }
 
     object Hilt {
-        private const val version = "2.41"
+        private const val version = "2.43.2"
 
         const val androidGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:$version"
         const val core = "com.google.dagger:hilt-android:$version"
@@ -105,8 +105,8 @@ object Libs {
         }
 
         object Compose {
-            const val version = "1.1.1"
-            const val compilerVersion = version
+            const val version = "1.2.1"
+            const val compilerVersion = "1.3.0"
 
             const val compiler = "androidx.compose.compiler:compiler:$compilerVersion"
 

@@ -71,6 +71,7 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -87,6 +88,7 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Shape
@@ -94,6 +96,9 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.LocalTextToolbar
+import androidx.compose.ui.platform.TextToolbar
+import androidx.compose.ui.platform.TextToolbarStatus
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextRange
@@ -156,9 +161,10 @@ fun TextFieldScreenSkeleton() {
         Modifier
             .navigationBarsWithImePadding()
             .statusBarsPadding()
-    ) {
+    ) { padding ->
         Column(
             Modifier
+                .padding(padding)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(start = 16.dp, end = 16.dp)
@@ -237,14 +243,27 @@ fun TextFieldScreenSkeleton() {
 
             Divider()
 
-            AppComponent.SubHeader("Type One")
+            AppComponent.SubHeader("Cut-Copy-Paste Disabled")
+
+            // ----------------------------------------------------------------
+
+            TextFieldWithCutCopyPasteDisabled()
+
+            // ----------------------------------------------------------------
+            // ----------------------------------------------------------------
+
+            AppComponent.MediumSpacer()
+
+            Divider()
+
+            AppComponent.SubHeader("Custom Type One")
 
             // ----------------------------------------------------------------
 
             TextInputFieldOne(
                 textFieldValue = remember { mutableStateOf(TextFieldValue()) },
                 placeholder = "I am  a placeholder",
-                keyboardType = KeyboardType.Text,
+                keyboardType = KeyboardType.Text
             )
 
             // ----------------------------------------------------------------
@@ -254,7 +273,7 @@ fun TextFieldScreenSkeleton() {
             TextInputFieldOne(
                 textFieldValue = remember { mutableStateOf(TextFieldValue()) },
                 placeholder = "I am  a placeholder",
-                isError = true,
+                isError = true
             )
 
             // ----------------------------------------------------------------
@@ -263,7 +282,7 @@ fun TextFieldScreenSkeleton() {
 
             TextInputFieldOne(
                 textFieldValue = remember { mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet")) },
-                placeholder = "I am  a placeholder",
+                placeholder = "I am  a placeholder"
             )
 
             // ----------------------------------------------------------------
@@ -272,7 +291,7 @@ fun TextFieldScreenSkeleton() {
 
             TextInputFieldOne(
                 textFieldValue = remember { mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet")) },
-                isError = true,
+                isError = true
             )
 
             // ----------------------------------------------------------------
@@ -285,7 +304,7 @@ fun TextFieldScreenSkeleton() {
                 textFieldValue = remember { mutableStateOf(TextFieldValue()) },
                 placeholder = "I am a multi-line placeholder.\nHere is another line.",
                 keyboardType = KeyboardType.Text,
-                singleLine = false,
+                singleLine = false
             )
 
             // ----------------------------------------------------------------
@@ -298,7 +317,15 @@ fun TextFieldScreenSkeleton() {
                 textFieldValue = remember { mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")) },
                 placeholder = "I am a multi-line placeholder.\nHere is another line.",
                 keyboardType = KeyboardType.Text,
-                singleLine = false,
+                singleLine = false
+            )
+
+            // ----------------------------------------------------------------
+
+            AppComponent.MediumSpacer()
+
+            PasswordInputFieldOne(
+                textFieldValue = remember { mutableStateOf(TextFieldValue()) }
             )
 
             // ----------------------------------------------------------------
@@ -307,15 +334,7 @@ fun TextFieldScreenSkeleton() {
 
             PasswordInputFieldOne(
                 textFieldValue = remember { mutableStateOf(TextFieldValue()) },
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            PasswordInputFieldOne(
-                textFieldValue = remember { mutableStateOf(TextFieldValue()) },
-                isError = true,
+                isError = true
             )
 
             // ----------------------------------------------------------------
@@ -325,14 +344,14 @@ fun TextFieldScreenSkeleton() {
 
             Divider()
 
-            AppComponent.SubHeader("Type Two")
+            AppComponent.SubHeader("Custom Type Two")
 
             // ----------------------------------------------------------------
 
             TextInputFieldTwo(
                 textFieldValue = remember { mutableStateOf(TextFieldValue()) },
                 placeholder = "I am  a placeholder",
-                keyboardType = KeyboardType.Text,
+                keyboardType = KeyboardType.Text
             )
 
             // ----------------------------------------------------------------
@@ -341,7 +360,7 @@ fun TextFieldScreenSkeleton() {
 
             TextInputFieldTwo(
                 textFieldValue = remember { mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet")) },
-                placeholder = "I am  a placeholder",
+                placeholder = "I am  a placeholder"
             )
 
             // ----------------------------------------------------------------
@@ -354,7 +373,7 @@ fun TextFieldScreenSkeleton() {
                 textFieldValue = remember { mutableStateOf(TextFieldValue()) },
                 placeholder = "I am  a placeholder",
                 keyboardType = KeyboardType.Text,
-                singleLine = false,
+                singleLine = false
             )
 
             // ----------------------------------------------------------------
@@ -367,7 +386,7 @@ fun TextFieldScreenSkeleton() {
                 textFieldValue = remember { mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")) },
                 placeholder = "I am  a placeholder",
                 keyboardType = KeyboardType.Text,
-                singleLine = false,
+                singleLine = false
             )
 
             // ----------------------------------------------------------------
@@ -410,7 +429,7 @@ fun TextInputFieldOne(
     fontSize: TextUnit = 16.sp,
     height: Dp = ELEMENT_HEIGHT,
     isError: Boolean = false,
-    onValueChange: (TextFieldValue) -> Unit = {},
+    onValueChange: (TextFieldValue) -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
     val bringIntoViewRequester = remember { BringIntoViewRequester() }
@@ -435,7 +454,7 @@ fun TextInputFieldOne(
         textStyle = TextStyle(
             fontFamily = MaterialTheme.typography.body1.fontFamily,
             fontSize = fontSize,
-            color = MaterialTheme.colors.onInputBackground,
+            color = MaterialTheme.colors.onInputBackground
         ),
         onValueChange = {
             textFieldValue.value = it
@@ -463,7 +482,7 @@ fun TextInputFieldOne(
                     .background(if (isError) MaterialTheme.colors.errorInputBackground else background)
                     .height(height)
                     .padding(horizontal = 12.dp),
-                contentAlignment = if (singleLine) Alignment.CenterStart else Alignment.TopStart,
+                contentAlignment = if (singleLine) Alignment.CenterStart else Alignment.TopStart
             ) {
                 Box(
                     Modifier
@@ -501,7 +520,7 @@ fun PasswordInputFieldOne(
     keyboardActions: KeyboardActions? = null,
     height: Dp = ELEMENT_HEIGHT,
     isError: Boolean = false,
-    onValueChange: (TextFieldValue) -> Unit = {},
+    onValueChange: (TextFieldValue) -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
     var passwordVisibility by remember { mutableStateOf(false) }
@@ -548,7 +567,7 @@ fun PasswordInputFieldOne(
         textStyle = TextStyle(
             fontFamily = MaterialTheme.typography.body1.fontFamily,
             fontSize = fontSize,
-            color = MaterialTheme.colors.onInputBackground,
+            color = MaterialTheme.colors.onInputBackground
         ),
         decorationBox = { innerTextField ->
             Row(
@@ -556,13 +575,13 @@ fun PasswordInputFieldOne(
                     .clip(MaterialTheme.shapes.medium)
                     .background(if (isError) MaterialTheme.colors.errorInputBackground else MaterialTheme.colors.inputBackground)
                     .height(height),
-                verticalAlignment = Alignment.CenterVertically,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Box(
                     Modifier
                         .weight(1f)
                         .padding(start = 12.dp, bottom = 2.dp),
-                    contentAlignment = Alignment.CenterStart,
+                    contentAlignment = Alignment.CenterStart
                 ) {
                     innerTextField()
 
@@ -571,7 +590,7 @@ fun PasswordInputFieldOne(
                             modifier = Modifier.padding(bottom = 2.dp),
                             text = placeholder,
                             color = MaterialTheme.colors.onInputBackground.copy(.35f),
-                            fontSize = fontSize,
+                            fontSize = fontSize
                         )
                     }
                 }
@@ -626,7 +645,7 @@ fun TextInputFieldTwo(
     keyboardActions: KeyboardActions? = null,
     height: Dp = ELEMENT_HEIGHT,
     @DrawableRes icon: Int? = null,
-    onValueChange: (TextFieldValue) -> Unit = {},
+    onValueChange: (TextFieldValue) -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
     val bringIntoViewRequester = remember { BringIntoViewRequester() }
@@ -663,7 +682,7 @@ fun TextInputFieldTwo(
             fontSize = 14.sp,
             fontFamily = MaterialTheme.typography.body1.fontFamily,
             fontWeight = FontWeight.Medium,
-            color = MaterialTheme.colors.onInputBackground,
+            color = MaterialTheme.colors.onInputBackground
         ),
         onValueChange = {
             if (it.text.length <= maxLength) {
@@ -687,12 +706,11 @@ fun TextInputFieldTwo(
                 Modifier
                     .clip(shape)
                     .background(background)
-                    .height(height),
+                    .height(height)
             ) {
                 Row(
-                    Modifier.fillMaxSize(),
+                    Modifier.fillMaxSize()
                 ) {
-
                     icon?.let {
                         Image(
                             modifier = Modifier
@@ -755,7 +773,7 @@ fun PasswordInputFieldTwo(
     imeAction: ImeAction = ImeAction.Done,
     keyboardActions: KeyboardActions? = null,
     @DrawableRes icon: Int? = null,
-    onValueChange: (TextFieldValue) -> Unit = {},
+    onValueChange: (TextFieldValue) -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
     val passwordVisibility = remember { mutableStateOf(false) }
@@ -812,16 +830,15 @@ fun PasswordInputFieldTwo(
             fontSize = fontSize,
             fontFamily = MaterialTheme.typography.body1.fontFamily,
             fontWeight = FontWeight.Medium,
-            color = MaterialTheme.colors.onInputBackground,
+            color = MaterialTheme.colors.onInputBackground
         ),
         decorationBox = { innerTextField ->
             Row(
                 Modifier
                     .clip(MaterialTheme.shapes.medium)
                     .background(MaterialTheme.colors.inputBackground)
-                    .height(ELEMENT_HEIGHT),
+                    .height(ELEMENT_HEIGHT)
             ) {
-
                 icon?.let {
                     Image(
                         modifier = Modifier
@@ -865,7 +882,7 @@ fun PasswordInputFieldTwo(
                         Modifier
                             .padding(top = 21.dp)
                             .fillMaxWidth()
-                            .height(18.dp),
+                            .height(18.dp)
                     ) {
                         innerTextField()
                     }
@@ -1085,4 +1102,43 @@ fun TextFieldWithHideKeyboardOnImeAction() {
             }
         )
     )
+}
+
+// ================================================================
+// Cut-Copy-Paste disabled TextField
+// Source: https://stackoverflow.com/a/72048150/2263329
+// ================================================================
+
+object EmptyTextToolbar : TextToolbar {
+    override val status: TextToolbarStatus = TextToolbarStatus.Hidden
+
+    override fun hide() {}
+
+    override fun showMenu(
+        rect: Rect,
+        onCopyRequested: (() -> Unit)?,
+        onPasteRequested: (() -> Unit)?,
+        onCutRequested: (() -> Unit)?,
+        onSelectAllRequested: (() -> Unit)?
+    ) {
+    }
+}
+
+@Composable
+fun TextFieldWithCutCopyPasteDisabled() {
+    var textValue by remember { mutableStateOf(TextFieldValue()) }
+
+    CompositionLocalProvider(LocalTextToolbar provides EmptyTextToolbar) {
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = textValue,
+            onValueChange = { newValue ->
+                textValue = if (newValue.selection.length > 0) {
+                    newValue.copy(selection = textValue.selection)
+                } else {
+                    newValue
+                }
+            }
+        )
+    }
 }

@@ -71,6 +71,8 @@ Feel free to request features or suggestions for improvements.
 - [ ] Shadow manipulation with device gyroscope
 - [ ] Composition: Bottom Sheet
 - [ ] Fix custom `LazyGridScope.items`
+- [ ] List with `LazyGrid`
+- [ ] Paging with `LazyGrid`
 
 # Note
 

@@ -106,7 +106,7 @@ fun EmudiScreen() {
         animStateDot1,
         animStateDot2,
         animStateDot3,
-        animStateDot4,
+        animStateDot4
     )
 }
 
@@ -119,7 +119,7 @@ fun EmudiScreenSkeletonPreview() {
             MutableStateFlow(true),
             MutableStateFlow(true),
             MutableStateFlow(true),
-            MutableStateFlow(true),
+            MutableStateFlow(true)
         )
     }
 }
@@ -133,7 +133,7 @@ fun EmudiScreenSkeletonPreviewDark() {
             MutableStateFlow(true),
             MutableStateFlow(true),
             MutableStateFlow(true),
-            MutableStateFlow(true),
+            MutableStateFlow(true)
         )
     }
 }
@@ -144,7 +144,7 @@ fun EmudiScreenSkeleton(
     _animStateDot1: StateFlow<Boolean>,
     _animStateDot2: StateFlow<Boolean>,
     _animStateDot3: StateFlow<Boolean>,
-    _animStateDot4: StateFlow<Boolean>,
+    _animStateDot4: StateFlow<Boolean>
 ) {
     val animState = _animState.collectAsState()
     val animStateDot1 = _animStateDot1.collectAsState()
@@ -181,9 +181,9 @@ fun EmudiScreenSkeleton(
         label = "textFadeInAlpha",
         transitionSpec = {
             tween(
-                durationMillis = 1000,
+                durationMillis = 1000
             )
-        },
+        }
     ) { state ->
         when (state) {
             true -> 1f
@@ -198,7 +198,7 @@ fun EmudiScreenSkeleton(
                 dampingRatio = Spring.DampingRatioMediumBouncy,
                 stiffness = Spring.StiffnessLow
             )
-        },
+        }
     ) { state ->
         when (state) {
             true -> 0f
@@ -212,9 +212,9 @@ fun EmudiScreenSkeleton(
         label = "dotsScaleOutScale",
         transitionSpec = {
             tween(
-                durationMillis = 500,
+                durationMillis = 500
             )
-        },
+        }
     ) { state ->
         when (state) {
             true -> 1f
@@ -227,9 +227,9 @@ fun EmudiScreenSkeleton(
         transitionSpec = {
             spring(
                 dampingRatio = Spring.DampingRatioMediumBouncy,
-                stiffness = Spring.StiffnessLow,
+                stiffness = Spring.StiffnessLow
             )
-        },
+        }
     ) { state ->
         when (state) {
             true -> 0f
@@ -243,9 +243,9 @@ fun EmudiScreenSkeleton(
         label = "dotsScaleOutScale",
         transitionSpec = {
             tween(
-                durationMillis = 500,
+                durationMillis = 500
             )
-        },
+        }
     ) { state ->
         when (state) {
             true -> 1f
@@ -258,9 +258,9 @@ fun EmudiScreenSkeleton(
         transitionSpec = {
             spring(
                 dampingRatio = Spring.DampingRatioMediumBouncy,
-                stiffness = Spring.StiffnessLow,
+                stiffness = Spring.StiffnessLow
             )
-        },
+        }
     ) { state ->
         when (state) {
             true -> 0f
@@ -274,9 +274,9 @@ fun EmudiScreenSkeleton(
         label = "dotsScaleOutScale",
         transitionSpec = {
             tween(
-                durationMillis = 500,
+                durationMillis = 500
             )
-        },
+        }
     ) { state ->
         when (state) {
             true -> 1f
@@ -289,9 +289,9 @@ fun EmudiScreenSkeleton(
         transitionSpec = {
             spring(
                 dampingRatio = Spring.DampingRatioMediumBouncy,
-                stiffness = Spring.StiffnessLow,
+                stiffness = Spring.StiffnessLow
             )
-        },
+        }
     ) { state ->
         when (state) {
             true -> 0f
@@ -305,9 +305,9 @@ fun EmudiScreenSkeleton(
         label = "dotsScaleOutScale",
         transitionSpec = {
             tween(
-                durationMillis = 500,
+                durationMillis = 500
             )
-        },
+        }
     ) { state ->
         when (state) {
             true -> 1f
@@ -320,9 +320,9 @@ fun EmudiScreenSkeleton(
         transitionSpec = {
             spring(
                 dampingRatio = Spring.DampingRatioMediumBouncy,
-                stiffness = Spring.StiffnessLow,
+                stiffness = Spring.StiffnessLow
             )
-        },
+        }
     ) { state ->
         when (state) {
             true -> 0f
@@ -333,17 +333,20 @@ fun EmudiScreenSkeleton(
     // ----------------------------------------------------------------
 
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
-    ) {
+        modifier = Modifier.fillMaxSize()
+    ) { innerPadding ->
         Box(
-            contentAlignment = Alignment.Center,
+            Modifier.padding(innerPadding),
+            contentAlignment = Alignment.Center
         ) {
             Image(
                 modifier = Modifier.fillMaxSize(),
                 painter = painterResource(id = R.drawable.ic_emudi_bg),
                 contentDescription = "Background",
                 contentScale = ContentScale.Crop,
-                colorFilter = ColorFilter.tint(MaterialTheme.colors.onBackground.copy(alpha = .045f))
+                colorFilter = ColorFilter.tint(
+                    MaterialTheme.colors.onBackground.copy(alpha = .045f)
+                )
             )
 
             Box( // Yellow
@@ -407,7 +410,7 @@ fun EmudiScreenSkeleton(
                     },
                 painter = painterResource(id = R.drawable.ic_emudi_part_1),
                 contentDescription = "Cart",
-                contentScale = ContentScale.Fit,
+                contentScale = ContentScale.Fit
             )
 
             Image(
@@ -419,7 +422,7 @@ fun EmudiScreenSkeleton(
                     },
                 painter = painterResource(id = R.drawable.ic_emudi_part_2),
                 contentDescription = "Emudi",
-                contentScale = ContentScale.Fit,
+                contentScale = ContentScale.Fit
             )
         }
     }

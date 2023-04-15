@@ -41,8 +41,11 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Card
@@ -69,8 +72,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
@@ -108,12 +109,13 @@ fun ExoPlayerScreenSkeletonPreviewDark() {
 fun ExoPlayerScreenSkeleton() {
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding()
-    ) { padding ->
+    ) { innerPadding ->
         Column(
             Modifier
-                .padding(padding)
+                .padding(innerPadding)
                 .fillMaxSize()
         ) {
             AppComponent.Header("ExoPlayer")
@@ -142,8 +144,8 @@ private fun VideoList(
 ) {
     val lazyListState = rememberLazyListState()
     // play the video on the first visible item in the list
-    val focusIndex by derivedStateOf { lazyListState.firstVisibleItemIndex }
-    val focusIndexOffset by derivedStateOf { lazyListState.firstVisibleItemScrollOffset }
+    val focusIndex by remember { derivedStateOf { lazyListState.firstVisibleItemIndex } }
+    val focusIndexOffset by remember { derivedStateOf { lazyListState.firstVisibleItemScrollOffset } }
 
     val density = LocalDensity.current
 
@@ -158,7 +160,7 @@ private fun VideoList(
             VideoItem(
                 video = videos[videoIndex],
                 focusedVideo = (index == 0 && focusIndexOffset <= with(density) { 48.dp.toPx() }) ||
-                    (index == focusIndex + 1 && focusIndexOffset > with(density) { 48.dp.toPx() })
+                        (index == focusIndex + 1 && focusIndexOffset > with(density) { 48.dp.toPx() })
             )
         }
     }
@@ -179,12 +181,14 @@ fun VideoItem(video: Video, focusedVideo: Boolean) {
             modifier = Modifier.fillMaxWidth()
         ) {
             Box(
-                Modifier.fillMaxWidth()
+                Modifier
+                    .fillMaxWidth()
                     .padding(top = 8.dp)
                     .aspectRatio(video.width.toFloat() / video.height.toFloat())
             ) {
                 Image(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize()
                         .background(MaterialTheme.colors.onSurface.copy(.1f)),
                     painter = rememberImagePainter(data = video.thumb),
                     contentDescription = null,
@@ -248,8 +252,10 @@ private fun Player(modifier: Modifier = Modifier, video: Video, focusedVideo: Bo
             val source = when (type) {
                 C.CONTENT_TYPE_DASH -> DashMediaSource.Factory(dataSourceFactory)
                     .createMediaSource(MediaItem.fromUri(videoUri))
+
                 C.CONTENT_TYPE_HLS -> HlsMediaSource.Factory(dataSourceFactory)
                     .createMediaSource(MediaItem.fromUri(videoUri))
+
                 else -> ProgressiveMediaSource.Factory(dataSourceFactory)
                     .createMediaSource(MediaItem.fromUri(videoUri))
             }

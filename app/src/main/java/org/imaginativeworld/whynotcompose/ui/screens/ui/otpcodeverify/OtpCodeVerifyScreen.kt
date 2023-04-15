@@ -47,6 +47,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -83,7 +84,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.accompanist.insets.navigationBarsPadding
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.base.models.Event
@@ -94,7 +94,7 @@ import org.imaginativeworld.whynotcompose.ui.compositions.CustomSnackbarHost
 fun OtpCodeVerifyScreen(
     viewModel: OtpCodeVerifyViewModel,
     phoneNumber: String,
-    goBack: () -> Unit,
+    goBack: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -136,7 +136,7 @@ fun OtpCodeVerifyScreenSkeletonPreview() {
     AppTheme {
         OtpCodeVerifyScreenSkeleton(
             phoneNumber = "+8801234567891",
-            counterValue = MutableLiveData(),
+            counterValue = MutableLiveData()
         )
     }
 }
@@ -147,7 +147,7 @@ fun OtpCodeVerifyScreenSkeletonPreviewDark() {
     AppTheme {
         OtpCodeVerifyScreenSkeleton(
             phoneNumber = "+8801234567891",
-            counterValue = MutableLiveData(),
+            counterValue = MutableLiveData()
         )
     }
 }
@@ -160,7 +160,7 @@ private fun OtpCodeVerifyScreenSkeleton(
     verify: (phoneNumber: String, code: String) -> Unit = { _, _ -> },
     isValidInputs: (code: String) -> Boolean = { false },
     counterValue: LiveData<String>,
-    resendCode: () -> Unit = {},
+    resendCode: () -> Unit = {}
 ) {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
@@ -185,11 +185,12 @@ private fun OtpCodeVerifyScreenSkeleton(
         modifier = Modifier
             .background(MaterialTheme.colors.surface)
             .navigationBarsPadding()
-    ) {
+    ) { innerPadding ->
         Column(
-            modifier = Modifier.fillMaxSize(),
+            Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
         ) {
-
             Column(
                 modifier = Modifier
                     .weight(1f)
@@ -197,7 +198,6 @@ private fun OtpCodeVerifyScreenSkeleton(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
-
                 Image(
                     painter = painterResource(id = R.drawable.ic_jetpack_compose_logo),
                     contentDescription = "illustration",
@@ -210,7 +210,7 @@ private fun OtpCodeVerifyScreenSkeleton(
                     text = "Verify Mobile Number",
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp),
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.h1,
+                    style = MaterialTheme.typography.h1
                 )
 
                 Text(
@@ -244,41 +244,52 @@ private fun OtpCodeVerifyScreenSkeleton(
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-
                     CodeField(
-                        text = if (codeState.value.isNotEmpty())
+                        text = if (codeState.value.isNotEmpty()) {
                             codeState.value.substring(TextRange(0, 1))
-                        else ""
+                        } else {
+                            ""
+                        }
                     )
 
                     CodeField(
-                        text = if (codeState.value.length > 1)
+                        text = if (codeState.value.length > 1) {
                             codeState.value.substring(TextRange(1, 2))
-                        else ""
+                        } else {
+                            ""
+                        }
                     )
 
                     CodeField(
-                        text = if (codeState.value.length > 2)
+                        text = if (codeState.value.length > 2) {
                             codeState.value.substring(TextRange(2, 3))
-                        else ""
+                        } else {
+                            ""
+                        }
                     )
 
                     CodeField(
-                        text = if (codeState.value.length > 3)
+                        text = if (codeState.value.length > 3) {
                             codeState.value.substring(TextRange(3, 4))
-                        else ""
+                        } else {
+                            ""
+                        }
                     )
 
                     CodeField(
-                        text = if (codeState.value.length > 4)
+                        text = if (codeState.value.length > 4) {
                             codeState.value.substring(TextRange(4, 5))
-                        else ""
+                        } else {
+                            ""
+                        }
                     )
 
                     CodeField(
-                        text = if (codeState.value.length > 5)
+                        text = if (codeState.value.length > 5) {
                             codeState.value.substring(TextRange(5, 6))
-                        else ""
+                        } else {
+                            ""
+                        }
                     )
                 }
 
@@ -305,7 +316,7 @@ private fun OtpCodeVerifyScreenSkeleton(
             AnimatedVisibility(
                 visible = customKeyboardVisible.value,
                 enter = slideInVertically(initialOffsetY = { fullHeight -> fullHeight }) + fadeIn(),
-                exit = slideOutVertically(targetOffsetY = { fullHeight -> fullHeight }) + fadeOut(),
+                exit = slideOutVertically(targetOffsetY = { fullHeight -> fullHeight }) + fadeOut()
             ) {
                 VirtualNumberKeyboard(
                     codeState = codeState,
@@ -475,6 +486,7 @@ fun VirtualNumberKeyboard(
                             painter = painterResource(id = R.drawable.ic_keyboard_enter_enabled),
                             contentDescription = "Enter"
                         )
+
                         false -> Image(
                             modifier = Modifier.size(38.dp),
                             painter = painterResource(id = R.drawable.ic_keyboard_enter),
@@ -554,7 +566,6 @@ private fun LoadingIndicator(
         enter = fadeIn(),
         exit = fadeOut()
     ) {
-
         Box(
             Modifier
                 .fillMaxSize()

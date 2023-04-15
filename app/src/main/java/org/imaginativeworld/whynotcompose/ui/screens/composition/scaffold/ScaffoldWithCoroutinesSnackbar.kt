@@ -27,7 +27,10 @@
 package org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.ExtendedFloatingActionButton
 import androidx.compose.material.Scaffold
@@ -43,8 +46,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
@@ -99,7 +100,8 @@ fun ScaffoldWithCoroutinesSnackbarScreenSkeleton() {
     }
     Scaffold(
         modifier = Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding(),
         // attach snackbar host state to the scaffold
         scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState),

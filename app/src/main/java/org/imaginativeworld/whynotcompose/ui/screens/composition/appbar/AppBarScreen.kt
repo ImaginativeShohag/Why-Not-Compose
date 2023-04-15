@@ -30,6 +30,10 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -47,8 +51,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent.Header
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
@@ -76,14 +78,17 @@ fun AppBarScreenSkeletonPreviewDark() {
 
 @Composable
 fun AppBarScreenSkeleton() {
-
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding()
-    ) {
-        Column(Modifier.fillMaxSize()) {
-
+    ) { innerPadding ->
+        Column(
+            Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+        ) {
             Header("App Bar")
 
             // ----------------------------------------------------------------
@@ -116,7 +121,7 @@ fun AppBarScreenSkeleton() {
                     text = "Flexible TopAppBar",
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 24.sp,
+                    fontSize = 24.sp
                 )
             }
 
@@ -125,14 +130,14 @@ fun AppBarScreenSkeleton() {
             AppComponent.MediumSpacer()
 
             TopAppBar(
-                modifier = Modifier.clip(RoundedCornerShape(0.dp, 0.dp, 24.dp, 24.dp)),
+                modifier = Modifier.clip(RoundedCornerShape(0.dp, 0.dp, 24.dp, 24.dp))
             ) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = "Custom TopAppBar",
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 24.sp,
+                    fontSize = 24.sp
                 )
             }
         }

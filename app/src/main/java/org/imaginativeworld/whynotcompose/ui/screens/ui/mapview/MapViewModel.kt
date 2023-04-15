@@ -30,11 +30,14 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Geocoder
+import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.util.Locale
+import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -45,8 +48,6 @@ import org.imaginativeworld.whynotcompose.base.models.Event
 import org.imaginativeworld.whynotcompose.models.MapPlace
 import org.imaginativeworld.whynotcompose.repositories.MapPlaceRepo
 import timber.log.Timber
-import java.util.Locale
-import javax.inject.Inject
 
 @HiltViewModel
 class MapViewModel @Inject constructor() : ViewModel() {
@@ -79,7 +80,7 @@ class MapViewModel @Inject constructor() : ViewModel() {
                 _eventShowMessage,
                 _eventCurrentLocationName,
                 _places,
-                _selectedPlace,
+                _selectedPlace
             ) { showLoading, showEmpty, showMessage, currentLocationName, places, selectedPlace ->
                 MapViewState(
                     loading = showLoading,
@@ -87,7 +88,7 @@ class MapViewModel @Inject constructor() : ViewModel() {
                     message = showMessage,
                     currentLocationName = currentLocationName,
                     places = places,
-                    selectedPlace = selectedPlace,
+                    selectedPlace = selectedPlace
                 )
             }.catch { throwable ->
                 // TODO: emit a UI error here. For now we'll just rethrow
@@ -131,11 +132,15 @@ class MapViewModel @Inject constructor() : ViewModel() {
         return if (_places.value.isNotEmpty() && isFirstTime) {
             isFirstTime = false
             return true
-        } else false
+        } else {
+            false
+        }
     }
 
     // ----------------------------------------------------------------
 
+    // TODO: Use this method.
+    @Suppress("DEPRECATION")
     fun getCurrentLocationName(
         context: Context,
         location: LatLng?
@@ -149,15 +154,23 @@ class MapViewModel @Inject constructor() : ViewModel() {
 
             // Note: Here "maxResult = 1" represent max location result to returned,
             // by documents it recommended 1 to 5
-            val addresses = geocoder.getFromLocation(
-                location.latitude,
-                location.longitude,
-                1
-            )
 
-            val address = addresses[0].getAddressLine(0)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                geocoder.getFromLocation(location.latitude, location.longitude, 1) { addresses ->
+                    _eventCurrentLocationName.value =
+                        addresses.firstOrNull()?.getAddressLine(0) ?: "Unknown"
+                }
+            } else {
+                val addresses = geocoder.getFromLocation(
+                    location.latitude,
+                    location.longitude,
+                    1
+                )
 
-            _eventCurrentLocationName.value = address
+                val address = addresses?.get(0)?.getAddressLine(0)
+
+                _eventCurrentLocationName.value = address ?: "Unknown"
+            }
         } catch (e: Exception) {
             Timber.e(e)
         }
@@ -177,9 +190,11 @@ class MapViewModel @Inject constructor() : ViewModel() {
     // ----------------------------------------------------------------
 
     fun hasLocationPermission(context: Context) = ActivityCompat.checkSelfPermission(
-        context, Manifest.permission.ACCESS_FINE_LOCATION
+        context,
+        Manifest.permission.ACCESS_FINE_LOCATION
     ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-        context, Manifest.permission.ACCESS_COARSE_LOCATION
+        context,
+        Manifest.permission.ACCESS_COARSE_LOCATION
     ) == PackageManager.PERMISSION_GRANTED
 }
 

@@ -27,6 +27,7 @@
 package org.imaginativeworld.whynotcompose.ui.screens
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
@@ -34,7 +35,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.ui.compositions.CustomSnackbarHost
@@ -42,7 +42,7 @@ import org.imaginativeworld.whynotcompose.ui.compositions.CustomSnackbarHost
 @Composable
 fun MainScreen(
     isDarkMode: Boolean,
-    turnOnDarkMode: (Boolean) -> Unit,
+    turnOnDarkMode: (Boolean) -> Unit
 ) {
     val systemUiController = rememberSystemUiController()
 
@@ -54,7 +54,7 @@ fun MainScreen(
     }
 
     MainScreenSkeleton(
-        turnOnDarkMode = turnOnDarkMode,
+        turnOnDarkMode = turnOnDarkMode
     )
 }
 
@@ -62,26 +62,24 @@ fun MainScreen(
 @Composable
 fun MainScreenSkeletonPreview() {
     AppTheme {
-        ProvideWindowInsets {
-            MainScreenSkeleton()
-        }
+        MainScreenSkeleton()
     }
 }
 
 @Composable
 fun MainScreenSkeleton(
-    turnOnDarkMode: (Boolean) -> Unit = {},
+    turnOnDarkMode: (Boolean) -> Unit = {}
 ) {
     val navController = rememberNavController()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        snackbarHost = { CustomSnackbarHost(it) },
-    ) {
+        snackbarHost = { CustomSnackbarHost(it) }
+    ) { innerPadding ->
         NavHostMain(
-            modifier = Modifier,
+            modifier = Modifier.padding(innerPadding),
             navController = navController,
-            turnOnDarkMode = turnOnDarkMode,
+            turnOnDarkMode = turnOnDarkMode
         )
     }
 }

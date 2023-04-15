@@ -37,13 +37,18 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -74,8 +79,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsHeight
 import org.imaginativeworld.whynotcompose.BuildConfig
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.base.extensions.openUrl
@@ -124,9 +127,14 @@ fun HomeIndexScreen(
 
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
-    ) {
-        Column(Modifier.fillMaxSize()) {
+            .navigationBarsPadding()
+            .imePadding()
+    ) { innerPadding ->
+        Column(
+            Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+        ) {
             Box(
                 modifier = Modifier.weight(1f)
             ) {
@@ -140,7 +148,7 @@ fun HomeIndexScreen(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            Spacer(Modifier.statusBarsHeight())
+                            Spacer(Modifier.windowInsetsTopHeight(WindowInsets.statusBars))
 
                             Text(
                                 modifier = Modifier
@@ -173,8 +181,11 @@ fun HomeIndexScreen(
                     item {
                         ModuleButton(
                             name = if (isDark) "Dark Mode" else "Light Mode",
-                            icon = if (isDark) R.drawable.ic_moon_stars
-                            else R.drawable.ic_brightness_high,
+                            icon = if (isDark) {
+                                R.drawable.ic_moon_stars
+                            } else {
+                                R.drawable.ic_brightness_high
+                            },
                             color = TailwindCSSColor.Green500,
                             onClick = {
                                 onDarkModeStateChange(!darkModeState)
@@ -260,7 +271,9 @@ fun HomeIndexScreen(
                         modifier = Modifier
                             .clip(RoundedCornerShape(8.dp))
                             .clickable {
-                                context.openUrl("https://github.com/ImaginativeShohag/Why-Not-Compose")
+                                context.openUrl(
+                                    "https://github.com/ImaginativeShohag/Why-Not-Compose"
+                                )
                             }
                             .padding(4.dp),
                         text = "GitHub",

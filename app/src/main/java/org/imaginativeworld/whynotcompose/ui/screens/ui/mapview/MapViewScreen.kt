@@ -41,8 +41,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
@@ -74,8 +77,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.model.LatLngBounds
@@ -84,8 +85,9 @@ import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.MarkerInfoWindow
 import com.google.maps.android.compose.rememberCameraPositionState
-import org.imaginativeworld.whynotcompose.R
+import com.google.maps.android.compose.rememberMarkerState
 import org.imaginativeworld.whynotcompose.base.extensions.dpToPx
+import org.imaginativeworld.whynotcompose.common.compose.R as CommonComposeR
 import org.imaginativeworld.whynotcompose.common.compose.composeutils.bitmapDescriptorFromVector
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
@@ -101,7 +103,7 @@ import org.imaginativeworld.whynotcompose.ui.compositions.CustomSnackbarHost
 fun MapScreen(
     viewModel: MapViewModel,
     goBack: () -> Unit,
-    gotoDetailsScreen: (MapPlace) -> Unit,
+    gotoDetailsScreen: (MapPlace) -> Unit
 ) {
     val context = LocalContext.current
 
@@ -154,22 +156,30 @@ fun MapScreen(
                     myLocationButtonEnabled = false,
                     mapToolbarEnabled = false,
                     rotationGesturesEnabled = true,
-                    zoomControlsEnabled = false,
+                    zoomControlsEnabled = false
                 )
             ) {
                 for (place in state.places) {
                     MarkerInfoWindow(
-                        position = place.location,
-                        anchor = if (state.selectedPlace == place) Offset(.5f, .7f)
-                        else Offset(.5f, 1f),
+                        state = rememberMarkerState(position = place.location),
+                        anchor = if (state.selectedPlace == place) {
+                            Offset(.5f, .7f)
+                        } else {
+                            Offset(.5f, 1f)
+                        },
                         title = place.name,
                         snippet = "Click for details",
-                        icon = if (state.selectedPlace == place)
+                        icon = if (state.selectedPlace == place) {
                             bitmapDescriptorFromVector(
                                 context,
-                                R.drawable.ic_location_on_map_selected
+                                CommonComposeR.drawable.ic_location_on_map_selected
                             )
-                        else bitmapDescriptorFromVector(context, R.drawable.ic_location_on_map),
+                        } else {
+                            bitmapDescriptorFromVector(
+                                context,
+                                CommonComposeR.drawable.ic_location_on_map
+                            )
+                        },
                         onClick = {
                             viewModel.setSelectedMapPlace(place)
 
@@ -222,7 +232,7 @@ fun MapSkeletonPreview() {
                         .fillMaxSize()
                         .background(TailwindCSSColor.Green500)
                 )
-            },
+            }
         )
     }
 }
@@ -238,7 +248,7 @@ fun MapSkeletonPreviewDark() {
                         .fillMaxSize()
                         .background(TailwindCSSColor.Green500)
                 )
-            },
+            }
         )
     }
 }
@@ -249,19 +259,21 @@ fun MapSkeleton(
     showLoadingView: Boolean = true,
     showEmptyView: Boolean = true,
     goBack: () -> Unit = {},
-    onRetryClicked: () -> Unit = {},
+    onRetryClicked: () -> Unit = {}
 ) {
     val scaffoldState = rememberScaffoldState()
 
     Scaffold(
         modifier = Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding(),
         scaffoldState = scaffoldState,
-        snackbarHost = { CustomSnackbarHost(it) },
-    ) {
+        snackbarHost = { CustomSnackbarHost(it) }
+    ) { innerPadding ->
         mapView(
             Modifier
+                .padding(innerPadding)
                 .padding(top = 56.dp)
                 .fillMaxSize()
         )
@@ -271,7 +283,7 @@ fun MapSkeleton(
                 .padding(top = 56.dp)
                 .fillMaxSize(),
             show = showEmptyView,
-            onRetryClicked = onRetryClicked,
+            onRetryClicked = onRetryClicked
         )
 
         Column(Modifier.fillMaxSize()) {
@@ -283,7 +295,7 @@ fun MapSkeleton(
                     }) {
                         Icon(Icons.Rounded.ArrowBack, contentDescription = null)
                     }
-                },
+                }
             )
 
             Box(
@@ -339,7 +351,7 @@ private fun MapLoadingView(
 fun MapEmptyView(
     modifier: Modifier = Modifier,
     show: Boolean = true,
-    onRetryClicked: () -> Unit,
+    onRetryClicked: () -> Unit
 ) {
     AnimatedVisibility(
         visible = show,
@@ -368,7 +380,9 @@ fun MapEmptyView(
                     modifier = Modifier
                         .padding(top = 32.dp)
                         .size(96.dp),
-                    painter = painterResource(id = R.drawable.ic_location_on_map_selected),
+                    painter = painterResource(
+                        id = CommonComposeR.drawable.ic_location_on_map_selected
+                    ),
                     contentDescription = "Empty",
                     alpha = .25f,
                     colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface)
@@ -394,7 +408,7 @@ fun MapEmptyView(
                     modifier = Modifier.padding(top = 8.dp),
                     onClick = {
                         onRetryClicked()
-                    },
+                    }
                 ) {
                     Text(text = "Retry")
                 }

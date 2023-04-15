@@ -30,7 +30,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Divider
@@ -40,15 +43,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent.Header
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.ui.screens.AnimationsScreen
 
 @Composable
 fun AnimationIndexScreen(
-    navigate: (AnimationsScreen) -> Unit,
+    navigate: (AnimationsScreen) -> Unit
 ) {
     AnimationIndexSkeleton(
         navigate = navigate
@@ -65,20 +66,22 @@ fun AnimationIndexSkeletonPreview() {
 
 @Composable
 fun AnimationIndexSkeleton(
-    navigate: (AnimationsScreen) -> Unit = {},
+    navigate: (AnimationsScreen) -> Unit = {}
 ) {
-
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding()
-    ) {
-
-        Column(Modifier.fillMaxSize()) {
+    ) { innerPadding ->
+        Column(
+            Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+        ) {
             Header("Compositions")
 
             LazyColumn(Modifier.fillMaxSize()) {
-
                 itemsIndexed(Animation.animationList) { index, item ->
 
                     if (index != 0) {

@@ -6,6 +6,7 @@ cookbook or play-ground if you want!
 Feel free to request features or suggestions for improvements.
 
 [![Developer](https://img.shields.io/badge/Maintainer-ImaginativeShohag-green)](https://github.com/ImaginativeShohag)
+[![Buy Me A Coffee](https://img.shields.io/badge/-buy_me_a_coffee-gray?logo=buy-me-a-coffee)](https://www.buymeacoffee.com/ImShohag)
 [![GitHub release](https://img.shields.io/github/release/ImaginativeShohag/Why-Not-Compose.svg)](https://github.com/ImaginativeShohag/Why-Not-Compose/releases)
 [![Google Play](https://img.shields.io/badge/GET%20IT%20ON-Google%20Play-brightgreen)](https://play.google.com/store/apps/details?id=org.imaginativeworld.whynotcompose)
 ![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat)
@@ -73,6 +74,8 @@ Feel free to request features or suggestions for improvements.
 - [ ] Fix custom `LazyGridScope.items`
 - [ ] List with `LazyGrid`
 - [ ] Paging with `LazyGrid`
+- [ ] Add compose BOM: https://developer.android.com/jetpack/androidx/releases/compose
+- [ ] Refactor to Gradle Plugins
 
 # Note
 

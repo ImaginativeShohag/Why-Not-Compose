@@ -27,20 +27,18 @@
 package org.imaginativeworld.whynotcompose.network
 
 import android.content.Context
+import java.net.HttpURLConnection
 import kotlinx.coroutines.CancellationException
 import org.imaginativeworld.whynotcompose.utils.Utils
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Response
 import timber.log.Timber
-import java.net.HttpURLConnection
 
 object SafeApiRequest {
 
     suspend fun <T : Any> apiRequest(context: Context, call: suspend () -> Response<T>): T {
-
         try {
-
             if (!Utils.isConnectedToInternet(context.applicationContext)) {
                 throw ApiException("No internet connection!")
             }
@@ -48,10 +46,8 @@ object SafeApiRequest {
             val response = call.invoke()
 
             if (response.isSuccessful && response.code() == HttpURLConnection.HTTP_OK) {
-
                 return response.body()!!
             } else {
-
                 val error = response.errorBody()?.string()
 
                 val message = StringBuilder()
@@ -60,6 +56,7 @@ object SafeApiRequest {
                     try {
                         message.append(JSONObject(it).getString("message"))
                     } catch (e: JSONException) {
+                        /* no-op */
                     }
                 }
 

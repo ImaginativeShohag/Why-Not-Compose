@@ -35,7 +35,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -55,16 +58,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
+import java.io.File
+import java.util.Date
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.base.extensions.toast
 import org.imaginativeworld.whynotcompose.common.compose.composeutils.rememberImagePainter
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.utils.SquireCropImage
-import java.io.File
-import java.util.Date
 
 @Composable
 fun SelectImageAndCropScreen(
@@ -82,7 +83,7 @@ fun SelectImageAndCropScreen(
         uri?.apply {
             viewModel.uploadPhoto(
                 context = context,
-                imageUri = uri,
+                imageUri = uri
             )
         }
     }
@@ -142,15 +143,17 @@ fun SelectImageAndCropScreenSkeletonPreviewDark() {
 @Composable
 fun SelectImageAndCropScreenSkeleton(
     imagePath: Uri? = null,
-    onChooseImageClicked: () -> Unit = {},
+    onChooseImageClicked: () -> Unit = {}
 ) {
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding()
-    ) {
+    ) { innerPadding ->
         Column(
             Modifier
+                .padding(innerPadding)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
@@ -174,7 +177,7 @@ fun SelectImageAndCropScreenSkeleton(
                     placeholder = R.drawable.default_placeholder
                 ),
                 contentDescription = "Image",
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.Crop
             )
 
             Button(

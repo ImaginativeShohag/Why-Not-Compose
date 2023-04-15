@@ -29,16 +29,15 @@ package org.imaginativeworld.whynotcompose.tictactoe
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+import kotlin.random.Random
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.base.extensions.combine
 import org.imaginativeworld.whynotcompose.base.models.Event
-import javax.inject.Inject
-import kotlin.random.Random
 
 @HiltViewModel
 class TicTacToeViewModel @Inject constructor(
@@ -78,10 +77,10 @@ class TicTacToeViewModel @Inject constructor(
                 _aiWinCount,
                 _currentPlayingMoves,
                 _totalNeurons,
-                _winPosition,
+                _winPosition
             ) { showLoading, showMessage, showToast,
-                paused, userWinCount, aiWinCount,
-                currentPlayingMoves, totalNeurons, winPosition ->
+                    paused, userWinCount, aiWinCount,
+                    currentPlayingMoves, totalNeurons, winPosition ->
                 UiState(
                     loading = showLoading,
                     message = showMessage,
@@ -91,7 +90,7 @@ class TicTacToeViewModel @Inject constructor(
                     aiWinCount = aiWinCount,
                     currentPlayingMoves = currentPlayingMoves,
                     totalNeurons = totalNeurons,
-                    winPosition = winPosition,
+                    winPosition = winPosition
                 )
             }.catch { throwable ->
                 // TODO: emit a UI error here. For now we'll just rethrow
@@ -131,7 +130,6 @@ class TicTacToeViewModel @Inject constructor(
 
         // Step 3: Is it a draw?
         if (_currentPlayingMoves.value.length >= 18) {
-
             _eventPaused.value = true
             _eventShowMessage.value = Event("It is a draw!")
 
@@ -223,5 +221,5 @@ data class UiState(
     val aiWinCount: Int = 0,
     val currentPlayingMoves: String = "",
     val totalNeurons: Int = 0,
-    val winPosition: WinPosition? = null,
+    val winPosition: WinPosition? = null
 )

@@ -76,9 +76,12 @@ fun ComposeOneScreen() {
     val density = LocalDensity.current
     val dotBackground = MaterialTheme.colors.dotBackground
 
-    Scaffold {
-
-        BoxWithConstraints(Modifier.fillMaxSize()) {
+    Scaffold { innerPadding ->
+        BoxWithConstraints(
+            Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+        ) {
             with(density) {
                 val maxWidth = maxWidth
                 val maxHeight = maxHeight

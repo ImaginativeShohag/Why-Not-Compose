@@ -32,6 +32,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CutCornerShape
@@ -55,12 +58,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
-import kotlinx.coroutines.launch
-import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import kotlin.math.abs
 import kotlin.math.roundToInt
+import kotlinx.coroutines.launch
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 // Source: https://cs.android.com/androidx/platform/tools/dokka-devsite-plugin/+/master:testData/compose/samples/material/samples/ScaffoldSamples.kt
 
@@ -132,7 +133,8 @@ fun ScaffoldWithBottomBarAndCutoutScreenSkeleton() {
 
     Scaffold(
         modifier = Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding(),
         scaffoldState = scaffoldState,
         drawerContent = { Text("Drawer content") },

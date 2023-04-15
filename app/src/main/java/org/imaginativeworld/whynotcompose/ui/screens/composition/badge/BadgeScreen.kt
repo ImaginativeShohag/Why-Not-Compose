@@ -29,7 +29,10 @@ package org.imaginativeworld.whynotcompose.ui.screens.composition.badge
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Badge
@@ -52,8 +55,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.base.extensions.toWords
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
@@ -86,11 +87,13 @@ fun BadgeScreenSkeletonPreviewDark() {
 fun BadgeScreenSkeleton() {
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding()
-    ) {
+    ) { innerPadding ->
         Column(
             Modifier
+                .padding(innerPadding)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(start = 16.dp, end = 16.dp)
@@ -150,8 +153,11 @@ fun BadgeScreenSkeleton() {
                         BadgedBox(badge = {
                             Badge {
                                 Text(
-                                    if (profileCounter > 9) "infinite"
-                                    else profileCounter.toWords()
+                                    if (profileCounter > 9) {
+                                        "infinite"
+                                    } else {
+                                        profileCounter.toWords()
+                                    }
                                 )
                             }
                         }) {

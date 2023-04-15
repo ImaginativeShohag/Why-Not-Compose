@@ -28,21 +28,24 @@ package org.imaginativeworld.whynotcompose.common.compose.composeutils
 
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
-import coil.compose.rememberImagePainter
+import androidx.compose.ui.platform.LocalContext
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 
 @Composable
 fun rememberImagePainter(
     data: Any?,
     @DrawableRes placeholder: Int? = null,
-    crossFade: Boolean = true,
-) = rememberImagePainter(
-    data = data,
-    builder = {
-        crossfade(crossFade)
-        placeholder?.let {
-            this.placeholder(placeholder)
-            this.error(placeholder)
-            this.fallback(placeholder)
-        }
-    }
+    crossFade: Boolean = true
+) = rememberAsyncImagePainter(
+    ImageRequest.Builder(LocalContext.current)
+        .data(data = data).apply(block = fun ImageRequest.Builder.() {
+            crossfade(crossFade)
+            placeholder?.let {
+                placeholder(placeholder)
+                error(placeholder)
+                fallback(placeholder)
+            }
+        })
+        .build()
 )

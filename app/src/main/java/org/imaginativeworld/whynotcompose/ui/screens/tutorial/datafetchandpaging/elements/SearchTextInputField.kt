@@ -88,7 +88,7 @@ fun SearchTextInputField(
     height: Dp = 48.dp,
     horizontalPadding: Dp = 12.dp,
     isError: Boolean = false,
-    onValueChange: (TextFieldValue) -> Unit = {},
+    onValueChange: (TextFieldValue) -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
     val bringIntoViewRequester = remember { BringIntoViewRequester() }
@@ -179,7 +179,7 @@ fun SearchTextInputField(
                         .clip(shape)
                         .background(if (isError) rErrorBackground else rBackground)
                         .height(rHeight)
-                        .padding(horizontal = horizontalPadding),
+                        .padding(horizontal = horizontalPadding)
                 ) {
                     Box(
                         Modifier
@@ -212,27 +212,27 @@ fun SearchTextInputFieldPreview() {
             SearchTextInputField(
                 textFieldValue = remember { mutableStateOf(TextFieldValue()) },
                 placeholder = "I am  a placeholder",
-                keyboardType = KeyboardType.Text,
+                keyboardType = KeyboardType.Text
             )
 
             SearchTextInputField(
                 modifier = Modifier.padding(top = 32.dp),
                 textFieldValue = remember { mutableStateOf(TextFieldValue("I am an input.")) },
-                placeholder = "I am  a placeholder",
+                placeholder = "I am  a placeholder"
             )
 
             SearchTextInputField(
                 modifier = Modifier.padding(top = 32.dp),
                 textFieldValue = remember { mutableStateOf(TextFieldValue()) },
                 placeholder = "I am  a placeholder",
-                isError = true,
+                isError = true
             )
 
             SearchTextInputField(
                 modifier = Modifier.padding(top = 32.dp),
                 textFieldValue = remember { mutableStateOf(TextFieldValue("I am an input.")) },
                 placeholder = "I am  a placeholder",
-                isError = true,
+                isError = true
             )
 
             SearchTextInputField(
@@ -242,7 +242,7 @@ fun SearchTextInputFieldPreview() {
                 textFieldValue = remember { mutableStateOf(TextFieldValue()) },
                 placeholder = "The quick brown fox jumps over a lazy dog, and the quick black cat jumps over a lazy tiger.",
                 keyboardType = KeyboardType.Text,
-                singleLine = false,
+                singleLine = false
             )
         }
     }
@@ -256,27 +256,27 @@ fun SearchTextInputFieldPreviewDark() {
             SearchTextInputField(
                 textFieldValue = remember { mutableStateOf(TextFieldValue()) },
                 placeholder = "I am  a placeholder",
-                keyboardType = KeyboardType.Text,
+                keyboardType = KeyboardType.Text
             )
 
             SearchTextInputField(
                 modifier = Modifier.padding(top = 32.dp),
                 textFieldValue = remember { mutableStateOf(TextFieldValue("I am an input.")) },
-                placeholder = "I am  a placeholder",
+                placeholder = "I am  a placeholder"
             )
 
             SearchTextInputField(
                 modifier = Modifier.padding(top = 32.dp),
                 textFieldValue = remember { mutableStateOf(TextFieldValue()) },
                 placeholder = "I am  a placeholder",
-                isError = true,
+                isError = true
             )
 
             SearchTextInputField(
                 modifier = Modifier.padding(top = 32.dp),
                 textFieldValue = remember { mutableStateOf(TextFieldValue("I am an input.")) },
                 placeholder = "I am  a placeholder",
-                isError = true,
+                isError = true
             )
 
             SearchTextInputField(
@@ -286,7 +286,7 @@ fun SearchTextInputFieldPreviewDark() {
                 textFieldValue = remember { mutableStateOf(TextFieldValue()) },
                 placeholder = "The quick brown fox jumps over a lazy dog, and the quick black cat jumps over a lazy tiger.",
                 keyboardType = KeyboardType.Text,
-                singleLine = false,
+                singleLine = false
             )
         }
     }

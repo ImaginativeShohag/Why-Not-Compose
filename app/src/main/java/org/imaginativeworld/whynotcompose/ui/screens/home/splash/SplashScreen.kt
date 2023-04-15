@@ -60,16 +60,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlin.math.min
+import kotlin.random.Random
 import kotlinx.coroutines.delay
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.ui.screens.animation.composeone.dotBackground
-import kotlin.math.min
-import kotlin.random.Random
 
 @Composable
 fun SplashScreen(
-    gotoHomeIndex: () -> Unit = {},
+    gotoHomeIndex: () -> Unit = {}
 ) {
     val density = LocalDensity.current
     val dotBackground = MaterialTheme.colors.dotBackground
@@ -80,9 +80,12 @@ fun SplashScreen(
         gotoHomeIndex()
     }
 
-    Scaffold {
-
-        BoxWithConstraints(Modifier.fillMaxSize()) {
+    Scaffold { innerPadding ->
+        BoxWithConstraints(
+            Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+        ) {
             with(density) {
                 val maxWidth = maxWidth
                 val maxHeight = maxHeight
@@ -99,7 +102,7 @@ fun SplashScreen(
                         targetValue = if (state) 1f else .75f,
                         animationSpec = tween(
                             durationMillis = 12000,
-                            easing = LinearEasing,
+                            easing = LinearEasing
                         )
                     )
 
@@ -107,7 +110,7 @@ fun SplashScreen(
                         targetValue = if (state) .8f else 1f,
                         animationSpec = tween(
                             durationMillis = 9000,
-                            easing = FastOutSlowInEasing,
+                            easing = FastOutSlowInEasing
                         )
                     )
 
@@ -115,7 +118,7 @@ fun SplashScreen(
                         targetValue = if (state) .8f else 1f,
                         animationSpec = tween(
                             durationMillis = 9000,
-                            easing = FastOutSlowInEasing,
+                            easing = FastOutSlowInEasing
                         )
                     )
 
@@ -149,7 +152,7 @@ fun SplashScreen(
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             var state by remember { mutableStateOf(false) }
 
@@ -163,7 +166,7 @@ fun SplashScreen(
                 targetValue = if (state) 1f else 0f,
                 animationSpec = tween(
                     durationMillis = 900,
-                    easing = FastOutSlowInEasing,
+                    easing = FastOutSlowInEasing
                 )
             )
 
@@ -171,7 +174,7 @@ fun SplashScreen(
                 targetValue = if (state) 360f else 0f,
                 animationSpec = tween(
                     durationMillis = 900,
-                    easing = FastOutSlowInEasing,
+                    easing = FastOutSlowInEasing
                 )
             )
 
@@ -179,7 +182,7 @@ fun SplashScreen(
                 targetValue = if (state) 1f else 0f,
                 animationSpec = tween(
                     durationMillis = 900,
-                    easing = FastOutSlowInEasing,
+                    easing = FastOutSlowInEasing
                 )
             )
 
@@ -219,11 +222,11 @@ fun SplashScreenPreview() {
 @Composable
 fun AnimatedText(
     text: String,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Row(
         modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center,
+        horizontalArrangement = Arrangement.Center
     ) {
         text.forEach { char ->
 
@@ -239,7 +242,7 @@ fun AnimatedText(
                 targetValue = if (state) 1f else 0f,
                 animationSpec = tween(
                     durationMillis = 900,
-                    easing = FastOutSlowInEasing,
+                    easing = FastOutSlowInEasing
                 )
             )
 

@@ -30,7 +30,10 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.selection.DisableSelection
@@ -53,8 +56,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.base.extensions.toast
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppFont
@@ -89,11 +90,13 @@ fun TextScreenSkeleton() {
 
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding()
-    ) {
+    ) { innerPadding ->
         Column(
             Modifier
+                .padding(innerPadding)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
@@ -109,7 +112,6 @@ fun TextScreenSkeleton() {
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp)
             ) {
-
                 // ----------------------------------------------------------------
 
                 AppComponent.MediumSpacer()
@@ -119,7 +121,7 @@ fun TextScreenSkeleton() {
                     color = MaterialTheme.colors.onBackground,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium,
-                    fontFamily = AppFont.TitilliumWeb,
+                    fontFamily = AppFont.TitilliumWeb
                     // etc.
                 )
 
@@ -268,9 +270,9 @@ fun TextScreenSkeleton() {
                             end = offset
                         )
                             .firstOrNull()?.let { annotation ->
-                                // If yes, we log its value
-                                context.toast("Clicked URL: " + annotation.item)
-                            }
+                            // If yes, we log its value
+                            context.toast("Clicked URL: " + annotation.item)
+                        }
                     }
                 )
             }

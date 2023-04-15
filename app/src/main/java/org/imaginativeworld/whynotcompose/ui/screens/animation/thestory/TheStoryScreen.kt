@@ -108,7 +108,7 @@ fun TheStoryScreenSkeleton() {
         targetValue = animState * 60f,
         animationSpec = tween(
             durationMillis = 800,
-            easing = FastOutSlowInEasing,
+            easing = FastOutSlowInEasing
         )
     )
 
@@ -117,7 +117,7 @@ fun TheStoryScreenSkeleton() {
         animationSpec = tween(
             durationMillis = 800,
             delayMillis = 800,
-            easing = FastOutSlowInEasing,
+            easing = FastOutSlowInEasing
         )
     )
 
@@ -126,7 +126,7 @@ fun TheStoryScreenSkeleton() {
         animationSpec = tween(
             durationMillis = 800,
             delayMillis = 900,
-            easing = FastOutSlowInEasing,
+            easing = FastOutSlowInEasing
         )
     )
 
@@ -135,7 +135,7 @@ fun TheStoryScreenSkeleton() {
         animationSpec = tween(
             durationMillis = 800,
             delayMillis = 1000,
-            easing = FastOutSlowInEasing,
+            easing = FastOutSlowInEasing
         )
     )
 
@@ -144,21 +144,24 @@ fun TheStoryScreenSkeleton() {
         animationSpec = tween(
             durationMillis = 800,
             delayMillis = 1100,
-            easing = FastOutSlowInEasing,
+            easing = FastOutSlowInEasing
         )
     )
 
     Scaffold(
         modifier = Modifier.fillMaxSize()
-    ) {
-        Box(Modifier.fillMaxSize()) {
+    ) { innerPadding ->
+        Box(
+            Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+        ) {
             Box(
                 modifier = Modifier
                     .fillMaxHeight()
                     .requiredWidth((8 * 16 * 5).dp),
-                contentAlignment = Alignment.Center,
+                contentAlignment = Alignment.Center
             ) {
-
                 Image(
                     modifier = Modifier
                         .size((8 * 16).dp)
@@ -167,7 +170,7 @@ fun TheStoryScreenSkeleton() {
                         },
                     painter = painterResource(id = R.drawable.ic_jetpack_compose_logo_outline),
                     contentDescription = "Jetpack Compose Outline Logo",
-                    contentScale = ContentScale.Fit,
+                    contentScale = ContentScale.Fit
                 )
 
                 Image(
@@ -180,7 +183,7 @@ fun TheStoryScreenSkeleton() {
                         .alpha(1f),
                     painter = painterResource(id = R.drawable.ic_hexagon_outline_4),
                     contentDescription = null,
-                    contentScale = ContentScale.Fit,
+                    contentScale = ContentScale.Fit
                 )
 
                 Image(
@@ -193,7 +196,7 @@ fun TheStoryScreenSkeleton() {
                         .alpha(.7f),
                     painter = painterResource(id = R.drawable.ic_hexagon_outline_3),
                     contentDescription = null,
-                    contentScale = ContentScale.Fit,
+                    contentScale = ContentScale.Fit
                 )
 
                 Image(
@@ -206,7 +209,7 @@ fun TheStoryScreenSkeleton() {
                         .alpha(.4f),
                     painter = painterResource(id = R.drawable.ic_hexagon_outline_2),
                     contentDescription = null,
-                    contentScale = ContentScale.Fit,
+                    contentScale = ContentScale.Fit
                 )
 
                 Image(
@@ -219,7 +222,7 @@ fun TheStoryScreenSkeleton() {
                         },
                     painter = painterResource(id = R.drawable.ic_hexagon_outline_1),
                     contentDescription = null,
-                    contentScale = ContentScale.Fit,
+                    contentScale = ContentScale.Fit
                 )
             }
 
@@ -232,7 +235,7 @@ fun TheStoryScreenSkeleton() {
 
                     withStyle(
                         SpanStyle(
-                            color = MaterialTheme.colors.onBackground,
+                            color = MaterialTheme.colors.onBackground
                         )
                     ) {
                         append("Compose!")
@@ -240,7 +243,7 @@ fun TheStoryScreenSkeleton() {
                 },
                 color = MaterialTheme.colors.composeThemeColor,
                 fontSize = 24.sp,
-                fontWeight = FontWeight.Medium,
+                fontWeight = FontWeight.Medium
             )
         }
     }

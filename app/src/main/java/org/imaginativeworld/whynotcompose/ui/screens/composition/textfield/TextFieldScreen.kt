@@ -46,8 +46,11 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.relocation.bringIntoViewRequester
@@ -116,8 +119,6 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.R
@@ -159,12 +160,13 @@ fun TextFieldScreenSkeletonPreviewDark() {
 fun TextFieldScreenSkeleton() {
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding()
-    ) { padding ->
+    ) { innerPadding ->
         Column(
             Modifier
-                .padding(padding)
+                .padding(innerPadding)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(start = 16.dp, end = 16.dp)
@@ -281,7 +283,9 @@ fun TextFieldScreenSkeleton() {
             AppComponent.MediumSpacer()
 
             TextInputFieldOne(
-                textFieldValue = remember { mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet")) },
+                textFieldValue = remember {
+                    mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet"))
+                },
                 placeholder = "I am  a placeholder"
             )
 
@@ -290,7 +294,9 @@ fun TextFieldScreenSkeleton() {
             AppComponent.MediumSpacer()
 
             TextInputFieldOne(
-                textFieldValue = remember { mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet")) },
+                textFieldValue = remember {
+                    mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet"))
+                },
                 isError = true
             )
 
@@ -314,7 +320,13 @@ fun TextFieldScreenSkeleton() {
             TextInputFieldOne(
                 modifier = Modifier
                     .height(128.dp),
-                textFieldValue = remember { mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")) },
+                textFieldValue = remember {
+                    mutableStateOf(
+                        TextFieldValue(
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                        )
+                    )
+                },
                 placeholder = "I am a multi-line placeholder.\nHere is another line.",
                 keyboardType = KeyboardType.Text,
                 singleLine = false
@@ -359,7 +371,9 @@ fun TextFieldScreenSkeleton() {
             AppComponent.MediumSpacer()
 
             TextInputFieldTwo(
-                textFieldValue = remember { mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet")) },
+                textFieldValue = remember {
+                    mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet"))
+                },
                 placeholder = "I am  a placeholder"
             )
 
@@ -383,7 +397,13 @@ fun TextFieldScreenSkeleton() {
             TextInputFieldTwo(
                 modifier = Modifier
                     .height(128.dp),
-                textFieldValue = remember { mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")) },
+                textFieldValue = remember {
+                    mutableStateOf(
+                        TextFieldValue(
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                        )
+                    )
+                },
                 placeholder = "I am  a placeholder",
                 keyboardType = KeyboardType.Text,
                 singleLine = false
@@ -479,7 +499,9 @@ fun TextInputFieldOne(
             Box(
                 Modifier
                     .clip(MaterialTheme.shapes.medium)
-                    .background(if (isError) MaterialTheme.colors.errorInputBackground else background)
+                    .background(
+                        if (isError) MaterialTheme.colors.errorInputBackground else background
+                    )
                     .height(height)
                     .padding(horizontal = 12.dp),
                 contentAlignment = if (singleLine) Alignment.CenterStart else Alignment.TopStart
@@ -544,8 +566,11 @@ fun PasswordInputFieldOne(
         value = textFieldValue.value,
         singleLine = true,
         visualTransformation =
-        if (passwordVisibility) VisualTransformation.None
-        else PasswordVisualTransformation(mask = '●'),
+        if (passwordVisibility) {
+            VisualTransformation.None
+        } else {
+            PasswordVisualTransformation(mask = '●')
+        },
         onValueChange = {
             textFieldValue.value = it
 
@@ -573,7 +598,9 @@ fun PasswordInputFieldOne(
             Row(
                 Modifier
                     .clip(MaterialTheme.shapes.medium)
-                    .background(if (isError) MaterialTheme.colors.errorInputBackground else MaterialTheme.colors.inputBackground)
+                    .background(
+                        if (isError) MaterialTheme.colors.errorInputBackground else MaterialTheme.colors.inputBackground
+                    )
                     .height(height),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -734,8 +761,12 @@ fun TextInputFieldTwo(
                     ) {
                         val hasText = textFieldValue.value.text.isNotEmpty()
 
-                        val animPlaceholder: Dp by animateDpAsState(if (isFocused.value || hasText) 6.dp else 14.dp)
-                        val animPlaceHolderFontSize: Int by animateIntAsState(if (isFocused.value || hasText) 12 else 14)
+                        val animPlaceholder: Dp by animateDpAsState(
+                            if (isFocused.value || hasText) 6.dp else 14.dp
+                        )
+                        val animPlaceHolderFontSize: Int by animateIntAsState(
+                            if (isFocused.value || hasText) 12 else 14
+                        )
 
                         Text(
                             modifier = Modifier
@@ -810,8 +841,11 @@ fun PasswordInputFieldTwo(
         value = textFieldValue.value,
         singleLine = true,
         visualTransformation =
-        if (passwordVisibility.value) VisualTransformation.None
-        else PasswordVisualTransformation(mask = '*'),
+        if (passwordVisibility.value) {
+            VisualTransformation.None
+        } else {
+            PasswordVisualTransformation(mask = '*')
+        },
         onValueChange = {
             textFieldValue.value = it
 
@@ -862,8 +896,12 @@ fun PasswordInputFieldTwo(
                 ) {
                     val hasText = textFieldValue.value.text.isNotEmpty()
 
-                    val animPlaceholder: Dp by animateDpAsState(if (isFocused.value || hasText) 6.dp else 14.dp)
-                    val animPlaceHolderFontSize: Int by animateIntAsState(if (isFocused.value || hasText) 12 else 14)
+                    val animPlaceholder: Dp by animateDpAsState(
+                        if (isFocused.value || hasText) 6.dp else 14.dp
+                    )
+                    val animPlaceHolderFontSize: Int by animateIntAsState(
+                        if (isFocused.value || hasText) 12 else 14
+                    )
 
                     Text(
                         modifier = Modifier
@@ -1005,9 +1043,11 @@ fun TextFieldWithErrorState() {
             .fillMaxWidth()
             .semantics {
                 // Provide localized description of the error
-                if (isError) Toast
-                    .makeText(context, "Email format is invalid.", Toast.LENGTH_SHORT)
-                    .show()
+                if (isError) {
+                    Toast
+                        .makeText(context, "Email format is invalid.", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
     )
 }

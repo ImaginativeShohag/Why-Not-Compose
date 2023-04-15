@@ -40,8 +40,11 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -78,8 +81,6 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.isActive
@@ -101,7 +102,7 @@ val Colors.searchErrorInputBackground: Color
 
 @Composable
 fun DataFetchAndPagingScreen(
-    viewModel: DataFetchAndPagingViewModel,
+    viewModel: DataFetchAndPagingViewModel
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -148,7 +149,7 @@ fun DataFetchAndPagingScreenSkeletonPreview() {
                         MockData.dummyGithubRepo
                     )
                 )
-            ).collectAsLazyPagingItems(),
+            ).collectAsLazyPagingItems()
         )
     }
 }
@@ -170,7 +171,7 @@ fun DataFetchAndPagingScreenSkeletonPreviewDark() {
                         MockData.dummyGithubRepo
                     )
                 )
-            ).collectAsLazyPagingItems(),
+            ).collectAsLazyPagingItems()
         )
     }
 }
@@ -183,7 +184,7 @@ fun DataFetchAndPagingScreenSkeleton(
     searchTFV: MutableState<TextFieldValue> = remember { mutableStateOf(TextFieldValue()) },
     openSearch: Boolean = false,
     setOpenSearch: (Boolean) -> Unit = {},
-    retryDataLoad: () -> Unit = {},
+    retryDataLoad: () -> Unit = {}
 ) {
     val scaffoldState = rememberScaffoldState()
 
@@ -215,12 +216,14 @@ fun DataFetchAndPagingScreenSkeleton(
 
     Scaffold(
         modifier = Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding(),
-        scaffoldState = scaffoldState,
-    ) {
+        scaffoldState = scaffoldState
+    ) { innerPadding ->
         Column(
             Modifier
+                .padding(innerPadding)
                 .fillMaxSize()
         ) {
             AppComponent.Header("Data Fetch and Paging")
@@ -251,7 +254,7 @@ fun DataFetchAndPagingScreenSkeleton(
                         Modifier
                             .fillMaxSize(),
                         state = lazyListState,
-                        contentPadding = PaddingValues(top = 28.dp, bottom = 4.dp),
+                        contentPadding = PaddingValues(top = 28.dp, bottom = 4.dp)
                     ) {
                         items(repos) { repo ->
                             if (repo == null) {
@@ -348,9 +351,11 @@ fun DataFetchAndPagingScreenSkeleton(
                         )
                 ) {
                     val searchBackgroundColor by animateColorAsState(
-                        targetValue = if (searchTFV.value.text.isBlank())
+                        targetValue = if (searchTFV.value.text.isBlank()) {
                             MaterialTheme.colors.searchErrorInputBackground
-                        else MaterialTheme.colors.surface
+                        } else {
+                            MaterialTheme.colors.surface
+                        }
                     )
 
                     Box(
@@ -373,7 +378,7 @@ fun DataFetchAndPagingScreenSkeleton(
                             fontSize = 16.sp,
                             textFieldValue = searchTFV,
                             placeholder = "Search Github repositories...",
-                            isError = searchTFV.value.text.isBlank(),
+                            isError = searchTFV.value.text.isBlank()
                         )
                         Column(
                             Modifier
@@ -385,7 +390,7 @@ fun DataFetchAndPagingScreenSkeleton(
                                 modifier = Modifier,
                                 visible = searchTFV.value.text.isNotEmpty(),
                                 enter = fadeIn(),
-                                exit = fadeOut(),
+                                exit = fadeOut()
                             ) {
                                 Image(
                                     modifier = Modifier
@@ -395,7 +400,9 @@ fun DataFetchAndPagingScreenSkeleton(
                                         },
                                     painter = painterResource(id = R.drawable.ic_close),
                                     contentDescription = "Clear",
-                                    colorFilter = ColorFilter.tint(MaterialTheme.colors.onBackground)
+                                    colorFilter = ColorFilter.tint(
+                                        MaterialTheme.colors.onBackground
+                                    )
                                 )
                             }
 
@@ -403,14 +410,16 @@ fun DataFetchAndPagingScreenSkeleton(
                                 modifier = Modifier,
                                 visible = searchTFV.value.text.isEmpty(),
                                 enter = fadeIn(),
-                                exit = fadeOut(),
+                                exit = fadeOut()
                             ) {
                                 Image(
                                     modifier = Modifier
                                         .size(18.dp),
                                     painter = painterResource(id = R.drawable.ic_search),
                                     contentDescription = "Search",
-                                    colorFilter = ColorFilter.tint(MaterialTheme.colors.onBackground)
+                                    colorFilter = ColorFilter.tint(
+                                        MaterialTheme.colors.onBackground
+                                    )
                                 )
                             }
                         }

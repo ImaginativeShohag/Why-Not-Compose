@@ -49,7 +49,10 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
@@ -57,6 +60,8 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -73,13 +78,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.R
+import org.imaginativeworld.whynotcompose.common.compose.R as CommonComposeR
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
 import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.components.ErrorView
@@ -104,7 +106,7 @@ sealed class WebViewTarget(val name: String, val url: String) {
 fun WebViewScreen(
     viewModel: WebViewViewModel,
     target: WebViewTarget,
-    goBack: () -> Unit,
+    goBack: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -127,11 +129,11 @@ fun WebViewScreen(
                 url = target.url,
                 loadingProgress = state.loadingProgress,
                 initSwipeRefresh = viewModel::initSwipeRefresh,
-                initWebView = viewModel::initWebView,
+                initWebView = viewModel::initWebView
             )
         },
         webViewError = state.error,
-        onRetry = viewModel::webViewReload,
+        onRetry = viewModel::webViewReload
     )
 }
 
@@ -177,16 +179,17 @@ fun WebViewSkeleton(
     goBack: () -> Unit,
     webView: @Composable (Modifier) -> Unit,
     webViewError: WebViewError? = null,
-    onRetry: () -> Unit = {},
+    onRetry: () -> Unit = {}
 ) {
-
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding()
-    ) {
+    ) { innerPadding ->
         Column(
             Modifier
+                .padding(innerPadding)
                 .fillMaxSize()
         ) {
             TopAppBar(
@@ -194,11 +197,13 @@ fun WebViewSkeleton(
                 navigationIcon = {
                     IconButton(onClick = { goBack() }) {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_arrow_left_single),
+                            painter = painterResource(
+                                id = R.drawable.ic_arrow_left_single
+                            ),
                             contentDescription = "Back"
                         )
                     }
-                },
+                }
             )
 
             Box(
@@ -231,12 +236,12 @@ private fun WebViewContainer(
     url: String,
     loadingProgress: Int?,
     initSwipeRefresh: (swipeRefreshLayout: SwipeRefreshLayout) -> Unit,
-    initWebView: (webView: WebView) -> Unit,
+    initWebView: (webView: WebView) -> Unit
 ) {
-    SwipeRefresh(
-        modifier = Modifier.fillMaxSize(),
-        state = rememberSwipeRefreshState(false),
-        onRefresh = { },
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .pullRefresh(rememberPullRefreshState(false, onRefresh = {}))
     ) {
         Box(modifier.fillMaxSize()) {
             AndroidView(
@@ -245,12 +250,11 @@ private fun WebViewContainer(
                     Timber.e("AndroidView: factory")
 
                     SwipeRefreshLayout(context).apply {
-
                         initSwipeRefresh(this)
 
                         addView(
                             WebView(context).apply {
-                                id = R.id.webView
+                                id = CommonComposeR.id.webView
 
                                 initWebView(this)
                             }
@@ -260,7 +264,8 @@ private fun WebViewContainer(
                 update = { swipeRefreshLayout ->
                     Timber.e("AndroidView: update")
 
-                    val webView = swipeRefreshLayout.findViewById<WebView>(R.id.webView)
+                    val webView =
+                        swipeRefreshLayout.findViewById<WebView>(CommonComposeR.id.webView)
 
                     swipeRefreshLayout.layoutParams = ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
@@ -278,7 +283,7 @@ private fun WebViewContainer(
 
             LoadingContainer(
                 progress = loadingProgress ?: 0,
-                visible = loadingProgress != null,
+                visible = loadingProgress != null
             )
         }
     }
@@ -337,13 +342,11 @@ private fun LoadingContainer(
         enter = fadeIn(),
         exit = fadeOut()
     ) {
-
         Box(
             Modifier
                 .fillMaxSize()
                 .background(Color.Black.copy(.25f))
         ) {
-
             Row(
                 Modifier
                     .align(Alignment.Center)

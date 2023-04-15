@@ -87,9 +87,11 @@ fun ErrorView(
     failingUrl: String?,
     onRetry: () -> Unit = {},
 ) {
-    Scaffold(modifier.fillMaxSize()) {
+    Scaffold(modifier.fillMaxSize()) { innerPadding ->
         Column(
-            Modifier.fillMaxSize(),
+            Modifier
+                .padding(innerPadding)
+                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {

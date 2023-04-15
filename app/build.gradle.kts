@@ -10,6 +10,7 @@ plugins {
 }
 
 android {
+    namespace = "org.imaginativeworld.whynotcompose"
     compileSdk = BuildConfigConst.compileSdk
 
     defaultConfig {
@@ -45,14 +46,13 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
 
-        freeCompilerArgs = freeCompilerArgs + "-Xallow-jvm-ir-dependencies"
         freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
 
         // Enable experimental coroutines APIs, including Flow
@@ -75,9 +75,8 @@ android {
         // Disable unused AGP features
         viewBinding = false
         dataBinding = false
+
         // buildConfig false
-        aidl = false
-        renderScript = false
         resValues = false
         shaders = false
     }
@@ -123,12 +122,15 @@ dependencies {
     implementation(Libs.AndroidX.Compose.layout)
     // Material Design
     implementation(Libs.AndroidX.Compose.material)
+    implementation(Libs.AndroidX.Compose.material3)
+    implementation(Libs.AndroidX.Compose.material3WindowSizeClass)
     // Material design icons
     implementation(Libs.AndroidX.Compose.materialIconsCore)
     implementation(Libs.AndroidX.Compose.materialIconsExtended)
     // Integration with observables
     implementation(Libs.AndroidX.Compose.runtime)
     implementation(Libs.AndroidX.Compose.runtimeLivedata)
+    implementation(Libs.AndroidX.Compose.runtimeTracing)
     // Compose Navigation Component
     implementation(Libs.AndroidX.Navigation.compose)
     // Constraint Layout
@@ -226,6 +228,6 @@ kapt {
 
 tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 }

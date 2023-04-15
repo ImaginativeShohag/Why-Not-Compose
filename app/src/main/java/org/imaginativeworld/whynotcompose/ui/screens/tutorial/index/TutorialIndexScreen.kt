@@ -31,7 +31,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Divider
@@ -48,8 +51,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent.Header
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.ui.screens.TutorialsScreen
@@ -57,7 +58,7 @@ import org.imaginativeworld.whynotcompose.utils.LiteMarkdown
 
 @Composable
 fun TutorialIndexScreen(
-    navigate: (TutorialsScreen) -> Unit,
+    navigate: (TutorialsScreen) -> Unit
 ) {
     TutorialIndexSkeleton(
         navigate = navigate
@@ -74,14 +75,19 @@ fun TutorialIndexSkeletonPreview() {
 
 @Composable
 fun TutorialIndexSkeleton(
-    navigate: (TutorialsScreen) -> Unit = {},
+    navigate: (TutorialsScreen) -> Unit = {}
 ) {
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding()
-    ) {
-        Column(Modifier.fillMaxSize()) {
+    ) { innerPadding ->
+        Column(
+            Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+        ) {
             Header("Tutorials")
 
             LazyColumn(
@@ -90,7 +96,6 @@ fun TutorialIndexSkeleton(
                     .fillMaxWidth(),
                 contentPadding = PaddingValues(bottom = 8.dp)
             ) {
-
                 itemsIndexed(Tutorial.tutorialList) { index, item ->
 
                     if (index != 0) {
@@ -106,11 +111,10 @@ fun TutorialIndexSkeleton(
                                 start = 16.dp,
                                 top = 8.dp,
                                 end = 16.dp,
-                                bottom = 8.dp,
+                                bottom = 8.dp
                             )
                             .fillMaxWidth()
                     ) {
-
                         Text(
                             modifier = Modifier
                                 .fillMaxWidth(),
@@ -122,7 +126,7 @@ fun TutorialIndexSkeleton(
                                     SpanStyle(
                                         color = item.level.color,
                                         fontWeight = FontWeight.Bold,
-                                        fontSize = 12.sp,
+                                        fontSize = 12.sp
                                     )
                                 ) {
                                     append(item.level.name.uppercase())
@@ -134,7 +138,7 @@ fun TutorialIndexSkeleton(
                             // val description = remember { getSections(item.description) }
                             Text(
                                 modifier = Modifier.padding(
-                                    top = 4.dp,
+                                    top = 4.dp
                                 ),
                                 text = buildAnnotatedString {
                                     for (section in LiteMarkdown.getSections(item.description)) {
@@ -155,7 +159,7 @@ fun TutorialIndexSkeleton(
                                         }
                                     }
                                 },
-                                fontSize = 12.sp,
+                                fontSize = 12.sp
                             )
                         }
                     }

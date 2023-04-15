@@ -42,9 +42,12 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -61,8 +64,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -122,18 +123,21 @@ fun RunningCarScreenSkeleton(
         targetValue = if (animState.value) 360f else 0f,
         animationSpec = tween(
             durationMillis = 2000,
-            easing = FastOutSlowInEasing,
+            easing = FastOutSlowInEasing
         )
     )
 
     Scaffold(
         modifier = Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding()
             .fillMaxSize()
-    ) {
+    ) { innerPadding ->
         BoxWithConstraints(
-            Modifier.fillMaxSize()
+            Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_jetpack_compose_logo),
@@ -150,7 +154,6 @@ fun RunningCarScreenSkeleton(
                 Modifier.align(Alignment.BottomCenter),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
                 Box(
                     Modifier.wrapContentHeight(),
                     contentAlignment = Alignment.BottomCenter
@@ -211,7 +214,8 @@ fun RunningCarScreenSkeleton(
                     )
 
                     Image(
-                        painterResource(id = R.drawable.scrolling_background), "background",
+                        painterResource(id = R.drawable.scrolling_background),
+                        "background",
                         Modifier
                             .align(Alignment.BottomStart)
                             .padding(bottom = 32.dp)
@@ -222,13 +226,17 @@ fun RunningCarScreenSkeleton(
                             },
                         contentScale = ContentScale.Inside,
                         colorFilter = ColorFilter.tint(
-                            if (MaterialTheme.colors.isLight) Color(0xFFE6E6E6)
-                            else Color(0xFF2B2B2B)
+                            if (MaterialTheme.colors.isLight) {
+                                Color(0xFFE6E6E6)
+                            } else {
+                                Color(0xFF2B2B2B)
+                            }
                         )
                     )
 
                     Image(
-                        painterResource(id = R.drawable.scrolling_foreground), "foreground",
+                        painterResource(id = R.drawable.scrolling_foreground),
+                        "foreground",
                         Modifier
                             .align(Alignment.BottomStart)
                             .padding(bottom = 28.dp)
@@ -239,13 +247,17 @@ fun RunningCarScreenSkeleton(
                             },
                         contentScale = ContentScale.Inside,
                         colorFilter = ColorFilter.tint(
-                            if (MaterialTheme.colors.isLight) Color(0xFFD4D4D4)
-                            else Color(0xFF3D3D3D)
+                            if (MaterialTheme.colors.isLight) {
+                                Color(0xFFD4D4D4)
+                            } else {
+                                Color(0xFF3D3D3D)
+                            }
                         )
                     )
 
                     Image(
-                        painterResource(id = R.drawable.ic_car), contentDescription = "Car",
+                        painterResource(id = R.drawable.ic_car),
+                        contentDescription = "Car",
                         Modifier
                             .padding(bottom = 0.dp)
                             .size(64.dp)

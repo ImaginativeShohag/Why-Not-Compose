@@ -93,6 +93,7 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
 import org.imaginativeworld.whynotcompose.models.MapPlace
 import org.imaginativeworld.whynotcompose.ui.compositions.CustomSnackbarHost
+import timber.log.Timber
 
 // TODO: add location permission
 // TODO: add current location request
@@ -117,6 +118,7 @@ fun MapScreen(
 
     LaunchedEffect(state.places) {
         if (viewModel.isFirstTime()) {
+            Timber.e("state.places: ${state.places.count()}")
             val boundsBuilder = LatLngBounds.Builder()
 
             for (place in state.places) {

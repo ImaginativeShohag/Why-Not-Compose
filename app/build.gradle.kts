@@ -22,6 +22,8 @@ android {
         vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        signingConfig = signingConfigs.getByName("debug")
     }
 
     buildTypes {
@@ -83,6 +85,15 @@ android {
 
     composeOptions {
         kotlinCompilerExtensionVersion = Libs.AndroidX.Compose.compilerVersion
+    }
+
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file("../debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
     }
 }
 

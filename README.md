@@ -76,6 +76,7 @@ Feel free to request features or suggestions for improvements.
 - [ ] Paging with `LazyGrid`
 - [ ] Add compose BOM: https://developer.android.com/jetpack/androidx/releases/compose
 - [ ] Refactor to Gradle Plugins
+- [ ] Add GitHub actions
 
 # Note
 

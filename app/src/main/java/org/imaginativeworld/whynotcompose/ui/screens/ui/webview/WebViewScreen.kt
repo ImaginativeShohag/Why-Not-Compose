@@ -60,8 +60,6 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
-import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -241,7 +239,6 @@ private fun WebViewContainer(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .pullRefresh(rememberPullRefreshState(false, onRefresh = {}))
     ) {
         Box(modifier.fillMaxSize()) {
             AndroidView(

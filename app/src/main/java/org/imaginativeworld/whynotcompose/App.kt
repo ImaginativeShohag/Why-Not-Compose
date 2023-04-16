@@ -59,8 +59,12 @@ class App : Application(), OnMapsSdkInitializedCallback {
 
     override fun onMapsSdkInitialized(renderer: MapsInitializer.Renderer) {
         when (renderer) {
-            MapsInitializer.Renderer.LATEST -> Timber.d("The latest version of the renderer is used.")
-            MapsInitializer.Renderer.LEGACY -> Timber.d("The legacy version of the renderer is used.")
+            MapsInitializer.Renderer.LATEST -> Timber.d(
+                "The latest version of the renderer is used."
+            )
+            MapsInitializer.Renderer.LEGACY -> Timber.d(
+                "The legacy version of the renderer is used."
+            )
         }
     }
 

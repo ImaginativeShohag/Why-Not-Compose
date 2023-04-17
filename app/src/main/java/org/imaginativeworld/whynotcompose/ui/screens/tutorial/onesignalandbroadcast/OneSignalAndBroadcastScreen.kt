@@ -40,10 +40,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -69,6 +71,7 @@ import timber.log.Timber
 fun OneSignalAndBroadcastScreen() {
     val context = LocalContext.current
 
+    var showError by remember { mutableStateOf("") }
     var counter by remember { mutableStateOf(0) }
     var currentValue by remember { mutableStateOf("$counter") }
 
@@ -102,7 +105,9 @@ fun OneSignalAndBroadcastScreen() {
             try {
                 counter++
 
-                sendNewNotification(counter.toString())
+                sendNewNotification(counter.toString()) { errorMessage ->
+                    showError = errorMessage
+                }
             } catch (e: JSONException) {
                 e.printStackTrace()
 
@@ -110,12 +115,31 @@ fun OneSignalAndBroadcastScreen() {
             }
         }
     )
+
+    if (showError.isNotBlank()) {
+        AlertDialog(
+            onDismissRequest = {
+                showError = ""
+            },
+            confirmButton = {
+                TextButton(onClick = { showError = "" }) {
+                    Text("Ok")
+                }
+            },
+            title = {
+                Text("Error!")
+            },
+            text = {
+                Text(showError)
+            }
+        )
+    }
 }
 
 /**
  * Send a new OneSignal notification to the current app user with given [value].
  */
-private fun sendNewNotification(value: String) {
+private fun sendNewNotification(value: String, onError: (String) -> Unit) {
     if (OneSignal.getDeviceState() != null && OneSignal.getDeviceState()!!.isSubscribed) {
         // This is the current device OneSignal userId.
         val userId = OneSignal.getDeviceState()!!.userId
@@ -145,7 +169,10 @@ private fun sendNewNotification(value: String) {
             }
         )
     } else {
-        throw Exception("OneSignal is not initialized yet or user is not subscribed!")
+        onError(
+            "OneSignal is not initialized yet or the user is not subscribed! " +
+                "Another reason could be notification permission is not allowed."
+        )
     }
 }
 

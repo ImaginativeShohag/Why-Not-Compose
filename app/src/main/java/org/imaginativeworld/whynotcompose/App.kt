@@ -43,6 +43,8 @@ class App : Application(), OnMapsSdkInitializedCallback {
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
+
+            OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE)
         }
 
         // New Map Renderer

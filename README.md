@@ -129,7 +129,7 @@ MAPS_API_KEY=YOUR_API_KEY
 - **Emudi** is a trademark of [Softzino Technologies](https://softzino.com/).
 
 ```
-Copyright 2021 Md. Mahmudul Hasan Shohagm
+Copyright 2021 Md. Mahmudul Hasan Shohag
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

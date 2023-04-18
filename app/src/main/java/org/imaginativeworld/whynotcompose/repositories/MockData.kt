@@ -51,7 +51,7 @@ object MockData {
         ListItem(id = 11, name = "Marshmallow"),
         ListItem(id = 12, name = "Nougat"),
         ListItem(id = 13, name = "Oreo"),
-        ListItem(id = 14, name = "Pie"),
+        ListItem(id = 14, name = "Pie")
     )
 
     val dummyGithubRepo = GithubRepo(
@@ -65,6 +65,6 @@ object MockData {
         description = "A collection of animations, compositions, UIs using Jetpack Compose. You can say Jetpack Compose cookbook or play-ground if you want!",
         stargazersCount = 100,
         watchersCount = 200,
-        forksCount = 300,
+        forksCount = 300
     )
 }

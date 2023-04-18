@@ -35,6 +35,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -49,7 +50,6 @@ import org.imaginativeworld.whynotcompose.datasource.GithubRepoDataSource
 import org.imaginativeworld.whynotcompose.models.github.GithubRepo
 import org.imaginativeworld.whynotcompose.repositories.AppRepository
 import timber.log.Timber
-import javax.inject.Inject
 
 @HiltViewModel
 class DataFetchAndPagingViewModel @Inject constructor(
@@ -75,13 +75,13 @@ class DataFetchAndPagingViewModel @Inject constructor(
             combine(
                 _eventShowLoading,
                 _eventShowMessage,
-                _items,
+                _items
             ) { showLoading, showMessage, items ->
 
                 ListViewState(
                     loading = showLoading,
                     message = showMessage,
-                    items = items,
+                    items = items
                 )
             }.catch { throwable ->
                 // TODO: emit a UI error here. For now we'll just rethrow
@@ -104,8 +104,9 @@ class DataFetchAndPagingViewModel @Inject constructor(
 
     fun setOpenSearch(isOpenSearch: Boolean) {
         Timber.e("setOpenSearch: $isOpenSearch")
-        if (openSearchTrueOnce && isOpenSearch)
+        if (openSearchTrueOnce && isOpenSearch) {
             return
+        }
 
         if (isOpenSearch) {
             openSearchTrueOnce = true
@@ -136,7 +137,7 @@ class DataFetchAndPagingViewModel @Inject constructor(
 
     fun loadPosts(
         query: String?,
-        delayRequest: Boolean = !query.isNullOrBlank(),
+        delayRequest: Boolean = !query.isNullOrBlank()
 
     ) {
         Timber.e("query: %s", query)
@@ -177,8 +178,9 @@ class DataFetchAndPagingViewModel @Inject constructor(
         // --------------------------------
 
         searchJob = viewModelScope.launch {
-            if (delayRequest)
+            if (delayRequest) {
                 delay(300)
+            }
 
             prevSearchResult = Pager(
                 config = PagingConfig(
@@ -188,7 +190,7 @@ class DataFetchAndPagingViewModel @Inject constructor(
                 pagingSourceFactory = {
                     GithubRepoDataSource(
                         repository = repository,
-                        query = query,
+                        query = query
                     )
                 }
             )
@@ -207,5 +209,5 @@ data class ListViewState(
 )
 
 private data class Query(
-    var query: String? = null,
+    var query: String? = null
 )

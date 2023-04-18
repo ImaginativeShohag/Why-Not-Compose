@@ -63,7 +63,7 @@ fun EmptyView(
     loadState: CombinedLoadStates,
     itemCount: Int,
     title: String = "Nothing here!",
-    message: String? = "No repository found.",
+    message: String? = "No repository found."
 ) {
     Timber.e("itemCount: $itemCount")
 
@@ -88,7 +88,7 @@ fun EmptyView(
             loadState.prepend.endOfPaginationReached &&
             itemCount == 0,
         title = title,
-        message = message,
+        message = message
     )
 }
 
@@ -98,7 +98,7 @@ fun EmptyViewPreview() {
     AppTheme {
         EmptyView(
             modifier = Modifier,
-            show = true,
+            show = true
         )
     }
 }
@@ -109,7 +109,7 @@ fun EmptyViewPreviewDark() {
     AppTheme {
         EmptyView(
             modifier = Modifier,
-            show = true,
+            show = true
         )
     }
 }
@@ -119,7 +119,7 @@ fun EmptyView(
     modifier: Modifier = Modifier,
     show: Boolean,
     title: String = "Nothing here!",
-    message: String? = "No repository found!",
+    message: String? = "No repository found!"
 ) {
     AnimatedVisibility(
         visible = show,
@@ -140,7 +140,7 @@ fun EmptyView(
                 Modifier
                     .padding(start = 32.dp, end = 32.dp, bottom = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.Center
             ) {
                 Image(
                     modifier = Modifier
@@ -156,7 +156,7 @@ fun EmptyView(
                     fontSize = 14.sp,
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.Medium,
-                    color = MaterialTheme.colors.onBackground.copy(.75f),
+                    color = MaterialTheme.colors.onBackground.copy(.75f)
                 )
 
                 if (message != null) {
@@ -166,7 +166,7 @@ fun EmptyView(
                         fontSize = 14.sp,
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.Normal,
-                        color = MaterialTheme.colors.onBackground.copy(.75f),
+                        color = MaterialTheme.colors.onBackground.copy(.75f)
                     )
                 }
             }

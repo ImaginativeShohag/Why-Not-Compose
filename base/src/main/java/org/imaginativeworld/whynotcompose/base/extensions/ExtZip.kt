@@ -52,7 +52,7 @@ fun <T1, T2, T3, T4, T5, T6, R> combine(
         t1.third,
         t2.first,
         t2.second,
-        t2.third,
+        t2.third
     )
 }
 
@@ -73,7 +73,7 @@ fun <T1, T2, T3, T4, T5, T6, T7, R> combine(
 ): Flow<R> = combine(
     combine(flow, flow2, flow3, ::Triple),
     combine(flow4, flow5, flow6, ::Triple),
-    flow7,
+    flow7
 ) { t1, t2, f7 ->
     transform(
         t1.first,
@@ -114,7 +114,7 @@ fun <T1, T2, T3, T4, T5, T6, T7, T8, R> combine(
         t2.second,
         t2.third,
         p1.first,
-        p1.second,
+        p1.second
     )
 }
 
@@ -148,6 +148,6 @@ fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, R> combine(
         t2.third,
         t3.first,
         t3.second,
-        t3.third,
+        t3.third
     )
 }

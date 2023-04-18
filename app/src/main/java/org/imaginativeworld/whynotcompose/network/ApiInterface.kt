@@ -42,6 +42,6 @@ interface ApiInterface {
         @Query("page") page: Int,
         @Query("sort") sort: String,
         @Query("order") order: String,
-        @Query("q") query: String,
+        @Query("q") query: String
     ): Response<GithubRepoResponse>
 }

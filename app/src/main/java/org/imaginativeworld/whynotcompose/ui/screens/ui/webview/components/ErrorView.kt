@@ -62,7 +62,7 @@ fun ErrorViewPreview() {
         ErrorView(
             errorCode = ERROR_HOST_LOOKUP,
             description = "Webpage not available",
-            failingUrl = "https://imaginativeworld.org",
+            failingUrl = "https://imaginativeworld.org"
         )
     }
 }
@@ -74,7 +74,7 @@ fun ErrorViewPreviewDark() {
         ErrorView(
             errorCode = ERROR_HOST_LOOKUP,
             description = "Webpage not available",
-            failingUrl = "https://imaginativeworld.org",
+            failingUrl = "https://imaginativeworld.org"
         )
     }
 }
@@ -85,7 +85,7 @@ fun ErrorView(
     errorCode: Int,
     description: String?,
     failingUrl: String?,
-    onRetry: () -> Unit = {},
+    onRetry: () -> Unit = {}
 ) {
     Scaffold(modifier.fillMaxSize()) { innerPadding ->
         Column(
@@ -93,7 +93,7 @@ fun ErrorView(
                 .padding(innerPadding)
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Center
         ) {
             Image(
                 modifier = Modifier
@@ -102,7 +102,7 @@ fun ErrorView(
                 painter = painterResource(
                     id = R.drawable.ic_undraw_location_search_modified
                 ),
-                contentDescription = null,
+                contentDescription = null
             )
 
             Spacer(Modifier.height(32.dp))
@@ -115,7 +115,7 @@ fun ErrorView(
 
                         withStyle(
                             style = SpanStyle(
-                                fontWeight = FontWeight.Bold,
+                                fontWeight = FontWeight.Bold
                             )
                         ) {
                             append("$failingUrl")
@@ -124,7 +124,7 @@ fun ErrorView(
                         append(" could not be loaded.")
                     },
                     fontSize = 16.sp,
-                    textAlign = TextAlign.Center,
+                    textAlign = TextAlign.Center
                 )
             }
 
@@ -132,7 +132,7 @@ fun ErrorView(
                 modifier = Modifier.padding(start = 16.dp, end = 16.dp),
                 text = getMessage(errorCode, description),
                 fontSize = 18.sp,
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Center
             )
 
             Button(
@@ -147,7 +147,7 @@ fun ErrorView(
 
 private fun getMessage(
     errorCode: Int,
-    description: String?,
+    description: String?
 ): String {
     return when (errorCode) {
         ERROR_HOST_LOOKUP -> "The website not found! Maybe you are not connected to the Internet."

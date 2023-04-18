@@ -98,8 +98,11 @@ object TicTacToeEngine {
     private fun String.findOrNull(position: Int): String? {
         val found = this.indexOf(position.toString())
 
-        return if (found == -1) null
-        else getOrNull(found + 1)?.toString()
+        return if (found == -1) {
+            null
+        } else {
+            getOrNull(found + 1)?.toString()
+        }
     }
 
     /**

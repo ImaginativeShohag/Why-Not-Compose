@@ -30,94 +30,94 @@ import org.imaginativeworld.whynotcompose.ui.screens.CompositionsScreen
 
 data class Composition(
     val name: String,
-    val route: CompositionsScreen,
+    val route: CompositionsScreen
 ) {
     companion object {
         val compositionList = listOf(
             Composition(
                 name = "App Bar",
-                route = CompositionsScreen.CompositionAppBar,
+                route = CompositionsScreen.CompositionAppBar
             ),
             Composition(
                 name = "Badge",
-                route = CompositionsScreen.CompositionBadge,
+                route = CompositionsScreen.CompositionBadge
             ),
             Composition(
                 name = "Bottom Navigation",
-                route = CompositionsScreen.CompositionBottomNavigation,
+                route = CompositionsScreen.CompositionBottomNavigation
             ),
             Composition(
                 name = "Button",
-                route = CompositionsScreen.CompositionButton,
+                route = CompositionsScreen.CompositionButton
             ),
             Composition(
                 name = "Card",
-                route = CompositionsScreen.CompositionCard,
+                route = CompositionsScreen.CompositionCard
             ),
             Composition(
                 name = "Check Box",
-                route = CompositionsScreen.CompositionCheckBox,
+                route = CompositionsScreen.CompositionCheckBox
             ),
             Composition(
                 name = "Dialog",
-                route = CompositionsScreen.CompositionDialog,
+                route = CompositionsScreen.CompositionDialog
             ),
             Composition(
                 name = "DropDown Menu",
-                route = CompositionsScreen.CompositionDropDownMenu,
+                route = CompositionsScreen.CompositionDropDownMenu
             ),
             Composition(
                 name = "FloatingActionButton",
-                route = CompositionsScreen.CompositionFloatingActionButton,
+                route = CompositionsScreen.CompositionFloatingActionButton
             ),
             Composition(
                 name = "List",
-                route = CompositionsScreen.CompositionListIndex,
+                route = CompositionsScreen.CompositionListIndex
             ),
             Composition(
                 name = "ListItem",
-                route = CompositionsScreen.CompositionListItem,
+                route = CompositionsScreen.CompositionListItem
             ),
             Composition(
                 name = "Loading Indicator",
-                route = CompositionsScreen.CompositionLoadingIndicator,
+                route = CompositionsScreen.CompositionLoadingIndicator
             ),
             Composition(
                 name = "Radio Button",
-                route = CompositionsScreen.CompositionRadioButton,
+                route = CompositionsScreen.CompositionRadioButton
             ),
             Composition(
                 name = "Scaffold",
-                route = CompositionsScreen.CompositionScaffoldIndex,
+                route = CompositionsScreen.CompositionScaffoldIndex
             ),
             Composition(
                 name = "Slider",
-                route = CompositionsScreen.CompositionSlider,
+                route = CompositionsScreen.CompositionSlider
             ),
             Composition(
                 name = "Snackbar",
-                route = CompositionsScreen.CompositionSnackbar,
+                route = CompositionsScreen.CompositionSnackbar
             ),
             Composition(
                 name = "SwipeRefresh",
-                route = CompositionsScreen.CompositionSwipeRefresh,
+                route = CompositionsScreen.CompositionSwipeRefresh
             ),
             Composition(
                 name = "SwipeToDismiss",
-                route = CompositionsScreen.CompositionSwipeToDismiss,
+                route = CompositionsScreen.CompositionSwipeToDismiss
             ),
             Composition(
                 name = "Switch",
-                route = CompositionsScreen.CompositionSwitch,
+                route = CompositionsScreen.CompositionSwitch
             ),
             Composition(
                 name = "Text",
-                route = CompositionsScreen.CompositionText,
+                route = CompositionsScreen.CompositionText
             ),
             Composition(
                 name = "Text Field",
-                route = CompositionsScreen.CompositionTextField,
-            ),
+                route = CompositionsScreen.CompositionTextField
+            )
         )
     }
 }

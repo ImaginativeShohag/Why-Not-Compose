@@ -48,5 +48,5 @@ data class GithubRepo(
     @Json(name = "watchers_count")
     val watchersCount: Int,
     @Json(name = "forks_count")
-    val forksCount: Int,
+    val forksCount: Int
 )

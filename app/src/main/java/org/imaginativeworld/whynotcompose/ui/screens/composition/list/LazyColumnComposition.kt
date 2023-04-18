@@ -28,32 +28,20 @@ package org.imaginativeworld.whynotcompose.ui.screens.composition.list
 
 import org.imaginativeworld.whynotcompose.ui.screens.CompositionsScreen
 
-data class ListComposition(
+data class LazyColumnComposition(
     val name: String,
-    val route: CompositionsScreen,
+    val route: CompositionsScreen
 ) {
     companion object {
-        val listCompositionList = listOf(
-            ListComposition(
-                name = "List with Column",
-                route = CompositionsScreen.CompositionListColumn,
+        val layColumnCompositionList = listOf(
+            LazyColumnComposition(
+                name = "Basic Sample",
+                route = CompositionsScreen.CompositionListLazyColumnOne
             ),
-            ListComposition(
-                name = "List with Row",
-                route = CompositionsScreen.CompositionListRow,
-            ),
-            ListComposition(
-                name = "List with LazyColumn",
-                route = CompositionsScreen.CompositionListLazyColumnIndex,
-            ),
-            ListComposition(
-                name = "List with LazyRow",
-                route = CompositionsScreen.CompositionListLazyRow,
-            ),
-            ListComposition(
-                name = "Grid with LazyVerticalGrid",
-                route = CompositionsScreen.CompositionListGridVertical,
-            ),
+            LazyColumnComposition(
+                name = "Sticky Header Sample",
+                route = CompositionsScreen.CompositionListLazyColumnTwo
+            )
         )
     }
 }

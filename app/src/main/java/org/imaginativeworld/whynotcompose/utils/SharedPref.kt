@@ -30,11 +30,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.squareup.moshi.Moshi
 import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
+import javax.inject.Singleton
 import org.imaginativeworld.whynotcompose.BuildConfig
 import org.imaginativeworld.whynotcompose.models.User
 import timber.log.Timber
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @Singleton
 class SharedPref @Inject constructor(

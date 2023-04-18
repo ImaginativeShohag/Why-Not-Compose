@@ -30,30 +30,30 @@ import org.imaginativeworld.whynotcompose.ui.screens.CompositionsScreen
 
 data class ScaffoldComposition(
     val name: String,
-    val route: CompositionsScreen,
+    val route: CompositionsScreen
 ) {
     companion object {
         val scaffoldCompositionList = listOf(
             ScaffoldComposition(
                 name = "Simple Scaffold With Top Bar",
-                route = CompositionsScreen.CompositionScaffoldOne,
+                route = CompositionsScreen.CompositionScaffoldOne
             ),
             ScaffoldComposition(
                 name = "Scaffold With Bottom Bar And Cutout",
-                route = CompositionsScreen.CompositionScaffoldTwo,
+                route = CompositionsScreen.CompositionScaffoldTwo
             ),
             ScaffoldComposition(
                 name = "Scaffold With Simple Snackbar",
-                route = CompositionsScreen.CompositionScaffoldThree,
+                route = CompositionsScreen.CompositionScaffoldThree
             ),
             ScaffoldComposition(
                 name = "Scaffold With Custom Snackbar",
-                route = CompositionsScreen.CompositionScaffoldFour,
+                route = CompositionsScreen.CompositionScaffoldFour
             ),
             ScaffoldComposition(
                 name = "Scaffold With Coroutines Snackbar",
-                route = CompositionsScreen.CompositionScaffoldFive,
-            ),
+                route = CompositionsScreen.CompositionScaffoldFive
+            )
         )
     }
 }

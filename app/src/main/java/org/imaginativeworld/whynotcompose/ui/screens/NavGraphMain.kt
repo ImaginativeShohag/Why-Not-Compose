@@ -213,7 +213,7 @@ sealed class TutorialsScreen(val route: String) {
 fun NavHostMain(
     modifier: Modifier,
     navController: NavHostController,
-    turnOnDarkMode: (Boolean) -> Unit,
+    turnOnDarkMode: (Boolean) -> Unit
 ) {
     NavHost(
         modifier = modifier,
@@ -222,7 +222,7 @@ fun NavHostMain(
     ) {
         addHomeScreens(
             navController = navController,
-            turnOnDarkMode = turnOnDarkMode,
+            turnOnDarkMode = turnOnDarkMode
         )
         addAnimationScreens(
             navController = navController
@@ -245,7 +245,7 @@ fun NavHostMain(
 
 private fun NavGraphBuilder.addHomeScreens(
     navController: NavHostController,
-    turnOnDarkMode: (Boolean) -> Unit,
+    turnOnDarkMode: (Boolean) -> Unit
 ) {
     navigation(
         route = Screen.Home.route,
@@ -256,13 +256,13 @@ private fun NavGraphBuilder.addHomeScreens(
         )
         addHomeIndexScreen(
             navController = navController,
-            turnOnDarkMode = turnOnDarkMode,
+            turnOnDarkMode = turnOnDarkMode
         )
     }
 }
 
 private fun NavGraphBuilder.addAnimationScreens(
-    navController: NavHostController,
+    navController: NavHostController
 ) {
     navigation(
         route = Screen.Animations.route,
@@ -293,7 +293,7 @@ private fun NavGraphBuilder.addAnimationScreens(
 }
 
 private fun NavGraphBuilder.addCompositionScreens(
-    navController: NavHostController,
+    navController: NavHostController
 ) {
     navigation(
         route = Screen.Compositions.route,
@@ -333,7 +333,7 @@ private fun NavGraphBuilder.addCompositionScreens(
             ListIndexScreen(
                 navigate = { screen ->
                     navController.navigate(screen.route)
-                },
+                }
             )
         }
 
@@ -349,7 +349,7 @@ private fun NavGraphBuilder.addCompositionScreens(
             LazyColumnIndexScreen(
                 navigate = { screen ->
                     navController.navigate(screen.route)
-                },
+                }
             )
         }
 
@@ -385,7 +385,7 @@ private fun NavGraphBuilder.addCompositionScreens(
             ScaffoldIndexScreen(
                 navigate = { screen ->
                     navController.navigate(screen.route)
-                },
+                }
             )
         }
 
@@ -456,7 +456,7 @@ private fun NavGraphBuilder.addCompositionScreens(
 }
 
 private fun NavGraphBuilder.addUiScreens(
-    navController: NavHostController,
+    navController: NavHostController
 ) {
     navigation(
         route = Screen.UIs.route,
@@ -523,7 +523,7 @@ private fun NavGraphBuilder.addUiScreens(
 }
 
 private fun NavGraphBuilder.addTutorialScreens(
-    navController: NavHostController,
+    navController: NavHostController
 ) {
     navigation(
         route = Screen.Tutorials.route,
@@ -546,7 +546,7 @@ private fun NavGraphBuilder.addTutorialScreens(
 // ================================================================
 
 private fun NavGraphBuilder.addHomeSplashScreen(
-    navController: NavHostController,
+    navController: NavHostController
 ) {
     composable(HomeScreen.Splash.route) {
         SplashScreen(
@@ -563,7 +563,7 @@ private fun NavGraphBuilder.addHomeSplashScreen(
 
 private fun NavGraphBuilder.addHomeIndexScreen(
     navController: NavHostController,
-    turnOnDarkMode: (Boolean) -> Unit,
+    turnOnDarkMode: (Boolean) -> Unit
 ) {
     composable(HomeScreen.HomeIndex.route) {
         HomeIndexScreen(
@@ -578,13 +578,13 @@ private fun NavGraphBuilder.addHomeIndexScreen(
 // ----------------------------------------------------------------
 
 private fun NavGraphBuilder.addAnimationIndexScreen(
-    navController: NavHostController,
+    navController: NavHostController
 ) {
     composable(AnimationsScreen.AnimationIndex.route) {
         AnimationIndexScreen(
             navigate = { screen ->
                 navController.navigate(screen.route)
-            },
+            }
         )
     }
 }
@@ -592,7 +592,7 @@ private fun NavGraphBuilder.addAnimationIndexScreen(
 // ----------------------------------------------------------------
 
 private fun NavGraphBuilder.addCompositionIndexScreen(
-    navController: NavHostController,
+    navController: NavHostController
 ) {
     composable(CompositionsScreen.CompositionIndex.route) {
         CompositionIndexScreen(
@@ -606,7 +606,7 @@ private fun NavGraphBuilder.addCompositionIndexScreen(
 // ----------------------------------------------------------------
 
 private fun NavGraphBuilder.addUiIndexScreen(
-    navController: NavHostController,
+    navController: NavHostController
 ) {
     composable(UIsScreen.UiIndex.route) {
         UiIndexScreen(
@@ -620,7 +620,7 @@ private fun NavGraphBuilder.addUiIndexScreen(
 // ----------------------------------------------------------------
 
 private fun NavGraphBuilder.addTutorialIndexScreen(
-    navController: NavHostController,
+    navController: NavHostController
 ) {
     composable(TutorialsScreen.TutorialIndex.route) {
         TutorialIndexScreen(

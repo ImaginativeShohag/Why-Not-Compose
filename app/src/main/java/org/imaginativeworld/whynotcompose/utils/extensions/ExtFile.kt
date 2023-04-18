@@ -29,12 +29,12 @@ package org.imaginativeworld.whynotcompose.utils.extensions
 import android.content.Context
 import android.net.Uri
 import androidx.core.content.FileProvider
-import org.imaginativeworld.whynotcompose.BuildConfig
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import org.imaginativeworld.whynotcompose.BuildConfig
 
 @Throws(IOException::class)
 fun Context.createImageFile(): File {

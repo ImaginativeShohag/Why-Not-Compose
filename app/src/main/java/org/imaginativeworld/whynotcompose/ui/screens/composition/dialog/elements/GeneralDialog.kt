@@ -82,7 +82,7 @@ fun GeneralDialog(
     positiveBtnText: String,
     onPositiveBtnClicked: () -> Unit = {},
     negativeBtnText: String? = null,
-    onNegativeBtnClicked: (() -> Unit)? = null,
+    onNegativeBtnClicked: (() -> Unit)? = null
 ) {
     Dialog(
         onDismissRequest = {
@@ -90,7 +90,7 @@ fun GeneralDialog(
 
             onDismissRequest?.invoke()
         },
-        properties = properties,
+        properties = properties
     ) {
         GeneralDialogSkeleton(
             title = title,
@@ -106,7 +106,7 @@ fun GeneralDialog(
                 dialogState.value = false
 
                 onNegativeBtnClicked?.invoke()
-            },
+            }
         )
     }
 }
@@ -133,7 +133,7 @@ fun GeneralDialogSkeleton(
     positiveBtnText: String,
     onPositiveBtnClicked: () -> Unit = {},
     negativeBtnText: String? = null,
-    onNegativeBtnClicked: (() -> Unit)? = null,
+    onNegativeBtnClicked: (() -> Unit)? = null
 ) {
     Box(Modifier.fillMaxSize()) {
         Card(
@@ -142,12 +142,10 @@ fun GeneralDialogSkeleton(
                 .padding(bottom = 16.dp),
             shape = RoundedCornerShape(16.dp)
         ) {
-
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
                 Text(
                     modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
                     text = title,

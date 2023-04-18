@@ -27,10 +27,10 @@
 package org.imaginativeworld.whynotcompose.utils.extensions
 
 import com.squareup.moshi.Moshi
-import org.imaginativeworld.whynotcompose.network.ApiClient
-import timber.log.Timber
 import java.net.URLEncoder
 import java.util.Date
+import org.imaginativeworld.whynotcompose.network.ApiClient
+import timber.log.Timber
 
 object MoshiUtil {
     fun getMoshi(): Moshi {

@@ -42,7 +42,7 @@ fun Modifier.shadow(
     spread: Dp = 8.dp,
     @FloatRange(from = 0.0, to = 1.0) alpha: Float = .25f,
     color: Color = Color.Gray,
-    radius: Dp = 8.dp,
+    radius: Dp = 8.dp
 ): Modifier {
     val spreadLayer = spread.value.toInt()
 
@@ -53,7 +53,7 @@ fun Modifier.shadow(
             .border(
                 width = 1.dp,
                 color = color.copy(alpha / x),
-                shape = RoundedCornerShape(radius + x.dp),
+                shape = RoundedCornerShape(radius + x.dp)
             )
             .padding(1.dp)
     }

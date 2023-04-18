@@ -160,7 +160,7 @@ private fun VideoList(
             VideoItem(
                 video = videos[videoIndex],
                 focusedVideo = (index == 0 && focusIndexOffset <= with(density) { 48.dp.toPx() }) ||
-                        (index == focusIndex + 1 && focusIndexOffset > with(density) { 48.dp.toPx() })
+                    (index == focusIndex + 1 && focusIndexOffset > with(density) { 48.dp.toPx() })
             )
         }
     }

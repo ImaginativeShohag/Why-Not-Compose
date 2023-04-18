@@ -47,7 +47,7 @@ object AppComponent {
     @Composable
     fun Header(
         text: String,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
         Text(
             modifier = modifier
@@ -60,14 +60,14 @@ object AppComponent {
                 .fillMaxWidth(),
             text = text,
             style = MaterialTheme.typography.h1,
-            textAlign = TextAlign.Center,
+            textAlign = TextAlign.Center
         )
     }
 
     @Composable
     fun SubHeader(
         text: String,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
         Text(
             modifier = modifier
@@ -80,13 +80,13 @@ object AppComponent {
                 .fillMaxWidth(),
             text = text,
             style = MaterialTheme.typography.h2,
-            textAlign = TextAlign.Center,
+            textAlign = TextAlign.Center
         )
     }
 
     @Composable
     fun MediumSpacer(
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
         Spacer(
             modifier = modifier
@@ -97,7 +97,7 @@ object AppComponent {
 
     @Composable
     fun BigSpacer(
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
         Spacer(
             modifier = modifier
@@ -109,7 +109,7 @@ object AppComponent {
     @Composable
     fun CustomListItem(
         text: String,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
         Text(
             modifier = modifier
@@ -123,7 +123,7 @@ object AppComponent {
                 .background(MaterialTheme.colors.surface)
                 .padding(16.dp, 8.dp),
             text = text,
-            textAlign = TextAlign.Center,
+            textAlign = TextAlign.Center
         )
     }
 }

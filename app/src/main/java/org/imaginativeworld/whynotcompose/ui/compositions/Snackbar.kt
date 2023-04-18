@@ -51,7 +51,7 @@ fun CustomSnackbarHost(state: SnackbarHostState) {
         CustomSnackbar(
             modifier = Modifier,
             snackbarData = data,
-            backgroundColor = MaterialTheme.colors.onBackground,
+            backgroundColor = MaterialTheme.colors.onBackground
         )
     }
 }
@@ -88,7 +88,7 @@ fun CustomSnackbar(
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = snackbarData.message,
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Center
             )
         },
         action = actionComposable,

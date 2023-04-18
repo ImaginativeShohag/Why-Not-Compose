@@ -78,6 +78,7 @@ Feel free to request features or suggestions for improvements.
 - [ ] Refactor to Gradle Plugins
 - [ ] Add GitHub actions
 - [ ] Add notification permission
+- [ ] Add Splash Screen (Introduced in Android 12)
 
 # Note
 

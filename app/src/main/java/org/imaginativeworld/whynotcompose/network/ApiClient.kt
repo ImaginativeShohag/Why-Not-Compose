@@ -30,15 +30,15 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonReader
 import com.squareup.moshi.JsonWriter
 import com.squareup.moshi.Moshi
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.imaginativeworld.whynotcompose.utils.Constants
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import timber.log.Timber
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class ApiClient {
     companion object {
@@ -69,7 +69,6 @@ class ApiClient {
         @Synchronized
         private fun getRetrofit(): Retrofit {
             return retrofit ?: synchronized(this) {
-
                 Timber.e("getRetrofit(): new generated")
 
                 val moshi = Moshi.Builder()
@@ -90,7 +89,6 @@ class ApiClient {
         @Synchronized
         fun getClient(): ApiInterface {
             return apiInterface ?: synchronized(this) {
-
                 Timber.e("getClient(): new generated")
 
                 apiInterface = getRetrofit().create(ApiInterface::class.java)

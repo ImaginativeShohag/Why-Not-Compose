@@ -24,28 +24,32 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.ui.screens.ui.index
+package org.imaginativeworld.whynotcompose.ui.screens.animation.index
 
-import org.imaginativeworld.whynotcompose.ui.screens.UIsScreen
+import org.imaginativeworld.whynotcompose.ui.screens.AnimationsScreen
 
-data class Ui(
+data class Animation(
     val name: String,
-    val route: UIsScreen,
+    val route: AnimationsScreen
 ) {
     companion object {
-        val uiList = listOf(
-            Ui(
-                name = "Map View",
-                route = UIsScreen.UiMapView,
+        val animationList = listOf(
+            Animation(
+                name = "Animated Text & Bubbles",
+                route = AnimationsScreen.AnimationComposeOne
             ),
-            Ui(
-                name = "OTP Code Verify",
-                route = UIsScreen.UiOtpCodeVerify,
+            Animation(
+                name = "Emudi",
+                route = AnimationsScreen.AnimationEmudi
             ),
-            Ui(
-                name = "Web View",
-                route = UIsScreen.UiWebView,
+            Animation(
+                name = "Running Car",
+                route = AnimationsScreen.AnimationRunningCar
             ),
+            Animation(
+                name = "The Story",
+                route = AnimationsScreen.AnimationTheStory
+            )
         )
     }
 }

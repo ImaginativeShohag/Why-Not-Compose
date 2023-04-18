@@ -61,12 +61,11 @@ fun LoadingContainer(
         enter = fadeIn(),
         exit = fadeOut()
     ) {
-
         Box(
             Modifier
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
-                    indication = null,
+                    indication = null
                 ) {
                     // Nothing. Just to block click from underlying elements.
                 }

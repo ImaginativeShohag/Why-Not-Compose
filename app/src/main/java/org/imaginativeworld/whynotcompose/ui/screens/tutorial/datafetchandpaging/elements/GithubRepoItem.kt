@@ -65,7 +65,7 @@ import org.imaginativeworld.whynotcompose.repositories.MockData
 fun GithubRepoItem(
     modifier: Modifier,
     item: GithubRepo,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -78,20 +78,20 @@ fun GithubRepoItem(
         Column(
             modifier
                 .fillMaxWidth()
-                .padding(8.dp),
+                .padding(8.dp)
         ) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = item.name,
                 fontSize = 16.sp,
-                fontWeight = FontWeight.Medium,
+                fontWeight = FontWeight.Medium
             )
 
             Row(
                 Modifier
                     .padding(top = 4.dp)
                     .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
                     modifier = Modifier
@@ -108,7 +108,7 @@ fun GithubRepoItem(
                     text = item.fullName,
                     fontSize = 14.sp,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
+                    overflow = TextOverflow.Ellipsis
                 )
             }
 
@@ -118,7 +118,7 @@ fun GithubRepoItem(
                         .padding(top = 4.dp)
                         .fillMaxWidth(),
                     text = item.description,
-                    fontSize = 14.sp,
+                    fontSize = 14.sp
                 )
             }
 
@@ -130,19 +130,19 @@ fun GithubRepoItem(
                 Text(
                     modifier = Modifier.weight(1f),
                     text = "⭐ ${item.stargazersCount}",
-                    textAlign = TextAlign.Center,
+                    textAlign = TextAlign.Center
                 )
 
                 Text(
                     modifier = Modifier.weight(1f),
                     text = "\uD83D\uDD76 ${item.watchersCount}",
-                    textAlign = TextAlign.Center,
+                    textAlign = TextAlign.Center
                 )
 
                 Text(
                     modifier = Modifier.weight(1f),
                     text = "\uD83C\uDF74 ${item.forksCount}",
-                    textAlign = TextAlign.Center,
+                    textAlign = TextAlign.Center
                 )
             }
         }
@@ -162,9 +162,13 @@ fun GithubRepoItemPreview() {
                         end = 12.dp,
                         bottom = 4.dp
                     ),
-                    item = if (it % 2 == 0) MockData.dummyGithubRepo else MockData.dummyGithubRepo.copy(
-                        description = null
-                    ),
+                    item = if (it % 2 == 0) {
+                        MockData.dummyGithubRepo
+                    } else {
+                        MockData.dummyGithubRepo.copy(
+                            description = null
+                        )
+                    },
                     onClick = {}
                 )
             }
@@ -185,9 +189,13 @@ fun GithubRepoItemPreviewDark() {
                         end = 12.dp,
                         bottom = 4.dp
                     ),
-                    item = if (it % 2 == 0) MockData.dummyGithubRepo else MockData.dummyGithubRepo.copy(
-                        description = null
-                    ),
+                    item = if (it % 2 == 0) {
+                        MockData.dummyGithubRepo
+                    } else {
+                        MockData.dummyGithubRepo.copy(
+                            description = null
+                        )
+                    },
                     onClick = {}
                 )
             }
@@ -237,7 +245,7 @@ fun LoadingGithubRepoItemPreviewDark() {
 
 @Composable
 fun LoadingGithubRepoItem(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Column(
         modifier
@@ -245,7 +253,7 @@ fun LoadingGithubRepoItem(
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
             .background(MaterialTheme.colors.surface)
-            .padding(8.dp),
+            .padding(8.dp)
     ) {
         Box(
             Modifier
@@ -254,8 +262,8 @@ fun LoadingGithubRepoItem(
                 .height(16.dp)
                 .placeholder(
                     visible = true,
-                    highlight = PlaceholderHighlight.shimmer(),
-                ),
+                    highlight = PlaceholderHighlight.shimmer()
+                )
         )
 
         Row(
@@ -270,8 +278,8 @@ fun LoadingGithubRepoItem(
                     .clip(CircleShape)
                     .placeholder(
                         visible = true,
-                        highlight = PlaceholderHighlight.shimmer(),
-                    ),
+                        highlight = PlaceholderHighlight.shimmer()
+                    )
             )
 
             Box(
@@ -282,8 +290,8 @@ fun LoadingGithubRepoItem(
                     .height(10.dp)
                     .placeholder(
                         visible = true,
-                        highlight = PlaceholderHighlight.shimmer(),
-                    ),
+                        highlight = PlaceholderHighlight.shimmer()
+                    )
             )
         }
 
@@ -295,8 +303,8 @@ fun LoadingGithubRepoItem(
                 .height(10.dp)
                 .placeholder(
                     visible = true,
-                    highlight = PlaceholderHighlight.shimmer(),
-                ),
+                    highlight = PlaceholderHighlight.shimmer()
+                )
         )
 
         Box(
@@ -307,8 +315,8 @@ fun LoadingGithubRepoItem(
                 .height(10.dp)
                 .placeholder(
                     visible = true,
-                    highlight = PlaceholderHighlight.shimmer(),
-                ),
+                    highlight = PlaceholderHighlight.shimmer()
+                )
         )
 
         Box(
@@ -319,8 +327,8 @@ fun LoadingGithubRepoItem(
                 .height(10.dp)
                 .placeholder(
                     visible = true,
-                    highlight = PlaceholderHighlight.shimmer(),
-                ),
+                    highlight = PlaceholderHighlight.shimmer()
+                )
         )
 
         Row(
@@ -341,8 +349,8 @@ fun LoadingGithubRepoItem(
                             .height(16.dp)
                             .placeholder(
                                 visible = true,
-                                highlight = PlaceholderHighlight.shimmer(),
-                            ),
+                                highlight = PlaceholderHighlight.shimmer()
+                            )
                     )
                 }
             }

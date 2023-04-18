@@ -45,7 +45,7 @@ private val DarkColorPalette = darkColors(
     onPrimary = TailwindCSSColor.Gray50,
     onSecondary = TailwindCSSColor.Gray50,
     onBackground = TailwindCSSColor.Gray50,
-    onSurface = TailwindCSSColor.Gray50,
+    onSurface = TailwindCSSColor.Gray50
 )
 
 private val LightColorPalette = lightColors(
@@ -60,7 +60,7 @@ private val LightColorPalette = lightColors(
     onPrimary = TailwindCSSColor.Gray50,
     onSecondary = TailwindCSSColor.Gray50,
     onBackground = TailwindCSSColor.Gray900,
-    onSurface = TailwindCSSColor.Gray900,
+    onSurface = TailwindCSSColor.Gray900
 )
 
 @Composable

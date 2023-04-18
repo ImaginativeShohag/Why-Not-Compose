@@ -38,9 +38,9 @@ import android.os.Build
 import android.util.Patterns
 import androidx.core.app.NotificationCompat
 import com.squareup.moshi.Moshi
+import java.util.Date
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.network.ApiClient
-import java.util.Date
 
 object Utils {
 
@@ -89,7 +89,6 @@ object Utils {
         messageBody: String,
         targetIntent: Intent?
     ) {
-
         val channelId = context.getString(R.string.default_notification_channel_id)
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(context, channelId)
@@ -101,7 +100,9 @@ object Utils {
 
         targetIntent?.also {
             val pendingIntent = PendingIntent.getActivity(
-                context, 0 /* Request code */, targetIntent,
+                context,
+                0 /* Request code */,
+                targetIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT
             )
 

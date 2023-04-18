@@ -33,8 +33,11 @@ subprojects {
             targetExclude("$buildDir/**/*.kt")
             targetExclude("bin/**/*.kt")
 
-            ktlint("0.48.2").userData(
-                mapOf("disabled_rules" to "filename")
+            ktlint("0.48.2").editorConfigOverride(
+                mapOf(
+                    "ktlint_code_style" to "android",
+                    "max_line_length" to "off"
+                )
             )
             licenseHeaderFile(rootProject.file("spotless/copyright.kt"))
         }

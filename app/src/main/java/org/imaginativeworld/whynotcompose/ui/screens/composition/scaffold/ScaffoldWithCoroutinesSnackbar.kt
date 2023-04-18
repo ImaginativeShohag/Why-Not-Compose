@@ -92,6 +92,7 @@ fun ScaffoldWithCoroutinesSnackbarScreenSkeleton() {
                 SnackbarResult.ActionPerformed -> {
                     /* action has been performed */
                 }
+
                 SnackbarResult.Dismissed -> {
                     /* dismissed, no action needed */
                 }

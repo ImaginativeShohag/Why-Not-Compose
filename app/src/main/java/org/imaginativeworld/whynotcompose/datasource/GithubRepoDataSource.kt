@@ -36,19 +36,18 @@ import retrofit2.HttpException
 
 class GithubRepoDataSource(
     private val repository: AppRepository,
-    private val query: String,
+    private val query: String
 ) : PagingSource<Int, GithubRepo>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, GithubRepo> {
         val pagePosition = params.key ?: 1
 
         return try {
-
             val response = repository.searchGithubRepo(
                 page = pagePosition,
                 sort = "stars",
                 order = "desc",
-                query = query,
+                query = query
             )
 
             val result = response.items

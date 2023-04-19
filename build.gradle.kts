@@ -3,29 +3,25 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        gradlePluginPortal()
         maven(url = "https://jitpack.io")
-    }
-    dependencies {
-        classpath(Libs.androidGradlePlugin)
-
-        classpath(Libs.Google.service)
-
-        classpath(Libs.Kotlin.gradlePlugin)
-
-        classpath(Libs.OneSignal.gradlePlugin)
-
-        classpath(Libs.Hilt.androidGradlePlugin)
-
-        classpath(Libs.secretsGradlePlugin)
     }
 }
 
 plugins {
-    id("com.diffplug.spotless") version "6.18.0"
+    id(Libs.Android.applicaiton) version Libs.Gradle.version apply false
+    id(Libs.Android.library) version Libs.Gradle.version apply false
+    kotlin("android") version Libs.Kotlin.version apply false
+    id(Libs.Google.Firebase.gradlePlugin) version Libs.Google.Firebase.gradlePluginVersion apply false
+    id(Libs.Google.Services.gradlePlugin) version Libs.Google.Services.version apply false
+    id(Libs.Google.Maps.secretsGradlePlugin) version Libs.Google.Maps.secretsGradlePluginVersion apply false
+    id(Libs.Google.Hilt.gradlePlugin) version Libs.Google.Hilt.version apply false
+
+    id(Libs.DiffPlug.spotless) version Libs.DiffPlug.version
 }
 
 subprojects {
-    apply(plugin = "com.diffplug.spotless")
+    apply(plugin = Libs.DiffPlug.spotless)
 
     spotless {
         kotlin {

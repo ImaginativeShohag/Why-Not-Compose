@@ -1,5 +1,5 @@
 plugins {
-    id("com.android.library")
+    id(Libs.Android.library)
     kotlin("android")
     kotlin("kapt")
 }
@@ -10,7 +10,6 @@ android {
 
     defaultConfig {
         minSdk = BuildConfigConst.minSdk
-        targetSdk = BuildConfigConst.targetSdk
     }
 
     compileOptions {

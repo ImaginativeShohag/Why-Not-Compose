@@ -1,13 +1,14 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("com.android.application")
+    id(Libs.Android.applicaiton)
     kotlin("android")
     kotlin("kapt")
-    id("kotlin-parcelize")
-    id("dagger.hilt.android.plugin")
-    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
-    id("com.google.gms.google-services")
+    id(Libs.Kotlin.percelizeGradlePlugin)
+    id(Libs.Google.Hilt.gradlePlugin)
+    id(Libs.Google.Maps.secretsGradlePlugin)
+    id(Libs.Google.Services.gradlePlugin)
+    id(Libs.Google.Firebase.gradlePlugin)
 }
 
 android {
@@ -206,9 +207,9 @@ dependencies {
     implementation(Libs.timber)
 
     // Hilt
-    implementation(Libs.Hilt.core)
-    kapt(Libs.Hilt.compiler)
-    implementation(Libs.Hilt.navigationCompose)
+    implementation(Libs.Google.Hilt.core)
+    kapt(Libs.Google.Hilt.compiler)
+    implementation(Libs.AndroidX.Hilt.navigationCompose)
 
     // No Internet Library
     implementation(Libs.oopsNoInternet)

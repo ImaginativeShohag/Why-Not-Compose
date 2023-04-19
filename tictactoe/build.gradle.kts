@@ -1,5 +1,5 @@
 plugins {
-    id("com.android.library")
+    id(Libs.Android.library)
     kotlin("android")
     kotlin("kapt")
 }
@@ -10,7 +10,6 @@ android {
 
     defaultConfig {
         minSdk = BuildConfigConst.minSdk
-        targetSdk = BuildConfigConst.targetSdk
     }
 
     compileOptions {
@@ -105,7 +104,7 @@ dependencies {
     implementation(Libs.timber)
 
     // Hilt
-    implementation(Libs.Hilt.core)
-    kapt(Libs.Hilt.compiler)
-    implementation(Libs.Hilt.navigationCompose)
+    implementation(Libs.Google.Hilt.core)
+    kapt(Libs.Google.Hilt.compiler)
+    implementation(Libs.AndroidX.Hilt.navigationCompose)
 }

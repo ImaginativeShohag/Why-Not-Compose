@@ -1,9 +1,4 @@
 object Libs {
-    const val androidGradlePlugin = "com.android.tools.build:gradle:8.0.0"
-
-    const val secretsGradlePlugin =
-        "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1"
-
     const val jdkDesugar = "com.android.tools:desugar_jdk_libs:1.1.5"
 
     const val junit = "junit:junit:4.13.2"
@@ -16,11 +11,26 @@ object Libs {
 
     const val oopsNoInternet = "org.imaginativeworld.oopsnointernet:oopsnointernet:2.0.0"
 
+    object Android {
+        const val applicaiton = "com.android.application"
+        const val library = "com.android.library"
+    }
+
     object Coil {
         private const val version = "2.3.0"
 
         const val compose = "io.coil-kt:coil-compose:$version"
         const val svg = "io.coil-kt:coil-svg:$version"
+    }
+
+    object DiffPlug {
+        const val version = "6.18.0"
+
+        const val spotless = "com.diffplug.spotless"
+    }
+
+    object Gradle {
+        const val version = "8.0.0"
     }
 
     object Yalantis {
@@ -39,9 +49,21 @@ object Libs {
         const val exoplayer = "com.google.android.exoplayer:exoplayer:2.18.5"
 
         object Firebase {
-            const val bom = "com.google.firebase:firebase-bom:31.5.0"
+            const val gradlePluginVersion = "2.9.4"
 
+            const val bom = "com.google.firebase:firebase-bom:31.5.0"
             const val analytics = "com.google.firebase:firebase-analytics-ktx"
+
+            const val gradlePlugin = "com.google.firebase.crashlytics"
+        }
+
+        object Hilt {
+            const val version = "2.45"
+
+            const val core = "com.google.dagger:hilt-android:$version"
+            const val compiler = "com.google.dagger:hilt-compiler:$version"
+
+            const val gradlePlugin = "com.google.dagger.hilt.android"
         }
 
         object PlayService {
@@ -50,10 +72,19 @@ object Libs {
 
         object Maps {
             private const val version = "3.4.0"
+            const val secretsGradlePluginVersion = "2.0.1"
 
             const val core = "com.google.maps.android:maps-ktx:$version"
             const val utils = "com.google.maps.android:maps-utils-ktx:$version"
             const val compose = "com.google.maps.android:maps-compose:2.11.4"
+            const val secretsGradlePlugin =
+                "com.google.android.libraries.mapsplatform.secrets-gradle-plugin"
+        }
+
+        object Services {
+            const val version = "4.3.15"
+
+            const val gradlePlugin = "com.google.gms.google-services"
         }
     }
 
@@ -70,11 +101,13 @@ object Libs {
     }
 
     object Kotlin {
-        private const val version = "1.8.20"
+        const val version = "1.8.20"
 
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$version"
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
         const val extensions = "org.jetbrains.kotlin:kotlin-android-extensions:$version"
+
+        const val percelizeGradlePlugin = "kotlin-parcelize"
     }
 
     object Coroutines {
@@ -83,16 +116,6 @@ object Libs {
         const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
         const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
         const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
-    }
-
-    object Hilt {
-        private const val version = "2.45"
-
-        const val androidGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:$version"
-        const val core = "com.google.dagger:hilt-android:$version"
-        const val compiler = "com.google.dagger:hilt-compiler:$version"
-
-        const val navigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0"
     }
 
     object AndroidX {
@@ -149,6 +172,10 @@ object Libs {
             const val compose = "androidx.constraintlayout:constraintlayout-compose:$version"
         }
 
+        object Hilt {
+            const val navigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0"
+        }
+
         object Lifecycle {
             private const val version = "2.6.1"
 
@@ -201,8 +228,6 @@ object Libs {
     }
 
     object OneSignal {
-        const val gradlePlugin = "gradle.plugin.com.onesignal:onesignal-gradle-plugin:0.14.0"
-
         const val core = "com.onesignal:OneSignal:4.8.5"
     }
 

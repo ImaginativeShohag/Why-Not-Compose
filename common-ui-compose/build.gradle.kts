@@ -54,6 +54,8 @@ dependencies {
     // ----------------------------------------------------------------
     // Compose
     // ----------------------------------------------------------------
+    implementation(platform(Libs.AndroidX.Compose.bom))
+
     implementation(Libs.AndroidX.Compose.compiler)
     implementation(Libs.AndroidX.Compose.ui)
     implementation(Libs.AndroidX.Compose.uiUtil)

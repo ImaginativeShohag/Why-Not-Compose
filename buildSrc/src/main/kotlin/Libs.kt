@@ -46,10 +46,10 @@ object Libs {
     object Google {
         const val service = "com.google.gms:google-services:4.3.15"
 
-        const val exoplayer = "com.google.android.exoplayer:exoplayer:2.18.5"
+        const val exoplayer = "com.google.android.exoplayer:exoplayer:2.18.6"
 
         object Firebase {
-            const val gradlePluginVersion = "2.9.4"
+            const val gradlePluginVersion = "2.9.5"
 
             const val bom = "com.google.firebase:firebase-bom:31.5.0"
             const val analytics = "com.google.firebase:firebase-analytics-ktx"
@@ -124,46 +124,47 @@ object Libs {
         const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
         object Activity {
-            const val activityCompose = "androidx.activity:activity-compose:1.7.0"
+            const val activityCompose = "androidx.activity:activity-compose:1.7.1"
         }
 
         object Compose {
-            const val version = "1.4.1"
-            const val compilerVersion = "1.4.5"
-            const val material3version = "1.0.1"
-            const val runtimeTracingVersion = "1.0.0-alpha01"
+            private const val bomVersion = "2023.03.00"
+            const val compilerVersion = "1.4.6"
+            private const val runtimeTracingVersion = "1.0.0-alpha01"
+
+            const val bom = "androidx.compose:compose-bom:$bomVersion"
 
             const val compiler = "androidx.compose.compiler:compiler:$compilerVersion"
 
-            const val foundation = "androidx.compose.foundation:foundation:$version"
-            const val layout = "androidx.compose.foundation:foundation-layout:$version"
+            const val foundation = "androidx.compose.foundation:foundation"
+            const val layout = "androidx.compose.foundation:foundation-layout"
 
-            const val material3 = "androidx.compose.material3:material3:$material3version"
+            const val material3 = "androidx.compose.material3:material3"
             const val material3WindowSizeClass =
-                "androidx.compose.material3:material3-window-size-class:$material3version"
+                "androidx.compose.material3:material3-window-size-class"
 
-            const val material = "androidx.compose.material:material:$version"
-            const val materialIconsCore = "androidx.compose.material:material-icons-core:$version"
+            const val material = "androidx.compose.material:material"
+            const val materialIconsCore = "androidx.compose.material:material-icons-core"
             const val materialIconsExtended =
-                "androidx.compose.material:material-icons-extended:$version"
+                "androidx.compose.material:material-icons-extended"
 
-            const val runtime = "androidx.compose.runtime:runtime:$version"
-            const val runtimeLivedata = "androidx.compose.runtime:runtime-livedata:$version"
+            const val runtime = "androidx.compose.runtime:runtime"
+            const val runtimeLivedata = "androidx.compose.runtime:runtime-livedata"
             const val runtimeTracing =
                 "androidx.compose.runtime:runtime-tracing:$runtimeTracingVersion"
 
-            const val ui = "androidx.compose.ui:ui:$version"
-            const val uiUtil = "androidx.compose.ui:ui-util:$version"
+            const val ui = "androidx.compose.ui:ui"
+            const val uiUtil = "androidx.compose.ui:ui-util"
 
-            const val tooling = "androidx.compose.ui:ui-tooling:$version"
-            const val toolingPreview = "androidx.compose.ui:ui-tooling-preview:$version"
+            const val tooling = "androidx.compose.ui:ui-tooling"
+            const val toolingPreview = "androidx.compose.ui:ui-tooling-preview"
 
-            const val viewBinding = "androidx.compose.ui:ui-viewbinding:$version"
-            const val animation = "androidx.compose.animation:animation:$version"
+            const val viewBinding = "androidx.compose.ui:ui-viewbinding"
+            const val animation = "androidx.compose.animation:animation"
 
-            const val test = "androidx.compose.ui:ui-test:$version"
-            const val uiTest = "androidx.compose.ui:ui-test-junit4:$version"
-            const val uiTestManifest = "androidx.compose.ui:ui-test-manifest:$version"
+            const val test = "androidx.compose.ui:ui-test"
+            const val uiTest = "androidx.compose.ui:ui-test-junit4"
+            const val uiTestManifest = "androidx.compose.ui:ui-test-manifest"
         }
 
         object ConstraintLayout {

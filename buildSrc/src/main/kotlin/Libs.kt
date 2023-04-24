@@ -91,7 +91,6 @@ object Libs {
     object Accompanist {
         private const val version = "0.30.1"
 
-        const val insets = "com.google.accompanist:accompanist-insets:$version"
         const val systemuicontroller =
             "com.google.accompanist:accompanist-systemuicontroller:$version"
         const val flowlayout = "com.google.accompanist:accompanist-flowlayout:$version"

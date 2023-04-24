@@ -71,7 +71,6 @@ dependencies {
     implementation(Libs.AndroidX.Paging.compose)
 
     // Accompanist
-    implementation(Libs.Accompanist.insets)
     implementation(Libs.Accompanist.systemuicontroller)
     implementation(Libs.Accompanist.flowlayout)
     implementation(Libs.Accompanist.pager)

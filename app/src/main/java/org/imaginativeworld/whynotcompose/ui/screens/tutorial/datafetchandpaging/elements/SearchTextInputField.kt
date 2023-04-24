@@ -32,8 +32,10 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.relocation.bringIntoViewRequester
@@ -65,7 +67,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.insets.LocalWindowInsets
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
@@ -95,10 +96,10 @@ fun SearchTextInputField(
     val interactionSource = remember { MutableInteractionSource() }
     val interactionSourceState = interactionSource.collectIsFocusedAsState()
     val scope = rememberCoroutineScope()
-    val ime = LocalWindowInsets.current.ime
+    val isImeVisible = WindowInsets.isImeVisible
 
-    LaunchedEffect(ime.isVisible, interactionSourceState.value) {
-        if (ime.isVisible && interactionSourceState.value) {
+    LaunchedEffect(isImeVisible, interactionSourceState.value) {
+        if (isImeVisible && interactionSourceState.value) {
             scope.launch {
                 delay(300)
                 bringIntoViewRequester.bringIntoView()

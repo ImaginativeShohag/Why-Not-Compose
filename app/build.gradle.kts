@@ -57,20 +57,19 @@ android {
     kotlinOptions {
         jvmTarget = "17"
 
-        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
-
-        // Enable experimental coroutines APIs, including Flow
-        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.Experimental"
+        freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.RequiresOptIn"
 
         // Enable experimental compose APIs
         freeCompilerArgs =
-            freeCompilerArgs + "-Xopt-in=androidx.compose.material.ExperimentalMaterialApi"
+            freeCompilerArgs + "-opt-in=androidx.compose.material.ExperimentalMaterialApi"
         freeCompilerArgs =
-            freeCompilerArgs + "-Xopt-in=androidx.compose.animation.ExperimentalAnimationApi"
+            freeCompilerArgs + "-opt-in=androidx.compose.animation.ExperimentalAnimationApi"
         freeCompilerArgs =
-            freeCompilerArgs + "-Xopt-in=androidx.compose.ui.ExperimentalComposeUiApi"
+            freeCompilerArgs + "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi"
         freeCompilerArgs =
-            freeCompilerArgs + "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi"
+            freeCompilerArgs + "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi"
+        freeCompilerArgs =
+            freeCompilerArgs + "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi"
     }
 
     buildFeatures {
@@ -160,7 +159,6 @@ dependencies {
     implementation(Libs.AndroidX.Paging.compose)
 
     // Accompanist
-    implementation(Libs.Accompanist.insets)
     implementation(Libs.Accompanist.systemuicontroller)
     implementation(Libs.Accompanist.flowlayout)
     implementation(Libs.Accompanist.pager)

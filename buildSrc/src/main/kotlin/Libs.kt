@@ -119,7 +119,7 @@ object Libs {
 
     object AndroidX {
         const val appcompat = "androidx.appcompat:appcompat:1.6.1"
-        const val coreKtx = "androidx.core:core-ktx:1.9.0"
+        const val coreKtx = "androidx.core:core-ktx:1.10.0"
         const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
         object Activity {
@@ -127,7 +127,7 @@ object Libs {
         }
 
         object Compose {
-            private const val bomVersion = "2023.03.00"
+            private const val bomVersion = "2023.04.01"
             const val compilerVersion = "1.4.6"
             private const val runtimeTracingVersion = "1.0.0-alpha01"
 

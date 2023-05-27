@@ -103,6 +103,7 @@ dependencies {
     implementation(project(":common-ui-compose"))
     implementation(project(":tictactoe"))
     implementation(project(":exoplayer"))
+    implementation(project(":cms"))
 
     implementation(Libs.Kotlin.stdlib)
     implementation(Libs.AndroidX.coreKtx)
@@ -115,7 +116,7 @@ dependencies {
     testImplementation(Libs.junit)
     androidTestImplementation(Libs.AndroidX.Test.Ext.junit)
     androidTestImplementation(Libs.AndroidX.Test.espressoCore)
-    androidTestImplementation(Libs.AndroidX.Compose.uiTest)
+    // androidTestImplementation(Libs.AndroidX.Compose.uiTest)
     debugImplementation(Libs.AndroidX.Compose.uiTestManifest)
 
     // ----------------------------------------------------------------

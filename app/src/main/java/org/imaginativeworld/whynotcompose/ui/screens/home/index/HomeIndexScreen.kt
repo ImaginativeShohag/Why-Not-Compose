@@ -26,8 +26,14 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.home.index
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -56,6 +62,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentColor
@@ -63,8 +70,11 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -79,12 +89,16 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
+import androidx.core.content.ContextCompat
 import org.imaginativeworld.whynotcompose.BuildConfig
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.base.extensions.openUrl
 import org.imaginativeworld.whynotcompose.base.extensions.shadow
+import org.imaginativeworld.whynotcompose.base.extensions.toast
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
+import org.imaginativeworld.whynotcompose.ui.screens.MainActivity
 import org.imaginativeworld.whynotcompose.ui.screens.Screen
 
 private val menuItems = listOf(
@@ -124,6 +138,49 @@ fun HomeIndexScreen(
 
     val isDark = !MaterialTheme.colors.isLight
     val (darkModeState, onDarkModeStateChange) = remember { mutableStateOf(isDark) }
+    var showNotificationPermissionRationale by remember { mutableStateOf(false) }
+
+    val requestNotificationPermission =
+        rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { permissionGranted ->
+            showNotificationPermissionRationale = false
+
+            if (!permissionGranted) {
+                context.toast("Notification permission is denied. Some feature will not work.")
+            }
+        }
+
+    val askForNotificationPermission: () -> Unit = {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_DENIED
+        ) {
+            when {
+                ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) == PackageManager.PERMISSION_GRANTED -> {
+                    // no-op
+                }
+
+                shouldShowRequestPermissionRationale(
+                    context as MainActivity,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) -> {
+                    showNotificationPermissionRationale = true
+                }
+
+                else -> {
+                    requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
+            }
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        askForNotificationPermission()
+    }
 
     Scaffold(
         Modifier
@@ -169,12 +226,44 @@ fun HomeIndexScreen(
                                         start = 16.dp,
                                         top = 4.dp,
                                         end = 16.dp,
-                                        bottom = 32.dp
+                                        bottom = 16.dp
                                     ),
                                 text = "Version ${BuildConfig.VERSION_NAME}",
                                 textAlign = TextAlign.Center,
                                 fontSize = 12.sp
                             )
+
+                            if (showNotificationPermissionRationale) {
+                                Card(
+                                    Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 8.dp)
+                                        .padding(bottom = 16.dp),
+                                    border = BorderStroke(
+                                        width = 1.dp,
+                                        TailwindCSSColor.Yellow500.copy(alpha = 1f)
+                                    )
+                                ) {
+                                    Row(
+                                        Modifier.padding(8.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Text(
+                                            modifier = Modifier
+                                                .padding(8.dp)
+                                                .weight(1f),
+                                            text = "Notification permission is necessary for some sample. Please allow.",
+                                            fontSize = 14.sp
+                                        )
+
+                                        Button(onClick = {
+                                            requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+                                        }) {
+                                            Text("Allow")
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
 

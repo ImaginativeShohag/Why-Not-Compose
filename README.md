@@ -80,6 +80,8 @@ Feel free to request features or suggestions for improvements.
 - [ ] Add notification permission
 - [ ] Add Splash Screen (Introduced in Android 12)
 - [ ] Update to new storage permission
+- [ ] Migrate to Material 3
+- [ ] Create color ready for dark and light mode
 
 # Note
 

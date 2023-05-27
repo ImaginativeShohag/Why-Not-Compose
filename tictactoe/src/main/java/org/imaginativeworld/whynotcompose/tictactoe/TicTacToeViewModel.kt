@@ -79,8 +79,8 @@ class TicTacToeViewModel @Inject constructor(
                 _totalNeurons,
                 _winPosition
             ) { showLoading, showMessage, showToast,
-                    paused, userWinCount, aiWinCount,
-                    currentPlayingMoves, totalNeurons, winPosition ->
+                paused, userWinCount, aiWinCount,
+                currentPlayingMoves, totalNeurons, winPosition ->
                 UiState(
                     loading = showLoading,
                     message = showMessage,

@@ -24,13 +24,13 @@ object Libs {
     }
 
     object DiffPlug {
-        const val version = "6.18.0"
+        const val version = "6.19.0"
 
         const val spotless = "com.diffplug.spotless"
     }
 
     object Gradle {
-        const val version = "8.0.0"
+        const val version = "8.0.2"
     }
 
     object Yalantis {

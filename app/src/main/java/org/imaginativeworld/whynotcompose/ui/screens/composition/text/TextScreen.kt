@@ -270,9 +270,9 @@ fun TextScreenSkeleton() {
                             end = offset
                         )
                             .firstOrNull()?.let { annotation ->
-                            // If yes, we log its value
-                            context.toast("Clicked URL: " + annotation.item)
-                        }
+                                // If yes, we log its value
+                                context.toast("Clicked URL: " + annotation.item)
+                            }
                     }
                 )
             }

@@ -108,4 +108,20 @@ dependencies {
     implementation(Libs.Google.Hilt.core)
     kapt(Libs.Google.Hilt.compiler)
     implementation(Libs.AndroidX.Hilt.navigationCompose)
+
+    // Retrofit
+    implementation(Libs.Square.Retrofit.core)
+    implementation(Libs.Square.okhttpLoggingInterceptor)
+
+    // Moshi
+    implementation(Libs.Square.Retrofit.converterMoshi)
+    implementation(Libs.Square.Moshi.core)
+    kapt(Libs.Square.Moshi.codegen)
+
+    // Room Persistence Library
+    implementation(Libs.AndroidX.Room.runtime)
+    kapt(Libs.AndroidX.Room.compiler)
+
+    // Room: Kotlin Extensions and Coroutines support for Room
+    implementation(Libs.AndroidX.Room.ktx)
 }

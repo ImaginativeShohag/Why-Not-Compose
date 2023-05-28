@@ -38,7 +38,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import org.imaginativeworld.whynotcompose.utils.RealPathUtil
+import org.imaginativeworld.whynotcompose.base.utils.RealPathUtil
 
 @HiltViewModel
 class SelectImageAndCropViewModel @Inject constructor() : ViewModel() {

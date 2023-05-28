@@ -24,7 +24,7 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.utils
+package org.imaginativeworld.whynotcompose.base.utils
 
 import android.content.ContentUris
 import android.content.Context

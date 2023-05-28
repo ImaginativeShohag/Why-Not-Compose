@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id(Libs.Android.applicaiton)
+    id(Libs.Android.application)
     kotlin("android")
     kotlin("kapt")
     id(Libs.Kotlin.percelizeGradlePlugin)

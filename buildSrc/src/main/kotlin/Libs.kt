@@ -12,7 +12,7 @@ object Libs {
     const val oopsNoInternet = "org.imaginativeworld.oopsnointernet:oopsnointernet:2.0.0"
 
     object Android {
-        const val applicaiton = "com.android.application"
+        const val application = "com.android.application"
         const val library = "com.android.library"
     }
 

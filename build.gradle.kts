@@ -9,7 +9,7 @@ buildscript {
 }
 
 plugins {
-    id(Libs.Android.applicaiton) version Libs.Gradle.version apply false
+    id(Libs.Android.application) version Libs.Gradle.version apply false
     id(Libs.Android.library) version Libs.Gradle.version apply false
     kotlin("android") version Libs.Kotlin.version apply false
     id(Libs.Google.Firebase.gradlePlugin) version Libs.Google.Firebase.gradlePluginVersion apply false

@@ -24,29 +24,24 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.models.github
+package org.imaginativeworld.whynotcompose.base.utils
 
-import androidx.annotation.Keep
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+object Constants {
+    const val APPLICATION_ID = "org.imaginativeworld.whynotcompose"
 
-@Keep
-@JsonClass(generateAdapter = true)
-data class GithubRepo(
-    @Json(name = "id")
-    val id: Int,
-    @Json(name = "name")
-    val name: String,
-    @Json(name = "full_name")
-    val fullName: String,
-    @Json(name = "owner")
-    val owner: Owner,
-    @Json(name = "description")
-    val description: String?,
-    @Json(name = "stargazers_count")
-    val stargazersCount: Int,
-    @Json(name = "watchers_count")
-    val watchersCount: Int,
-    @Json(name = "forks_count")
-    val forksCount: Int
-)
+    /**
+     * Server endpoint without end slash.
+     */
+    const val SERVER_ENDPOINT = "https://imaginativeworld.org"
+
+    /**
+     * For MyNotificationOpenedHandler
+     */
+    const val INTENT_EXTRA_TARGET_KEY = "target"
+    const val INTENT_EXTRA_TARGET_VAL_NOTIFICATIONS = "notifications"
+
+    /**
+     * For Broadcast
+     */
+    const val BROADCAST_ACTION_NOTIFICATIONS = "$APPLICATION_ID.notifications"
+}

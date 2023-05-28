@@ -26,10 +26,10 @@
 
 package org.imaginativeworld.whynotcompose.repositories
 
+import org.imaginativeworld.whynotcompose.base.models.User
+import org.imaginativeworld.whynotcompose.base.models.github.GithubRepo
+import org.imaginativeworld.whynotcompose.base.models.github.Owner
 import org.imaginativeworld.whynotcompose.models.ListItem
-import org.imaginativeworld.whynotcompose.models.User
-import org.imaginativeworld.whynotcompose.models.github.GithubRepo
-import org.imaginativeworld.whynotcompose.models.github.Owner
 
 object MockData {
     val dummyUser = User(

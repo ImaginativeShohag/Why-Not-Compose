@@ -24,24 +24,8 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.utils
+package org.imaginativeworld.whynotcompose.base.network
 
-import org.imaginativeworld.whynotcompose.BuildConfig
+import java.io.IOException
 
-object Constants {
-    /**
-     * Server endpoint without end slash.
-     */
-    const val SERVER_ENDPOINT = "https://gorest.co.in/public-api"
-
-    /**
-     * For MyNotificationOpenedHandler
-     */
-    const val INTENT_EXTRA_TARGET_KEY = "target"
-    const val INTENT_EXTRA_TARGET_VAL_NOTIFICATIONS = "notifications"
-
-    /**
-     * For Broadcast
-     */
-    const val BROADCAST_ACTION_NOTIFICATIONS = BuildConfig.APPLICATION_ID + ".notifications"
-}
+class ApiException(message: String) : IOException(message)

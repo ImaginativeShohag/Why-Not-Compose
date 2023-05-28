@@ -29,8 +29,8 @@ package org.imaginativeworld.whynotcompose.datasource
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import okio.IOException
-import org.imaginativeworld.whynotcompose.models.github.GithubRepo
-import org.imaginativeworld.whynotcompose.network.ApiException
+import org.imaginativeworld.whynotcompose.base.models.github.GithubRepo
+import org.imaginativeworld.whynotcompose.base.network.ApiException
 import org.imaginativeworld.whynotcompose.repositories.AppRepository
 import retrofit2.HttpException
 

@@ -24,12 +24,12 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.network
+package org.imaginativeworld.whynotcompose.base.network
 
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.imaginativeworld.whynotcompose.utils.Constants
+import org.imaginativeworld.whynotcompose.base.utils.Constants
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 

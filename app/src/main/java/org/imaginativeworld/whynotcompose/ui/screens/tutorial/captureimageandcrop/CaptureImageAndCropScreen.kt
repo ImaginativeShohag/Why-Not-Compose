@@ -60,12 +60,12 @@ import androidx.compose.ui.unit.dp
 import java.io.File
 import java.util.Date
 import org.imaginativeworld.whynotcompose.R
+import org.imaginativeworld.whynotcompose.base.extensions.createImageFile
 import org.imaginativeworld.whynotcompose.base.extensions.toast
 import org.imaginativeworld.whynotcompose.common.compose.composeutils.rememberImagePainter
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.utils.SquireCropImage
-import org.imaginativeworld.whynotcompose.utils.extensions.createImageFile
 import org.imaginativeworld.whynotcompose.utils.extensions.getUriForFile
 
 @Composable

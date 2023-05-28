@@ -24,7 +24,7 @@
  * Source: https://github.com/ImaginativeShohag/Simple-MVVM
  */
 
-package org.imaginativeworld.whynotcompose.network.jsonadapter
+package org.imaginativeworld.whynotcompose.base.network.jsonadapter
 
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonReader

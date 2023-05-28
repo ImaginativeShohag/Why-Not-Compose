@@ -24,8 +24,17 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.network
+package org.imaginativeworld.whynotcompose.base.models
 
-import java.io.IOException
+import androidx.annotation.Keep
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-class ApiException(message: String) : IOException(message)
+@Keep
+@JsonClass(generateAdapter = true)
+data class User(
+    @Json(name = "id")
+    val id: Int,
+    @Json(name = "name")
+    val name: String
+)

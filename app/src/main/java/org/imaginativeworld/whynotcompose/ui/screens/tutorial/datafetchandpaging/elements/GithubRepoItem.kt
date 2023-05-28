@@ -56,9 +56,9 @@ import androidx.compose.ui.unit.sp
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.material.shimmer
+import org.imaginativeworld.whynotcompose.base.models.github.GithubRepo
 import org.imaginativeworld.whynotcompose.common.compose.composeutils.rememberImagePainter
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
-import org.imaginativeworld.whynotcompose.models.github.GithubRepo
 import org.imaginativeworld.whynotcompose.repositories.MockData
 
 @Composable
@@ -117,7 +117,7 @@ fun GithubRepoItem(
                     modifier = Modifier
                         .padding(top = 4.dp)
                         .fillMaxWidth(),
-                    text = item.description,
+                    text = item.description ?: "",
                     fontSize = 14.sp
                 )
             }

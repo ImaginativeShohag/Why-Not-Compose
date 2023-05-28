@@ -60,9 +60,9 @@ import androidx.compose.ui.unit.dp
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.onesignal.OneSignal
 import org.imaginativeworld.whynotcompose.base.extensions.toast
+import org.imaginativeworld.whynotcompose.base.utils.Constants
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
-import org.imaginativeworld.whynotcompose.utils.Constants
 import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber

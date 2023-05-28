@@ -24,21 +24,24 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.models.github
+package org.imaginativeworld.whynotcompose.base.network.api
 
-import androidx.annotation.Keep
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import org.imaginativeworld.whynotcompose.base.models.github.GithubRepoResponse
+import retrofit2.Response
+import retrofit2.http.GET
+import retrofit2.http.Query
 
-@Keep
-@JsonClass(generateAdapter = true)
-data class GithubRepoResponse(
-    @Json(name = "total_count")
-    val totalCount: Int?,
-    @Json(name = "incomplete_results")
-    val incompleteResults: Boolean?,
-    @Json(name = "items")
-    val items: List<GithubRepo>?,
-    @Json(name = "message")
-    val message: String?
-)
+interface GithubApiInterface {
+    // ----------------------------------------------------------------
+    // Search Github Repositories
+    // Help: https://docs.github.com/en/rest/reference/search#search-repositories
+    // ----------------------------------------------------------------
+
+    @GET("https://api.github.com/search/repositories")
+    suspend fun searchGithubRepo(
+        @Query("page") page: Int,
+        @Query("sort") sort: String,
+        @Query("order") order: String,
+        @Query("q") query: String
+    ): Response<GithubRepoResponse>
+}

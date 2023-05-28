@@ -31,8 +31,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.imaginativeworld.whynotcompose.network.SafeApiRequest
-import org.imaginativeworld.whynotcompose.network.api.GithubApiInterface
+import org.imaginativeworld.whynotcompose.base.network.SafeApiRequest
+import org.imaginativeworld.whynotcompose.base.network.api.GithubApiInterface
 
 class AppRepository @Inject constructor(
     @ApplicationContext private val context: Context,

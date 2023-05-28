@@ -64,6 +64,7 @@ import kotlin.math.min
 import kotlin.random.Random
 import kotlinx.coroutines.delay
 import org.imaginativeworld.whynotcompose.R
+import org.imaginativeworld.whynotcompose.base.R as BaseR
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.ui.screens.animation.composeone.dotBackground
 
@@ -198,11 +199,11 @@ fun SplashScreen(
                         scaleY = animScale
                     },
                 painter = painterResource(id = R.drawable.ic_jetpack_compose_logo),
-                contentDescription = stringResource(id = R.string.app_name)
+                contentDescription = stringResource(id = BaseR.string.app_name)
             )
 
             AnimatedText(
-                text = stringResource(id = R.string.app_name),
+                text = stringResource(id = BaseR.string.app_name),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, top = 16.dp, end = 16.dp)

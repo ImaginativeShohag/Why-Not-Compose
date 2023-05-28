@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright 2021 Md. Mahmudul Hasan Shohag
+  ~ Copyright 2023 Md. Mahmudul Hasan Shohag
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -28,6 +28,6 @@
     <string name="app_name">Why Not Compose!</string>
 
     <!-- Start Configuration Strings -->
-    <string name="default_notification_channel_id">default_notification_channel</string>
+    <string name="default_notification_channel_id" translatable="false">default_notification_channel</string>
     <!-- End Configuration Strings -->
 </resources>

@@ -38,6 +38,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import org.imaginativeworld.whynotcompose.base.extensions.getJsonFromObj
+import org.imaginativeworld.whynotcompose.base.extensions.getObjFromJson
 import org.imaginativeworld.whynotcompose.exoplayer.ExoPlayerScreen
 import org.imaginativeworld.whynotcompose.models.MapPlace
 import org.imaginativeworld.whynotcompose.tictactoe.TicTacToeScreen
@@ -106,8 +108,6 @@ import org.imaginativeworld.whynotcompose.ui.screens.ui.otpcodeverify.OtpCodeVer
 import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.WebViewScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.WebViewTarget
 import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.WebViewViewModel
-import org.imaginativeworld.whynotcompose.utils.extensions.getJsonFromObj
-import org.imaginativeworld.whynotcompose.utils.extensions.getObjFromJson
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")

@@ -24,17 +24,29 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.models.github
+package org.imaginativeworld.whynotcompose.base.extensions
 
-import androidx.annotation.Keep
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import java.io.File
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 
-@Keep
-@JsonClass(generateAdapter = true)
-data class Owner(
-    @Json(name = "login")
-    val login: String,
-    @Json(name = "avatar_url")
-    val avatarUrl: String
-)
+fun String?.toFormRequestBody() = this?.toRequestBody(MultipartBody.FORM)
+
+/**
+ * @return [MultipartBody.Part] from the file's real path or null if the path is null.
+ */
+fun String?.createFormDataFromPath(fieldName: String): MultipartBody.Part? {
+    return this?.let { filePath ->
+        val imageFile = File(filePath)
+
+        val requestBody = imageFile.asRequestBody(filePath.toMediaTypeOrNull())
+
+        MultipartBody.Part.createFormData(
+            fieldName,
+            imageFile.name,
+            requestBody
+        )
+    }
+}

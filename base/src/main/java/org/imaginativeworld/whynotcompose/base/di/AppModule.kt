@@ -24,7 +24,7 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.di
+package org.imaginativeworld.whynotcompose.base.di
 
 import com.squareup.moshi.Moshi
 import dagger.Module
@@ -32,9 +32,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
-import org.imaginativeworld.whynotcompose.network.ApiClient
-import org.imaginativeworld.whynotcompose.network.api.GithubApiInterface
-import org.imaginativeworld.whynotcompose.utils.extensions.MoshiUtil
+import org.imaginativeworld.whynotcompose.base.extensions.MoshiUtil
+import org.imaginativeworld.whynotcompose.base.network.ApiClient
+import org.imaginativeworld.whynotcompose.base.network.api.GithubApiInterface
 import retrofit2.Retrofit
 
 @InstallIn(SingletonComponent::class)

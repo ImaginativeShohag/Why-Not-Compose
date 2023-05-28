@@ -24,12 +24,12 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.utils.extensions
+package org.imaginativeworld.whynotcompose.base.extensions
 
 import com.squareup.moshi.Moshi
 import java.net.URLEncoder
 import java.util.Date
-import org.imaginativeworld.whynotcompose.network.jsonadapter.DateJsonAdapter
+import org.imaginativeworld.whynotcompose.base.network.jsonadapter.DateJsonAdapter
 import timber.log.Timber
 
 object MoshiUtil {

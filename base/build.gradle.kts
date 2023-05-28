@@ -96,4 +96,9 @@ dependencies {
 
     // Timber
     implementation(Libs.timber)
+
+    // Hilt
+    implementation(Libs.Google.Hilt.core)
+    kapt(Libs.Google.Hilt.compiler)
+    implementation(Libs.AndroidX.Hilt.navigationCompose)
 }

@@ -24,7 +24,7 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.utils
+package org.imaginativeworld.whynotcompose.base.utils
 
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
@@ -39,8 +39,8 @@ import android.util.Patterns
 import androidx.core.app.NotificationCompat
 import com.squareup.moshi.Moshi
 import java.util.Date
-import org.imaginativeworld.whynotcompose.R
-import org.imaginativeworld.whynotcompose.network.jsonadapter.DateJsonAdapter
+import org.imaginativeworld.whynotcompose.base.R
+import org.imaginativeworld.whynotcompose.base.network.jsonadapter.DateJsonAdapter
 
 object Utils {
 

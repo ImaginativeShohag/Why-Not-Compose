@@ -24,29 +24,29 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.utils.extensions
+package org.imaginativeworld.whynotcompose.base.models.github
 
-import java.io.File
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
+import androidx.annotation.Keep
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-fun String?.toFormRequestBody() = this?.toRequestBody(MultipartBody.FORM)
-
-/**
- * @return [MultipartBody.Part] from the file's real path or null if the path is null.
- */
-fun String?.createFormDataFromPath(fieldName: String): MultipartBody.Part? {
-    return this?.let { filePath ->
-        val imageFile = File(filePath)
-
-        val requestBody = imageFile.asRequestBody(filePath.toMediaTypeOrNull())
-
-        MultipartBody.Part.createFormData(
-            fieldName,
-            imageFile.name,
-            requestBody
-        )
-    }
-}
+@Keep
+@JsonClass(generateAdapter = true)
+data class GithubRepo(
+    @Json(name = "id")
+    val id: Int,
+    @Json(name = "name")
+    val name: String,
+    @Json(name = "full_name")
+    val fullName: String,
+    @Json(name = "owner")
+    val owner: Owner,
+    @Json(name = "description")
+    val description: String?,
+    @Json(name = "stargazers_count")
+    val stargazersCount: Int,
+    @Json(name = "watchers_count")
+    val watchersCount: Int,
+    @Json(name = "forks_count")
+    val forksCount: Int
+)

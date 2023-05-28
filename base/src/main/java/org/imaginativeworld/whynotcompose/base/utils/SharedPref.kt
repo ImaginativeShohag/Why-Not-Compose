@@ -24,7 +24,7 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.utils
+package org.imaginativeworld.whynotcompose.base.utils
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -32,8 +32,7 @@ import com.squareup.moshi.Moshi
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
-import org.imaginativeworld.whynotcompose.BuildConfig
-import org.imaginativeworld.whynotcompose.models.User
+import org.imaginativeworld.whynotcompose.base.models.User
 import timber.log.Timber
 
 @Singleton
@@ -58,7 +57,7 @@ class SharedPref @Inject constructor(
     private fun getSharedPerf(): SharedPreferences {
         return sharedPref ?: synchronized(this) {
             context.getSharedPreferences(
-                "${BuildConfig.APPLICATION_ID}.main",
+                "${context.packageName}.main",
                 Context.MODE_PRIVATE
             )
         }

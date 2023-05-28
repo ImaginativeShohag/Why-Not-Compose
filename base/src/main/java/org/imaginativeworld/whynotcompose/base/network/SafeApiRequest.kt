@@ -24,12 +24,12 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.network
+package org.imaginativeworld.whynotcompose.base.network
 
 import android.content.Context
 import java.net.HttpURLConnection
 import kotlinx.coroutines.CancellationException
-import org.imaginativeworld.whynotcompose.utils.Utils
+import org.imaginativeworld.whynotcompose.base.utils.Utils
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Response

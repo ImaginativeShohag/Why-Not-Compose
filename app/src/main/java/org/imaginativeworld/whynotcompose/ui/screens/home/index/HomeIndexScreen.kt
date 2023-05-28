@@ -93,6 +93,7 @@ import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import androidx.core.content.ContextCompat
 import org.imaginativeworld.whynotcompose.BuildConfig
 import org.imaginativeworld.whynotcompose.R
+import org.imaginativeworld.whynotcompose.base.R as BaseR
 import org.imaginativeworld.whynotcompose.base.extensions.openUrl
 import org.imaginativeworld.whynotcompose.base.extensions.shadow
 import org.imaginativeworld.whynotcompose.base.extensions.toast
@@ -215,7 +216,7 @@ fun HomeIndexScreen(
                                         end = 16.dp
                                     )
                                     .fillMaxWidth(),
-                                text = stringResource(id = R.string.app_name),
+                                text = stringResource(id = BaseR.string.app_name),
                                 style = MaterialTheme.typography.h1,
                                 textAlign = TextAlign.Center
                             )

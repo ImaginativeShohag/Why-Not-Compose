@@ -50,10 +50,10 @@ class GithubRepoDataSource(
                 query = query
             )
 
-            val result = response.items
+            val result = response?.items
 
             if (result == null) {
-                LoadResult.Error(ApiException(response.message ?: "No data returned!"))
+                LoadResult.Error(ApiException(response?.message ?: "No data returned!"))
             } else {
                 val nextKey = if (result.isEmpty()) {
                     null

@@ -24,14 +24,14 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.network
+package org.imaginativeworld.whynotcompose.network.api
 
 import org.imaginativeworld.whynotcompose.models.github.GithubRepoResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface ApiInterface {
+interface GithubApiInterface {
     // ----------------------------------------------------------------
     // Search Github Repositories
     // Help: https://docs.github.com/en/rest/reference/search#search-repositories

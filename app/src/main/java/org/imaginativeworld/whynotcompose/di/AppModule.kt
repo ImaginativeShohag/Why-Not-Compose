@@ -26,18 +26,35 @@
 
 package org.imaginativeworld.whynotcompose.di
 
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 import org.imaginativeworld.whynotcompose.network.ApiClient
-import org.imaginativeworld.whynotcompose.network.ApiInterface
+import org.imaginativeworld.whynotcompose.network.api.GithubApiInterface
+import org.imaginativeworld.whynotcompose.utils.extensions.MoshiUtil
+import retrofit2.Retrofit
 
 @InstallIn(SingletonComponent::class)
 @Module
 class AppModule {
+    @Singleton
     @Provides
-    fun provideApiInterface(): ApiInterface {
-        return ApiClient.getClient()
+    fun provideMoshi(): Moshi {
+        return MoshiUtil.getMoshi()
+    }
+
+    @Singleton
+    @Provides
+    fun provideRetrofit(moshi: Moshi): Retrofit {
+        return ApiClient.getRetrofit(moshi)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserApiInterface(retrofit: Retrofit): GithubApiInterface {
+        return retrofit.create(GithubApiInterface::class.java)
     }
 }

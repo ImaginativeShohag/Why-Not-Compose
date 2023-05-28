@@ -29,13 +29,13 @@ package org.imaginativeworld.whynotcompose.utils.extensions
 import com.squareup.moshi.Moshi
 import java.net.URLEncoder
 import java.util.Date
-import org.imaginativeworld.whynotcompose.network.ApiClient
+import org.imaginativeworld.whynotcompose.network.jsonadapter.DateJsonAdapter
 import timber.log.Timber
 
 object MoshiUtil {
     fun getMoshi(): Moshi {
         return Moshi.Builder()
-            .add(Date::class.java, ApiClient.DateJsonAdapter())
+            .add(Date::class.java, DateJsonAdapter())
             .build()
     }
 }

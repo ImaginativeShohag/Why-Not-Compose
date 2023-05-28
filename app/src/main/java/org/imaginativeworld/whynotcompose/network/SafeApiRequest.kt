@@ -36,8 +36,10 @@ import retrofit2.Response
 import timber.log.Timber
 
 object SafeApiRequest {
-
-    suspend fun <T : Any> apiRequest(context: Context, call: suspend () -> Response<T>): T {
+    suspend fun <T : Any?> apiRequest(
+        context: Context,
+        call: suspend () -> Response<T>
+    ): T? {
         try {
             if (!Utils.isConnectedToInternet(context.applicationContext)) {
                 throw ApiException("No internet connection!")
@@ -45,8 +47,11 @@ object SafeApiRequest {
 
             val response = call.invoke()
 
-            if (response.isSuccessful && response.code() == HttpURLConnection.HTTP_OK) {
-                return response.body()!!
+            if (response.isSuccessful &&
+                response.code() >= HttpURLConnection.HTTP_OK &&
+                response.code() < HttpURLConnection.HTTP_MULT_CHOICE
+            ) {
+                return response.body()
             } else {
                 val error = response.errorBody()?.string()
 
@@ -66,7 +71,7 @@ object SafeApiRequest {
 
                 message.append("Something went wrong! ${response.message()} (${response.code()})")
 
-                Timber.e("SafeApiRequest: ApiException: $message")
+                Timber.e("ApiException: $message")
 
                 throw ApiException(message.toString())
             }

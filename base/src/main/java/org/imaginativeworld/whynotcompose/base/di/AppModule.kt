@@ -35,6 +35,7 @@ import javax.inject.Singleton
 import org.imaginativeworld.whynotcompose.base.extensions.MoshiUtil
 import org.imaginativeworld.whynotcompose.base.network.ApiClient
 import org.imaginativeworld.whynotcompose.base.network.api.GithubApiInterface
+import org.imaginativeworld.whynotcompose.base.utils.Constants
 import retrofit2.Retrofit
 
 @InstallIn(SingletonComponent::class)
@@ -54,7 +55,10 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideUserApiInterface(retrofit: Retrofit): GithubApiInterface {
-        return retrofit.create(GithubApiInterface::class.java)
+    fun provideGithubApiInterface(moshi: Moshi): GithubApiInterface {
+        return ApiClient.getRetrofit(
+            moshi,
+            Constants.CMS_SERVER_ENDPOINT + "/"
+        ).create(GithubApiInterface::class.java)
     }
 }

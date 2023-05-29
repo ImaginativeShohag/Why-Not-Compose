@@ -35,7 +35,7 @@ import java.util.Locale
 
 class DateJsonAdapter : JsonAdapter<Date>() {
     private val dateFormat =
-        SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.getDefault())
 
     override fun fromJson(reader: JsonReader): Date? {
         if (reader.peek() == JsonReader.Token.NULL) {

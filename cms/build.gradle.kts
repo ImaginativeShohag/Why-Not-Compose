@@ -10,6 +10,12 @@ android {
 
     defaultConfig {
         minSdk = BuildConfigConst.minSdk
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments(mapOf("room.schemaLocation" to "$projectDir/schemas"))
+            }
+        }
     }
 
     compileOptions {

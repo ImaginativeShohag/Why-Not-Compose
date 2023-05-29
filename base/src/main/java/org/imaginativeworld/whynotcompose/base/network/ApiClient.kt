@@ -52,11 +52,14 @@ class ApiClient {
                 .build()
         }
 
-        fun getRetrofit(moshi: Moshi): Retrofit {
+        fun getRetrofit(
+            moshi: Moshi,
+            baseUrl: String = Constants.SERVER_ENDPOINT + "/"
+        ): Retrofit {
             return Retrofit.Builder()
                 .client(buildClient())
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .baseUrl(Constants.SERVER_ENDPOINT + "/")
+                .baseUrl(baseUrl)
                 .build()
         }
     }

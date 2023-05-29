@@ -101,4 +101,8 @@ dependencies {
     implementation(Libs.Google.Hilt.core)
     kapt(Libs.Google.Hilt.compiler)
     implementation(Libs.AndroidX.Hilt.navigationCompose)
+
+    // Room Persistence Library
+    implementation(Libs.AndroidX.Room.runtime)
+    kapt(Libs.AndroidX.Room.compiler)
 }

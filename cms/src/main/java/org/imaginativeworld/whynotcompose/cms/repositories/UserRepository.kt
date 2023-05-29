@@ -15,13 +15,13 @@
  *
  * ------------------------------------------------------------------------
  *
- * Project: Simple MVVM
+ * Project: Why Not Compose!
  * Developed by: @ImaginativeShohag
  *
  * Md. Mahmudul Hasan Shohag
  * imaginativeshohag@gmail.com
  *
- * Source: https://github.com/ImaginativeShohag/Simple-MVVM
+ * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
 package org.imaginativeworld.whynotcompose.cms.repositories
@@ -32,7 +32,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.imaginativeworld.whynotcompose.base.network.SafeApiRequest
-import org.imaginativeworld.whynotcompose.cms.db.AppDatabase
+import org.imaginativeworld.whynotcompose.cms.db.CMSDatabase
 import org.imaginativeworld.whynotcompose.cms.models.user.User
 import org.imaginativeworld.whynotcompose.cms.models.user.UserEntity
 import org.imaginativeworld.whynotcompose.cms.network.api.UserApiInterface
@@ -40,7 +40,7 @@ import org.imaginativeworld.whynotcompose.cms.network.api.UserApiInterface
 class UserRepository @Inject constructor(
     @ApplicationContext private val context: Context,
     private val api: UserApiInterface,
-    private val db: AppDatabase
+    private val db: CMSDatabase
 ) {
     suspend fun getUsers(page: Long) = withContext(Dispatchers.IO) {
         SafeApiRequest.apiRequest(context) {

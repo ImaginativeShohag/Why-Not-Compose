@@ -36,7 +36,7 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import org.imaginativeworld.whynotcompose.base.network.ApiClient
 import org.imaginativeworld.whynotcompose.base.utils.Constants
-import org.imaginativeworld.whynotcompose.cms.db.AppDatabase
+import org.imaginativeworld.whynotcompose.cms.db.CMSDatabase
 import org.imaginativeworld.whynotcompose.cms.network.api.CommentApiInterface
 import org.imaginativeworld.whynotcompose.cms.network.api.PostApiInterface
 import org.imaginativeworld.whynotcompose.cms.network.api.TodoApiInterface
@@ -47,8 +47,8 @@ import org.imaginativeworld.whynotcompose.cms.network.api.UserApiInterface
 class CMSAppModule {
     @Singleton
     @Provides
-    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
-        return AppDatabase(context)
+    fun provideAppDatabase(@ApplicationContext context: Context): CMSDatabase {
+        return CMSDatabase(context)
     }
 
     @Singleton

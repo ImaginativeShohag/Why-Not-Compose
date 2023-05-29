@@ -15,13 +15,13 @@
  *
  * ------------------------------------------------------------------------
  *
- * Project: Simple MVVM
+ * Project: Why Not Compose!
  * Developed by: @ImaginativeShohag
  *
  * Md. Mahmudul Hasan Shohag
  * imaginativeshohag@gmail.com
  *
- * Source: https://github.com/ImaginativeShohag/Simple-MVVM
+ * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
 package org.imaginativeworld.whynotcompose.cms.db

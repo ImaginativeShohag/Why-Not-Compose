@@ -15,13 +15,13 @@
  *
  * ------------------------------------------------------------------------
  *
- * Project: Simple MVVM
+ * Project: Why Not Compose!
  * Developed by: @ImaginativeShohag
  *
  * Md. Mahmudul Hasan Shohag
  * imaginativeshohag@gmail.com
  *
- * Source: https://github.com/ImaginativeShohag/Simple-MVVM
+ * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
 package org.imaginativeworld.whynotcompose.cms.db
@@ -44,7 +44,7 @@ import org.imaginativeworld.whynotcompose.cms.models.user.UserEntity
     version = 1
 )
 @TypeConverters(DateConverter::class)
-abstract class AppDatabase : RoomDatabase() {
+abstract class CMSDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
     abstract fun todoDao(): TodoDao
@@ -63,8 +63,8 @@ abstract class AppDatabase : RoomDatabase() {
 
         private fun buildDatabase(context: Context) = Room.databaseBuilder(
             context.applicationContext,
-            AppDatabase::class.java,
-            "MyDatabase.db"
+            CMSDatabase::class.java,
+            "CMSDatabase.db"
         )
 //            .addMigrations(MIGRATION_1_2) // Note: Migration example
             .fallbackToDestructiveMigration() // Note: Mostly for debug

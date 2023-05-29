@@ -15,13 +15,13 @@
  *
  * ------------------------------------------------------------------------
  *
- * Project: Simple MVVM
+ * Project: Why Not Compose!
  * Developed by: @ImaginativeShohag
  *
  * Md. Mahmudul Hasan Shohag
  * imaginativeshohag@gmail.com
  *
- * Source: https://github.com/ImaginativeShohag/Simple-MVVM
+ * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
 package org.imaginativeworld.whynotcompose.cms.repositories
@@ -33,7 +33,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.imaginativeworld.whynotcompose.base.network.SafeApiRequest
 import org.imaginativeworld.whynotcompose.base.utils.Utils
-import org.imaginativeworld.whynotcompose.cms.db.AppDatabase
+import org.imaginativeworld.whynotcompose.cms.db.CMSDatabase
 import org.imaginativeworld.whynotcompose.cms.models.todo.Todo
 import org.imaginativeworld.whynotcompose.cms.models.todo.asEntity
 import org.imaginativeworld.whynotcompose.cms.models.todo.asModel
@@ -42,7 +42,7 @@ import org.imaginativeworld.whynotcompose.cms.network.api.TodoApiInterface
 class TodoRepository @Inject constructor(
     @ApplicationContext private val context: Context,
     private val api: TodoApiInterface,
-    private val db: AppDatabase
+    private val db: CMSDatabase
 ) {
     suspend fun getTodos(userId: Int, page: Int) = withContext(Dispatchers.IO) {
         if (Utils.isConnectedToInternet(context.applicationContext)) {

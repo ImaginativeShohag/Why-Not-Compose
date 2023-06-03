@@ -37,6 +37,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import org.imaginativeworld.whynotcompose.cms.ui.splash.SplashScreen
 
 sealed class Screen(val route: String) {
     object Splash : Screen("splash")
@@ -108,7 +109,15 @@ private fun NavGraphBuilder.addSplashScreens(
         startDestination = SplashScreen.Splash.route
     ) {
         composable(SplashScreen.Splash.route) {
-            BlankScreen()
+            SplashScreen(
+                gotoHomeIndex = {
+                    navController.navigate(UserScreen.UserList.route) {
+                        popUpTo(SplashScreen.Splash.route) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
         }
     }
 }

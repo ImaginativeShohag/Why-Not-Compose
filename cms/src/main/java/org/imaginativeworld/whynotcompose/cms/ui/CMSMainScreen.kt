@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
+import org.imaginativeworld.whynotcompose.cms.theme.CMSAppTheme
 
 @Composable
 fun CMSMainScreen(
@@ -29,15 +29,19 @@ fun CMSMainScreen(
         )
     }
 
-    CMSMainScreenSkeleton(
-        turnOnDarkMode = turnOnDarkMode
-    )
+    CMSAppTheme(
+        darkTheme = isDarkMode
+    ) {
+        CMSMainScreenSkeleton(
+            turnOnDarkMode = turnOnDarkMode
+        )
+    }
 }
 
 @Preview
 @Composable
 fun CMSMainScreenSkeletonPreview() {
-    AppTheme {
+    CMSAppTheme {
         CMSMainScreenSkeleton()
     }
 }

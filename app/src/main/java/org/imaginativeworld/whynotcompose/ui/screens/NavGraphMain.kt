@@ -40,6 +40,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import org.imaginativeworld.whynotcompose.base.extensions.getJsonFromObj
 import org.imaginativeworld.whynotcompose.base.extensions.getObjFromJson
+import org.imaginativeworld.whynotcompose.cms.ui.CMSMainScreen
 import org.imaginativeworld.whynotcompose.exoplayer.ExoPlayerScreen
 import org.imaginativeworld.whynotcompose.models.MapPlace
 import org.imaginativeworld.whynotcompose.tictactoe.TicTacToeScreen
@@ -203,6 +204,7 @@ sealed class TutorialsScreen(val route: String) {
     object TutorialTicTacToe : TutorialsScreen("tutorial/tic-tac-toe")
     object TutorialOneSignalAndBroadcast : TutorialsScreen("tutorial/onesignal-and-broadcast")
     object TutorialExoPlayer : TutorialsScreen("tutorial/exoplayer")
+    object TutorialCMS : TutorialsScreen("tutorial/cms")
 }
 
 // ================================================================
@@ -213,6 +215,7 @@ sealed class TutorialsScreen(val route: String) {
 fun NavHostMain(
     modifier: Modifier,
     navController: NavHostController,
+    isDarkMode: Boolean,
     turnOnDarkMode: (Boolean) -> Unit
 ) {
     NavHost(
@@ -234,7 +237,9 @@ fun NavHostMain(
             navController = navController
         )
         addTutorialScreens(
-            navController = navController
+            navController = navController,
+            isDarkMode = isDarkMode,
+            turnOnDarkMode = turnOnDarkMode
         )
     }
 }
@@ -523,14 +528,18 @@ private fun NavGraphBuilder.addUiScreens(
 }
 
 private fun NavGraphBuilder.addTutorialScreens(
-    navController: NavHostController
+    navController: NavHostController,
+    isDarkMode: Boolean,
+    turnOnDarkMode: (Boolean) -> Unit
 ) {
     navigation(
         route = Screen.Tutorials.route,
         startDestination = TutorialsScreen.TutorialIndex.route
     ) {
         addTutorialIndexScreen(
-            navController = navController
+            navController = navController,
+            isDarkMode = isDarkMode,
+            turnOnDarkMode = turnOnDarkMode
         )
 
         // Below compositions will be just few lines.
@@ -620,7 +629,9 @@ private fun NavGraphBuilder.addUiIndexScreen(
 // ----------------------------------------------------------------
 
 private fun NavGraphBuilder.addTutorialIndexScreen(
-    navController: NavHostController
+    navController: NavHostController,
+    isDarkMode: Boolean,
+    turnOnDarkMode: (Boolean) -> Unit
 ) {
     composable(TutorialsScreen.TutorialIndex.route) {
         TutorialIndexScreen(
@@ -692,6 +703,13 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
 
     composable(TutorialsScreen.TutorialExoPlayer.route) {
         ExoPlayerScreen()
+    }
+
+    composable(TutorialsScreen.TutorialCMS.route) {
+        CMSMainScreen(
+            isDarkMode = false,
+            turnOnDarkMode = { isDark -> }
+        )
     }
 }
 

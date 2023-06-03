@@ -123,6 +123,12 @@ data class Tutorial(
                 description = "Example usage of `ExoPlayer` with Compose.",
                 route = TutorialsScreen.TutorialExoPlayer,
                 level = TutorialLevel.Advanced
+            ),
+            Tutorial(
+                name = "CMS",
+                description = "Example of a CMS.",
+                route = TutorialsScreen.TutorialCMS,
+                level = TutorialLevel.Advanced
             )
         )
     }

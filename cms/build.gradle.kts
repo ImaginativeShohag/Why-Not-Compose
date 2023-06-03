@@ -26,20 +26,20 @@ android {
     kotlinOptions {
         jvmTarget = "17"
 
-        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
+        freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.RequiresOptIn"
 
         // Enable experimental coroutines APIs, including Flow
-        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.Experimental"
+        freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.Experimental"
 
         // Enable experimental compose APIs
         freeCompilerArgs =
-            freeCompilerArgs + "-Xopt-in=androidx.compose.material.ExperimentalMaterialApi"
+            freeCompilerArgs + "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
         freeCompilerArgs =
-            freeCompilerArgs + "-Xopt-in=androidx.compose.animation.ExperimentalAnimationApi"
+            freeCompilerArgs + "-opt-in=androidx.compose.animation.ExperimentalAnimationApi"
         freeCompilerArgs =
-            freeCompilerArgs + "-Xopt-in=androidx.compose.ui.ExperimentalComposeUiApi"
+            freeCompilerArgs + "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi"
         freeCompilerArgs =
-            freeCompilerArgs + "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi"
+            freeCompilerArgs + "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi"
     }
 
     buildFeatures {
@@ -78,7 +78,9 @@ dependencies {
     implementation(Libs.AndroidX.Compose.foundation)
     implementation(Libs.AndroidX.Compose.layout)
     // Material Design
-    implementation(Libs.AndroidX.Compose.material)
+
+    implementation(Libs.AndroidX.Compose.material3)
+    implementation(Libs.AndroidX.Compose.material3WindowSizeClass)
     // Material design icons
     implementation(Libs.AndroidX.Compose.materialIconsCore)
     implementation(Libs.AndroidX.Compose.materialIconsExtended)

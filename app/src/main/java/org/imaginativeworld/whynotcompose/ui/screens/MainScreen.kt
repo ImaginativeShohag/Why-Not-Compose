@@ -54,6 +54,7 @@ fun MainScreen(
     }
 
     MainScreenSkeleton(
+        isDarkMode = isDarkMode,
         turnOnDarkMode = turnOnDarkMode
     )
 }
@@ -62,13 +63,17 @@ fun MainScreen(
 @Composable
 fun MainScreenSkeletonPreview() {
     AppTheme {
-        MainScreenSkeleton()
+        MainScreenSkeleton(
+            isDarkMode = false,
+            turnOnDarkMode = {}
+        )
     }
 }
 
 @Composable
 fun MainScreenSkeleton(
-    turnOnDarkMode: (Boolean) -> Unit = {}
+    isDarkMode: Boolean,
+    turnOnDarkMode: (Boolean) -> Unit
 ) {
     val navController = rememberNavController()
 
@@ -79,6 +84,7 @@ fun MainScreenSkeleton(
         NavHostMain(
             modifier = Modifier.padding(innerPadding),
             navController = navController,
+            isDarkMode = isDarkMode,
             turnOnDarkMode = turnOnDarkMode
         )
     }

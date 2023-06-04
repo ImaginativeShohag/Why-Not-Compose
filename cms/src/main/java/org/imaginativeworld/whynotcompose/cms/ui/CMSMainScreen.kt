@@ -1,13 +1,8 @@
 package org.imaginativeworld.whynotcompose.cms.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,7 +13,8 @@ import org.imaginativeworld.whynotcompose.cms.theme.CMSAppTheme
 @Composable
 fun CMSMainScreen(
     isDarkMode: Boolean,
-    turnOnDarkMode: (Boolean) -> Unit
+    turnOnDarkMode: (Boolean) -> Unit,
+    goBack: () -> Unit
 ) {
     val systemUiController = rememberSystemUiController()
 
@@ -33,7 +29,9 @@ fun CMSMainScreen(
         darkTheme = isDarkMode
     ) {
         CMSMainScreenSkeleton(
-            turnOnDarkMode = turnOnDarkMode
+            isDarkMode = isDarkMode,
+            turnOnDarkMode = turnOnDarkMode,
+            goBack = goBack
         )
     }
 }
@@ -42,25 +40,23 @@ fun CMSMainScreen(
 @Composable
 fun CMSMainScreenSkeletonPreview() {
     CMSAppTheme {
-        CMSMainScreenSkeleton()
+        CMSMainScreenSkeleton(isDarkMode = false)
     }
 }
 
 @Composable
 fun CMSMainScreenSkeleton(
-    turnOnDarkMode: (Boolean) -> Unit = {}
+    isDarkMode: Boolean,
+    turnOnDarkMode: (Boolean) -> Unit = {},
+    goBack: () -> Unit = {}
 ) {
     val navController = rememberNavController()
-    val snackbarHostState = remember { SnackbarHostState() }
 
-    Scaffold(
+    CMSNavHost(
         modifier = Modifier.fillMaxSize(),
-        snackbarHost = { SnackbarHost(snackbarHostState) }
-    ) { innerPadding ->
-        CMSNavHost(
-            modifier = Modifier.padding(innerPadding),
-            navController = navController,
-            turnOnDarkMode = turnOnDarkMode
-        )
-    }
+        navController = navController,
+        isDarkMode = isDarkMode,
+        turnOnDarkMode = turnOnDarkMode,
+        goBack = goBack
+    )
 }

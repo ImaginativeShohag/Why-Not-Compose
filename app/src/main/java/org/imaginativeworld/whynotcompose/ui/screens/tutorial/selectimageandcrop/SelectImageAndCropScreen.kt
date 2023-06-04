@@ -60,8 +60,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import java.io.File
 import java.util.Date
-import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.base.extensions.toast
+import org.imaginativeworld.whynotcompose.common.compose.R as CommonR
 import org.imaginativeworld.whynotcompose.common.compose.composeutils.rememberImagePainter
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
@@ -174,7 +174,7 @@ fun SelectImageAndCropScreenSkeleton(
                     .clip(RoundedCornerShape(16.dp)),
                 painter = rememberImagePainter(
                     data = imagePath,
-                    placeholder = R.drawable.default_placeholder
+                    placeholder = CommonR.drawable.default_placeholder
                 ),
                 contentDescription = "Image",
                 contentScale = ContentScale.Crop

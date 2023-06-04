@@ -32,16 +32,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import org.imaginativeworld.whynotcompose.cms.ui.splash.SplashScreen
+import org.imaginativeworld.whynotcompose.cms.ui.user.list.UserListScreen
+import org.imaginativeworld.whynotcompose.cms.ui.user.list.UserListViewModel
 
 sealed class Screen(val route: String) {
     object Splash : Screen("splash")
-    object Auth : Screen("auth")
     object User : Screen("user")
     object Post : Screen("post")
     object Todo : Screen("todo")
@@ -50,10 +52,6 @@ sealed class Screen(val route: String) {
 
 sealed class SplashScreen(val route: String) {
     object Splash : UserScreen("splash/index")
-}
-
-sealed class AuthScreen(val route: String) {
-    object Login : UserScreen("auth/login")
 }
 
 sealed class UserScreen(val route: String) {
@@ -84,7 +82,9 @@ sealed class CommentScreen(val route: String) {
 fun CMSNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    turnOnDarkMode: (Boolean) -> Unit
+    isDarkMode: Boolean,
+    turnOnDarkMode: (Boolean) -> Unit,
+    goBack: () -> Unit
 ) {
     NavHost(
         modifier = modifier,
@@ -92,8 +92,12 @@ fun CMSNavHost(
         startDestination = Screen.Splash.route
     ) {
         addSplashScreens(navController = navController)
-        addAuthScreens(navController = navController)
-        addUserScreens(navController = navController)
+        addUserScreens(
+            navController = navController,
+            isDarkMode = isDarkMode,
+            turnOnDarkMode = turnOnDarkMode,
+            goBack = goBack
+        )
     }
 }
 
@@ -122,21 +126,11 @@ private fun NavGraphBuilder.addSplashScreens(
     }
 }
 
-private fun NavGraphBuilder.addAuthScreens(
-    navController: NavHostController
-) {
-    navigation(
-        route = Screen.Auth.route,
-        startDestination = AuthScreen.Login.route
-    ) {
-        composable(SplashScreen.Splash.route) {
-            BlankScreen()
-        }
-    }
-}
-
 private fun NavGraphBuilder.addUserScreens(
-    navController: NavHostController
+    navController: NavHostController,
+    isDarkMode: Boolean,
+    turnOnDarkMode: (Boolean) -> Unit,
+    goBack: () -> Unit
 ) {
     navigation(
         route = Screen.User.route,
@@ -146,7 +140,19 @@ private fun NavGraphBuilder.addUserScreens(
         addTodoScreens(navController = navController)
 
         composable(UserScreen.UserList.route) {
-            BlankScreen()
+            val viewModel: UserListViewModel = hiltViewModel()
+
+            UserListScreen(
+                viewModel = viewModel,
+                goBack = {
+                    // We are using the parent `NavController` to go back from this `NavHost`.
+                    goBack()
+                },
+                isDarkMode = isDarkMode,
+                toggleUIMode = {
+                    turnOnDarkMode(isDarkMode)
+                }
+            )
         }
 
         composable(UserScreen.UserDetails.route) {

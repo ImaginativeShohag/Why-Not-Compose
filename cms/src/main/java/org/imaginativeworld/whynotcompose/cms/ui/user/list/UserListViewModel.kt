@@ -26,8 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.user.list
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -37,6 +35,13 @@ import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.launch
+import org.imaginativeworld.whynotcompose.base.models.Event
 import org.imaginativeworld.whynotcompose.cms.datasource.UserPagingSource
 import org.imaginativeworld.whynotcompose.cms.models.user.User
 import org.imaginativeworld.whynotcompose.cms.repositories.UserRepository
@@ -46,29 +51,73 @@ class UserListViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : ViewModel() {
 
-    private val _eventShowMessage: MutableLiveData<String?> by lazy {
-        MutableLiveData<String?>()
-    }
+    private val _eventShowLoading = MutableStateFlow(false)
 
-    val eventShowMessage: LiveData<String?>
-        get() = _eventShowMessage
+    private val _eventShowMessage = MutableStateFlow<Event<String>?>(null)
 
-    // ----------------------------------------------------------------
-
-    private val _eventShowLoading: MutableLiveData<Boolean?> by lazy {
-        MutableLiveData<Boolean?>()
-    }
-
-    val eventShowLoading: LiveData<Boolean?>
-        get() = _eventShowLoading
+    private var _items = MutableStateFlow<Flow<PagingData<User>>>(emptyFlow())
 
     // ----------------------------------------------------------------
 
-    fun getUsers(): Flow<PagingData<User>> {
-        return Pager(PagingConfig(pageSize = 20)) {
-            UserPagingSource(userRepository)
+    private val _state = MutableStateFlow(UserListViewState())
+    val state: StateFlow<UserListViewState>
+        get() = _state
+
+    // ----------------------------------------------------------------
+
+    init {
+        viewModelScope.launch {
+            combine(
+                _eventShowLoading,
+                _eventShowMessage,
+                _items
+            ) { showLoading, showMessage, items ->
+
+                UserListViewState(
+                    loading = showLoading,
+                    message = showMessage,
+                    items = items
+                )
+            }.catch { throwable ->
+                // TODO: emit a UI error here. For now we'll just rethrow
+                throw throwable
+            }.collect {
+                _state.value = it
+            }
         }
-            .flow
-            .cachedIn(viewModelScope)
+    }
+
+    // ----------------------------------------------------------------
+
+    private var prevResult: Flow<PagingData<User>>? = null
+
+    fun loadUsers() {
+        if (prevResult != null) {
+            _items.value = prevResult ?: emptyFlow()
+
+            return
+        }
+
+        viewModelScope.launch {
+            prevResult = Pager(
+                config = PagingConfig(
+                    pageSize = 10,
+                    enablePlaceholders = false
+                ),
+                pagingSourceFactory = {
+                    UserPagingSource(userRepository)
+                }
+            )
+                .flow
+                .cachedIn(viewModelScope)
+
+            _items.value = prevResult ?: emptyFlow()
+        }
     }
 }
+
+data class UserListViewState(
+    val loading: Boolean = false,
+    val message: Event<String>? = null,
+    val items: Flow<PagingData<User>> = emptyFlow()
+)

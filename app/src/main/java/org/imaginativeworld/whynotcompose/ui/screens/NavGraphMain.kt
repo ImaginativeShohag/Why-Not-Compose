@@ -707,8 +707,11 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
 
     composable(TutorialsScreen.TutorialCMS.route) {
         CMSMainScreen(
-            isDarkMode = false,
-            turnOnDarkMode = { isDark -> }
+            isDarkMode = isDarkMode,
+            turnOnDarkMode = turnOnDarkMode,
+            goBack = {
+                navController.popBackStack()
+            }
         )
     }
 }

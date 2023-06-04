@@ -138,7 +138,6 @@ class DataFetchAndPagingViewModel @Inject constructor(
     fun loadPosts(
         query: String?,
         delayRequest: Boolean = !query.isNullOrBlank()
-
     ) {
         Timber.e("query: %s", query)
 

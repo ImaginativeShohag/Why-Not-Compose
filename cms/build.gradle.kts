@@ -132,4 +132,8 @@ dependencies {
 
     // Room: Kotlin Extensions and Coroutines support for Room
     implementation(Libs.AndroidX.Room.ktx)
+
+    // Coil
+    implementation(Libs.Coil.compose)
+    implementation(Libs.Coil.svg)
 }

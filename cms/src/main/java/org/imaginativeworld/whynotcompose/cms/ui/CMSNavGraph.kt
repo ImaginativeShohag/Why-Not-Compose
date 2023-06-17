@@ -30,6 +30,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -38,6 +40,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
 import org.imaginativeworld.whynotcompose.cms.ui.splash.SplashScreen
 import org.imaginativeworld.whynotcompose.cms.ui.user.list.UserListScreen
 import org.imaginativeworld.whynotcompose.cms.ui.user.list.UserListViewModel
@@ -82,7 +85,6 @@ sealed class CommentScreen(val route: String) {
 fun CMSNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    isDarkMode: Boolean,
     turnOnDarkMode: (Boolean) -> Unit,
     goBack: () -> Unit
 ) {
@@ -94,7 +96,6 @@ fun CMSNavHost(
         addSplashScreens(navController = navController)
         addUserScreens(
             navController = navController,
-            isDarkMode = isDarkMode,
             turnOnDarkMode = turnOnDarkMode,
             goBack = goBack
         )
@@ -128,7 +129,6 @@ private fun NavGraphBuilder.addSplashScreens(
 
 private fun NavGraphBuilder.addUserScreens(
     navController: NavHostController,
-    isDarkMode: Boolean,
     turnOnDarkMode: (Boolean) -> Unit,
     goBack: () -> Unit
 ) {
@@ -142,6 +142,8 @@ private fun NavGraphBuilder.addUserScreens(
         composable(UserScreen.UserList.route) {
             val viewModel: UserListViewModel = hiltViewModel()
 
+            val isDarkMode by UIThemeController.isDarkMode.collectAsState()
+
             UserListScreen(
                 viewModel = viewModel,
                 goBack = {
@@ -150,7 +152,7 @@ private fun NavGraphBuilder.addUserScreens(
                 },
                 isDarkMode = isDarkMode,
                 toggleUIMode = {
-                    turnOnDarkMode(isDarkMode)
+                    turnOnDarkMode(!isDarkMode)
                 }
             )
         }

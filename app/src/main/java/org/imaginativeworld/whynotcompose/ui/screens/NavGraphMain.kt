@@ -215,7 +215,6 @@ sealed class TutorialsScreen(val route: String) {
 fun NavHostMain(
     modifier: Modifier,
     navController: NavHostController,
-    isDarkMode: Boolean,
     turnOnDarkMode: (Boolean) -> Unit
 ) {
     NavHost(
@@ -238,7 +237,6 @@ fun NavHostMain(
         )
         addTutorialScreens(
             navController = navController,
-            isDarkMode = isDarkMode,
             turnOnDarkMode = turnOnDarkMode
         )
     }
@@ -529,7 +527,6 @@ private fun NavGraphBuilder.addUiScreens(
 
 private fun NavGraphBuilder.addTutorialScreens(
     navController: NavHostController,
-    isDarkMode: Boolean,
     turnOnDarkMode: (Boolean) -> Unit
 ) {
     navigation(
@@ -538,7 +535,6 @@ private fun NavGraphBuilder.addTutorialScreens(
     ) {
         addTutorialIndexScreen(
             navController = navController,
-            isDarkMode = isDarkMode,
             turnOnDarkMode = turnOnDarkMode
         )
 
@@ -630,7 +626,6 @@ private fun NavGraphBuilder.addUiIndexScreen(
 
 private fun NavGraphBuilder.addTutorialIndexScreen(
     navController: NavHostController,
-    isDarkMode: Boolean,
     turnOnDarkMode: (Boolean) -> Unit
 ) {
     composable(TutorialsScreen.TutorialIndex.route) {
@@ -707,7 +702,6 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
 
     composable(TutorialsScreen.TutorialCMS.route) {
         CMSMainScreen(
-            isDarkMode = isDarkMode,
             turnOnDarkMode = turnOnDarkMode,
             goBack = {
                 navController.popBackStack()

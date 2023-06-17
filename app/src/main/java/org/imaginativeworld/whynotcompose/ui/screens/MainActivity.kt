@@ -30,9 +30,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.addCallback
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,6 +41,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.base.extensions.toast
 import org.imaginativeworld.whynotcompose.base.utils.SharedPref
+import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @AndroidEntryPoint
@@ -58,16 +58,18 @@ class MainActivity : ComponentActivity() {
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        var isDarkMode by mutableStateOf(sharedPref.getDarkMode())
+        UIThemeController.updateUITheme(sharedPref.getDarkMode())
 
         setContent {
+            val isDarkMode by UIThemeController.isDarkMode.collectAsState()
+
             AppTheme(
                 darkTheme = isDarkMode
             ) {
                 MainScreen(
                     isDarkMode = isDarkMode,
                     turnOnDarkMode = { turnOn ->
-                        isDarkMode = turnOn
+                        UIThemeController.updateUITheme(turnOn)
 
                         sharedPref.setDarkMode(turnOn)
                     }

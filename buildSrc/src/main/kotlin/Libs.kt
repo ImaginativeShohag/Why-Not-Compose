@@ -100,7 +100,7 @@ object Libs {
     }
 
     object Kotlin {
-        const val version = "1.8.20"
+        const val version = "1.8.21"
 
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$version"
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
@@ -127,9 +127,9 @@ object Libs {
         }
 
         object Compose {
-            private const val bomVersion = "2023.04.01"
-            const val compilerVersion = "1.4.6"
-            private const val runtimeTracingVersion = "1.0.0-alpha01"
+            private const val bomVersion = "2023.05.01"
+            const val compilerVersion = "1.4.7"
+            private const val runtimeTracingVersion = "1.0.0-alpha02"
 
             const val bom = "androidx.compose:compose-bom:$bomVersion"
 

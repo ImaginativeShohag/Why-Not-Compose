@@ -150,7 +150,6 @@ private fun NavGraphBuilder.addUserScreens(
                     // We are using the parent `NavController` to go back from this `NavHost`.
                     goBack()
                 },
-                isDarkMode = isDarkMode,
                 toggleUIMode = {
                     turnOnDarkMode(!isDarkMode)
                 }

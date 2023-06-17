@@ -30,7 +30,6 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -39,28 +38,30 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.ChevronRight
-import androidx.compose.material.icons.rounded.DarkMode
-import androidx.compose.material.icons.rounded.LightMode
-import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
@@ -69,21 +70,23 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.base.models.Event
 import org.imaginativeworld.whynotcompose.cms.models.user.User
 import org.imaginativeworld.whynotcompose.cms.repositories.MockData
 import org.imaginativeworld.whynotcompose.cms.theme.CMSAppTheme
 import org.imaginativeworld.whynotcompose.cms.ui.common.EmptyView
 import org.imaginativeworld.whynotcompose.cms.ui.common.ErrorItem
+import org.imaginativeworld.whynotcompose.cms.ui.common.GeneralAppBar
 import org.imaginativeworld.whynotcompose.cms.ui.common.LoadingContainer
 import org.imaginativeworld.whynotcompose.cms.ui.common.LoadingItem
+import org.imaginativeworld.whynotcompose.cms.ui.user.add.UserAddSheet
 import org.imaginativeworld.whynotcompose.cms.ui.user.list.elements.UserItem
 
 @Composable
 fun UserListScreen(
     viewModel: UserListViewModel,
     goBack: () -> Unit,
-    isDarkMode: Boolean,
     toggleUIMode: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()
@@ -96,7 +99,6 @@ fun UserListScreen(
 
     UserListScreenSkeleton(
         goBack = goBack,
-        isDarkMode = isDarkMode,
         toggleUIMode = toggleUIMode,
         showLoading = state.loading,
         showMessage = state.message,
@@ -113,7 +115,6 @@ fun UserListScreenSkeletonPreview() {
     CMSAppTheme {
         UserListScreenSkeleton(
             goBack = { },
-            isDarkMode = false,
             toggleUIMode = {},
             users = flowOf(
                 PagingData.from(
@@ -130,7 +131,6 @@ fun UserListScreenSkeletonPreviewDark() {
     CMSAppTheme {
         UserListScreenSkeleton(
             goBack = { },
-            isDarkMode = true,
             toggleUIMode = {},
             users = flowOf(
                 PagingData.from(
@@ -144,7 +144,6 @@ fun UserListScreenSkeletonPreviewDark() {
 @Composable
 fun UserListScreenSkeleton(
     goBack: () -> Unit,
-    isDarkMode: Boolean,
     toggleUIMode: () -> Unit,
     showLoading: Boolean = false,
     showMessage: Event<String>? = null,
@@ -152,8 +151,21 @@ fun UserListScreenSkeleton(
     retryDataLoad: () -> Unit = {}
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
-
+    var openAddUserSheet by rememberSaveable { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
     val lazyListState = rememberLazyListState()
+    val bottomSheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = false,
+        confirmValueChange = { sheetState ->
+            return@rememberModalBottomSheetState sheetState != SheetValue.Hidden
+        }
+    )
+
+    val expandedFab by remember {
+        derivedStateOf {
+            lazyListState.firstVisibleItemIndex == 0
+        }
+    }
 
     LaunchedEffect(showMessage) {
         showMessage?.let { message ->
@@ -173,47 +185,21 @@ fun UserListScreenSkeleton(
             .imePadding()
             .statusBarsPadding(),
         snackbarHost = { SnackbarHost(snackbarHostState) },
+        floatingActionButton = {
+            ExtendedFloatingActionButton(
+                onClick = {
+                    openAddUserSheet = !openAddUserSheet
+                },
+                expanded = expandedFab,
+                icon = { Icon(Icons.Filled.Add, "Add User") },
+                text = { Text(text = "Add User") }
+            )
+        },
         topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            "CMS",
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            fontWeight = FontWeight.Bold
-                        )
-
-                        Icon(
-                            imageVector = Icons.Rounded.ChevronRight,
-                            contentDescription = null
-                        )
-
-                        Text(
-                            "Users",
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
-                },
-                navigationIcon = {
-                    IconButton(onClick = { goBack() }) {
-                        Icon(
-                            imageVector = Icons.Rounded.ArrowBack,
-                            contentDescription = "Go back"
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(onClick = { toggleUIMode() }) {
-                        Icon(
-                            imageVector = if (isDarkMode) Icons.Rounded.DarkMode else Icons.Rounded.LightMode,
-                            contentDescription = "Toggle UI mode"
-                        )
-                    }
-                }
+            GeneralAppBar(
+                subTitle = "Users",
+                goBack = goBack,
+                toggleUIMode = toggleUIMode
             )
         }
     ) { innerPadding ->
@@ -334,5 +320,31 @@ fun UserListScreenSkeleton(
         LoadingContainer(
             show = showLoading
         )
+    }
+
+    // ----------------------------------------------------------------
+    // Bottom Sheet
+    // ----------------------------------------------------------------
+
+    if (openAddUserSheet) {
+        ModalBottomSheet(
+            onDismissRequest = { openAddUserSheet = false },
+            sheetState = bottomSheetState
+        ) {
+            UserAddSheet(
+                goBack = {
+                    scope.launch {
+                        bottomSheetState.hide()
+                    }.invokeOnCompletion {
+                        if (!bottomSheetState.isVisible) {
+                            openAddUserSheet = false
+                        }
+                    }
+                },
+                addUser = { name, email, gender, status ->
+                    //
+                }
+            )
+        }
     }
 }

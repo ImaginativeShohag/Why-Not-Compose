@@ -1,30 +1,4 @@
-/*
- * Copyright 2023 Md. Mahmudul Hasan Shohag
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * ------------------------------------------------------------------------
- *
- * Project: Why Not Compose!
- * Developed by: @ImaginativeShohag
- *
- * Md. Mahmudul Hasan Shohag
- * imaginativeshohag@gmail.com
- *
- * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
- */
-
-package org.imaginativeworld.whynotcompose.cms.ui.screens.user.details
+package org.imaginativeworld.whynotcompose.cms.ui.screens.todo.details
 
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
@@ -41,10 +15,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Ballot
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Edit
-import androidx.compose.material.icons.rounded.TextSnippet
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -65,33 +37,30 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.base.models.Event
 import org.imaginativeworld.whynotcompose.cms.models.ActionMessage
-import org.imaginativeworld.whynotcompose.cms.models.user.User
+import org.imaginativeworld.whynotcompose.cms.models.todo.Todo
 import org.imaginativeworld.whynotcompose.cms.repositories.MockData
 import org.imaginativeworld.whynotcompose.cms.theme.CMSAppTheme
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.GeneralAppBar
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.LoadingContainer
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.LoadingItem
-import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralFilledButton
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralOutlinedButton
-import org.imaginativeworld.whynotcompose.cms.ui.screens.user.edit.UserEditSheet
-import org.imaginativeworld.whynotcompose.cms.ui.screens.user.list.elements.UserItem
+import org.imaginativeworld.whynotcompose.cms.ui.screens.todo.list.elements.TodoItem
 
 @Composable
-fun UserDetailsScreen(
-    viewModel: UserDetailsViewModel,
+fun TodoDetailsScreen(
+    viewModel: TodoDetailsViewModel,
     userId: Int,
+    todoId: Int,
     goBack: () -> Unit,
-    toggleUIMode: () -> Unit,
-    onTodosClicked: () -> Unit,
-    onPostsClicked: () -> Unit
+    toggleUIMode: () -> Unit
 ) {
-    val openEditUserSheet = rememberSaveable { mutableStateOf(false) }
+    val openEditTodoSheet = rememberSaveable { mutableStateOf(false) }
     val state by viewModel.state.collectAsState()
 
     var openDeleteDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        viewModel.getDetails(userId)
+        viewModel.getDetails(todoId)
     }
 
     LaunchedEffect(state.deleteSuccess) {
@@ -100,21 +69,19 @@ fun UserDetailsScreen(
         }
     }
 
-    UserDetailsScreenSkeleton(
-        user = state.user,
+    TodoDetailsScreenSkeleton(
+        todo = state.todo,
         showLoading = state.loading,
         showMessage = state.message,
         goBack = goBack,
         toggleUIMode = toggleUIMode,
         retryDataLoad = {
-            viewModel.getDetails(userId)
+            viewModel.getDetails(todoId)
         },
         onDeleteClicked = { openDeleteDialog = true },
         onEditClicked = {
-            openEditUserSheet.value = !openEditUserSheet.value
-        },
-        onTodosClicked = onTodosClicked,
-        onPostsClicked = onPostsClicked
+            openEditTodoSheet.value = !openEditTodoSheet.value
+        }
     )
 
     // ----------------------------------------------------------------
@@ -137,7 +104,7 @@ fun UserDetailsScreen(
                     onClick = {
                         openDeleteDialog = false
 
-                        viewModel.deleteUser(userId)
+                        viewModel.deleteTodo(todoId)
                     }
                 ) {
                     Text("Yes")
@@ -159,56 +126,54 @@ fun UserDetailsScreen(
     // Bottom Sheet
     // ----------------------------------------------------------------
 
-    if (openEditUserSheet.value) {
-        UserEditSheet(
-            showSheet = openEditUserSheet,
-            userId = userId,
-            onSuccess = {
-                viewModel.getDetails(userId)
-            }
-        )
-    }
+//    if (openEditTodoSheet.value) {
+//        TodoEditSheet(
+//            showSheet = openEditTodoSheet,
+//            todoId = todoId,
+//            onSuccess = {
+//                viewModel.getDetails(todoId)
+//            }
+//        )
+//    }
 }
 
 @Preview
 @Composable
-fun UserDetailsScreenSkeletonPreview() {
+fun TodoDetailsScreenSkeletonPreview() {
     CMSAppTheme {
-        UserDetailsScreenSkeleton(
-            user = MockData.dummyUser
+        TodoDetailsScreenSkeleton(
+            todo = MockData.dummyTodo
         )
     }
 }
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun UserDetailsScreenSkeletonPreviewDark() {
+fun TodoDetailsScreenSkeletonPreviewDark() {
     CMSAppTheme {
-        UserDetailsScreenSkeleton(
-            user = MockData.dummyUser
+        TodoDetailsScreenSkeleton(
+            todo = MockData.dummyTodo
         )
     }
 }
 
 @Composable
-fun UserDetailsScreenSkeleton(
-    user: User?,
+fun TodoDetailsScreenSkeleton(
+    todo: Todo?,
     showLoading: Boolean = false,
     showMessage: Event<ActionMessage>? = null,
     goBack: () -> Unit = {},
     toggleUIMode: () -> Unit = {},
     retryDataLoad: () -> Unit = {},
     onDeleteClicked: () -> Unit = {},
-    onEditClicked: () -> Unit = {},
-    onTodosClicked: () -> Unit = {},
-    onPostsClicked: () -> Unit = {}
+    onEditClicked: () -> Unit = {}
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(showMessage) {
         showMessage?.getValueOnce()?.let { actionMessage ->
             when (actionMessage.action) {
-                UserDetailsViewAction.USER_LOAD_ERROR -> {
+                TodoDetailsViewAction.TODO_LOAD_ERROR -> {
                     val result = snackbarHostState.showSnackbar(
                         actionMessage.message,
                         actionLabel = "Retry"
@@ -234,7 +199,7 @@ fun UserDetailsScreenSkeleton(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             GeneralAppBar(
-                subTitle = "User Details",
+                subTitle = "Todo Details",
                 goBack = goBack,
                 toggleUIMode = toggleUIMode
             )
@@ -247,7 +212,7 @@ fun UserDetailsScreenSkeleton(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            if (user == null) {
+            if (todo == null) {
                 LoadingItem(
                     Modifier
                         .padding(
@@ -256,21 +221,19 @@ fun UserDetailsScreenSkeleton(
                         )
                 )
             } else {
-                UserItem(
+                TodoItem(
                     modifier = Modifier.padding(
                         top = 4.dp
                     ),
-                    name = user.name,
-                    email = user.email,
-                    gender = user.getGenderLabel(),
-                    status = user.getStatusLabel(),
-                    userImageUrl = user.getAvatarImageUrl(),
-                    statusColor = user.getStatusColor(),
+                    title = todo.title,
+                    dueDate = todo.getDueDate(),
+                    status = todo.getStatusLabel(),
+                    statusColor = todo.getStatusColor(),
                     onClick = {}
                 )
             }
 
-            AnimatedVisibility(visible = user != null) {
+            AnimatedVisibility(visible = todo != null) {
                 Column {
                     Spacer(Modifier.height(16.dp))
 
@@ -291,26 +254,6 @@ fun UserDetailsScreenSkeleton(
                             icon = Icons.Rounded.Edit
                         ) {
                             onEditClicked()
-                        }
-                    }
-
-                    Row {
-                        GeneralFilledButton(
-                            modifier = Modifier.weight(1f),
-                            caption = "Todos",
-                            icon = Icons.Rounded.Ballot
-                        ) {
-                            onTodosClicked()
-                        }
-
-                        Spacer(Modifier.width(16.dp))
-
-                        GeneralFilledButton(
-                            modifier = Modifier.weight(1f),
-                            caption = "Posts",
-                            icon = Icons.Rounded.TextSnippet
-                        ) {
-                            onPostsClicked()
                         }
                     }
                 }

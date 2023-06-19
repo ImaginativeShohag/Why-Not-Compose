@@ -44,6 +44,8 @@ import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
 import org.imaginativeworld.whynotcompose.cms.ui.screens.splash.SplashScreen
+import org.imaginativeworld.whynotcompose.cms.ui.screens.todo.details.TodoDetailsScreen
+import org.imaginativeworld.whynotcompose.cms.ui.screens.todo.details.TodoDetailsViewModel
 import org.imaginativeworld.whynotcompose.cms.ui.screens.todo.list.TodoListScreen
 import org.imaginativeworld.whynotcompose.cms.ui.screens.todo.list.TodoListViewModel
 import org.imaginativeworld.whynotcompose.cms.ui.screens.user.details.UserDetailsScreen
@@ -234,26 +236,6 @@ private fun NavGraphBuilder.addUserScreens(
     }
 }
 
-private fun NavGraphBuilder.addPostScreens(
-    navController: NavHostController,
-    turnOnDarkMode: (Boolean) -> Unit
-) {
-    navigation(
-        route = Screen.Post.route,
-        startDestination = PostScreen.PostList.route
-    ) {
-        addCommentScreens(navController = navController)
-
-        composable(PostScreen.PostList.route) {
-            BlankScreen()
-        }
-
-        composable(PostScreen.PostDetails.route) {
-            BlankScreen()
-        }
-    }
-}
-
 private fun NavGraphBuilder.addTodoScreens(
     navController: NavHostController,
     turnOnDarkMode: (Boolean) -> Unit
@@ -303,7 +285,42 @@ private fun NavGraphBuilder.addTodoScreens(
                 navArgument(TodoScreen.TodoDetails.USER_ID) { type = NavType.IntType },
                 navArgument(TodoScreen.TodoDetails.TODO_ID) { type = NavType.IntType }
             )
-        ) {
+        ) { backStackEntry ->
+            val viewModel: TodoDetailsViewModel = hiltViewModel()
+            val isDarkMode by UIThemeController.isDarkMode.collectAsState()
+            val userId = backStackEntry.arguments?.getInt(TodoScreen.TodoDetails.USER_ID) ?: 0
+            val todoId = backStackEntry.arguments?.getInt(TodoScreen.TodoDetails.TODO_ID) ?: 0
+
+            TodoDetailsScreen(
+                viewModel = viewModel,
+                userId = userId,
+                todoId = todoId,
+                goBack = {
+                    navController.popBackStack()
+                },
+                toggleUIMode = {
+                    turnOnDarkMode(!isDarkMode)
+                }
+            )
+        }
+    }
+}
+
+private fun NavGraphBuilder.addPostScreens(
+    navController: NavHostController,
+    turnOnDarkMode: (Boolean) -> Unit
+) {
+    navigation(
+        route = Screen.Post.route,
+        startDestination = PostScreen.PostList.route
+    ) {
+        addCommentScreens(navController = navController)
+
+        composable(PostScreen.PostList.route) {
+            BlankScreen()
+        }
+
+        composable(PostScreen.PostDetails.route) {
             BlankScreen()
         }
     }

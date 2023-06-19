@@ -37,11 +37,15 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
 import org.imaginativeworld.whynotcompose.cms.ui.splash.SplashScreen
+import org.imaginativeworld.whynotcompose.cms.ui.user.details.UserDetailsScreen
+import org.imaginativeworld.whynotcompose.cms.ui.user.details.UserDetailsViewModel
 import org.imaginativeworld.whynotcompose.cms.ui.user.list.UserListScreen
 import org.imaginativeworld.whynotcompose.cms.ui.user.list.UserListViewModel
 
@@ -59,7 +63,9 @@ sealed class SplashScreen(val route: String) {
 
 sealed class UserScreen(val route: String) {
     object UserList : UserScreen("users")
-    object UserDetails : UserScreen("users/{userId}")
+    object UserDetails : UserScreen("users/{userId}") {
+        const val USER_ID = "userId"
+    }
 }
 
 sealed class PostScreen(val route: String) {
@@ -152,12 +158,40 @@ private fun NavGraphBuilder.addUserScreens(
                 },
                 toggleUIMode = {
                     turnOnDarkMode(!isDarkMode)
+                },
+                goToUserDetails = { userId ->
+                    navController.navigate(
+                        UserScreen.UserDetails.route.replaceFirst(
+                            "{${UserScreen.UserDetails.USER_ID}}",
+                            "$userId"
+                        )
+                    )
                 }
             )
         }
 
-        composable(UserScreen.UserDetails.route) {
-            BlankScreen()
+        composable(
+            UserScreen.UserDetails.route,
+            arguments = listOf(
+                navArgument(UserScreen.UserDetails.USER_ID) {
+                    type = NavType.IntType
+                }
+            )
+        ) { backStackEntry ->
+            val viewModel: UserDetailsViewModel = hiltViewModel()
+
+            val isDarkMode by UIThemeController.isDarkMode.collectAsState()
+
+            UserDetailsScreen(
+                viewModel = viewModel,
+                userId = backStackEntry.arguments?.getInt(UserScreen.UserDetails.USER_ID) ?: 0,
+                goBack = {
+                    navController.popBackStack()
+                },
+                toggleUIMode = {
+                    turnOnDarkMode(!isDarkMode)
+                }
+            )
         }
     }
 }

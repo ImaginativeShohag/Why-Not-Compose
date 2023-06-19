@@ -1,6 +1,5 @@
 package org.imaginativeworld.whynotcompose.cms.ui.user.list.elements
 
-import android.R
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -41,7 +40,7 @@ fun UserItem(
         modifier = modifier
             .fillMaxWidth()
     ) {
-        Column(Modifier.padding(8.dp)) {
+        Column(Modifier.padding(16.dp)) {
             Row(
                 Modifier
                     .fillMaxWidth(),

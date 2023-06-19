@@ -53,7 +53,6 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -83,15 +82,9 @@ import org.imaginativeworld.whynotcompose.cms.ui.user.list.elements.UserItem
 fun UserListScreen(
     viewModel: UserListViewModel,
     goBack: () -> Unit,
-    toggleUIMode: () -> Unit
+    toggleUIMode: () -> Unit,
+    goToUserDetails: (Int) -> Unit
 ) {
-    val scope = rememberCoroutineScope()
-//    val bottomSheetState = rememberModalBottomSheetState(
-//        skipPartiallyExpanded = false,
-//        confirmValueChange = { sheetState ->
-//            return@rememberModalBottomSheetState sheetState != SheetValue.Hidden
-//        }
-//    )
     val openAddUserSheet = rememberSaveable { mutableStateOf(false) }
     val state by viewModel.state.collectAsState()
 
@@ -112,7 +105,8 @@ fun UserListScreen(
         },
         openAddUserSheet = {
             openAddUserSheet.value = !openAddUserSheet.value
-        }
+        },
+        goToUserDetails = goToUserDetails
     )
 
     // ----------------------------------------------------------------
@@ -134,7 +128,7 @@ fun UserListScreen(
 fun UserListScreenSkeletonPreview() {
     CMSAppTheme {
         UserListScreenSkeleton(
-            goBack = { },
+            goBack = {},
             toggleUIMode = {},
             users = flowOf(
                 PagingData.from(
@@ -150,7 +144,7 @@ fun UserListScreenSkeletonPreview() {
 fun UserListScreenSkeletonPreviewDark() {
     CMSAppTheme {
         UserListScreenSkeleton(
-            goBack = { },
+            goBack = {},
             toggleUIMode = {},
             users = flowOf(
                 PagingData.from(
@@ -169,7 +163,8 @@ fun UserListScreenSkeleton(
     showMessage: Event<String>? = null,
     users: LazyPagingItems<User>,
     retryDataLoad: () -> Unit = {},
-    openAddUserSheet: () -> Unit = {}
+    openAddUserSheet: () -> Unit = {},
+    goToUserDetails: (Int) -> Unit = { _ -> }
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val lazyListState = rememberLazyListState()
@@ -253,11 +248,10 @@ fun UserListScreenSkeleton(
                                 email = user.email,
                                 gender = user.getGenderLabel(),
                                 status = user.getStatusLabel(),
-                                userImageUrl = "https://picsum.photos/seed/u${user.id}/200/200",
+                                userImageUrl = user.getAvatarImageUrl(),
                                 statusColor = user.getStatusColor(),
                                 onClick = {
-                                    // open details sheet
-                                    // do something...
+                                    goToUserDetails(user.id)
                                 }
                             )
                         }

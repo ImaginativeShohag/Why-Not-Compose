@@ -67,4 +67,6 @@ data class User(
             FlatColor.FlatRed2
         }
     }
+
+    fun getAvatarImageUrl() = "https://picsum.photos/seed/u$id/200/200"
 }

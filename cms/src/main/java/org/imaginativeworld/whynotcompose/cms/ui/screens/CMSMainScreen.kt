@@ -24,58 +24,54 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.cms.ui.common.button
+package org.imaginativeworld.whynotcompose.cms.ui.screens
 
-import android.content.res.Configuration
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Star
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedIconButton
-import androidx.compose.material3.Surface
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
 import org.imaginativeworld.whynotcompose.cms.theme.CMSAppTheme
 
 @Composable
-fun GeneralOutlinedIconButton(
-    modifier: Modifier = Modifier,
-    icon: ImageVector,
-    contentDescription: String? = null,
-    onClick: () -> Unit
+fun CMSMainScreen(
+    turnOnDarkMode: (Boolean) -> Unit,
+    goBack: () -> Unit
 ) {
-    OutlinedIconButton(
-        modifier = modifier,
-        onClick = onClick
+    val isDarkMode by UIThemeController.isDarkMode.collectAsState()
+
+    CMSAppTheme(
+        darkTheme = isDarkMode
     ) {
-        Icon(
-            icon,
-            contentDescription = contentDescription
+        CMSMainScreenSkeleton(
+            turnOnDarkMode = turnOnDarkMode,
+            goBack = goBack
         )
     }
 }
 
 @Preview
 @Composable
-fun GeneralOutlinedIconButtonPreview() {
+fun CMSMainScreenSkeletonPreview() {
     CMSAppTheme {
-        Surface {
-            GeneralOutlinedIconButton(
-                icon = Icons.Outlined.Star
-            ) {}
-        }
+        CMSMainScreenSkeleton()
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun GeneralOutlinedIconButtonPreviewDark() {
-    CMSAppTheme {
-        Surface {
-            GeneralOutlinedIconButton(
-                icon = Icons.Outlined.Star
-            ) {}
-        }
-    }
+fun CMSMainScreenSkeleton(
+    turnOnDarkMode: (Boolean) -> Unit = {},
+    goBack: () -> Unit = {}
+) {
+    val navController = rememberNavController()
+
+    CMSNavHost(
+        modifier = Modifier.fillMaxSize(),
+        navController = navController,
+        turnOnDarkMode = turnOnDarkMode,
+        goBack = goBack
+    )
 }

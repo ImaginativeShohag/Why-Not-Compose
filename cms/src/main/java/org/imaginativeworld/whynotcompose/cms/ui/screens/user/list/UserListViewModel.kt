@@ -24,7 +24,7 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.cms.ui.user.list
+package org.imaginativeworld.whynotcompose.cms.ui.screens.user.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -2,6 +2,7 @@ plugins {
     id(Libs.Android.library)
     kotlin("android")
     kotlin("kapt")
+    id(Libs.Google.DevTools.ksp)
 }
 
 android {
@@ -86,7 +87,7 @@ dependencies {
     // Moshi
     implementation(Libs.Square.Retrofit.converterMoshi)
     implementation(Libs.Square.Moshi.core)
-    kapt(Libs.Square.Moshi.codegen)
+    ksp(Libs.Square.Moshi.codegen)
 
     // ViewModel and LiveData
     implementation(Libs.AndroidX.Lifecycle.viewmodel)
@@ -104,5 +105,5 @@ dependencies {
 
     // Room Persistence Library
     implementation(Libs.AndroidX.Room.runtime)
-    kapt(Libs.AndroidX.Room.compiler)
+    ksp(Libs.AndroidX.Room.compiler)
 }

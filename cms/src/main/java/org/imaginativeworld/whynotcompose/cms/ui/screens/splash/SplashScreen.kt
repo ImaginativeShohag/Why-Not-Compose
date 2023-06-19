@@ -24,7 +24,7 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.cms.ui.splash
+package org.imaginativeworld.whynotcompose.cms.ui.screens.splash
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box

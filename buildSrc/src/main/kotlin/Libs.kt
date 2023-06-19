@@ -48,6 +48,12 @@ object Libs {
 
         const val exoplayer = "com.google.android.exoplayer:exoplayer:2.18.7"
 
+        object DevTools {
+            const val kspVersion = "1.8.21-1.0.11"
+
+            const val ksp = "com.google.devtools.ksp"
+        }
+
         object Firebase {
             const val crashlyticsGradlePluginVersion = "2.9.6"
 

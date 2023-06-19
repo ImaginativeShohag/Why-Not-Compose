@@ -1,7 +1,7 @@
 plugins {
     id(Libs.Android.library)
     kotlin("android")
-    kotlin("kapt")
+    id(Libs.Google.DevTools.ksp)
 }
 
 android {

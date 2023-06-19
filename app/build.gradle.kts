@@ -1,9 +1,8 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     id(Libs.Android.application)
     kotlin("android")
     kotlin("kapt")
+    id(Libs.Google.DevTools.ksp)
     id(Libs.Kotlin.percelizeGradlePlugin)
     id(Libs.Google.Hilt.gradlePlugin)
     id(Libs.Google.Maps.secretsGradlePlugin)
@@ -175,7 +174,7 @@ dependencies {
     // Moshi
     implementation(Libs.Square.Retrofit.converterMoshi)
     implementation(Libs.Square.Moshi.core)
-    kapt(Libs.Square.Moshi.codegen)
+    ksp(Libs.Square.Moshi.codegen)
 
     // Gson
     implementation(Libs.gson)
@@ -192,7 +191,7 @@ dependencies {
 
     // Room Persistence Library
     implementation(Libs.AndroidX.Room.runtime)
-    kapt(Libs.AndroidX.Room.compiler)
+    ksp(Libs.AndroidX.Room.compiler)
 
     // Room: Kotlin Extensions and Coroutines support for Room
     implementation(Libs.AndroidX.Room.ktx)
@@ -234,14 +233,4 @@ dependencies {
     implementation(platform(Libs.Google.Firebase.bom))
 
     implementation(Libs.Google.Firebase.analytics)
-}
-
-kapt {
-    correctErrorTypes = true
-}
-
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions {
-        jvmTarget = "17"
-    }
 }

@@ -24,7 +24,7 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.cms.ui.user.add
+package org.imaginativeworld.whynotcompose.cms.ui.screens.user.add
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
@@ -41,7 +41,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -76,10 +75,10 @@ import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.base.extensions.toast
 import org.imaginativeworld.whynotcompose.base.models.Event
 import org.imaginativeworld.whynotcompose.cms.theme.CMSAppTheme
-import org.imaginativeworld.whynotcompose.cms.ui.common.GeneralSheetAppBar
-import org.imaginativeworld.whynotcompose.cms.ui.common.LoadingContainer
-import org.imaginativeworld.whynotcompose.cms.ui.common.button.GeneralFilledButton
-import org.imaginativeworld.whynotcompose.cms.ui.common.button.GeneralOutlinedButton
+import org.imaginativeworld.whynotcompose.cms.ui.compositions.GeneralSheetAppBar
+import org.imaginativeworld.whynotcompose.cms.ui.compositions.LoadingContainer
+import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralFilledButton
+import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralOutlinedButton
 
 @Composable
 fun UserAddSheet(

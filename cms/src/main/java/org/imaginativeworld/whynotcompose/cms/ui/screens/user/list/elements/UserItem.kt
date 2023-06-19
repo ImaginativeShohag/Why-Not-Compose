@@ -24,7 +24,7 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.cms.ui.user.list.elements
+package org.imaginativeworld.whynotcompose.cms.ui.screens.user.list.elements
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column

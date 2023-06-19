@@ -24,7 +24,7 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.cms.ui
+package org.imaginativeworld.whynotcompose.cms.ui.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -43,11 +43,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
-import org.imaginativeworld.whynotcompose.cms.ui.splash.SplashScreen
-import org.imaginativeworld.whynotcompose.cms.ui.user.details.UserDetailsScreen
-import org.imaginativeworld.whynotcompose.cms.ui.user.details.UserDetailsViewModel
-import org.imaginativeworld.whynotcompose.cms.ui.user.list.UserListScreen
-import org.imaginativeworld.whynotcompose.cms.ui.user.list.UserListViewModel
+import org.imaginativeworld.whynotcompose.cms.ui.screens.splash.SplashScreen
+import org.imaginativeworld.whynotcompose.cms.ui.screens.user.details.UserDetailsScreen
+import org.imaginativeworld.whynotcompose.cms.ui.screens.user.details.UserDetailsViewModel
+import org.imaginativeworld.whynotcompose.cms.ui.screens.user.list.UserListScreen
+import org.imaginativeworld.whynotcompose.cms.ui.screens.user.list.UserListViewModel
 
 sealed class Screen(val route: String) {
     object Splash : Screen("splash")

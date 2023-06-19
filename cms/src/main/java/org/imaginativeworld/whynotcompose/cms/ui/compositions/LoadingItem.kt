@@ -24,7 +24,7 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.cms.ui.common
+package org.imaginativeworld.whynotcompose.cms.ui.compositions
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background

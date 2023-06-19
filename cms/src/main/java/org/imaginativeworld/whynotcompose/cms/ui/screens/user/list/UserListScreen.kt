@@ -24,7 +24,7 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.cms.ui.user.list
+package org.imaginativeworld.whynotcompose.cms.ui.screens.user.list
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
@@ -54,7 +54,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -64,19 +63,19 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
+import androidx.paging.compose.itemKey
 import kotlinx.coroutines.flow.flowOf
 import org.imaginativeworld.whynotcompose.base.models.Event
 import org.imaginativeworld.whynotcompose.cms.models.user.User
 import org.imaginativeworld.whynotcompose.cms.repositories.MockData
 import org.imaginativeworld.whynotcompose.cms.theme.CMSAppTheme
-import org.imaginativeworld.whynotcompose.cms.ui.common.EmptyView
-import org.imaginativeworld.whynotcompose.cms.ui.common.ErrorItem
-import org.imaginativeworld.whynotcompose.cms.ui.common.GeneralAppBar
-import org.imaginativeworld.whynotcompose.cms.ui.common.LoadingContainer
-import org.imaginativeworld.whynotcompose.cms.ui.common.LoadingItem
-import org.imaginativeworld.whynotcompose.cms.ui.user.add.UserAddSheet
-import org.imaginativeworld.whynotcompose.cms.ui.user.list.elements.UserItem
+import org.imaginativeworld.whynotcompose.cms.ui.compositions.EmptyView
+import org.imaginativeworld.whynotcompose.cms.ui.compositions.ErrorItem
+import org.imaginativeworld.whynotcompose.cms.ui.compositions.GeneralAppBar
+import org.imaginativeworld.whynotcompose.cms.ui.compositions.LoadingContainer
+import org.imaginativeworld.whynotcompose.cms.ui.compositions.LoadingItem
+import org.imaginativeworld.whynotcompose.cms.ui.screens.user.add.UserAddSheet
+import org.imaginativeworld.whynotcompose.cms.ui.screens.user.list.elements.UserItem
 
 @Composable
 fun UserListScreen(
@@ -233,7 +232,12 @@ fun UserListScreenSkeleton(
                     state = lazyListState,
                     contentPadding = PaddingValues(top = 4.dp, bottom = 4.dp)
                 ) {
-                    items(users) { user ->
+                    items(
+                        count = users.itemCount,
+                        key = users.itemKey { it.id }
+                    ) { index ->
+                        val user = users[index]
+
                         if (user == null) {
                             Text("Loading...")
                         } else {

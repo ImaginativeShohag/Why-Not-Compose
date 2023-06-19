@@ -123,6 +123,7 @@ CMS_API_KEY=YOUR_API_KEY
 
 - [Compose Material Catalog](https://github.com/androidx/androidx/tree/androidx-main/compose/integration-tests/material-catalog)
 - [Official Compose Samples](https://github.com/android/compose-samples)
+- [Now in Android App](https://github.com/android/nowinandroid)
 - [ChrisBanes/Tivi](https://github.com/chrisbanes/tivi)
 - [Gurupreet/ComposeCookBook](https://github.com/Gurupreet/ComposeCookBook)
 - [spencergriffin/exoplayer-compose](https://github.com/spencergriffin/exoplayer-compose)

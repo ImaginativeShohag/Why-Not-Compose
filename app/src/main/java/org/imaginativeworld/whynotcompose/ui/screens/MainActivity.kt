@@ -91,7 +91,7 @@ class MainActivity : ComponentActivity() {
             backPressedOnce = true
 
             pressBackExitJob = lifecycleScope.launch {
-                delay(500)
+                delay(1000)
 
                 backPressedOnce = false
             }

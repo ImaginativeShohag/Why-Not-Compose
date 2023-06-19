@@ -1,7 +1,7 @@
 plugins {
     id(Libs.Android.library)
     kotlin("android")
-    kotlin("kapt")
+    id(Libs.Google.DevTools.ksp)
 }
 
 android {
@@ -11,6 +11,7 @@ android {
     defaultConfig {
         minSdk = BuildConfigConst.minSdk
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -101,11 +102,6 @@ dependencies {
 
     // Timber
     implementation(Libs.timber)
-
-    // Hilt
-    implementation(Libs.Google.Hilt.core)
-    kapt(Libs.Google.Hilt.compiler)
-    implementation(Libs.AndroidX.Hilt.navigationCompose)
 
     // ExoPlayer
     implementation(Libs.Google.exoplayer)

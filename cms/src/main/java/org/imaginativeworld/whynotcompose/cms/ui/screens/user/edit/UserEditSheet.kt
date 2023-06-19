@@ -24,7 +24,7 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.cms.ui.user.edit
+package org.imaginativeworld.whynotcompose.cms.ui.screens.user.edit
 
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
@@ -80,10 +80,10 @@ import org.imaginativeworld.whynotcompose.base.models.Event
 import org.imaginativeworld.whynotcompose.cms.models.user.User
 import org.imaginativeworld.whynotcompose.cms.repositories.MockData
 import org.imaginativeworld.whynotcompose.cms.theme.CMSAppTheme
-import org.imaginativeworld.whynotcompose.cms.ui.common.GeneralSheetAppBar
-import org.imaginativeworld.whynotcompose.cms.ui.common.LoadingContainer
-import org.imaginativeworld.whynotcompose.cms.ui.common.button.GeneralFilledButton
-import org.imaginativeworld.whynotcompose.cms.ui.common.button.GeneralOutlinedButton
+import org.imaginativeworld.whynotcompose.cms.ui.compositions.GeneralSheetAppBar
+import org.imaginativeworld.whynotcompose.cms.ui.compositions.LoadingContainer
+import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralFilledButton
+import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralOutlinedButton
 
 @Composable
 fun UserEditSheet(

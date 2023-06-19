@@ -24,42 +24,58 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.cms.ui.common.button
+package org.imaginativeworld.whynotcompose.cms.ui.compositions.button
 
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import android.content.res.Configuration
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.material3.OutlinedIconButton
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.tooling.preview.Preview
+import org.imaginativeworld.whynotcompose.cms.theme.CMSAppTheme
 
 @Composable
-fun GeneralFilledButton(
+fun GeneralOutlinedIconButton(
     modifier: Modifier = Modifier,
-    caption: String,
-    icon: ImageVector? = null,
+    icon: ImageVector,
+    contentDescription: String? = null,
     onClick: () -> Unit
 ) {
-    Button(
+    OutlinedIconButton(
         modifier = modifier,
-        onClick = onClick,
-        contentPadding = if (icon == null) {
-            ButtonDefaults.TextButtonContentPadding
-        } else {
-            ButtonDefaults.ButtonWithIconContentPadding
-        }
+        onClick = onClick
     ) {
-        if (icon != null) {
-            Icon(
-                icon,
-                contentDescription = caption,
-                modifier = Modifier.size(ButtonDefaults.IconSize)
-            )
-            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+        Icon(
+            icon,
+            contentDescription = contentDescription
+        )
+    }
+}
+
+@Preview
+@Composable
+fun GeneralOutlinedIconButtonPreview() {
+    CMSAppTheme {
+        Surface {
+            GeneralOutlinedIconButton(
+                icon = Icons.Outlined.Star
+            ) {}
         }
-        Text(caption)
+    }
+}
+
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun GeneralOutlinedIconButtonPreviewDark() {
+    CMSAppTheme {
+        Surface {
+            GeneralOutlinedIconButton(
+                icon = Icons.Outlined.Star
+            ) {}
+        }
     }
 }

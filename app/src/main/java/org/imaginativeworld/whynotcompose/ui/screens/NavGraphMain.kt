@@ -40,7 +40,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import org.imaginativeworld.whynotcompose.base.extensions.getJsonFromObj
 import org.imaginativeworld.whynotcompose.base.extensions.getObjFromJson
-import org.imaginativeworld.whynotcompose.cms.ui.CMSMainScreen
+import org.imaginativeworld.whynotcompose.cms.ui.screens.CMSMainScreen
 import org.imaginativeworld.whynotcompose.exoplayer.ExoPlayerScreen
 import org.imaginativeworld.whynotcompose.models.MapPlace
 import org.imaginativeworld.whynotcompose.tictactoe.TicTacToeScreen

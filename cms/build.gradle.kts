@@ -2,6 +2,7 @@ plugins {
     id(Libs.Android.library)
     kotlin("android")
     kotlin("kapt")
+    id(Libs.Google.DevTools.ksp)
 }
 
 android {
@@ -10,12 +11,6 @@ android {
 
     defaultConfig {
         minSdk = BuildConfigConst.minSdk
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments(mapOf("room.schemaLocation" to "$projectDir/schemas"))
-            }
-        }
 
         buildConfigField("String", "CMS_API_KEY", "\"${getLocalProperty(key = "CMS_API_KEY")}\"")
     }
@@ -42,6 +37,10 @@ android {
             freeCompilerArgs + "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi"
         freeCompilerArgs =
             freeCompilerArgs + "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi"
+    }
+
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schemas")
     }
 
     buildFeatures {
@@ -126,11 +125,11 @@ dependencies {
     // Moshi
     implementation(Libs.Square.Retrofit.converterMoshi)
     implementation(Libs.Square.Moshi.core)
-    kapt(Libs.Square.Moshi.codegen)
+    ksp(Libs.Square.Moshi.codegen)
 
     // Room Persistence Library
     implementation(Libs.AndroidX.Room.runtime)
-    kapt(Libs.AndroidX.Room.compiler)
+    ksp(Libs.AndroidX.Room.compiler)
 
     // Room: Kotlin Extensions and Coroutines support for Room
     implementation(Libs.AndroidX.Room.ktx)

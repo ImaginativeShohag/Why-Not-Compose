@@ -24,7 +24,7 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.cms.ui.user.add
+package org.imaginativeworld.whynotcompose.cms.ui.screens.user.edit
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -42,19 +42,21 @@ import org.imaginativeworld.whynotcompose.cms.models.user.User
 import org.imaginativeworld.whynotcompose.cms.repositories.UserRepository
 
 @HiltViewModel
-class UserAddViewModel @Inject constructor(
+class UserEditViewModel @Inject constructor(
     private val repository: UserRepository
 ) : ViewModel() {
     private val _eventShowLoading = MutableStateFlow(false)
 
     private val _eventShowMessage = MutableStateFlow<Event<String>?>(null)
 
-    private val _eventAddUserSuccess = MutableStateFlow<Event<Boolean>?>(null)
+    private val _eventUpdateUserSuccess = MutableStateFlow<Event<Boolean>?>(null)
+
+    private val _user = MutableStateFlow<User?>(null)
 
     // ----------------------------------------------------------------
 
-    private val _state = MutableStateFlow(UserAddViewState())
-    val state: StateFlow<UserAddViewState>
+    private val _state = MutableStateFlow(UserEditViewState())
+    val state: StateFlow<UserEditViewState>
         get() = _state
 
     // ----------------------------------------------------------------
@@ -64,13 +66,15 @@ class UserAddViewModel @Inject constructor(
             combine(
                 _eventShowLoading,
                 _eventShowMessage,
-                _eventAddUserSuccess
-            ) { showLoading, showMessage, addUserSuccess ->
+                _eventUpdateUserSuccess,
+                _user
+            ) { showLoading, showMessage, updateUserSuccess, user ->
 
-                UserAddViewState(
+                UserEditViewState(
                     loading = showLoading,
                     message = showMessage,
-                    addUserSuccess = addUserSuccess
+                    user = user,
+                    updateUserSuccess = updateUserSuccess
                 )
             }.catch { throwable ->
                 // TODO: emit a UI error here. For now we'll just rethrow
@@ -83,10 +87,33 @@ class UserAddViewModel @Inject constructor(
 
     // ----------------------------------------------------------------
 
+    fun getDetails(
+        userId: Int
+    ) = viewModelScope.launch {
+        // Reset
+        _user.value = null
+
+        // Call API
+        _eventShowLoading.value = true
+
+        try {
+            val user = repository.getUser(userId)
+
+            _user.value = user
+        } catch (e: ApiException) {
+            _eventShowMessage.value = Event(e.message ?: "Unknown error!")
+        }
+
+        _eventShowLoading.value = false
+    }
+
+    // ----------------------------------------------------------------
+
     private fun isValid(
         name: String,
         email: String,
-        gender: String
+        gender: String,
+        status: String
     ): Boolean {
         if (name.isBlank()) {
             _eventShowMessage.value = Event("Please enter your name!")
@@ -108,25 +135,32 @@ class UserAddViewModel @Inject constructor(
             return false
         }
 
+        if (status.isBlank()) {
+            _eventShowMessage.value = Event("Please select user status!")
+            return false
+        }
+
         return true
     }
 
-    fun addUser(
+    fun update(
+        userId: Int,
         name: String,
         email: String,
         gender: String,
         status: String
     ) = viewModelScope.launch {
-        if (!isValid(name, email, gender)) {
+        if (!isValid(name, email, gender, status)) {
             return@launch
         }
 
         _eventShowLoading.value = true
 
         try {
-            val newUser = repository.signIn(
+            repository.updateUser(
+                userId,
                 User(
-                    0, // It will be ignored in the server.
+                    userId,
                     name,
                     email,
                     gender,
@@ -134,11 +168,7 @@ class UserAddViewModel @Inject constructor(
                 )
             )
 
-            if (newUser != null) {
-                _eventAddUserSuccess.value = Event(true)
-            } else {
-                _eventShowMessage.value = Event("Failed to add user!")
-            }
+            _eventUpdateUserSuccess.value = Event(true)
         } catch (e: ApiException) {
             _eventShowMessage.value = Event(e.message ?: "Unknown error!")
         }
@@ -147,8 +177,9 @@ class UserAddViewModel @Inject constructor(
     }
 }
 
-data class UserAddViewState(
+data class UserEditViewState(
     val loading: Boolean = false,
     val message: Event<String>? = null,
-    val addUserSuccess: Event<Boolean>? = null
+    val user: User? = null,
+    val updateUserSuccess: Event<Boolean>? = null
 )

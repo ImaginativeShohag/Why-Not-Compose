@@ -80,7 +80,7 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
+import androidx.paging.compose.itemKey
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.isActive
@@ -256,7 +256,12 @@ fun DataFetchAndPagingScreenSkeleton(
                         state = lazyListState,
                         contentPadding = PaddingValues(top = 28.dp, bottom = 4.dp)
                     ) {
-                        items(repos) { repo ->
+                        items(
+                            count = repos.itemCount,
+                            key = repos.itemKey { it.id }
+                        ) { index ->
+                            val repo = repos[index]
+
                             if (repo == null) {
                                 Text("Loading...")
                             } else {

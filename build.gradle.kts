@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
@@ -12,6 +14,7 @@ plugins {
     id(Libs.Android.application) version Libs.Gradle.version apply false
     id(Libs.Android.library) version Libs.Gradle.version apply false
     kotlin("android") version Libs.Kotlin.version apply false
+    id(Libs.Google.DevTools.ksp) version Libs.Google.DevTools.kspVersion apply false
     id(Libs.Google.Firebase.crashlyticsGradlePlugin) version Libs.Google.Firebase.crashlyticsGradlePluginVersion apply false
     id(Libs.Google.Services.gradlePlugin) version Libs.Google.Services.version apply false
     id(Libs.Google.Maps.secretsGradlePlugin) version Libs.Google.Maps.secretsGradlePluginVersion apply false
@@ -37,6 +40,14 @@ subprojects {
                 )
             )
             licenseHeaderFile(rootProject.file("spotless/copyright.kt"))
+        }
+    }
+}
+
+allprojects {
+    tasks.withType<KotlinCompile>().configureEach {
+        kotlinOptions {
+            jvmTarget = "17"
         }
     }
 }

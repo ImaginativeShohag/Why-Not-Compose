@@ -39,26 +39,26 @@ object Libs {
 
     object Airbnb {
         object Lottie {
-            const val compose = "com.airbnb.android:lottie-compose:6.0.0"
+            const val compose = "com.airbnb.android:lottie-compose:6.0.1"
         }
     }
 
     object Google {
         const val service = "com.google.gms:google-services:4.3.15"
 
-        const val exoplayer = "com.google.android.exoplayer:exoplayer:2.18.6"
+        const val exoplayer = "com.google.android.exoplayer:exoplayer:2.18.7"
 
         object Firebase {
-            const val gradlePluginVersion = "2.9.5"
+            const val crashlyticsGradlePluginVersion = "2.9.6"
 
-            const val bom = "com.google.firebase:firebase-bom:31.5.0"
+            const val bom = "com.google.firebase:firebase-bom:32.1.1"
             const val analytics = "com.google.firebase:firebase-analytics-ktx"
 
-            const val gradlePlugin = "com.google.firebase.crashlytics"
+            const val crashlyticsGradlePlugin = "com.google.firebase.crashlytics"
         }
 
         object Hilt {
-            const val version = "2.45"
+            const val version = "2.46.1"
 
             const val core = "com.google.dagger:hilt-android:$version"
             const val compiler = "com.google.dagger:hilt-compiler:$version"
@@ -123,11 +123,11 @@ object Libs {
         const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
         object Activity {
-            const val activityCompose = "androidx.activity:activity-compose:1.7.1"
+            const val activityCompose = "androidx.activity:activity-compose:1.7.2"
         }
 
         object Compose {
-            private const val bomVersion = "2023.05.01"
+            private const val bomVersion = "2023.06.00"
             const val compilerVersion = "1.4.7"
             private const val runtimeTracingVersion = "1.0.0-alpha02"
 
@@ -188,7 +188,7 @@ object Libs {
         }
 
         object Navigation {
-            private const val version = "2.5.3"
+            private const val version = "2.6.0"
 
             const val fragment = "androidx.navigation:navigation-fragment-ktx:$version"
             const val uiKtx = "androidx.navigation:navigation-ui-ktx:$version"
@@ -197,7 +197,7 @@ object Libs {
 
         object Paging {
             private const val version = "3.1.1"
-            private const val composeVersion = "1.0.0-alpha18"
+            private const val composeVersion = "3.2.0-beta01"
 
             const val runtime = "androidx.paging:paging-runtime-ktx:$version"
             const val compose = "androidx.paging:paging-compose:$composeVersion"
@@ -228,7 +228,7 @@ object Libs {
     }
 
     object OneSignal {
-        const val core = "com.onesignal:OneSignal:4.8.5"
+        const val core = "com.onesignal:OneSignal:4.8.6"
     }
 
     object Square {
@@ -242,7 +242,7 @@ object Libs {
         const val okhttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:4.9.3"
 
         object Moshi {
-            private const val version = "1.14.0"
+            private const val version = "1.15.0"
 
             const val core = "com.squareup.moshi:moshi-kotlin:$version"
             const val codegen = "com.squareup.moshi:moshi-kotlin-codegen:$version"

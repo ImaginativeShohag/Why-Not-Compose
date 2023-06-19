@@ -12,7 +12,7 @@ plugins {
     id(Libs.Android.application) version Libs.Gradle.version apply false
     id(Libs.Android.library) version Libs.Gradle.version apply false
     kotlin("android") version Libs.Kotlin.version apply false
-    id(Libs.Google.Firebase.gradlePlugin) version Libs.Google.Firebase.gradlePluginVersion apply false
+    id(Libs.Google.Firebase.crashlyticsGradlePlugin) version Libs.Google.Firebase.crashlyticsGradlePluginVersion apply false
     id(Libs.Google.Services.gradlePlugin) version Libs.Google.Services.version apply false
     id(Libs.Google.Maps.secretsGradlePlugin) version Libs.Google.Maps.secretsGradlePluginVersion apply false
     id(Libs.Google.Hilt.gradlePlugin) version Libs.Google.Hilt.version apply false

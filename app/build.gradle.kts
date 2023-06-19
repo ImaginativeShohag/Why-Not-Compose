@@ -8,7 +8,7 @@ plugins {
     id(Libs.Google.Hilt.gradlePlugin)
     id(Libs.Google.Maps.secretsGradlePlugin)
     id(Libs.Google.Services.gradlePlugin)
-    id(Libs.Google.Firebase.gradlePlugin)
+    id(Libs.Google.Firebase.crashlyticsGradlePlugin)
 }
 
 android {

@@ -93,8 +93,7 @@ class UserDetailsViewModel @Inject constructor(
         } catch (e: ApiException) {
             _eventShowMessage.value = Event(
                 ActionMessage(
-                    e.message ?: "Unknown error!",
-                    action = UserDetailsViewAction.USER_DELETE_ERROR
+                    e.message ?: "Unknown error!"
                 )
             )
         }
@@ -111,6 +110,5 @@ data class UserDetailsViewState(
 )
 
 enum class UserDetailsViewAction : ViewAction {
-    USER_LOAD_ERROR,
-    USER_DELETE_ERROR
+    USER_LOAD_ERROR
 }

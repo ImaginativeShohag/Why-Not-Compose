@@ -16,6 +16,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
@@ -86,8 +87,8 @@ fun UserAddSheet(
             if (isAddUserSuccess) {
                 context.toast("User successfully added.")
 
-                onSuccess()
                 goBack()
+                onSuccess()
             }
         }
     }
@@ -147,11 +148,11 @@ fun UserAddSheetSkeleton(
 
     val genderOptions = listOf("Male", "Female")
     var genderDropdownExpended by remember { mutableStateOf(false) }
-    var selectedGenderOption by remember { mutableStateOf("") }
+    var selectedGenderOption by rememberSaveable { mutableStateOf("") }
 
     val statusOptions = listOf("Active", "Inactive")
     var statusDropdownExpended by remember { mutableStateOf(false) }
-    var selectedStatusOption by remember { mutableStateOf("") }
+    var selectedStatusOption by rememberSaveable { mutableStateOf("") }
 
     LaunchedEffect(showMessage) {
         showMessage?.getValueOnce()?.let { message ->
@@ -184,7 +185,8 @@ fun UserAddSheetSkeleton(
                 modifier = Modifier.fillMaxWidth(),
                 value = name,
                 onValueChange = { name = it },
-                label = { Text("Name") }
+                label = { Text("Name") },
+                singleLine = true
             )
 
             OutlinedTextField(
@@ -194,7 +196,8 @@ fun UserAddSheetSkeleton(
                 label = { Text("Email") },
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Email
-                )
+                ),
+                singleLine = true
             )
 
             ExposedDropdownMenuBox(
@@ -294,7 +297,7 @@ fun UserAddSheetSkeleton(
 
                 GeneralFilledButton(
                     caption = "Add User",
-                    icon = Icons.Filled.Add,
+                    icon = Icons.Rounded.Add,
                     onClick = {
                         addUser(
                             name,

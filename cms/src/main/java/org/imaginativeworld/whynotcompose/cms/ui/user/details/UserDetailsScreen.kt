@@ -49,6 +49,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -57,11 +58,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.base.models.Event
+import org.imaginativeworld.whynotcompose.cms.models.ActionMessage
 import org.imaginativeworld.whynotcompose.cms.models.user.User
 import org.imaginativeworld.whynotcompose.cms.repositories.MockData
 import org.imaginativeworld.whynotcompose.cms.theme.CMSAppTheme
@@ -70,6 +73,7 @@ import org.imaginativeworld.whynotcompose.cms.ui.common.LoadingContainer
 import org.imaginativeworld.whynotcompose.cms.ui.common.LoadingItem
 import org.imaginativeworld.whynotcompose.cms.ui.common.button.GeneralFilledButton
 import org.imaginativeworld.whynotcompose.cms.ui.common.button.GeneralOutlinedButton
+import org.imaginativeworld.whynotcompose.cms.ui.user.edit.UserEditSheet
 import org.imaginativeworld.whynotcompose.cms.ui.user.list.elements.UserItem
 
 @Composable
@@ -77,8 +81,11 @@ fun UserDetailsScreen(
     viewModel: UserDetailsViewModel,
     userId: Int,
     goBack: () -> Unit,
-    toggleUIMode: () -> Unit
+    toggleUIMode: () -> Unit,
+    onTodosClicked: () -> Unit,
+    onPostsClicked: () -> Unit
 ) {
+    val openEditUserSheet = rememberSaveable { mutableStateOf(false) }
     val state by viewModel.state.collectAsState()
 
     var openDeleteDialog by remember { mutableStateOf(false) }
@@ -95,12 +102,19 @@ fun UserDetailsScreen(
 
     UserDetailsScreenSkeleton(
         user = state.user,
+        showLoading = state.loading,
+        showMessage = state.message,
         goBack = goBack,
         toggleUIMode = toggleUIMode,
+        retryDataLoad = {
+            viewModel.getDetails(userId)
+        },
         onDeleteClicked = { openDeleteDialog = true },
-        onEditClicked = {},
-        onTodosClicked = {},
-        onPostsClicked = {}
+        onEditClicked = {
+            openEditUserSheet.value = !openEditUserSheet.value
+        },
+        onTodosClicked = onTodosClicked,
+        onPostsClicked = onPostsClicked
     )
 
     // ----------------------------------------------------------------
@@ -140,6 +154,20 @@ fun UserDetailsScreen(
             }
         )
     }
+
+    // ----------------------------------------------------------------
+    // Bottom Sheet
+    // ----------------------------------------------------------------
+
+    if (openEditUserSheet.value) {
+        UserEditSheet(
+            showSheet = openEditUserSheet,
+            userId = userId,
+            onSuccess = {
+                viewModel.getDetails(userId)
+            }
+        )
+    }
 }
 
 @Preview
@@ -166,18 +194,35 @@ fun UserDetailsScreenSkeletonPreviewDark() {
 fun UserDetailsScreenSkeleton(
     user: User?,
     showLoading: Boolean = false,
-    showMessage: Event<String>? = null,
+    showMessage: Event<ActionMessage>? = null,
     goBack: () -> Unit = {},
     toggleUIMode: () -> Unit = {},
+    retryDataLoad: () -> Unit = {},
     onDeleteClicked: () -> Unit = {},
     onEditClicked: () -> Unit = {},
     onTodosClicked: () -> Unit = {},
     onPostsClicked: () -> Unit = {}
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
+
     LaunchedEffect(showMessage) {
-        showMessage?.getValueOnce()?.let { message ->
-            snackbarHostState.showSnackbar(message)
+        showMessage?.getValueOnce()?.let { actionMessage ->
+            when (actionMessage.action) {
+                UserDetailsViewAction.USER_LOAD_ERROR -> {
+                    val result = snackbarHostState.showSnackbar(
+                        actionMessage.message,
+                        actionLabel = "Retry"
+                    )
+
+                    if (result == SnackbarResult.ActionPerformed) {
+                        retryDataLoad()
+                    }
+                }
+
+                else -> {
+                    snackbarHostState.showSnackbar(actionMessage.message)
+                }
+            }
         }
     }
 

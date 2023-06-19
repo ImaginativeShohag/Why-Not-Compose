@@ -58,7 +58,7 @@ sealed class Screen(val route: String) {
 }
 
 sealed class SplashScreen(val route: String) {
-    object Splash : UserScreen("splash/index")
+    object Splash : SplashScreen("splash/index")
 }
 
 sealed class UserScreen(val route: String) {
@@ -69,18 +69,18 @@ sealed class UserScreen(val route: String) {
 }
 
 sealed class PostScreen(val route: String) {
-    object PostList : UserScreen("users/{userId}/posts")
-    object PostDetails : UserScreen("posts/{postId}")
+    object PostList : PostScreen("users/{userId}/posts")
+    object PostDetails : PostScreen("posts/{postId}")
 }
 
 sealed class TodoScreen(val route: String) {
-    object TodoList : UserScreen("users/{userId}/todos")
-    object TodoDetails : UserScreen("todos/{todoId}")
+    object TodoList : TodoScreen("users/{userId}/todos")
+    object TodoDetails : TodoScreen("todos/{todoId}")
 }
 
 sealed class CommentScreen(val route: String) {
-    object CommentList : UserScreen("posts/{postId}/comments")
-    object CommentDetails : UserScreen("comments/{commentId}")
+    object CommentList : CommentScreen("posts/{postId}/comments")
+    object CommentDetails : CommentScreen("comments/{commentId}")
 }
 
 // ================================================================
@@ -122,7 +122,7 @@ private fun NavGraphBuilder.addSplashScreens(
         composable(SplashScreen.Splash.route) {
             SplashScreen(
                 gotoHomeIndex = {
-                    navController.navigate(UserScreen.UserList.route) {
+                    navController.navigate(Screen.User.route) {
                         popUpTo(SplashScreen.Splash.route) {
                             inclusive = true
                         }
@@ -190,6 +190,12 @@ private fun NavGraphBuilder.addUserScreens(
                 },
                 toggleUIMode = {
                     turnOnDarkMode(!isDarkMode)
+                },
+                onTodosClicked = {
+                    navController.navigate(Screen.Todo.route)
+                },
+                onPostsClicked = {
+                    navController.navigate(Screen.Post.route)
                 }
             )
         }

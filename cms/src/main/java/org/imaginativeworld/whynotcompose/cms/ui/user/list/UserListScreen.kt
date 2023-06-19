@@ -41,14 +41,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SheetValue
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -70,7 +67,6 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.base.models.Event
 import org.imaginativeworld.whynotcompose.cms.models.user.User
 import org.imaginativeworld.whynotcompose.cms.repositories.MockData
@@ -90,13 +86,13 @@ fun UserListScreen(
     toggleUIMode: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
-    val bottomSheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = false,
-        confirmValueChange = { sheetState ->
-            return@rememberModalBottomSheetState sheetState != SheetValue.Hidden
-        }
-    )
-    var openAddUserSheet by rememberSaveable { mutableStateOf(false) }
+//    val bottomSheetState = rememberModalBottomSheetState(
+//        skipPartiallyExpanded = false,
+//        confirmValueChange = { sheetState ->
+//            return@rememberModalBottomSheetState sheetState != SheetValue.Hidden
+//        }
+//    )
+    val openAddUserSheet = rememberSaveable { mutableStateOf(false) }
     val state by viewModel.state.collectAsState()
 
     val pagedUsers = state.items.collectAsLazyPagingItems()
@@ -115,7 +111,7 @@ fun UserListScreen(
             viewModel.loadUsers()
         },
         openAddUserSheet = {
-            openAddUserSheet = !openAddUserSheet
+            openAddUserSheet.value = !openAddUserSheet.value
         }
     )
 
@@ -123,26 +119,13 @@ fun UserListScreen(
     // Bottom Sheet
     // ----------------------------------------------------------------
 
-    if (openAddUserSheet) {
-        ModalBottomSheet(
-            onDismissRequest = { openAddUserSheet = false },
-            sheetState = bottomSheetState
-        ) {
-            UserAddSheet(
-                goBack = {
-                    scope.launch {
-                        bottomSheetState.hide()
-                    }.invokeOnCompletion {
-                        if (!bottomSheetState.isVisible) {
-                            openAddUserSheet = false
-                        }
-                    }
-                },
-                onSuccess = {
-                    viewModel.loadUsers()
-                }
-            )
-        }
+    if (openAddUserSheet.value) {
+        UserAddSheet(
+            showSheet = openAddUserSheet,
+            onSuccess = {
+                viewModel.loadUsers()
+            }
+        )
     }
 }
 

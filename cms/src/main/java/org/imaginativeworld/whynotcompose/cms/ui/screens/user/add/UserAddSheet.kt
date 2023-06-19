@@ -89,7 +89,7 @@ fun UserAddSheet(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = false,
+        skipPartiallyExpanded = true,
         confirmValueChange = { sheetState ->
             return@rememberModalBottomSheetState sheetState != SheetValue.Hidden
         }
@@ -171,11 +171,11 @@ fun UserAddSheetSkeleton(
     var name by rememberSaveable { mutableStateOf("") }
     var email by rememberSaveable { mutableStateOf("") }
 
-    val genderOptions = listOf("Male", "Female")
+    val genderOptions = remember { listOf("Male", "Female") }
     var genderDropdownExpended by remember { mutableStateOf(false) }
     var selectedGenderOption by rememberSaveable { mutableStateOf("") }
 
-    val statusOptions = listOf("Active", "Inactive")
+    val statusOptions = remember { listOf("Active", "Inactive") }
     var statusDropdownExpended by remember { mutableStateOf(false) }
     var selectedStatusOption by rememberSaveable { mutableStateOf("") }
 

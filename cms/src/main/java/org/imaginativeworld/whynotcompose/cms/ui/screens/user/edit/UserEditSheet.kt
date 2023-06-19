@@ -95,7 +95,7 @@ fun UserEditSheet(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = false,
+        skipPartiallyExpanded = true,
         confirmValueChange = { sheetState ->
             return@rememberModalBottomSheetState sheetState != SheetValue.Hidden
         }
@@ -188,13 +188,21 @@ fun UserEditSheetSkeleton(
     var name by rememberSaveable(user) { mutableStateOf(user?.name ?: "") }
     var email by rememberSaveable(user) { mutableStateOf(user?.email ?: "") }
 
-    val genderOptions = listOf("Male", "Female")
+    val genderOptions = remember { listOf("Male", "Female") }
     var genderDropdownExpended by remember { mutableStateOf(false) }
-    var selectedGenderOption by rememberSaveable(user) { mutableStateOf(user?.getGenderLabel() ?: "") }
+    var selectedGenderOption by rememberSaveable(user) {
+        mutableStateOf(
+            user?.getGenderLabel() ?: ""
+        )
+    }
 
-    val statusOptions = listOf("Active", "Inactive")
+    val statusOptions = remember { listOf("Active", "Inactive") }
     var statusDropdownExpended by remember { mutableStateOf(false) }
-    var selectedStatusOption by rememberSaveable(user) { mutableStateOf(user?.getStatusLabel() ?: "") }
+    var selectedStatusOption by rememberSaveable(user) {
+        mutableStateOf(
+            user?.getStatusLabel() ?: ""
+        )
+    }
 
     LaunchedEffect(showMessage) {
         showMessage?.getValueOnce()?.let { message ->

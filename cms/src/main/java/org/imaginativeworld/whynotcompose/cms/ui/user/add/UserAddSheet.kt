@@ -83,7 +83,7 @@ fun UserAddSheet(
 
 @Preview
 @Composable
-fun TemplateChildScreenSkeletonPreview() {
+fun UserAddSheetSkeletonPreview() {
     CMSAppTheme {
         UserAddSheetSkeleton()
     }
@@ -91,7 +91,7 @@ fun TemplateChildScreenSkeletonPreview() {
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun TemplateChildScreenSkeletonPreviewDark() {
+fun UserAddSheetSkeletonPreviewDark() {
     CMSAppTheme {
         UserAddSheetSkeleton()
     }

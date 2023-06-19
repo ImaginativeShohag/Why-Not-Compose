@@ -64,7 +64,7 @@ fun EmptyView(
     loadState: CombinedLoadStates,
     itemCount: Int,
     title: String = "Nothing here!",
-    message: String? = "No repository found."
+    message: String? = "No item found."
 ) {
     Timber.e("itemCount: $itemCount")
 
@@ -100,7 +100,9 @@ fun EmptyViewPreview() {
         Surface {
             EmptyView(
                 modifier = Modifier,
-                show = true
+                show = true,
+                title = "Nothing here!",
+                message = "No item found."
             )
         }
     }
@@ -113,7 +115,9 @@ fun EmptyViewPreviewDark() {
         Surface {
             EmptyView(
                 modifier = Modifier,
-                show = true
+                show = true,
+                title = "Nothing here!",
+                message = "No item found."
             )
         }
     }
@@ -123,8 +127,8 @@ fun EmptyViewPreviewDark() {
 fun EmptyView(
     modifier: Modifier = Modifier,
     show: Boolean,
-    title: String = "Nothing here!",
-    message: String? = "No item found!"
+    title: String,
+    message: String?
 ) {
     AnimatedVisibility(
         visible = show,

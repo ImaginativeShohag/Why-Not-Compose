@@ -1,30 +1,4 @@
-/*
- * Copyright 2023 Md. Mahmudul Hasan Shohag
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * ------------------------------------------------------------------------
- *
- * Project: Why Not Compose!
- * Developed by: @ImaginativeShohag
- *
- * Md. Mahmudul Hasan Shohag
- * imaginativeshohag@gmail.com
- *
- * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
- */
-
-package org.imaginativeworld.whynotcompose.cms.ui.screens.user.list
+package org.imaginativeworld.whynotcompose.cms.ui.screens.todo.list
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
@@ -66,7 +40,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import kotlinx.coroutines.flow.flowOf
 import org.imaginativeworld.whynotcompose.base.models.Event
-import org.imaginativeworld.whynotcompose.cms.models.user.User
+import org.imaginativeworld.whynotcompose.cms.models.todo.Todo
 import org.imaginativeworld.whynotcompose.cms.repositories.MockData
 import org.imaginativeworld.whynotcompose.cms.theme.CMSAppTheme
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.EmptyView
@@ -74,49 +48,51 @@ import org.imaginativeworld.whynotcompose.cms.ui.compositions.ErrorItem
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.GeneralAppBar
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.LoadingContainer
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.LoadingItem
-import org.imaginativeworld.whynotcompose.cms.ui.screens.user.add.UserAddSheet
-import org.imaginativeworld.whynotcompose.cms.ui.screens.user.list.elements.UserItem
+import org.imaginativeworld.whynotcompose.cms.ui.screens.todo.add.TodoAddSheet
+import org.imaginativeworld.whynotcompose.cms.ui.screens.todo.list.elements.TodoItem
 
 @Composable
-fun UserListScreen(
-    viewModel: UserListViewModel,
+fun TodoListScreen(
+    viewModel: TodoListViewModel,
+    userId: Int,
     goBack: () -> Unit,
     toggleUIMode: () -> Unit,
-    goToUserDetails: (Int) -> Unit
+    goToTodoDetails: (Int) -> Unit
 ) {
-    val openAddUserSheet = rememberSaveable { mutableStateOf(false) }
+    val openAddTodoSheet = rememberSaveable { mutableStateOf(false) }
     val state by viewModel.state.collectAsState()
 
-    val pagedUsers = state.items.collectAsLazyPagingItems()
+    val pagedTodos = state.items.collectAsLazyPagingItems()
 
     LaunchedEffect(Unit) {
-        viewModel.loadUsers()
+        viewModel.loadTodos(userId)
     }
 
-    UserListScreenSkeleton(
+    TodoListScreenSkeleton(
         goBack = goBack,
         toggleUIMode = toggleUIMode,
         showLoading = state.loading,
         showMessage = state.message,
-        users = pagedUsers,
+        todos = pagedTodos,
         retryDataLoad = {
-            viewModel.loadUsers()
+            viewModel.loadTodos(userId)
         },
-        openAddUserSheet = {
-            openAddUserSheet.value = !openAddUserSheet.value
+        openAddTodoSheet = {
+            openAddTodoSheet.value = !openAddTodoSheet.value
         },
-        goToUserDetails = goToUserDetails
+        goToTodoDetails = goToTodoDetails
     )
 
     // ----------------------------------------------------------------
     // Bottom Sheet
     // ----------------------------------------------------------------
 
-    if (openAddUserSheet.value) {
-        UserAddSheet(
-            showSheet = openAddUserSheet,
+    if (openAddTodoSheet.value) {
+        TodoAddSheet(
+            userId = userId,
+            showSheet = openAddTodoSheet,
             onSuccess = {
-                viewModel.loadUsers()
+                viewModel.loadTodos(userId)
             }
         )
     }
@@ -124,14 +100,14 @@ fun UserListScreen(
 
 @Preview
 @Composable
-fun UserListScreenSkeletonPreview() {
+fun TodoListScreenSkeletonPreview() {
     CMSAppTheme {
-        UserListScreenSkeleton(
+        TodoListScreenSkeleton(
             goBack = {},
             toggleUIMode = {},
-            users = flowOf(
+            todos = flowOf(
                 PagingData.from(
-                    MockData.dummyUserList
+                    MockData.dummyTodoList
                 )
             ).collectAsLazyPagingItems()
         )
@@ -140,14 +116,14 @@ fun UserListScreenSkeletonPreview() {
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun UserListScreenSkeletonPreviewDark() {
+fun TodoListScreenSkeletonPreviewDark() {
     CMSAppTheme {
-        UserListScreenSkeleton(
+        TodoListScreenSkeleton(
             goBack = {},
             toggleUIMode = {},
-            users = flowOf(
+            todos = flowOf(
                 PagingData.from(
-                    MockData.dummyUserList
+                    MockData.dummyTodoList
                 )
             ).collectAsLazyPagingItems()
         )
@@ -155,15 +131,15 @@ fun UserListScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun UserListScreenSkeleton(
+fun TodoListScreenSkeleton(
     goBack: () -> Unit,
     toggleUIMode: () -> Unit,
     showLoading: Boolean = false,
     showMessage: Event<String>? = null,
-    users: LazyPagingItems<User>,
+    todos: LazyPagingItems<Todo>,
     retryDataLoad: () -> Unit = {},
-    openAddUserSheet: () -> Unit = {},
-    goToUserDetails: (Int) -> Unit = { _ -> }
+    openAddTodoSheet: () -> Unit = {},
+    goToTodoDetails: (Int) -> Unit = { _ -> }
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val lazyListState = rememberLazyListState()
@@ -193,16 +169,16 @@ fun UserListScreenSkeleton(
         floatingActionButton = {
             ExtendedFloatingActionButton(
                 onClick = {
-                    openAddUserSheet()
+                    openAddTodoSheet()
                 },
                 expanded = expandedFab,
-                icon = { Icon(Icons.Filled.Add, "Add User") },
-                text = { Text(text = "Add User") }
+                icon = { Icon(Icons.Filled.Add, "Add Todo") },
+                text = { Text(text = "Add Todo") }
             )
         },
         topBar = {
             GeneralAppBar(
-                subTitle = "Users",
+                subTitle = "Todos",
                 goBack = goBack,
                 toggleUIMode = toggleUIMode
             )
@@ -218,7 +194,7 @@ fun UserListScreenSkeleton(
                     .fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                users.apply {
+                todos.apply {
                     EmptyView(
                         modifier = Modifier,
                         loadState = loadState,
@@ -233,35 +209,33 @@ fun UserListScreenSkeleton(
                     contentPadding = PaddingValues(top = 4.dp, bottom = 4.dp)
                 ) {
                     items(
-                        count = users.itemCount,
-                        key = users.itemKey { it.id }
+                        count = todos.itemCount,
+                        key = todos.itemKey { it.id }
                     ) { index ->
-                        val user = users[index]
+                        val todo = todos[index]
 
-                        if (user == null) {
+                        if (todo == null) {
                             Text("Loading...")
                         } else {
-                            UserItem(
+                            TodoItem(
                                 modifier = Modifier.padding(
                                     start = 12.dp,
                                     top = 4.dp,
                                     end = 12.dp,
                                     bottom = 4.dp
                                 ),
-                                name = user.name,
-                                email = user.email,
-                                gender = user.getGenderLabel(),
-                                status = user.getStatusLabel(),
-                                userImageUrl = user.getAvatarImageUrl(),
-                                statusColor = user.getStatusColor(),
+                                title = todo.title,
+                                dueDate = todo.getDueDate(),
+                                status = todo.getStatusLabel(),
+                                statusColor = todo.getStatusColor(),
                                 onClick = {
-                                    goToUserDetails(user.id)
+                                    goToTodoDetails(todo.id)
                                 }
                             )
                         }
                     }
 
-                    users.apply {
+                    todos.apply {
                         when {
                             loadState.refresh is LoadState.Loading -> {
                                 item {
@@ -302,7 +276,7 @@ fun UserListScreenSkeleton(
                                 item {
                                     // Note: this should be full screen using fillParentMaxSize()
                                     ErrorItem(
-                                        errorMessage = "Error! " + (users.loadState.refresh as LoadState.Error).error.message,
+                                        errorMessage = "Error! " + (todos.loadState.refresh as LoadState.Error).error.message,
                                         onRetryClicked = {
                                             retry()
                                         }
@@ -313,7 +287,7 @@ fun UserListScreenSkeleton(
                             loadState.append is LoadState.Error -> {
                                 item {
                                     ErrorItem(
-                                        errorMessage = "Error! " + (users.loadState.append as LoadState.Error).error.message,
+                                        errorMessage = "Error! " + (todos.loadState.append as LoadState.Error).error.message,
                                         onRetryClicked = {
                                             retry()
                                         }

@@ -44,6 +44,8 @@ import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
 import org.imaginativeworld.whynotcompose.cms.ui.screens.splash.SplashScreen
+import org.imaginativeworld.whynotcompose.cms.ui.screens.todo.list.TodoListScreen
+import org.imaginativeworld.whynotcompose.cms.ui.screens.todo.list.TodoListViewModel
 import org.imaginativeworld.whynotcompose.cms.ui.screens.user.details.UserDetailsScreen
 import org.imaginativeworld.whynotcompose.cms.ui.screens.user.details.UserDetailsViewModel
 import org.imaginativeworld.whynotcompose.cms.ui.screens.user.list.UserListScreen
@@ -52,8 +54,8 @@ import org.imaginativeworld.whynotcompose.cms.ui.screens.user.list.UserListViewM
 sealed class Screen(val route: String) {
     object Splash : Screen("splash")
     object User : Screen("user")
-    object Post : Screen("post")
     object Todo : Screen("todo")
+    object Post : Screen("post")
     object Comment : Screen("comment")
 }
 
@@ -68,19 +70,37 @@ sealed class UserScreen(val route: String) {
     }
 }
 
-sealed class PostScreen(val route: String) {
-    object PostList : PostScreen("users/{userId}/posts")
-    object PostDetails : PostScreen("posts/{postId}")
+sealed class TodoScreen(val route: String) {
+    object TodoList : TodoScreen("users/{userId}/todos") {
+        const val USER_ID = "userId"
+    }
+
+    object TodoDetails : TodoScreen("users/{userId}/todos/{todoId}") {
+        const val USER_ID = "userId"
+        const val TODO_ID = "todoId"
+    }
 }
 
-sealed class TodoScreen(val route: String) {
-    object TodoList : TodoScreen("users/{userId}/todos")
-    object TodoDetails : TodoScreen("todos/{todoId}")
+sealed class PostScreen(val route: String) {
+    object PostList : PostScreen("users/{userId}/posts") {
+        const val USER_ID = "userId"
+    }
+
+    object PostDetails : PostScreen("users/{userId}/posts/{postId}") {
+        const val USER_ID = "userId"
+        const val POST_ID = "postId"
+    }
 }
 
 sealed class CommentScreen(val route: String) {
-    object CommentList : CommentScreen("posts/{postId}/comments")
-    object CommentDetails : CommentScreen("comments/{commentId}")
+    object CommentList : CommentScreen("posts/{postId}/comments") {
+        const val POST_ID = "postId"
+    }
+
+    object CommentDetails : CommentScreen("posts/{postId}/comments/{commentId}") {
+        const val POST_ID = "postId"
+        const val COMMNET_ID = "commentId"
+    }
 }
 
 // ================================================================
@@ -142,8 +162,14 @@ private fun NavGraphBuilder.addUserScreens(
         route = Screen.User.route,
         startDestination = UserScreen.UserList.route
     ) {
-        addPostScreens(navController = navController)
-        addTodoScreens(navController = navController)
+        addPostScreens(
+            navController = navController,
+            turnOnDarkMode = turnOnDarkMode
+        )
+        addTodoScreens(
+            navController = navController,
+            turnOnDarkMode = turnOnDarkMode
+        )
 
         composable(UserScreen.UserList.route) {
             val viewModel: UserListViewModel = hiltViewModel()
@@ -179,12 +205,12 @@ private fun NavGraphBuilder.addUserScreens(
             )
         ) { backStackEntry ->
             val viewModel: UserDetailsViewModel = hiltViewModel()
-
             val isDarkMode by UIThemeController.isDarkMode.collectAsState()
+            val userId = backStackEntry.arguments?.getInt(UserScreen.UserDetails.USER_ID) ?: 0
 
             UserDetailsScreen(
                 viewModel = viewModel,
-                userId = backStackEntry.arguments?.getInt(UserScreen.UserDetails.USER_ID) ?: 0,
+                userId = userId,
                 goBack = {
                     navController.popBackStack()
                 },
@@ -192,7 +218,13 @@ private fun NavGraphBuilder.addUserScreens(
                     turnOnDarkMode(!isDarkMode)
                 },
                 onTodosClicked = {
-                    navController.navigate(Screen.Todo.route)
+                    navController.navigate(
+                        TodoScreen.TodoList.route
+                            .replaceFirst(
+                                "{${TodoScreen.TodoList.USER_ID}}",
+                                "$userId"
+                            )
+                    )
                 },
                 onPostsClicked = {
                     navController.navigate(Screen.Post.route)
@@ -203,7 +235,8 @@ private fun NavGraphBuilder.addUserScreens(
 }
 
 private fun NavGraphBuilder.addPostScreens(
-    navController: NavHostController
+    navController: NavHostController,
+    turnOnDarkMode: (Boolean) -> Unit
 ) {
     navigation(
         route = Screen.Post.route,
@@ -222,17 +255,55 @@ private fun NavGraphBuilder.addPostScreens(
 }
 
 private fun NavGraphBuilder.addTodoScreens(
-    navController: NavHostController
+    navController: NavHostController,
+    turnOnDarkMode: (Boolean) -> Unit
 ) {
     navigation(
         route = Screen.Todo.route,
         startDestination = TodoScreen.TodoList.route
     ) {
-        composable(TodoScreen.TodoList.route) {
-            BlankScreen()
+        composable(
+            TodoScreen.TodoList.route,
+            arguments = listOf(
+                navArgument(TodoScreen.TodoList.USER_ID) { type = NavType.IntType }
+            )
+        ) { backStackEntry ->
+            val viewModel: TodoListViewModel = hiltViewModel()
+            val isDarkMode by UIThemeController.isDarkMode.collectAsState()
+            val userId = backStackEntry.arguments?.getInt(TodoScreen.TodoList.USER_ID) ?: 0
+
+            TodoListScreen(
+                viewModel = viewModel,
+                userId = userId,
+                goBack = {
+                    navController.popBackStack()
+                },
+                toggleUIMode = {
+                    turnOnDarkMode(!isDarkMode)
+                },
+                goToTodoDetails = { todoId ->
+                    navController.navigate(
+                        TodoScreen.TodoDetails.route
+                            .replaceFirst(
+                                "{${TodoScreen.TodoDetails.USER_ID}}",
+                                "$userId"
+                            )
+                            .replaceFirst(
+                                "{${TodoScreen.TodoDetails.TODO_ID}}",
+                                "$todoId"
+                            )
+                    )
+                }
+            )
         }
 
-        composable(TodoScreen.TodoDetails.route) {
+        composable(
+            TodoScreen.TodoDetails.route,
+            arguments = listOf(
+                navArgument(TodoScreen.TodoDetails.USER_ID) { type = NavType.IntType },
+                navArgument(TodoScreen.TodoDetails.TODO_ID) { type = NavType.IntType }
+            )
+        ) {
             BlankScreen()
         }
     }

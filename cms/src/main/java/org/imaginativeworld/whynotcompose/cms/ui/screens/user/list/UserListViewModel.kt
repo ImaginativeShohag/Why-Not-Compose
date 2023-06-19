@@ -90,19 +90,17 @@ class UserListViewModel @Inject constructor(
     // ----------------------------------------------------------------
 
     fun loadUsers() {
-        viewModelScope.launch {
-            _items.value = Pager(
-                config = PagingConfig(
-                    pageSize = 10,
-                    enablePlaceholders = false
-                ),
-                pagingSourceFactory = {
-                    UserPagingSource(userRepository)
-                }
-            )
-                .flow
-                .cachedIn(viewModelScope)
-        }
+        _items.value = Pager(
+            config = PagingConfig(
+                pageSize = 10,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = {
+                UserPagingSource(userRepository)
+            }
+        )
+            .flow
+            .cachedIn(viewModelScope)
     }
 }
 

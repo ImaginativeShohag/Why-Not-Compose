@@ -26,9 +26,15 @@
 
 package org.imaginativeworld.whynotcompose.cms.repositories
 
+import java.util.Date
+import org.imaginativeworld.whynotcompose.cms.models.todo.Todo
 import org.imaginativeworld.whynotcompose.cms.models.user.User
 
 object MockData {
+    // ----------------------------------------------------------------
+    // User
+    // ----------------------------------------------------------------
+
     val dummyUser = User(
         id = 1,
         name = "Md. Mahmudul Hasan Shohag",
@@ -37,7 +43,7 @@ object MockData {
         status = "active"
     )
 
-    val dummayUserList = listOf(
+    val dummyUserList = listOf(
         dummyUser.copy(id = 1),
         dummyUser.copy(id = 2),
         dummyUser.copy(id = 3),
@@ -48,5 +54,30 @@ object MockData {
         dummyUser.copy(id = 8),
         dummyUser.copy(id = 9),
         dummyUser.copy(id = 10)
+    )
+
+    // ----------------------------------------------------------------
+    // Todos
+    // ----------------------------------------------------------------
+
+    val dummyTodo = Todo(
+        id = 1,
+        title = "The quick brown fox jumps over the lazy dog.",
+        dueOn = Date(),
+        status = "Completed",
+        userId = 1
+    )
+
+    val dummyTodoList = listOf(
+        dummyTodo.copy(id = 1),
+        dummyTodo.copy(id = 2),
+        dummyTodo.copy(id = 3),
+        dummyTodo.copy(id = 4),
+        dummyTodo.copy(id = 5),
+        dummyTodo.copy(id = 6),
+        dummyTodo.copy(id = 7),
+        dummyTodo.copy(id = 8),
+        dummyTodo.copy(id = 9),
+        dummyTodo.copy(id = 10)
     )
 }

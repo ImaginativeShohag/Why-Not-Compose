@@ -44,6 +44,7 @@ import org.imaginativeworld.whynotcompose.cms.ui.compositions.GeneralAppBar
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.LoadingContainer
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.LoadingItem
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralOutlinedButton
+import org.imaginativeworld.whynotcompose.cms.ui.screens.todo.edit.TodoEditSheet
 import org.imaginativeworld.whynotcompose.cms.ui.screens.todo.list.elements.TodoItem
 
 @Composable
@@ -126,15 +127,16 @@ fun TodoDetailsScreen(
     // Bottom Sheet
     // ----------------------------------------------------------------
 
-//    if (openEditTodoSheet.value) {
-//        TodoEditSheet(
-//            showSheet = openEditTodoSheet,
-//            todoId = todoId,
-//            onSuccess = {
-//                viewModel.getDetails(todoId)
-//            }
-//        )
-//    }
+    if (openEditTodoSheet.value) {
+        TodoEditSheet(
+            showSheet = openEditTodoSheet,
+            userId = userId,
+            todoId = todoId,
+            onSuccess = {
+                viewModel.getDetails(todoId)
+            }
+        )
+    }
 }
 
 @Preview

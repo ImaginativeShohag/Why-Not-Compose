@@ -16,6 +16,8 @@ android {
                 arguments(mapOf("room.schemaLocation" to "$projectDir/schemas"))
             }
         }
+
+        buildConfigField("String", "CMS_API_KEY", "\"${getLocalProperty(key = "CMS_API_KEY")}\"")
     }
 
     compileOptions {

@@ -138,14 +138,14 @@ object Libs {
             const val foundation = "androidx.compose.foundation:foundation"
             const val layout = "androidx.compose.foundation:foundation-layout"
 
-            const val material3 = "androidx.compose.material3:material3"
-            const val material3WindowSizeClass =
-                "androidx.compose.material3:material3-window-size-class"
-
             const val material = "androidx.compose.material:material"
             const val materialIconsCore = "androidx.compose.material:material-icons-core"
             const val materialIconsExtended =
                 "androidx.compose.material:material-icons-extended"
+
+            const val material3 = "androidx.compose.material3:material3:1.2.0-alpha02"
+            const val material3WindowSizeClass =
+                "androidx.compose.material3:material3-window-size-class:1.2.0-alpha02"
 
             const val runtime = "androidx.compose.runtime:runtime"
             const val runtimeLivedata = "androidx.compose.runtime:runtime-livedata"

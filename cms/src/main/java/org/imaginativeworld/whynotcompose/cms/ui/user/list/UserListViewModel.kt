@@ -89,17 +89,9 @@ class UserListViewModel @Inject constructor(
 
     // ----------------------------------------------------------------
 
-    private var prevResult: Flow<PagingData<User>>? = null
-
     fun loadUsers() {
-        if (prevResult != null) {
-            _items.value = prevResult ?: emptyFlow()
-
-            return
-        }
-
         viewModelScope.launch {
-            prevResult = Pager(
+            _items.value = Pager(
                 config = PagingConfig(
                     pageSize = 10,
                     enablePlaceholders = false
@@ -110,8 +102,6 @@ class UserListViewModel @Inject constructor(
             )
                 .flow
                 .cachedIn(viewModelScope)
-
-            _items.value = prevResult ?: emptyFlow()
         }
     }
 }

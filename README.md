@@ -111,6 +111,14 @@ Replace `YOUR_API_KEY` with your API key.
 MAPS_API_KEY=YOUR_API_KEY
 ```
 
+### Go REST API Key
+
+Open the `local.properties` in your project level directory, and then add the following code. Replace `YOUR_API_KEY` with your [Go REST](https://gorest.co.in) API key.
+
+```groovy
+CMS_API_KEY=YOUR_API_KEY
+```
+
 ## Other Interesting Repos
 
 - [Compose Material Catalog](https://github.com/androidx/androidx/tree/androidx-main/compose/integration-tests/material-catalog)

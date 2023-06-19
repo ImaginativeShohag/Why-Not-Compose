@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Md. Mahmudul Hasan Shohag
+ * Copyright 2023 Md. Mahmudul Hasan Shohag
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,14 +33,17 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Named
 import javax.inject.Singleton
 import org.imaginativeworld.whynotcompose.base.network.ApiClient
 import org.imaginativeworld.whynotcompose.base.utils.Constants
+import org.imaginativeworld.whynotcompose.cms.BuildConfig
 import org.imaginativeworld.whynotcompose.cms.db.CMSDatabase
 import org.imaginativeworld.whynotcompose.cms.network.api.CommentApiInterface
 import org.imaginativeworld.whynotcompose.cms.network.api.PostApiInterface
 import org.imaginativeworld.whynotcompose.cms.network.api.TodoApiInterface
 import org.imaginativeworld.whynotcompose.cms.network.api.UserApiInterface
+import retrofit2.Retrofit
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -53,37 +56,38 @@ class CMSAppModule {
 
     @Singleton
     @Provides
-    fun provideUserApiInterface(moshi: Moshi): UserApiInterface {
+    @Named("CMS")
+    fun provideRetrofit(moshi: Moshi): Retrofit {
         return ApiClient.getRetrofit(
             moshi,
-            Constants.CMS_SERVER_ENDPOINT + "/"
-        ).create(UserApiInterface::class.java)
+            Constants.CMS_SERVER_ENDPOINT + "/",
+            mapOf(
+                "Authorization" to "Bearer ${BuildConfig.CMS_API_KEY}"
+            )
+        )
     }
 
     @Singleton
     @Provides
-    fun provideTodoApiInterface(moshi: Moshi): TodoApiInterface {
-        return ApiClient.getRetrofit(
-            moshi,
-            Constants.CMS_SERVER_ENDPOINT + "/"
-        ).create(TodoApiInterface::class.java)
+    fun provideUserApiInterface(@Named("CMS") retrofit: Retrofit): UserApiInterface {
+        return retrofit.create(UserApiInterface::class.java)
     }
 
     @Singleton
     @Provides
-    fun providePostApiInterface(moshi: Moshi): PostApiInterface {
-        return ApiClient.getRetrofit(
-            moshi,
-            Constants.CMS_SERVER_ENDPOINT + "/"
-        ).create(PostApiInterface::class.java)
+    fun provideTodoApiInterface(@Named("CMS") retrofit: Retrofit): TodoApiInterface {
+        return retrofit.create(TodoApiInterface::class.java)
     }
 
     @Singleton
     @Provides
-    fun provideCommentApiInterface(moshi: Moshi): CommentApiInterface {
-        return ApiClient.getRetrofit(
-            moshi,
-            Constants.CMS_SERVER_ENDPOINT + "/"
-        ).create(CommentApiInterface::class.java)
+    fun providePostApiInterface(@Named("CMS") retrofit: Retrofit): PostApiInterface {
+        return retrofit.create(PostApiInterface::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCommentApiInterface(@Named("CMS") retrofit: Retrofit): CommentApiInterface {
+        return retrofit.create(CommentApiInterface::class.java)
     }
 }

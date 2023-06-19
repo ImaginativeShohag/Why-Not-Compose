@@ -35,7 +35,9 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 class ApiClient {
     companion object {
-        private fun buildClient(): OkHttpClient {
+        private fun buildClient(
+            headers: Map<String, String> = mapOf()
+        ): OkHttpClient {
             return OkHttpClient.Builder()
                 .addInterceptor(
                     HttpLoggingInterceptor().apply {
@@ -43,9 +45,14 @@ class ApiClient {
                     }
                 )
                 .addInterceptor { chain ->
-                    val request = chain.request().newBuilder()
+                    val requestBuilder = chain.request().newBuilder()
                         .addHeader("Accept", "application/json")
-                        .build()
+
+                    for (header in headers) {
+                        requestBuilder.addHeader(header.key, header.value)
+                    }
+
+                    val request = requestBuilder.build()
 
                     chain.proceed(request)
                 }
@@ -54,10 +61,11 @@ class ApiClient {
 
         fun getRetrofit(
             moshi: Moshi,
-            baseUrl: String = Constants.SERVER_ENDPOINT + "/"
+            baseUrl: String = Constants.SERVER_ENDPOINT + "/",
+            headers: Map<String, String> = mapOf()
         ): Retrofit {
             return Retrofit.Builder()
-                .client(buildClient())
+                .client(buildClient(headers))
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
                 .baseUrl(baseUrl)
                 .build()

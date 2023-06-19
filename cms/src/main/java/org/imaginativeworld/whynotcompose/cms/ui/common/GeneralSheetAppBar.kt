@@ -2,24 +2,25 @@ package org.imaginativeworld.whynotcompose.cms.ui.common
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Row
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ChevronRight
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.cms.theme.CMSAppTheme
+import org.imaginativeworld.whynotcompose.cms.ui.common.button.GeneralOutlinedButton
 
 @Composable
 fun GeneralSheetAppBar(
-    title: String = "CMS",
-    subTitle: String
+    title: String,
+    onCancelClicked: () -> Unit
 ) {
-    CenterAlignedTopAppBar(
+    TopAppBar(
         title = {
             Row(
                 verticalAlignment = Alignment.CenterVertically
@@ -27,20 +28,15 @@ fun GeneralSheetAppBar(
                 Text(
                     title,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    fontWeight = FontWeight.Bold
-                )
-
-                Icon(
-                    imageVector = Icons.Rounded.ChevronRight,
-                    contentDescription = null
-                )
-
-                Text(
-                    subTitle,
-                    maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
+            }
+        },
+        actions = {
+            GeneralOutlinedButton(
+                caption = "Cancel"
+            ) {
+                onCancelClicked()
             }
         }
     )
@@ -51,7 +47,8 @@ fun GeneralSheetAppBar(
 fun GeneralSheetAppBarPreview() {
     CMSAppTheme {
         GeneralSheetAppBar(
-            subTitle = "Users"
+            title = "Users",
+            onCancelClicked = {}
         )
     }
 }
@@ -61,7 +58,8 @@ fun GeneralSheetAppBarPreview() {
 fun GeneralSheetAppBarPreviewDark() {
     CMSAppTheme {
         GeneralSheetAppBar(
-            subTitle = "Users"
+            title = "Users",
+            onCancelClicked = {}
         )
     }
 }

@@ -89,6 +89,14 @@ fun UserListScreen(
     goBack: () -> Unit,
     toggleUIMode: () -> Unit
 ) {
+    val scope = rememberCoroutineScope()
+    val bottomSheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = false,
+        confirmValueChange = { sheetState ->
+            return@rememberModalBottomSheetState sheetState != SheetValue.Hidden
+        }
+    )
+    var openAddUserSheet by rememberSaveable { mutableStateOf(false) }
     val state by viewModel.state.collectAsState()
 
     val pagedUsers = state.items.collectAsLazyPagingItems()
@@ -105,8 +113,37 @@ fun UserListScreen(
         users = pagedUsers,
         retryDataLoad = {
             viewModel.loadUsers()
+        },
+        openAddUserSheet = {
+            openAddUserSheet = !openAddUserSheet
         }
     )
+
+    // ----------------------------------------------------------------
+    // Bottom Sheet
+    // ----------------------------------------------------------------
+
+    if (openAddUserSheet) {
+        ModalBottomSheet(
+            onDismissRequest = { openAddUserSheet = false },
+            sheetState = bottomSheetState
+        ) {
+            UserAddSheet(
+                goBack = {
+                    scope.launch {
+                        bottomSheetState.hide()
+                    }.invokeOnCompletion {
+                        if (!bottomSheetState.isVisible) {
+                            openAddUserSheet = false
+                        }
+                    }
+                },
+                onSuccess = {
+                    viewModel.loadUsers()
+                }
+            )
+        }
+    }
 }
 
 @Preview
@@ -148,18 +185,11 @@ fun UserListScreenSkeleton(
     showLoading: Boolean = false,
     showMessage: Event<String>? = null,
     users: LazyPagingItems<User>,
-    retryDataLoad: () -> Unit = {}
+    retryDataLoad: () -> Unit = {},
+    openAddUserSheet: () -> Unit = {}
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
-    var openAddUserSheet by rememberSaveable { mutableStateOf(false) }
-    val scope = rememberCoroutineScope()
     val lazyListState = rememberLazyListState()
-    val bottomSheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = false,
-        confirmValueChange = { sheetState ->
-            return@rememberModalBottomSheetState sheetState != SheetValue.Hidden
-        }
-    )
 
     val expandedFab by remember {
         derivedStateOf {
@@ -168,13 +198,11 @@ fun UserListScreenSkeleton(
     }
 
     LaunchedEffect(showMessage) {
-        showMessage?.let { message ->
-            message.getValueOnce()?.let { value ->
-                val result = snackbarHostState.showSnackbar(value)
+        showMessage?.getValueOnce()?.let { message ->
+            val result = snackbarHostState.showSnackbar(message)
 
-                if (result == SnackbarResult.ActionPerformed) {
-                    retryDataLoad()
-                }
+            if (result == SnackbarResult.ActionPerformed) {
+                retryDataLoad()
             }
         }
     }
@@ -188,7 +216,7 @@ fun UserListScreenSkeleton(
         floatingActionButton = {
             ExtendedFloatingActionButton(
                 onClick = {
-                    openAddUserSheet = !openAddUserSheet
+                    openAddUserSheet()
                 },
                 expanded = expandedFab,
                 icon = { Icon(Icons.Filled.Add, "Add User") },
@@ -320,31 +348,5 @@ fun UserListScreenSkeleton(
         LoadingContainer(
             show = showLoading
         )
-    }
-
-    // ----------------------------------------------------------------
-    // Bottom Sheet
-    // ----------------------------------------------------------------
-
-    if (openAddUserSheet) {
-        ModalBottomSheet(
-            onDismissRequest = { openAddUserSheet = false },
-            sheetState = bottomSheetState
-        ) {
-            UserAddSheet(
-                goBack = {
-                    scope.launch {
-                        bottomSheetState.hide()
-                    }.invokeOnCompletion {
-                        if (!bottomSheetState.isVisible) {
-                            openAddUserSheet = false
-                        }
-                    }
-                },
-                addUser = { name, email, gender, status ->
-                    //
-                }
-            )
-        }
     }
 }

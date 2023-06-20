@@ -1,30 +1,4 @@
-/*
- * Copyright 2023 Md. Mahmudul Hasan Shohag
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * ------------------------------------------------------------------------
- *
- * Project: Why Not Compose!
- * Developed by: @ImaginativeShohag
- *
- * Md. Mahmudul Hasan Shohag
- * imaginativeshohag@gmail.com
- *
- * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
- */
-
-package org.imaginativeworld.whynotcompose.cms.ui.screens.post.edit
+package org.imaginativeworld.whynotcompose.cms.ui.screens.comment.edit
 
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
@@ -41,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Check
@@ -65,13 +40,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.base.extensions.toast
 import org.imaginativeworld.whynotcompose.base.models.Event
-import org.imaginativeworld.whynotcompose.cms.models.Post
+import org.imaginativeworld.whynotcompose.cms.models.Comment
 import org.imaginativeworld.whynotcompose.cms.repositories.MockData
 import org.imaginativeworld.whynotcompose.cms.theme.CMSAppTheme
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.GeneralSheetAppBar
@@ -80,10 +56,10 @@ import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralFill
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralOutlinedButton
 
 @Composable
-fun PostEditSheet(
-    viewModel: PostEditViewModel = hiltViewModel(),
-    userId: Int,
+fun CommentEditSheet(
+    viewModel: CommentEditViewModel = hiltViewModel(),
     postId: Int,
+    commentId: Int,
     showSheet: MutableState<Boolean>,
     onSuccess: () -> Unit
 ) {
@@ -109,13 +85,13 @@ fun PostEditSheet(
     }
 
     LaunchedEffect(Unit) {
-        viewModel.getDetails(postId)
+        viewModel.getDetails(commentId)
     }
 
-    LaunchedEffect(state.updatePostSuccess) {
-        state.updatePostSuccess?.getValueOnce()?.let { isAddPostSuccess ->
-            if (isAddPostSuccess) {
-                context.toast("Post successfully updated.")
+    LaunchedEffect(state.updateCommentSuccess) {
+        state.updateCommentSuccess?.getValueOnce()?.let { isAddCommentSuccess ->
+            if (isAddCommentSuccess) {
+                context.toast("Comment successfully updated.")
 
                 goBack()
                 onSuccess()
@@ -127,16 +103,17 @@ fun PostEditSheet(
         onDismissRequest = { showSheet.value = false },
         sheetState = bottomSheetState
     ) {
-        PostEditSheetSkeleton(
-            post = state.post,
+        CommentEditSheetSkeleton(
+            comment = state.comment,
             showLoading = state.loading,
             showMessage = state.message,
             goBack = goBack,
-            updatePost = { title, body ->
-                viewModel.updatePost(
-                    userId,
+            updateComment = { name, email, body ->
+                viewModel.updateComment(
                     postId,
-                    title,
+                    commentId,
+                    name,
+                    email,
                     body
                 )
             }
@@ -146,39 +123,41 @@ fun PostEditSheet(
 
 @Preview
 @Composable
-fun PostEditSheetSkeletonPreview() {
+fun CommentEditSheetSkeletonPreview() {
     CMSAppTheme {
-        PostEditSheetSkeleton(
-            post = MockData.dummyPost
+        CommentEditSheetSkeleton(
+            comment = MockData.dummyComment
         )
     }
 }
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun PostEditSheetSkeletonPreviewDark() {
+fun CommentEditSheetSkeletonPreviewDark() {
     CMSAppTheme {
-        PostEditSheetSkeleton(
-            post = MockData.dummyPost
+        CommentEditSheetSkeleton(
+            comment = MockData.dummyComment
         )
     }
 }
 
 @Composable
-fun PostEditSheetSkeleton(
-    post: Post?,
+fun CommentEditSheetSkeleton(
+    comment: Comment?,
     showLoading: Boolean = false,
     showMessage: Event<String>? = null,
     goBack: () -> Unit = {},
-    updatePost: (
-        title: String,
+    updateComment: (
+        name: String,
+        email: String,
         body: String
-    ) -> Unit = { _, _ -> }
+    ) -> Unit = { _, _, _ -> }
 ) {
     val scrollState = rememberScrollState()
     val snackbarHostState = remember { SnackbarHostState() }
-    var title by rememberSaveable(post) { mutableStateOf(post?.title ?: "") }
-    var body by rememberSaveable(post) { mutableStateOf(post?.body ?: "") }
+    var name by rememberSaveable(comment) { mutableStateOf(comment?.name ?: "") }
+    var email by rememberSaveable(comment) { mutableStateOf(comment?.email ?: "") }
+    var body by rememberSaveable(comment) { mutableStateOf(comment?.body ?: "") }
 
     LaunchedEffect(showMessage) {
         showMessage?.getValueOnce()?.let { message ->
@@ -193,7 +172,7 @@ fun PostEditSheetSkeleton(
             .statusBarsPadding(),
         topBar = {
             GeneralSheetAppBar(
-                title = "Edit Post",
+                title = "Edit Comment",
                 onCancelClicked = goBack
             )
         },
@@ -201,7 +180,7 @@ fun PostEditSheetSkeleton(
     ) { innerPadding ->
         AnimatedVisibility(
             modifier = Modifier.fillMaxWidth(),
-            visible = post != null,
+            visible = comment != null,
             enter = expandVertically(),
             exit = shrinkVertically()
         ) {
@@ -215,9 +194,20 @@ fun PostEditSheetSkeleton(
             ) {
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth(),
-                    value = title,
-                    onValueChange = { title = it },
-                    label = { Text("Title") },
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text("Name") },
+                    singleLine = true
+                )
+
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = email,
+                    onValueChange = { email = it },
+                    label = { Text("Email") },
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Email
+                    ),
                     singleLine = true
                 )
 
@@ -226,6 +216,9 @@ fun PostEditSheetSkeleton(
                     value = body,
                     onValueChange = { body = it },
                     label = { Text("Body") },
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Email
+                    ),
                     minLines = 5
                 )
 
@@ -243,11 +236,12 @@ fun PostEditSheetSkeleton(
                     Spacer(Modifier.width(8.dp))
 
                     GeneralFilledButton(
-                        caption = "Update Post",
+                        caption = "Update Comment",
                         icon = Icons.Rounded.Check,
                         onClick = {
-                            updatePost(
-                                title,
+                            updateComment(
+                                name,
+                                email,
                                 body
                             )
                         }

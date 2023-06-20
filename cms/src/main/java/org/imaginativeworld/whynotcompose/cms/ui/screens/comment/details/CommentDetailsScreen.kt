@@ -44,6 +44,7 @@ import org.imaginativeworld.whynotcompose.cms.ui.compositions.GeneralAppBar
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.LoadingContainer
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.LoadingItem
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralOutlinedButton
+import org.imaginativeworld.whynotcompose.cms.ui.screens.comment.edit.CommentEditSheet
 import org.imaginativeworld.whynotcompose.cms.ui.screens.comment.list.elements.CommentItem
 
 @Composable
@@ -126,16 +127,16 @@ fun CommentDetailsScreen(
     // Bottom Sheet
     // ----------------------------------------------------------------
 
-//    if (openEditCommentSheet.value) {
-//        CommentEditSheet(
-//            showSheet = openEditCommentSheet,
-//            userId = userId,
-//            commentId = commentId,
-//            onSuccess = {
-//                viewModel.getDetails(commentId)
-//            }
-//        )
-//    }
+    if (openEditCommentSheet.value) {
+        CommentEditSheet(
+            showSheet = openEditCommentSheet,
+            postId = postId,
+            commentId = commentId,
+            onSuccess = {
+                viewModel.getDetails(commentId)
+            }
+        )
+    }
 }
 
 @Preview

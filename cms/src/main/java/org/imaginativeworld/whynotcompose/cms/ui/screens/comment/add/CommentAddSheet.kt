@@ -182,17 +182,17 @@ fun CommentAddSheetSkeleton(
                 value = email,
                 onValueChange = { email = it },
                 label = { Text("Email") },
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Email
+                ),
                 singleLine = true
             )
 
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = email,
-                onValueChange = { email = it },
+                value = body,
+                onValueChange = { body = it },
                 label = { Text("Body") },
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    keyboardType = KeyboardType.Email
-                ),
                 minLines = 5
             )
 

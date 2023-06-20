@@ -26,13 +26,9 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.screens
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
@@ -43,6 +39,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
+import org.imaginativeworld.whynotcompose.cms.ui.screens.comment.details.CommentDetailsScreen
+import org.imaginativeworld.whynotcompose.cms.ui.screens.comment.details.CommentDetailsViewModel
 import org.imaginativeworld.whynotcompose.cms.ui.screens.comment.list.CommentListScreen
 import org.imaginativeworld.whynotcompose.cms.ui.screens.comment.list.CommentListViewModel
 import org.imaginativeworld.whynotcompose.cms.ui.screens.post.details.PostDetailsScreen
@@ -451,23 +449,23 @@ private fun NavGraphBuilder.addCommentScreens(
                 navArgument(CommentScreen.CommentDetails.POST_ID) { type = NavType.IntType },
                 navArgument(CommentScreen.CommentDetails.COMMNET_ID) { type = NavType.IntType }
             )
-        ) {
-            BlankScreen()
+        ) { backStackEntry ->
+            val viewModel: CommentDetailsViewModel = hiltViewModel()
+            val isDarkMode by UIThemeController.isDarkMode.collectAsState()
+            val postId = backStackEntry.arguments?.getInt(CommentScreen.CommentDetails.POST_ID) ?: 0
+            val commentId = backStackEntry.arguments?.getInt(CommentScreen.CommentDetails.COMMNET_ID) ?: 0
+
+            CommentDetailsScreen(
+                viewModel = viewModel,
+                postId = postId,
+                commentId = commentId,
+                goBack = {
+                    navController.popBackStack()
+                },
+                toggleUIMode = {
+                    turnOnDarkMode(!isDarkMode)
+                }
+            )
         }
-    }
-}
-
-// ================================================================
-// Leaf Screens
-// ================================================================
-
-// ================================================================
-// Blank Screen
-// ================================================================
-
-@Composable
-private fun BlankScreen() {
-    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text("Coming soon...")
     }
 }

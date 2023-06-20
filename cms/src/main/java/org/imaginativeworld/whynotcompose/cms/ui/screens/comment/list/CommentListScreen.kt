@@ -48,6 +48,7 @@ import org.imaginativeworld.whynotcompose.cms.ui.compositions.ErrorItem
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.GeneralAppBar
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.LoadingContainer
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.LoadingItem
+import org.imaginativeworld.whynotcompose.cms.ui.screens.comment.add.CommentAddSheet
 import org.imaginativeworld.whynotcompose.cms.ui.screens.comment.list.elements.CommentItem
 
 @Composable
@@ -86,15 +87,15 @@ fun CommentListScreen(
     // Bottom Sheet
     // ----------------------------------------------------------------
 
-//    if (openAddCommentSheet.value) {
-//        CommentAddSheet(
-//            showSheet = openAddCommentSheet,
-//            userId = userId,
-//            onSuccess = {
-//                viewModel.loadComments(postId)
-//            }
-//        )
-//    }
+    if (openAddCommentSheet.value) {
+        CommentAddSheet(
+            showSheet = openAddCommentSheet,
+            postId = postId,
+            onSuccess = {
+                viewModel.loadComments(postId)
+            }
+        )
+    }
 }
 
 @Preview

@@ -74,14 +74,15 @@ Feel free to request features or suggestions for improvements.
 - [ ] Fix custom `LazyGridScope.items`
 - [ ] List with `LazyGrid`
 - [ ] Paging with `LazyGrid`
-- [ ] Add compose BOM: https://developer.android.com/jetpack/androidx/releases/compose
-- [ ] Refactor to Gradle Plugins
+- [x] Add compose BOM: https://developer.android.com/jetpack/androidx/releases/compose
+- [x] Refactor to Gradle Plugins
 - [-] Add GitHub actions
-- [ ] Add notification permission
+- [x] Add notification permission
 - [ ] Add Splash Screen (Introduced in Android 12)
 - [ ] Update to new storage permission
-- [ ] Migrate to Material 3
+- [-] Migrate to Material 3
 - [ ] Create color ready for dark and light mode
+- [ ] Add screenshot for CMS module
 
 # Note
 

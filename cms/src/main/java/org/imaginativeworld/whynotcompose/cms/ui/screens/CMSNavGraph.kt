@@ -43,6 +43,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
+import org.imaginativeworld.whynotcompose.cms.ui.screens.post.details.PostDetailsScreen
+import org.imaginativeworld.whynotcompose.cms.ui.screens.post.details.PostDetailsViewModel
 import org.imaginativeworld.whynotcompose.cms.ui.screens.post.list.PostListScreen
 import org.imaginativeworld.whynotcompose.cms.ui.screens.post.list.PostListViewModel
 import org.imaginativeworld.whynotcompose.cms.ui.screens.splash.SplashScreen
@@ -365,8 +367,32 @@ private fun NavGraphBuilder.addPostScreens(
                 navArgument(PostScreen.PostDetails.USER_ID) { type = NavType.IntType },
                 navArgument(PostScreen.PostDetails.POST_ID) { type = NavType.IntType }
             )
-        ) {
-            BlankScreen()
+        ) { backStackEntry ->
+            val viewModel: PostDetailsViewModel = hiltViewModel()
+            val isDarkMode by UIThemeController.isDarkMode.collectAsState()
+            val userId = backStackEntry.arguments?.getInt(PostScreen.PostDetails.USER_ID) ?: 0
+            val postId = backStackEntry.arguments?.getInt(PostScreen.PostDetails.POST_ID) ?: 0
+
+            PostDetailsScreen(
+                viewModel = viewModel,
+                userId = userId,
+                postId = postId,
+                goBack = {
+                    navController.popBackStack()
+                },
+                toggleUIMode = {
+                    turnOnDarkMode(!isDarkMode)
+                },
+                onCommentsClicked = {
+                    navController.navigate(
+                        CommentScreen.CommentList.route
+                            .replaceFirst(
+                                "{${CommentScreen.CommentList.POST_ID}}",
+                                "$postId"
+                            )
+                    )
+                }
+            )
         }
     }
 }
@@ -378,11 +404,22 @@ private fun NavGraphBuilder.addCommentScreens(
         route = Screen.Comment.route,
         startDestination = CommentScreen.CommentList.route
     ) {
-        composable(CommentScreen.CommentList.route) {
+        composable(
+            CommentScreen.CommentList.route,
+            arguments = listOf(
+                navArgument(CommentScreen.CommentList.POST_ID) { type = NavType.IntType }
+            )
+        ) {
             BlankScreen()
         }
 
-        composable(CommentScreen.CommentDetails.route) {
+        composable(
+            CommentScreen.CommentDetails.route,
+            arguments = listOf(
+                navArgument(CommentScreen.CommentDetails.POST_ID) { type = NavType.IntType },
+                navArgument(CommentScreen.CommentDetails.COMMNET_ID) { type = NavType.IntType }
+            )
+        ) {
             BlankScreen()
         }
     }

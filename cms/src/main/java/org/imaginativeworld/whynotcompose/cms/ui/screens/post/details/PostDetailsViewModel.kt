@@ -1,4 +1,4 @@
-package org.imaginativeworld.whynotcompose.cms.ui.screens.todo.details
+package org.imaginativeworld.whynotcompose.cms.ui.screens.post.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,26 +12,26 @@ import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.base.models.Event
 import org.imaginativeworld.whynotcompose.base.network.ApiException
 import org.imaginativeworld.whynotcompose.cms.models.ActionMessage
+import org.imaginativeworld.whynotcompose.cms.models.Post
 import org.imaginativeworld.whynotcompose.cms.models.ViewAction
-import org.imaginativeworld.whynotcompose.cms.models.todo.Todo
-import org.imaginativeworld.whynotcompose.cms.repositories.TodoRepository
+import org.imaginativeworld.whynotcompose.cms.repositories.PostRepository
 
 @HiltViewModel
-class TodoDetailsViewModel @Inject constructor(
-    private val repository: TodoRepository
+class PostDetailsViewModel @Inject constructor(
+    private val repository: PostRepository
 ) : ViewModel() {
     private val _eventShowLoading = MutableStateFlow(false)
 
     private val _eventShowMessage = MutableStateFlow<Event<ActionMessage>?>(null)
 
-    private val _todo = MutableStateFlow<Todo?>(null)
+    private val _post = MutableStateFlow<Post?>(null)
 
     private val _eventDeleteSuccess = MutableStateFlow<Event<Boolean>?>(null)
 
     // ----------------------------------------------------------------
 
-    private val _state = MutableStateFlow(TodoDetailsViewState())
-    val state: StateFlow<TodoDetailsViewState>
+    private val _state = MutableStateFlow(PostDetailsViewState())
+    val state: StateFlow<PostDetailsViewState>
         get() = _state
 
     // ----------------------------------------------------------------
@@ -41,14 +41,14 @@ class TodoDetailsViewModel @Inject constructor(
             combine(
                 _eventShowLoading,
                 _eventShowMessage,
-                _todo,
+                _post,
                 _eventDeleteSuccess
-            ) { showLoading, showMessage, todo, deleteSuccess ->
+            ) { showLoading, showMessage, post, deleteSuccess ->
 
-                TodoDetailsViewState(
+                PostDetailsViewState(
                     loading = showLoading,
                     message = showMessage,
-                    todo = todo,
+                    post = post,
                     deleteSuccess = deleteSuccess
                 )
             }.catch { throwable ->
@@ -63,19 +63,19 @@ class TodoDetailsViewModel @Inject constructor(
     // ----------------------------------------------------------------
 
     fun getDetails(
-        todoId: Int
+        PostId: Int
     ) = viewModelScope.launch {
         _eventShowLoading.value = true
 
         try {
-            val todo = repository.getTodo(todoId)
+            val post = repository.getPost(PostId)
 
-            _todo.value = todo
+            _post.value = post
         } catch (e: ApiException) {
             _eventShowMessage.value = Event(
                 ActionMessage(
                     e.message ?: "Unknown error!",
-                    action = TodoDetailsViewAction.TODO_LOAD_ERROR
+                    action = PostDetailsViewAction.POST_LOAD_ERROR
                 )
             )
         }
@@ -83,18 +83,16 @@ class TodoDetailsViewModel @Inject constructor(
         _eventShowLoading.value = false
     }
 
-    fun deleteTodo(todoId: Int) = viewModelScope.launch {
+    fun deletePost(PostId: Int) = viewModelScope.launch {
         _eventShowLoading.value = true
 
         try {
-            repository.deleteTodo(todoId)
+            repository.deletePost(PostId)
 
             _eventDeleteSuccess.value = Event(true)
         } catch (e: ApiException) {
             _eventShowMessage.value = Event(
-                ActionMessage(
-                    e.message ?: "Unknown error!"
-                )
+                ActionMessage(e.message ?: "Unknown error!")
             )
         }
 
@@ -102,13 +100,13 @@ class TodoDetailsViewModel @Inject constructor(
     }
 }
 
-data class TodoDetailsViewState(
+data class PostDetailsViewState(
     val loading: Boolean = false,
     val message: Event<ActionMessage>? = null,
-    val todo: Todo? = null,
+    val post: Post? = null,
     val deleteSuccess: Event<Boolean>? = null
 )
 
-enum class TodoDetailsViewAction : ViewAction {
-    TODO_LOAD_ERROR
+enum class PostDetailsViewAction : ViewAction {
+    POST_LOAD_ERROR
 }

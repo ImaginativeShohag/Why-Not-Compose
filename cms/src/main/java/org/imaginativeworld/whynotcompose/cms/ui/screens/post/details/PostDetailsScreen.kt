@@ -1,33 +1,8 @@
-/*
- * Copyright 2023 Md. Mahmudul Hasan Shohag
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * ------------------------------------------------------------------------
- *
- * Project: Why Not Compose!
- * Developed by: @ImaginativeShohag
- *
- * Md. Mahmudul Hasan Shohag
- * imaginativeshohag@gmail.com
- *
- * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
- */
-
-package org.imaginativeworld.whynotcompose.cms.ui.screens.user.details
+package org.imaginativeworld.whynotcompose.cms.ui.screens.post.details
 
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -41,10 +16,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Ballot
+import androidx.compose.material.icons.rounded.Chat
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Edit
-import androidx.compose.material.icons.rounded.TextSnippet
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -65,7 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.base.models.Event
 import org.imaginativeworld.whynotcompose.cms.models.ActionMessage
-import org.imaginativeworld.whynotcompose.cms.models.user.User
+import org.imaginativeworld.whynotcompose.cms.models.Post
 import org.imaginativeworld.whynotcompose.cms.repositories.MockData
 import org.imaginativeworld.whynotcompose.cms.theme.CMSAppTheme
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.GeneralAppBar
@@ -73,25 +47,24 @@ import org.imaginativeworld.whynotcompose.cms.ui.compositions.LoadingContainer
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.LoadingItem
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralFilledButton
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralOutlinedButton
-import org.imaginativeworld.whynotcompose.cms.ui.screens.user.edit.UserEditSheet
-import org.imaginativeworld.whynotcompose.cms.ui.screens.user.list.elements.UserItem
+import org.imaginativeworld.whynotcompose.cms.ui.screens.post.list.elements.PostItem
 
 @Composable
-fun UserDetailsScreen(
-    viewModel: UserDetailsViewModel,
+fun PostDetailsScreen(
+    viewModel: PostDetailsViewModel,
     userId: Int,
+    postId: Int,
     goBack: () -> Unit,
     toggleUIMode: () -> Unit,
-    onTodosClicked: () -> Unit,
-    onPostsClicked: () -> Unit
+    onCommentsClicked: () -> Unit
 ) {
-    val openEditUserSheet = rememberSaveable { mutableStateOf(false) }
+    val openEditPostSheet = rememberSaveable { mutableStateOf(false) }
     val state by viewModel.state.collectAsState()
 
     var openDeleteDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        viewModel.getDetails(userId)
+        viewModel.getDetails(postId)
     }
 
     LaunchedEffect(state.deleteSuccess) {
@@ -100,21 +73,20 @@ fun UserDetailsScreen(
         }
     }
 
-    UserDetailsScreenSkeleton(
-        user = state.user,
+    PostDetailsScreenSkeleton(
+        post = state.post,
         showLoading = state.loading,
         showMessage = state.message,
         goBack = goBack,
         toggleUIMode = toggleUIMode,
         retryDataLoad = {
-            viewModel.getDetails(userId)
+            viewModel.getDetails(postId)
         },
         onDeleteClicked = { openDeleteDialog = true },
         onEditClicked = {
-            openEditUserSheet.value = !openEditUserSheet.value
+            openEditPostSheet.value = !openEditPostSheet.value
         },
-        onTodosClicked = onTodosClicked,
-        onPostsClicked = onPostsClicked
+        onCommentsClicked = onCommentsClicked
     )
 
     // ----------------------------------------------------------------
@@ -130,14 +102,14 @@ fun UserDetailsScreen(
                 Text(text = "Delete")
             },
             text = {
-                Text(text = "Are you sure you want to delete this user?")
+                Text(text = "Are you sure you want to delete this post?")
             },
             confirmButton = {
                 TextButton(
                     onClick = {
                         openDeleteDialog = false
 
-                        viewModel.deleteUser(userId)
+                        viewModel.deletePost(postId)
                     }
                 ) {
                     Text("Yes")
@@ -159,40 +131,40 @@ fun UserDetailsScreen(
     // Bottom Sheet
     // ----------------------------------------------------------------
 
-    if (openEditUserSheet.value) {
-        UserEditSheet(
-            showSheet = openEditUserSheet,
-            userId = userId,
-            onSuccess = {
-                viewModel.getDetails(userId)
-            }
-        )
-    }
+//    if (openEditPostSheet.value) {
+//        PostEditSheet(
+//            showSheet = openEditPostSheet,
+//            postId = postId,
+//            onSuccess = {
+//                viewModel.getDetails(postId)
+//            }
+//        )
+//    }
 }
 
 @Preview
 @Composable
-fun UserDetailsScreenSkeletonPreview() {
+fun PostDetailsScreenSkeletonPreview() {
     CMSAppTheme {
-        UserDetailsScreenSkeleton(
-            user = MockData.dummyUser
+        PostDetailsScreenSkeleton(
+            post = MockData.dummyPost
         )
     }
 }
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun UserDetailsScreenSkeletonPreviewDark() {
+fun PostDetailsScreenSkeletonPreviewDark() {
     CMSAppTheme {
-        UserDetailsScreenSkeleton(
-            user = MockData.dummyUser
+        PostDetailsScreenSkeleton(
+            post = MockData.dummyPost
         )
     }
 }
 
 @Composable
-fun UserDetailsScreenSkeleton(
-    user: User?,
+fun PostDetailsScreenSkeleton(
+    post: Post?,
     showLoading: Boolean = false,
     showMessage: Event<ActionMessage>? = null,
     goBack: () -> Unit = {},
@@ -200,15 +172,14 @@ fun UserDetailsScreenSkeleton(
     retryDataLoad: () -> Unit = {},
     onDeleteClicked: () -> Unit = {},
     onEditClicked: () -> Unit = {},
-    onTodosClicked: () -> Unit = {},
-    onPostsClicked: () -> Unit = {}
+    onCommentsClicked: () -> Unit = {}
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(showMessage) {
         showMessage?.getValueOnce()?.let { actionMessage ->
             when (actionMessage.action) {
-                UserDetailsViewAction.USER_LOAD_ERROR -> {
+                PostDetailsViewAction.POST_LOAD_ERROR -> {
                     val result = snackbarHostState.showSnackbar(
                         actionMessage.message,
                         actionLabel = "Retry"
@@ -234,7 +205,7 @@ fun UserDetailsScreenSkeleton(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             GeneralAppBar(
-                subTitle = "User Details",
+                subTitle = "Post Details",
                 goBack = goBack,
                 toggleUIMode = toggleUIMode
             )
@@ -247,7 +218,7 @@ fun UserDetailsScreenSkeleton(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            if (user == null) {
+            if (post == null) {
                 LoadingItem(
                     Modifier
                         .padding(
@@ -256,21 +227,19 @@ fun UserDetailsScreenSkeleton(
                         )
                 )
             } else {
-                UserItem(
+                PostItem(
                     modifier = Modifier.padding(
                         top = 4.dp
                     ),
-                    name = user.name,
-                    email = user.email,
-                    gender = user.getGenderLabel(),
-                    status = user.getStatusLabel(),
-                    userImageUrl = user.getAvatarImageUrl(),
-                    statusColor = user.getStatusColor(),
+                    title = post.title,
+                    body = post.body,
+                    featuredImageUrl = post.getFeaturedImageUrl(),
+                    isPreview = false,
                     onClick = {}
                 )
             }
 
-            AnimatedVisibility(visible = user != null) {
+            AnimatedVisibility(visible = post != null) {
                 Column {
                     Spacer(Modifier.height(16.dp))
 
@@ -294,24 +263,18 @@ fun UserDetailsScreenSkeleton(
                         }
                     }
 
-                    Row {
-                        GeneralFilledButton(
-                            modifier = Modifier.weight(1f),
-                            caption = "Todos",
-                            icon = Icons.Rounded.Ballot
-                        ) {
-                            onTodosClicked()
-                        }
-
-                        Spacer(Modifier.width(16.dp))
+                    Row(horizontalArrangement = Arrangement.Center) {
+                        Spacer(Modifier.weight(1f))
 
                         GeneralFilledButton(
-                            modifier = Modifier.weight(1f),
-                            caption = "Posts",
-                            icon = Icons.Rounded.TextSnippet
+                            modifier = Modifier.weight(2f),
+                            caption = "Comments",
+                            icon = Icons.Rounded.Chat
                         ) {
-                            onPostsClicked()
+                            onCommentsClicked()
                         }
+
+                        Spacer(Modifier.weight(1f))
                     }
                 }
             }

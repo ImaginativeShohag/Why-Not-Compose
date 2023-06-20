@@ -118,9 +118,7 @@ class UserDetailsViewModel @Inject constructor(
             _eventDeleteSuccess.value = Event(true)
         } catch (e: ApiException) {
             _eventShowMessage.value = Event(
-                ActionMessage(
-                    e.message ?: "Unknown error!"
-                )
+                ActionMessage(e.message ?: "Unknown error!")
             )
         }
 

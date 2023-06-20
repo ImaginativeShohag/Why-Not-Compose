@@ -27,6 +27,7 @@
 package org.imaginativeworld.whynotcompose.cms.repositories
 
 import java.util.Date
+import org.imaginativeworld.whynotcompose.cms.models.Post
 import org.imaginativeworld.whynotcompose.cms.models.todo.Todo
 import org.imaginativeworld.whynotcompose.cms.models.user.User
 
@@ -79,5 +80,29 @@ object MockData {
         dummyTodo.copy(id = 8),
         dummyTodo.copy(id = 9),
         dummyTodo.copy(id = 10)
+    )
+
+    // ----------------------------------------------------------------
+    // Post
+    // ----------------------------------------------------------------
+
+    val dummyPost = Post(
+        id = 1,
+        title = "The quick brown fox jumps over the lazy dog.",
+        body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        userId = 1
+    )
+
+    val dummyPostList = listOf(
+        dummyPost.copy(id = 1),
+        dummyPost.copy(id = 2),
+        dummyPost.copy(id = 3),
+        dummyPost.copy(id = 4),
+        dummyPost.copy(id = 5),
+        dummyPost.copy(id = 6),
+        dummyPost.copy(id = 7),
+        dummyPost.copy(id = 8),
+        dummyPost.copy(id = 9),
+        dummyPost.copy(id = 10)
     )
 }

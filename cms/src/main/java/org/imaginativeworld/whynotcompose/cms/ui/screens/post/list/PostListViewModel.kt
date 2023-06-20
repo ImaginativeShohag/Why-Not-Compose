@@ -1,30 +1,4 @@
-/*
- * Copyright 2023 Md. Mahmudul Hasan Shohag
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * ------------------------------------------------------------------------
- *
- * Project: Why Not Compose!
- * Developed by: @ImaginativeShohag
- *
- * Md. Mahmudul Hasan Shohag
- * imaginativeshohag@gmail.com
- *
- * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
- */
-
-package org.imaginativeworld.whynotcompose.cms.ui.screens.user.list
+package org.imaginativeworld.whynotcompose.cms.ui.screens.post.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -42,25 +16,25 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.base.models.Event
-import org.imaginativeworld.whynotcompose.cms.datasource.UserPagingSource
-import org.imaginativeworld.whynotcompose.cms.models.user.User
-import org.imaginativeworld.whynotcompose.cms.repositories.UserRepository
+import org.imaginativeworld.whynotcompose.cms.datasource.PostPagingSource
+import org.imaginativeworld.whynotcompose.cms.models.Post
+import org.imaginativeworld.whynotcompose.cms.repositories.PostRepository
 
 @HiltViewModel
-class UserListViewModel @Inject constructor(
-    private val userRepository: UserRepository
+class PostListViewModel @Inject constructor(
+    private val postRepository: PostRepository
 ) : ViewModel() {
 
     private val _eventShowLoading = MutableStateFlow(false)
 
     private val _eventShowMessage = MutableStateFlow<Event<String>?>(null)
 
-    private var _items = MutableStateFlow<Flow<PagingData<User>>>(emptyFlow())
+    private var _items = MutableStateFlow<Flow<PagingData<Post>>>(emptyFlow())
 
     // ----------------------------------------------------------------
 
-    private val _state = MutableStateFlow(UserListViewState())
-    val state: StateFlow<UserListViewState>
+    private val _state = MutableStateFlow(PostListViewState())
+    val state: StateFlow<PostListViewState>
         get() = _state
 
     // ----------------------------------------------------------------
@@ -73,7 +47,7 @@ class UserListViewModel @Inject constructor(
                 _items
             ) { showLoading, showMessage, items ->
 
-                UserListViewState(
+                PostListViewState(
                     loading = showLoading,
                     message = showMessage,
                     items = items
@@ -89,17 +63,17 @@ class UserListViewModel @Inject constructor(
 
     // ----------------------------------------------------------------
 
-    fun loadUsers() {
-        _items.value = Pager(PagingConfig(pageSize = 10)) {
-            UserPagingSource(userRepository)
+    fun loadPosts(userId: Int) {
+        _items.value = Pager(PagingConfig(pageSize = 20)) {
+            PostPagingSource(userId, postRepository)
         }
             .flow
             .cachedIn(viewModelScope)
     }
 }
 
-data class UserListViewState(
+data class PostListViewState(
     val loading: Boolean = false,
     val message: Event<String>? = null,
-    val items: Flow<PagingData<User>> = emptyFlow()
+    val items: Flow<PagingData<Post>> = emptyFlow()
 )

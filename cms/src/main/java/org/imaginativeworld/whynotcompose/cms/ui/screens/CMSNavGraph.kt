@@ -43,6 +43,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
+import org.imaginativeworld.whynotcompose.cms.ui.screens.post.list.PostListScreen
+import org.imaginativeworld.whynotcompose.cms.ui.screens.post.list.PostListViewModel
 import org.imaginativeworld.whynotcompose.cms.ui.screens.splash.SplashScreen
 import org.imaginativeworld.whynotcompose.cms.ui.screens.todo.details.TodoDetailsScreen
 import org.imaginativeworld.whynotcompose.cms.ui.screens.todo.details.TodoDetailsViewModel
@@ -229,7 +231,13 @@ private fun NavGraphBuilder.addUserScreens(
                     )
                 },
                 onPostsClicked = {
-                    navController.navigate(Screen.Post.route)
+                    navController.navigate(
+                        PostScreen.PostList.route
+                            .replaceFirst(
+                                "{${PostScreen.PostList.USER_ID}}",
+                                "$userId"
+                            )
+                    )
                 }
             )
         }
@@ -316,11 +324,48 @@ private fun NavGraphBuilder.addPostScreens(
     ) {
         addCommentScreens(navController = navController)
 
-        composable(PostScreen.PostList.route) {
-            BlankScreen()
+        composable(
+            PostScreen.PostList.route,
+            arguments = listOf(
+                navArgument(PostScreen.PostList.USER_ID) { type = NavType.IntType }
+            )
+        ) { backStackEntry ->
+            val viewModel: PostListViewModel = hiltViewModel()
+            val isDarkMode by UIThemeController.isDarkMode.collectAsState()
+            val userId = backStackEntry.arguments?.getInt(PostScreen.PostList.USER_ID) ?: 0
+
+            PostListScreen(
+                viewModel = viewModel,
+                userId = userId,
+                goBack = {
+                    navController.popBackStack()
+                },
+                toggleUIMode = {
+                    turnOnDarkMode(!isDarkMode)
+                },
+                goToPostDetails = { postId ->
+                    navController.navigate(
+                        PostScreen.PostDetails.route
+                            .replaceFirst(
+                                "{${PostScreen.PostDetails.USER_ID}}",
+                                "$userId"
+                            )
+                            .replaceFirst(
+                                "{${PostScreen.PostDetails.POST_ID}}",
+                                "$postId"
+                            )
+                    )
+                }
+            )
         }
 
-        composable(PostScreen.PostDetails.route) {
+        composable(
+            PostScreen.PostDetails.route,
+            arguments = listOf(
+                navArgument(PostScreen.PostDetails.USER_ID) { type = NavType.IntType },
+                navArgument(PostScreen.PostDetails.POST_ID) { type = NavType.IntType }
+            )
+        ) {
             BlankScreen()
         }
     }

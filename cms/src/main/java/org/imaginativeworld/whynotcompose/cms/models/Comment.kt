@@ -33,12 +33,14 @@ import com.squareup.moshi.JsonClass
 data class Comment(
     @Json(name = "id")
     val id: Int,
-    @Json(name = "body")
-    val body: String,
-    @Json(name = "email")
-    val email: String,
     @Json(name = "name")
     val name: String,
+    @Json(name = "email")
+    val email: String,
+    @Json(name = "body")
+    val body: String,
     @Json(name = "post_id")
     val postId: Int
-)
+) {
+    fun getAvatarImageUrl() = "https://picsum.photos/seed/c$id/200/200"
+}

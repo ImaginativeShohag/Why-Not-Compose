@@ -43,6 +43,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
+import org.imaginativeworld.whynotcompose.cms.ui.screens.comment.list.CommentListScreen
+import org.imaginativeworld.whynotcompose.cms.ui.screens.comment.list.CommentListViewModel
 import org.imaginativeworld.whynotcompose.cms.ui.screens.post.details.PostDetailsScreen
 import org.imaginativeworld.whynotcompose.cms.ui.screens.post.details.PostDetailsViewModel
 import org.imaginativeworld.whynotcompose.cms.ui.screens.post.list.PostListScreen
@@ -324,7 +326,10 @@ private fun NavGraphBuilder.addPostScreens(
         route = Screen.Post.route,
         startDestination = PostScreen.PostList.route
     ) {
-        addCommentScreens(navController = navController)
+        addCommentScreens(
+            navController = navController,
+            turnOnDarkMode = turnOnDarkMode
+        )
 
         composable(
             PostScreen.PostList.route,
@@ -398,7 +403,8 @@ private fun NavGraphBuilder.addPostScreens(
 }
 
 private fun NavGraphBuilder.addCommentScreens(
-    navController: NavHostController
+    navController: NavHostController,
+    turnOnDarkMode: (Boolean) -> Unit
 ) {
     navigation(
         route = Screen.Comment.route,
@@ -409,8 +415,34 @@ private fun NavGraphBuilder.addCommentScreens(
             arguments = listOf(
                 navArgument(CommentScreen.CommentList.POST_ID) { type = NavType.IntType }
             )
-        ) {
-            BlankScreen()
+        ) { backStackEntry ->
+            val viewModel: CommentListViewModel = hiltViewModel()
+            val isDarkMode by UIThemeController.isDarkMode.collectAsState()
+            val postId = backStackEntry.arguments?.getInt(CommentScreen.CommentList.POST_ID) ?: 0
+
+            CommentListScreen(
+                viewModel = viewModel,
+                postId = postId,
+                goBack = {
+                    navController.popBackStack()
+                },
+                toggleUIMode = {
+                    turnOnDarkMode(!isDarkMode)
+                },
+                goToCommentDetails = { commentId ->
+                    navController.navigate(
+                        CommentScreen.CommentDetails.route
+                            .replaceFirst(
+                                "{${CommentScreen.CommentDetails.POST_ID}}",
+                                "$postId"
+                            )
+                            .replaceFirst(
+                                "{${CommentScreen.CommentDetails.COMMNET_ID}}",
+                                "$commentId"
+                            )
+                    )
+                }
+            )
         }
 
         composable(

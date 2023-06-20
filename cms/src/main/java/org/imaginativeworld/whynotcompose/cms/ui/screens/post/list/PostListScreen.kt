@@ -48,6 +48,7 @@ import org.imaginativeworld.whynotcompose.cms.ui.compositions.ErrorItem
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.GeneralAppBar
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.LoadingContainer
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.LoadingItem
+import org.imaginativeworld.whynotcompose.cms.ui.screens.post.add.PostAddSheet
 import org.imaginativeworld.whynotcompose.cms.ui.screens.post.list.elements.PostItem
 
 @Composable
@@ -86,14 +87,15 @@ fun PostListScreen(
     // Bottom Sheet
     // ----------------------------------------------------------------
 
-//    if (openAddPostSheet.value) {
-//        PostAddSheet(
-//            showSheet = openAddPostSheet,
-//            onSuccess = {
-//                viewModel.loadPosts(userId)
-//            }
-//        )
-//    }
+    if (openAddPostSheet.value) {
+        PostAddSheet(
+            showSheet = openAddPostSheet,
+            userId = userId,
+            onSuccess = {
+                viewModel.loadPosts(userId)
+            }
+        )
+    }
 }
 
 @Preview

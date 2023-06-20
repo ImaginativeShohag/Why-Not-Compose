@@ -48,6 +48,7 @@ import org.imaginativeworld.whynotcompose.cms.ui.compositions.LoadingItem
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralFilledButton
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralOutlinedButton
 import org.imaginativeworld.whynotcompose.cms.ui.screens.post.add.PostAddSheet
+import org.imaginativeworld.whynotcompose.cms.ui.screens.post.edit.PostEditSheet
 import org.imaginativeworld.whynotcompose.cms.ui.screens.post.list.elements.PostItem
 
 @Composable
@@ -133,9 +134,10 @@ fun PostDetailsScreen(
     // ----------------------------------------------------------------
 
     if (openEditPostSheet.value) {
-        PostAddSheet(
+        PostEditSheet(
             showSheet = openEditPostSheet,
             userId = userId,
+            postId = postId,
             onSuccess = {
                 viewModel.getDetails(postId)
             }

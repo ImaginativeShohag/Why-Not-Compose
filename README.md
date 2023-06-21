@@ -78,7 +78,7 @@ Feel free to request features or suggestions for improvements.
 - [x] Refactor to Gradle Plugins
 - [-] Add GitHub actions
 - [x] Add notification permission
-- [ ] Add Splash Screen (Introduced in Android 12)
+- [x] Animated Splash Screen (Introduced in Android 12)
 - [ ] Update to new storage permission
 - [-] Migrate to Material 3
 - [ ] Create color ready for dark and light mode

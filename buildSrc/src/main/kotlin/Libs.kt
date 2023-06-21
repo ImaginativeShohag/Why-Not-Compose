@@ -172,6 +172,10 @@ object Libs {
             const val uiTestManifest = "androidx.compose.ui:ui-test-manifest"
         }
 
+        object Core {
+            const val splashScreen = "androidx.core:core-splashscreen:1.0.1"
+        }
+
         object ConstraintLayout {
             private const val version = "1.0.1"
 

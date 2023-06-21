@@ -25,6 +25,21 @@
   ~ Source: https://github.com/ImaginativeShohag/Why-Not-Compose
   -->
 <resources>
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <!-- Set the splash screen background, animated icon, and animation duration. -->
+        <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
+
+        <!-- Use windowSplashScreenAnimatedIcon to add either a drawable or an
+             animated drawable. One of these is required. -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <!-- Required for animated icons -->
+        <item name="windowSplashScreenAnimationDuration">1000</item>
+
+        <!-- Set the theme of the Activity that directly follows your splash screen. -->
+        <!-- Required -->
+        <item name="postSplashScreenTheme">@style/Theme.WhyNotCompose</item>
+    </style>
+
     <style name="Theme.WhyNotCompose" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:colorPrimary">#10B981</item>
         <item name="android:colorAccent">#10B981</item>

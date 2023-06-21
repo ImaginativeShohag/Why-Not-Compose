@@ -109,7 +109,7 @@ dependencies {
     implementation(Libs.AndroidX.appcompat)
     implementation(Libs.AndroidX.swipeRefreshLayout)
 
-    // Let"s not use material xml view components at all. :)
+    // Let's not use material xml view components at all. :)
     // implementation(Google.android.material)
 
     testImplementation(Libs.junit)
@@ -166,6 +166,9 @@ dependencies {
     implementation(Libs.Accompanist.placeholder)
 
     // ----------------------------------------------------------------
+
+    // Splash Screen
+    implementation(Libs.AndroidX.Core.splashScreen)
 
     // Retrofit
     implementation(Libs.Square.Retrofit.core)

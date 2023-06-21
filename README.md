@@ -83,6 +83,7 @@ Feel free to request features or suggestions for improvements.
 - [-] Migrate to Material 3
 - [ ] Create color ready for dark and light mode
 - [ ] Add screenshot for CMS module
+- [ ] CMS module: UI Testing
 
 # Note
 

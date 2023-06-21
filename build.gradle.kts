@@ -51,3 +51,7 @@ allprojects {
         }
     }
 }
+
+task("testClasses").doLast {
+    println("This is a dummy testClasses task to fix GitHub CodeQL action issue.")
+}

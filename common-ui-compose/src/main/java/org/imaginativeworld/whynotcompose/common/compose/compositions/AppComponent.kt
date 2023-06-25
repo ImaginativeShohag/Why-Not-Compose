@@ -165,7 +165,15 @@ fun AppComponentPreview() {
 
                 Divider()
 
+                AppComponent.Header(text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit") {}
+
+                Divider()
+
                 AppComponent.SubHeader(text = "Lorem Ipsum")
+
+                Divider()
+
+                AppComponent.SubHeader(text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit")
 
                 Divider()
 
@@ -177,7 +185,11 @@ fun AppComponentPreview() {
 
                 Divider()
 
-                AppComponent.CustomListItem(text = "Lorem Ispum")
+                AppComponent.CustomListItem(text = "Lorem Ipsum")
+
+                Divider()
+
+                AppComponent.CustomListItem(text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit")
             }
         }
     }

@@ -191,7 +191,7 @@ object Libs {
 
             const val extensions = "androidx.lifecycle:lifecycle-extensions:$version"
             const val livedata = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
-            const val viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
+            const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
             const val common = "androidx.lifecycle:lifecycle-common:$version"
             const val runtime = "androidx.lifecycle:lifecycle-runtime-ktx:$version"
             const val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:$version"

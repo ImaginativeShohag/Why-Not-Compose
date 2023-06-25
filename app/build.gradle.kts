@@ -184,7 +184,7 @@ dependencies {
     implementation(Libs.gson)
 
     // ViewModel and LiveData
-    implementation(Libs.AndroidX.Lifecycle.viewmodel)
+    implementation(Libs.AndroidX.Lifecycle.viewModel)
     implementation(Libs.AndroidX.Lifecycle.livedata)
     implementation(Libs.AndroidX.Lifecycle.common)
     implementation(Libs.AndroidX.Lifecycle.runtime)

@@ -55,8 +55,12 @@ import org.imaginativeworld.whynotcompose.common.compose.compositions.AppCompone
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
-fun CardScreen() {
-    CardScreenSkeleton()
+fun CardScreen(
+    goBack: () -> Unit
+) {
+    CardScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -76,7 +80,9 @@ fun CardScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun CardScreenSkeleton() {
+fun CardScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
             .navigationBarsPadding()
@@ -90,7 +96,10 @@ fun CardScreenSkeleton() {
                 .verticalScroll(rememberScrollState())
                 .padding(start = 16.dp, end = 16.dp)
         ) {
-            AppComponent.Header("Card")
+            AppComponent.Header(
+                "Card",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

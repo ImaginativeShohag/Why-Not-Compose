@@ -54,12 +54,15 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.ui.screens.composition.dialog.elements.GeneralDialog
 
 @Composable
-fun DialogScreen() {
+fun DialogScreen(
+    goBack: () -> Unit
+) {
     val openDefaultDialog = remember { mutableStateOf(false) }
 
     val openCustomDialog = remember { mutableStateOf(false) }
 
     DialogScreenSkeleton(
+        goBack = goBack,
         showDefaultDialog = {
             openDefaultDialog.value = true
         },
@@ -105,6 +108,7 @@ fun DialogScreenSkeletonPreviewDark() {
 
 @Composable
 fun DialogScreenSkeleton(
+    goBack: () -> Unit = {},
     showDefaultDialog: () -> Unit = {},
     showCustomDialog: () -> Unit = {}
 ) {
@@ -120,7 +124,10 @@ fun DialogScreenSkeleton(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            AppComponent.Header("Dialog")
+            AppComponent.Header(
+                "Dialog",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

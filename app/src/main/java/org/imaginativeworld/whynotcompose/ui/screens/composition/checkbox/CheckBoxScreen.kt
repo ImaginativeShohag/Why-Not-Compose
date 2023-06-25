@@ -57,8 +57,12 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 private val ELEMENT_HEIGHT = 56.dp
 
 @Composable
-fun CheckBoxScreen() {
-    CheckBoxScreenSkeleton()
+fun CheckBoxScreen(
+    goBack: () -> Unit
+) {
+    CheckBoxScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -70,7 +74,9 @@ fun CheckBoxScreenSkeletonPreview() {
 }
 
 @Composable
-fun CheckBoxScreenSkeleton() {
+fun CheckBoxScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
             .navigationBarsPadding()
@@ -83,7 +89,10 @@ fun CheckBoxScreenSkeleton() {
                 .fillMaxSize()
                 .padding(start = 16.dp, end = 16.dp)
         ) {
-            AppComponent.Header("Check Box")
+            AppComponent.Header(
+                "Check Box",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

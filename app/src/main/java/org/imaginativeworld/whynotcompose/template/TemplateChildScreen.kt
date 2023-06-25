@@ -44,8 +44,12 @@ import org.imaginativeworld.whynotcompose.common.compose.compositions.AppCompone
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
-fun TemplateChildScreen() {
-    TemplateChildScreenSkeleton()
+fun TemplateChildScreen(
+    goBack: () -> Unit
+) {
+    TemplateChildScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -65,7 +69,9 @@ fun TemplateChildScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun TemplateChildScreenSkeleton() {
+fun TemplateChildScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
             .navigationBarsPadding()
@@ -78,7 +84,10 @@ fun TemplateChildScreenSkeleton() {
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            AppComponent.Header("Title")
+            AppComponent.Header(
+                "Title",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

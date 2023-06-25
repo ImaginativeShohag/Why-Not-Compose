@@ -49,8 +49,12 @@ import org.imaginativeworld.whynotcompose.common.compose.compositions.AppCompone
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
-fun LazyVerticalGridScreen() {
-    LazyVerticalGridScreenSkeleton()
+fun LazyVerticalGridScreen(
+    goBack: () -> Unit
+) {
+    LazyVerticalGridScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -72,7 +76,9 @@ fun LazyVerticalGridScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun LazyVerticalGridScreenSkeleton() {
+fun LazyVerticalGridScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
             .navigationBarsPadding()
@@ -84,7 +90,10 @@ fun LazyVerticalGridScreenSkeleton() {
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            AppComponent.Header("Grid with LazyVerticalGrid")
+            AppComponent.Header(
+                "Grid with LazyVerticalGrid",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

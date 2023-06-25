@@ -70,7 +70,8 @@ import org.imaginativeworld.whynotcompose.utils.extensions.getUriForFile
 
 @Composable
 fun CaptureImageAndCropScreen(
-    viewModel: CaptureImageAndCropViewModel
+    viewModel: CaptureImageAndCropViewModel,
+    goBack: () -> Unit
 ) {
     val context = LocalContext.current
 
@@ -110,6 +111,7 @@ fun CaptureImageAndCropScreen(
     // ----------------------------------------------------------------
 
     CaptureImageAndCropScreenSkeleton(
+        goBack = goBack,
         imagePath = imageUri,
         onChooseImageClicked = {
             val newPhotoUri = context.createImageFile().getUriForFile(context)
@@ -139,6 +141,7 @@ fun CaptureImageAndCropScreenSkeletonPreviewDark() {
 
 @Composable
 fun CaptureImageAndCropScreenSkeleton(
+    goBack: () -> Unit = {},
     imagePath: Uri? = null,
     onChooseImageClicked: () -> Unit = {}
 ) {
@@ -154,7 +157,10 @@ fun CaptureImageAndCropScreenSkeleton(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            AppComponent.Header("Capture Image and Crop for Upload")
+            AppComponent.Header(
+                "Capture Image and Crop for Upload",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

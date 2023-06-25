@@ -54,8 +54,12 @@ import org.imaginativeworld.whynotcompose.common.compose.compositions.AppCompone
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
-fun LazyRowScreen() {
-    LazyRowScreenSkeleton()
+fun LazyRowScreen(
+    goBack: () -> Unit
+) {
+    LazyRowScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -77,7 +81,9 @@ fun LazyRowScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun LazyRowScreenSkeleton() {
+fun LazyRowScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
             .navigationBarsPadding()
@@ -89,7 +95,10 @@ fun LazyRowScreenSkeleton() {
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            AppComponent.Header("List with Row")
+            AppComponent.Header(
+                "List with Row",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

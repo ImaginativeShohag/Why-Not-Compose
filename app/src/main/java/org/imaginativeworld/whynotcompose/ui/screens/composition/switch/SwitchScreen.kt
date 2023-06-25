@@ -56,8 +56,12 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 private val ELEMENT_HEIGHT = 56.dp
 
 @Composable
-fun SwitchScreen() {
-    SwitchScreenSkeleton()
+fun SwitchScreen(
+    goBack: () -> Unit
+) {
+    SwitchScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -69,7 +73,9 @@ fun SwitchScreenSkeletonPreview() {
 }
 
 @Composable
-fun SwitchScreenSkeleton() {
+fun SwitchScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
             .navigationBarsPadding()
@@ -82,7 +88,10 @@ fun SwitchScreenSkeleton() {
                 .fillMaxSize()
                 .padding(start = 16.dp, end = 16.dp)
         ) {
-            AppComponent.Header("Switch")
+            AppComponent.Header(
+                "Switch",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

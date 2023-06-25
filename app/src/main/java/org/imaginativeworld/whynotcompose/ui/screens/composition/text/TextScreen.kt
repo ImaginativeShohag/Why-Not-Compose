@@ -64,8 +64,12 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 // Help: https://developer.android.com/jetpack/compose/text
 
 @Composable
-fun TextScreen() {
-    TextScreenSkeleton()
+fun TextScreen(
+    goBack: () -> Unit
+) {
+    TextScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -85,7 +89,9 @@ fun TextScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun TextScreenSkeleton() {
+fun TextScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     val context = LocalContext.current
 
     Scaffold(
@@ -100,7 +106,10 @@ fun TextScreenSkeleton() {
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            AppComponent.Header("Text")
+            AppComponent.Header(
+                "Text",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

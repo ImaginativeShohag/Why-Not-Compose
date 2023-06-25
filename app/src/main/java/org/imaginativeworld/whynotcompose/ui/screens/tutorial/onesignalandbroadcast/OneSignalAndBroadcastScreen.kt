@@ -49,6 +49,7 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -68,11 +69,13 @@ import org.json.JSONObject
 import timber.log.Timber
 
 @Composable
-fun OneSignalAndBroadcastScreen() {
+fun OneSignalAndBroadcastScreen(
+    goBack: () -> Unit
+) {
     val context = LocalContext.current
 
     var showError by remember { mutableStateOf("") }
-    var counter by remember { mutableStateOf(0) }
+    var counter by remember { mutableIntStateOf(0) }
     var currentValue by remember { mutableStateOf("$counter") }
 
     DisposableEffect(context) {
@@ -100,6 +103,7 @@ fun OneSignalAndBroadcastScreen() {
     }
 
     OneSignalAndBroadcastScreenSkeleton(
+        goBack = goBack,
         currentValue = currentValue,
         sendNotification = {
             try {
@@ -194,6 +198,7 @@ fun OneSignalAndBroadcastScreenSkeletonPreviewDark() {
 
 @Composable
 fun OneSignalAndBroadcastScreenSkeleton(
+    goBack: () -> Unit = {},
     currentValue: String = "",
     sendNotification: () -> Unit = {}
 ) {
@@ -209,7 +214,10 @@ fun OneSignalAndBroadcastScreenSkeleton(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            AppComponent.Header("OneSignal and Broadcast")
+            AppComponent.Header(
+                "OneSignal and Broadcast",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

@@ -55,7 +55,9 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 // Note: Clear Storage will clear the permissions.
 
 @Composable
-fun PermissionScreen() {
+fun PermissionScreen(
+    goBack: () -> Unit
+) {
     val context = LocalContext.current
 
     val requestSinglePermission =
@@ -79,6 +81,7 @@ fun PermissionScreen() {
         }
 
     PermissionScreenSkeleton(
+        goBack = goBack,
         onSinglePermissionClicked = {
             requestSinglePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         },
@@ -111,6 +114,7 @@ fun PermissionScreenSkeletonPreviewDark() {
 
 @Composable
 fun PermissionScreenSkeleton(
+    goBack: () -> Unit = {},
     onSinglePermissionClicked: () -> Unit = {},
     onMultiplePermissionsClicked: () -> Unit = {}
 ) {
@@ -126,7 +130,10 @@ fun PermissionScreenSkeleton(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            AppComponent.Header("Permission")
+            AppComponent.Header(
+                "Permission",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

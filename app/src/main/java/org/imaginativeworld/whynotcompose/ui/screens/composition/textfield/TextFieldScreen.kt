@@ -137,8 +137,12 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.onInputBackground
 private val ELEMENT_HEIGHT = 48.dp
 
 @Composable
-fun TextFieldScreen() {
-    TextFieldScreenSkeleton()
+fun TextFieldScreen(
+    goBack: () -> Unit
+) {
+    TextFieldScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -158,7 +162,9 @@ fun TextFieldScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun TextFieldScreenSkeleton() {
+fun TextFieldScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
             .navigationBarsPadding()
@@ -172,7 +178,10 @@ fun TextFieldScreenSkeleton() {
                 .verticalScroll(rememberScrollState())
                 .padding(start = 16.dp, end = 16.dp)
         ) {
-            AppComponent.Header("Text Field")
+            AppComponent.Header(
+                "Text Field",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

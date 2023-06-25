@@ -72,8 +72,12 @@ import org.imaginativeworld.whynotcompose.common.compose.compositions.AppCompone
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
-fun LottieScreen() {
-    LottieScreenSkeleton()
+fun LottieScreen(
+    goBack: () -> Unit
+) {
+    LottieScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -93,7 +97,9 @@ fun LottieScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun LottieScreenSkeleton() {
+fun LottieScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
             .navigationBarsPadding()
@@ -107,7 +113,10 @@ fun LottieScreenSkeleton() {
                 .verticalScroll(rememberScrollState())
                 .padding(start = 16.dp, end = 16.dp)
         ) {
-            AppComponent.Header("Lottie")
+            AppComponent.Header(
+                "Lottie",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

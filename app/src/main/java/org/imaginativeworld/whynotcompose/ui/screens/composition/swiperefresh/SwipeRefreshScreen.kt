@@ -68,7 +68,9 @@ import org.imaginativeworld.whynotcompose.models.ListItem
 import org.imaginativeworld.whynotcompose.repositories.MockData
 
 @Composable
-fun SwipeRefreshScreen() {
+fun SwipeRefreshScreen(
+    goBack: () -> Unit
+) {
     val scope = rememberCoroutineScope()
 
     val items = remember { mutableStateOf(MockData.dummyListItem) }
@@ -76,6 +78,7 @@ fun SwipeRefreshScreen() {
     val isRefreshing = remember { mutableStateOf(false) }
 
     SwipeRefreshScreenSkeleton(
+        goBack = goBack,
         items = items.value,
         isRefreshing = isRefreshing.value,
         onRefresh = {
@@ -118,6 +121,7 @@ fun SwipeRefreshScreenSkeletonPreviewDark() {
 
 @Composable
 fun SwipeRefreshScreenSkeleton(
+    goBack: () -> Unit = {},
     items: List<ListItem>,
     isRefreshing: Boolean = false,
     onRefresh: () -> Unit = {}
@@ -135,7 +139,10 @@ fun SwipeRefreshScreenSkeleton(
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            AppComponent.Header("SwipeRefresh")
+            AppComponent.Header(
+                "SwipeRefresh",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

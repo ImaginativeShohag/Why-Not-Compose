@@ -88,10 +88,13 @@ import org.imaginativeworld.whynotcompose.repositories.MockData
 private val dummyItems = MockData.dummyListItem.toList()
 
 @Composable
-fun SwipeToDismissScreen() {
+fun SwipeToDismissScreen(
+    goBack: () -> Unit
+) {
     val items = remember { mutableStateOf(dummyItems) }
 
     SwipeToDismissScreenSkeleton(
+        goBack = goBack,
         items = items.value,
         onDelete = {
             items.value = items.value.toMutableList().apply {
@@ -137,6 +140,7 @@ fun SwipeToDismissScreenSkeletonPreviewDark() {
 
 @Composable
 fun SwipeToDismissScreenSkeleton(
+    goBack: () -> Unit = {},
     items: List<ListItem>,
     onDelete: (ListItem) -> Unit
 ) {
@@ -151,7 +155,10 @@ fun SwipeToDismissScreenSkeleton(
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            AppComponent.Header("SwipeToDismiss")
+            AppComponent.Header(
+                "SwipeToDismiss",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

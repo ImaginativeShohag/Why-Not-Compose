@@ -58,9 +58,11 @@ import org.imaginativeworld.whynotcompose.utils.LiteMarkdown
 
 @Composable
 fun TutorialIndexScreen(
+    goBack: () -> Unit,
     navigate: (TutorialsScreen) -> Unit
 ) {
     TutorialIndexSkeleton(
+        goBack = goBack,
         navigate = navigate
     )
 }
@@ -75,6 +77,7 @@ fun TutorialIndexSkeletonPreview() {
 
 @Composable
 fun TutorialIndexSkeleton(
+    goBack: () -> Unit = {},
     navigate: (TutorialsScreen) -> Unit = {}
 ) {
     Scaffold(
@@ -88,7 +91,10 @@ fun TutorialIndexSkeleton(
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            Header("Tutorials")
+            Header(
+                "Tutorials",
+                goBack = goBack
+            )
 
             LazyColumn(
                 Modifier

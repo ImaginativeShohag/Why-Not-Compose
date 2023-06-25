@@ -53,8 +53,12 @@ import org.imaginativeworld.whynotcompose.common.compose.compositions.AppCompone
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
-fun ListRowScreen() {
-    ListRowScreenSkeleton()
+fun ListRowScreen(
+    goBack: () -> Unit
+) {
+    ListRowScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -76,7 +80,9 @@ fun ListRowScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun ListRowScreenSkeleton() {
+fun ListRowScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
             .navigationBarsPadding()
@@ -88,7 +94,10 @@ fun ListRowScreenSkeleton() {
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            AppComponent.Header("List with Row")
+            AppComponent.Header(
+                "List with Row",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

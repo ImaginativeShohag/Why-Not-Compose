@@ -55,8 +55,12 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 // https://cs.android.com/androidx/platform/tools/dokka-devsite-plugin/+/master:testData/compose/samples/material/samples/FloatingActionButtonSamples.kt
 
 @Composable
-fun FloatingActionButtonScreen() {
-    FloatingActionButtonScreenSkeleton()
+fun FloatingActionButtonScreen(
+    goBack: () -> Unit
+) {
+    FloatingActionButtonScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -76,7 +80,9 @@ fun FloatingActionButtonScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun FloatingActionButtonScreenSkeleton() {
+fun FloatingActionButtonScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
             .navigationBarsPadding()
@@ -90,7 +96,10 @@ fun FloatingActionButtonScreenSkeleton() {
                 .verticalScroll(rememberScrollState())
                 .padding(start = 16.dp, end = 16.dp)
         ) {
-            AppComponent.Header("FloatingActionButton")
+            AppComponent.Header(
+                "FloatingActionButton",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

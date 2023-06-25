@@ -88,7 +88,8 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
 fun TicTacToeScreen(
-    viewModel: TicTacToeViewModel
+    viewModel: TicTacToeViewModel,
+    goBack: () -> Unit = {}
 ) {
     val context = LocalContext.current
 
@@ -109,6 +110,7 @@ fun TicTacToeScreen(
         currentPlayingMoves = state.currentPlayingMoves,
         totalNeurons = state.totalNeurons,
         winPosition = state.winPosition,
+        goBack = goBack,
         onBoxClicked = { position ->
             viewModel.act(
                 position = position
@@ -150,7 +152,8 @@ fun TicTacToeScreenSkeleton(
     currentPlayingMoves: String = "",
     totalNeurons: Int = 0,
     winPosition: WinPosition? = null,
-    onBoxClicked: (position: Int) -> Unit = { },
+    goBack: () -> Unit = {},
+    onBoxClicked: (position: Int) -> Unit = {},
     onRestartClicked: () -> Unit = {}
 ) {
     val snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
@@ -183,7 +186,10 @@ fun TicTacToeScreenSkeleton(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            AppComponent.Header("Tic-Tac-Toe")
+            AppComponent.Header(
+                "Tic-Tac-Toe",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

@@ -56,8 +56,12 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 private val ELEMENT_HEIGHT = 56.dp
 
 @Composable
-fun RadioButtonScreen() {
-    RadioButtonScreenSkeleton()
+fun RadioButtonScreen(
+    goBack: () -> Unit
+) {
+    RadioButtonScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -69,7 +73,9 @@ fun RadioButtonScreenSkeletonPreview() {
 }
 
 @Composable
-fun RadioButtonScreenSkeleton() {
+fun RadioButtonScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
             .navigationBarsPadding()
@@ -82,7 +88,10 @@ fun RadioButtonScreenSkeleton() {
                 .fillMaxSize()
                 .padding(start = 16.dp, end = 16.dp)
         ) {
-            AppComponent.Header("Radio Button")
+            AppComponent.Header(
+                "Radio Button",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

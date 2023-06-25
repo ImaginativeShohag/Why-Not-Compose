@@ -56,8 +56,12 @@ import org.imaginativeworld.whynotcompose.common.compose.compositions.AppCompone
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
-fun AppBarScreen() {
-    AppBarScreenSkeleton()
+fun AppBarScreen(
+    goBack: () -> Unit
+) {
+    AppBarScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -77,7 +81,9 @@ fun AppBarScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun AppBarScreenSkeleton() {
+fun AppBarScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
             .navigationBarsPadding()
@@ -89,7 +95,10 @@ fun AppBarScreenSkeleton() {
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            Header("App Bar")
+            Header(
+                "App Bar",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
 

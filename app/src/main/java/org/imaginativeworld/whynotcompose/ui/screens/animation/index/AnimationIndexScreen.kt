@@ -49,9 +49,11 @@ import org.imaginativeworld.whynotcompose.ui.screens.AnimationsScreen
 
 @Composable
 fun AnimationIndexScreen(
+    goBack: () -> Unit,
     navigate: (AnimationsScreen) -> Unit
 ) {
     AnimationIndexSkeleton(
+        goBack = goBack,
         navigate = navigate
     )
 }
@@ -66,6 +68,7 @@ fun AnimationIndexSkeletonPreview() {
 
 @Composable
 fun AnimationIndexSkeleton(
+    goBack: () -> Unit = {},
     navigate: (AnimationsScreen) -> Unit = {}
 ) {
     Scaffold(
@@ -79,7 +82,10 @@ fun AnimationIndexSkeleton(
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            Header("Compositions")
+            Header(
+                "Compositions",
+                goBack = goBack
+            )
 
             LazyColumn(Modifier.fillMaxSize()) {
                 itemsIndexed(Animation.animationList) { index, item ->

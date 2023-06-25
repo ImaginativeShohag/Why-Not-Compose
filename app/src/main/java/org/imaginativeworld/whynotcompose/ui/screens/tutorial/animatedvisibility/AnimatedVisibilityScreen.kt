@@ -60,8 +60,12 @@ import org.imaginativeworld.whynotcompose.common.compose.compositions.AppCompone
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
-fun AnimatedVisibilityScreen() {
-    AnimatedVisibilityScreenSkeleton()
+fun AnimatedVisibilityScreen(
+    goBack: () -> Unit
+) {
+    AnimatedVisibilityScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -81,7 +85,9 @@ fun AnimatedVisibilityScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun AnimatedVisibilityScreenSkeleton() {
+fun AnimatedVisibilityScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
             .navigationBarsPadding()
@@ -93,7 +99,10 @@ fun AnimatedVisibilityScreenSkeleton() {
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            AppComponent.Header("AnimatedVisibility")
+            AppComponent.Header(
+                "AnimatedVisibility",
+                goBack = goBack
+            )
 
             Divider()
 

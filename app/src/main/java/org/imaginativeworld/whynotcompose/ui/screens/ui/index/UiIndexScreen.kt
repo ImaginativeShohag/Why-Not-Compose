@@ -49,9 +49,11 @@ import org.imaginativeworld.whynotcompose.ui.screens.UIsScreen
 
 @Composable
 fun UiIndexScreen(
+    goBack: () -> Unit,
     navigate: (UIsScreen) -> Unit
 ) {
     UiIndexSkeleton(
+        goBack = goBack,
         navigate = navigate
     )
 }
@@ -66,6 +68,7 @@ fun UiIndexSkeletonPreview() {
 
 @Composable
 fun UiIndexSkeleton(
+    goBack: () -> Unit = {},
     navigate: (UIsScreen) -> Unit = {}
 ) {
     Scaffold(
@@ -79,7 +82,10 @@ fun UiIndexSkeleton(
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            Header("UIs")
+            Header(
+                "UIs",
+                goBack = goBack
+            )
 
             LazyColumn(Modifier.fillMaxSize()) {
                 itemsIndexed(Ui.uiList) { index, item ->

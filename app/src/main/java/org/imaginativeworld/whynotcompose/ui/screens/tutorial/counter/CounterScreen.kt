@@ -54,8 +54,12 @@ import org.imaginativeworld.whynotcompose.common.compose.compositions.AppCompone
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
-fun CounterScreen() {
-    CounterScreenSkeleton()
+fun CounterScreen(
+    goBack: () -> Unit
+) {
+    CounterScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -75,7 +79,9 @@ fun CounterScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun CounterScreenSkeleton() {
+fun CounterScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
             .navigationBarsPadding()
@@ -87,7 +93,10 @@ fun CounterScreenSkeleton() {
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            AppComponent.Header("Counter")
+            AppComponent.Header(
+                "Counter",
+                goBack = goBack
+            )
 
             Divider()
 

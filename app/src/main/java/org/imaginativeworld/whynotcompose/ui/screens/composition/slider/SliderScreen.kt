@@ -53,8 +53,12 @@ import org.imaginativeworld.whynotcompose.common.compose.compositions.AppCompone
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
-fun SliderScreen() {
-    SliderScreenSkeleton()
+fun SliderScreen(
+    goBack: () -> Unit
+) {
+    SliderScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -74,7 +78,9 @@ fun SliderScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun SliderScreenSkeleton() {
+fun SliderScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
             .navigationBarsPadding()
@@ -88,7 +94,10 @@ fun SliderScreenSkeleton() {
                 .verticalScroll(rememberScrollState())
                 .padding(start = 16.dp, end = 16.dp)
         ) {
-            AppComponent.Header("Slider")
+            AppComponent.Header(
+                "Slider",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

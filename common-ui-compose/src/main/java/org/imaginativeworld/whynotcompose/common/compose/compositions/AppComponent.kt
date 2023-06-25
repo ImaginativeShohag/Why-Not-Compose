@@ -28,40 +28,67 @@ package org.imaginativeworld.whynotcompose.common.compose.compositions
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Divider
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBackIosNew
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 object AppComponent {
-
     @Composable
     fun Header(
         text: String,
-        modifier: Modifier = Modifier
+        modifier: Modifier = Modifier,
+        goBack: () -> Unit
     ) {
-        Text(
-            modifier = modifier
-                .padding(
-                    start = 16.dp,
-                    top = 32.dp,
-                    end = 16.dp,
-                    bottom = 32.dp
+        Row(
+            Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(
+                modifier = Modifier.size(48.dp),
+                onClick = goBack
+            ) {
+                Icon(
+                    Icons.Rounded.ArrowBackIosNew,
+                    contentDescription = "Go Back"
                 )
-                .fillMaxWidth(),
-            text = text,
-            style = MaterialTheme.typography.h1,
-            textAlign = TextAlign.Center
-        )
+            }
+
+            Text(
+                modifier = modifier
+                    .padding(
+                        start = 0.dp,
+                        top = 32.dp,
+                        end = 48.dp,
+                        bottom = 32.dp
+                    )
+                    .fillMaxWidth(),
+                text = text,
+                style = MaterialTheme.typography.h1,
+                textAlign = TextAlign.Center
+            )
+        }
     }
 
     @Composable
@@ -125,5 +152,33 @@ object AppComponent {
             text = text,
             textAlign = TextAlign.Center
         )
+    }
+}
+
+@Preview
+@Composable
+fun AppComponentPreview() {
+    AppTheme {
+        Scaffold { innerPadding ->
+            Column(Modifier.padding(innerPadding)) {
+                AppComponent.Header(text = "Lorem Ipsum") {}
+
+                Divider()
+
+                AppComponent.SubHeader(text = "Lorem Ipsum")
+
+                Divider()
+
+                AppComponent.MediumSpacer()
+
+                Divider()
+
+                AppComponent.BigSpacer()
+
+                Divider()
+
+                AppComponent.CustomListItem(text = "Lorem Ispum")
+            }
+        }
     }
 }

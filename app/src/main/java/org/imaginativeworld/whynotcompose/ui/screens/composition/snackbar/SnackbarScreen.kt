@@ -69,9 +69,11 @@ import org.imaginativeworld.whynotcompose.ui.screens.CompositionsScreen
 
 @Composable
 fun SnackbarScreen(
+    goBack: () -> Unit,
     navigate: (String) -> Unit
 ) {
     SnackbarScreenSkeleton(
+        goBack = goBack,
         navigate = navigate
     )
 }
@@ -86,6 +88,7 @@ fun SnackbarScreenSkeletonPreview() {
 
 @Composable
 fun SnackbarScreenSkeleton(
+    goBack: () -> Unit = {},
     navigate: (String) -> Unit = {}
 ) {
     val scaffoldState = rememberScaffoldState()
@@ -106,7 +109,10 @@ fun SnackbarScreenSkeleton(
                 .padding(start = 32.dp, end = 32.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            AppComponent.Header("Snackbar")
+            AppComponent.Header(
+                "Snackbar",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

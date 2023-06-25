@@ -92,8 +92,12 @@ import org.imaginativeworld.whynotcompose.common.compose.compositions.AppCompone
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
-fun LoadingIndicatorScreen() {
-    LoadingIndicatorScreenSkeleton()
+fun LoadingIndicatorScreen(
+    goBack: () -> Unit
+) {
+    LoadingIndicatorScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -115,7 +119,9 @@ fun LoadingIndicatorScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun LoadingIndicatorScreenSkeleton() {
+fun LoadingIndicatorScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     var showLoading by remember { mutableStateOf(false) }
 
     Scaffold(
@@ -131,7 +137,10 @@ fun LoadingIndicatorScreenSkeleton() {
                 .verticalScroll(rememberScrollState())
                 .padding(start = 16.dp, end = 16.dp)
         ) {
-            AppComponent.Header("Loading Indicator")
+            AppComponent.Header(
+                "Loading Indicator",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

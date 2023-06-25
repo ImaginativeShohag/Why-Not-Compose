@@ -71,8 +71,12 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 private val ELEMENT_HEIGHT = 48.dp
 
 @Composable
-fun DropDownMenuScreen() {
-    DropDownMenuScreenSkeleton()
+fun DropDownMenuScreen(
+    goBack: () -> Unit
+) {
+    DropDownMenuScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -92,7 +96,9 @@ fun DropDownMenuScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun DropDownMenuScreenSkeleton() {
+fun DropDownMenuScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
             .navigationBarsPadding()
@@ -105,7 +111,10 @@ fun DropDownMenuScreenSkeleton() {
                 .fillMaxSize()
                 .padding(start = 16.dp, end = 16.dp)
         ) {
-            AppComponent.Header("DropDown Menu")
+            AppComponent.Header(
+                "DropDown Menu",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

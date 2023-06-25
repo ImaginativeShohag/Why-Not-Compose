@@ -48,8 +48,12 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 // Source: https://cs.android.com/androidx/platform/tools/dokka-devsite-plugin/+/master:testData/compose/samples/foundation/samples/LazyDslSamples.kt
 
 @Composable
-fun LazyColumnSampleOneScreen() {
-    LazyColumnSampleOneScreenSkeleton()
+fun LazyColumnSampleOneScreen(
+    goBack: () -> Unit
+) {
+    LazyColumnSampleOneScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -71,7 +75,9 @@ fun LazyColumnSampleOneScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun LazyColumnSampleOneScreenSkeleton() {
+fun LazyColumnSampleOneScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
             .navigationBarsPadding()
@@ -83,7 +89,10 @@ fun LazyColumnSampleOneScreenSkeleton() {
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            AppComponent.Header("Basic Sample")
+            AppComponent.Header(
+                "Basic Sample",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

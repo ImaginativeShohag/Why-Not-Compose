@@ -69,7 +69,8 @@ import org.imaginativeworld.whynotcompose.utils.SquireCropImage
 
 @Composable
 fun SelectImageAndCropScreen(
-    viewModel: SelectImageAndCropViewModel
+    viewModel: SelectImageAndCropViewModel,
+    goBack: () -> Unit
 ) {
     val context = LocalContext.current
 
@@ -117,6 +118,7 @@ fun SelectImageAndCropScreen(
     // ----------------------------------------------------------------
 
     SelectImageAndCropScreenSkeleton(
+        goBack = goBack,
         imagePath = imageUri,
         onChooseImageClicked = {
             requestStoragePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -142,6 +144,7 @@ fun SelectImageAndCropScreenSkeletonPreviewDark() {
 
 @Composable
 fun SelectImageAndCropScreenSkeleton(
+    goBack: () -> Unit = {},
     imagePath: Uri? = null,
     onChooseImageClicked: () -> Unit = {}
 ) {
@@ -157,7 +160,10 @@ fun SelectImageAndCropScreenSkeleton(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            AppComponent.Header("Select Image and Crop for Upload")
+            AppComponent.Header(
+                "Select Image and Crop for Upload",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

@@ -102,7 +102,8 @@ val Colors.searchErrorInputBackground: Color
 
 @Composable
 fun DataFetchAndPagingScreen(
-    viewModel: DataFetchAndPagingViewModel
+    viewModel: DataFetchAndPagingViewModel,
+    goBack: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -122,6 +123,7 @@ fun DataFetchAndPagingScreen(
         repos = pagedPosts,
         searchTFV = searchTFV,
         openSearch = viewModel.openSearch.value,
+        goBack = goBack,
         setOpenSearch = viewModel::setOpenSearch,
         retryDataLoad = {
             viewModel.loadPosts(
@@ -183,6 +185,7 @@ fun DataFetchAndPagingScreenSkeleton(
     repos: LazyPagingItems<GithubRepo>,
     searchTFV: MutableState<TextFieldValue> = remember { mutableStateOf(TextFieldValue()) },
     openSearch: Boolean = false,
+    goBack: () -> Unit = {},
     setOpenSearch: (Boolean) -> Unit = {},
     retryDataLoad: () -> Unit = {}
 ) {
@@ -226,7 +229,10 @@ fun DataFetchAndPagingScreenSkeleton(
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            AppComponent.Header("Data Fetch and Paging")
+            AppComponent.Header(
+                "Data Fetch and Paging",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

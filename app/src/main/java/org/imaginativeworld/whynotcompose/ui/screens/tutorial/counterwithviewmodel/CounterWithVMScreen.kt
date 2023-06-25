@@ -58,11 +58,13 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
 fun CounterWithVMScreen(
-    viewModel: CounterWithVMViewModel
+    viewModel: CounterWithVMViewModel,
+    goBack: () -> Unit
 ) {
     val counter = viewModel.counter.collectAsState()
 
     CounterWithVMScreenSkeleton(
+        goBack = goBack,
         counter = counter.value,
         increase = {
             viewModel.increase()
@@ -111,6 +113,7 @@ fun CounterWithVMScreenSkeletonPreviewDark() {
 
 @Composable
 fun CounterWithVMScreenSkeleton(
+    goBack: () -> Unit = {},
     counter: Int,
     increase: () -> Unit,
     decrease: () -> Unit
@@ -126,7 +129,10 @@ fun CounterWithVMScreenSkeleton(
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            AppComponent.Header("Counter with ViewModel")
+            AppComponent.Header(
+                "Counter with ViewModel",
+                goBack = goBack
+            )
 
             Divider()
 

@@ -63,8 +63,12 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 // https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:compose/material/material/samples/src/main/java/androidx/compose/material/samples/BadgeSamples.kt
 
 @Composable
-fun BadgeScreen() {
-    BadgeScreenSkeleton()
+fun BadgeScreen(
+    goBack: () -> Unit
+) {
+    BadgeScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -84,7 +88,9 @@ fun BadgeScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun BadgeScreenSkeleton() {
+fun BadgeScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
             .navigationBarsPadding()
@@ -98,7 +104,10 @@ fun BadgeScreenSkeleton() {
                 .verticalScroll(rememberScrollState())
                 .padding(start = 16.dp, end = 16.dp)
         ) {
-            AppComponent.Header("Badge")
+            AppComponent.Header(
+                "Badge",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

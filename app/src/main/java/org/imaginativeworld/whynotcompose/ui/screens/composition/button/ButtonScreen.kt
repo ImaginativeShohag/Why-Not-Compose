@@ -90,8 +90,12 @@ fun defaultButtonBackgroundBrush(
 )
 
 @Composable
-fun ButtonScreen() {
-    ButtonScreenSkeleton()
+fun ButtonScreen(
+    goBack: () -> Unit
+) {
+    ButtonScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -103,7 +107,9 @@ fun ButtonScreenSkeletonPreview() {
 }
 
 @Composable
-fun ButtonScreenSkeleton() {
+fun ButtonScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
             .navigationBarsPadding()
@@ -118,7 +124,10 @@ fun ButtonScreenSkeleton() {
                 .padding(start = 32.dp, end = 32.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            AppComponent.Header("Button")
+            AppComponent.Header(
+                "Button",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

@@ -194,8 +194,7 @@ fun CommentDetailsScreenSkeleton(
     toggleUIMode: () -> Unit = {},
     retryDataLoad: () -> Unit = {},
     onDeleteClicked: () -> Unit = {},
-    onEditClicked: () -> Unit = {},
-    onCommentsClicked: () -> Unit = {}
+    onEditClicked: () -> Unit = {}
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 

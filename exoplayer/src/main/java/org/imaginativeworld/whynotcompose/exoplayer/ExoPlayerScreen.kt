@@ -85,8 +85,12 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
 
 @Composable
-fun ExoPlayerScreen() {
-    ExoPlayerScreenSkeleton()
+fun ExoPlayerScreen(
+    goBack: () -> Unit = {}
+) {
+    ExoPlayerScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -106,7 +110,9 @@ fun ExoPlayerScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun ExoPlayerScreenSkeleton() {
+fun ExoPlayerScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
             .navigationBarsPadding()
@@ -118,7 +124,10 @@ fun ExoPlayerScreenSkeleton() {
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            AppComponent.Header("ExoPlayer")
+            AppComponent.Header(
+                "ExoPlayer",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

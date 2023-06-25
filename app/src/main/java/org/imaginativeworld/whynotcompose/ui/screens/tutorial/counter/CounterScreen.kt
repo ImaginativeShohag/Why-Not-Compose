@@ -43,9 +43,10 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -109,11 +110,11 @@ fun CounterScreenSkeleton(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                val counter = remember { mutableIntStateOf(0) }
+                var counter by remember { mutableIntStateOf(0) }
 
                 Text(
                     modifier = Modifier.padding(top = 32.dp),
-                    text = "${counter.value}",
+                    text = "$counter",
                     fontSize = 64.sp
                 )
 
@@ -125,7 +126,7 @@ fun CounterScreenSkeleton(
                     Button(
                         modifier = Modifier
                             .weight(1f),
-                        onClick = { counter.value += 1 }
+                        onClick = { counter += 1 }
                     ) {
                         Text(
                             text = "Increase"
@@ -136,7 +137,7 @@ fun CounterScreenSkeleton(
 
                     Button(
                         modifier = Modifier.weight(1f),
-                        onClick = { counter.value -= 1 }
+                        onClick = { counter -= 1 }
                     ) {
                         Text(
                             text = "Decrease"

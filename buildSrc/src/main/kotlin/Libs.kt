@@ -133,7 +133,7 @@ object Libs {
         }
 
         object Compose {
-            private const val bomVersion = "2023.06.00"
+            private const val bomVersion = "2023.05.01"
             const val compilerVersion = "1.4.7"
             private const val runtimeTracingVersion = "1.0.0-alpha02"
 
@@ -207,14 +207,14 @@ object Libs {
 
         object Paging {
             private const val version = "3.1.1"
-            private const val composeVersion = "3.2.0-beta01"
+            private const val composeVersion = "3.2.0-rc01"
 
             const val runtime = "androidx.paging:paging-runtime-ktx:$version"
             const val compose = "androidx.paging:paging-compose:$composeVersion"
         }
 
         object Room {
-            private const val version = "2.5.1"
+            private const val version = "2.5.2"
 
             const val runtime = "androidx.room:room-runtime:$version"
             const val compiler = "androidx.room:room-compiler:$version"

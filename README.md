@@ -84,6 +84,7 @@ Feel free to request features or suggestions for improvements.
 - [ ] Create color ready for dark and light mode
 - [ ] Add screenshot for CMS module
 - [ ] CMS module: UI Testing
+- [ ] Auto Theme mode from system
 
 # Note
 

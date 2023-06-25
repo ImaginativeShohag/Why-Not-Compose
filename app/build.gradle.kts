@@ -115,7 +115,8 @@ dependencies {
     testImplementation(Libs.junit)
     androidTestImplementation(Libs.AndroidX.Test.Ext.junit)
     androidTestImplementation(Libs.AndroidX.Test.espressoCore)
-    // androidTestImplementation(Libs.AndroidX.Compose.uiTest)
+    androidTestImplementation(platform(Libs.AndroidX.Compose.bom))
+    androidTestImplementation(Libs.AndroidX.Compose.uiTest)
     debugImplementation(Libs.AndroidX.Compose.uiTestManifest)
 
     // ----------------------------------------------------------------

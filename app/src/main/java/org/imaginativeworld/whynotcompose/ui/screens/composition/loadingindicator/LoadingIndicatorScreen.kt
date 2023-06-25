@@ -74,6 +74,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -162,7 +163,7 @@ fun LoadingIndicatorScreenSkeleton(
 
             AppComponent.MediumSpacer()
 
-            var progress1 by remember { mutableStateOf(0.1f) }
+            var progress1 by remember { mutableFloatStateOf(0.1f) }
             val animatedProgress1 by animateFloatAsState(
                 targetValue = progress1,
                 animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
@@ -202,7 +203,7 @@ fun LoadingIndicatorScreenSkeleton(
 
             AppComponent.MediumSpacer()
 
-            var progress3 by remember { mutableStateOf(0.1f) }
+            var progress3 by remember { mutableFloatStateOf(0.1f) }
             val animatedProgress3 by animateFloatAsState(
                 targetValue = progress3,
                 animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
@@ -247,7 +248,7 @@ fun LoadingIndicatorScreenSkeleton(
 
             AppComponent.MediumSpacer()
 
-            var progress2 by remember { mutableStateOf(0.1f) }
+            var progress2 by remember { mutableFloatStateOf(0.1f) }
             val animatedProgress2 by animateFloatAsState(
                 targetValue = progress2,
                 animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec

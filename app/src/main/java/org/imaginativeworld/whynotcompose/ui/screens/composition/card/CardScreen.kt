@@ -42,6 +42,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -126,7 +127,7 @@ fun CardScreenSkeleton(
 
             AppComponent.MediumSpacer()
 
-            var count by remember { mutableStateOf(0) }
+            var count by remember { mutableIntStateOf(0) }
 
             Card(
                 modifier = Modifier

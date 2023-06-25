@@ -45,6 +45,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -78,7 +79,7 @@ fun CounterWithVMScreen(
 @Preview
 @Composable
 fun CounterWithVMScreenSkeletonPreview() {
-    val counter = remember { mutableStateOf(0) }
+    val counter = remember { mutableIntStateOf(0) }
 
     AppTheme {
         CounterWithVMScreenSkeleton(
@@ -96,7 +97,7 @@ fun CounterWithVMScreenSkeletonPreview() {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL)
 @Composable
 fun CounterWithVMScreenSkeletonPreviewDark() {
-    var counter by remember { mutableStateOf(0) }
+    var counter by remember { mutableIntStateOf(0) }
 
     AppTheme {
         CounterWithVMScreenSkeleton(

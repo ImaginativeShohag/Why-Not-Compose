@@ -49,6 +49,7 @@ import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -118,9 +119,9 @@ fun BadgeScreenSkeleton(
 
             // ----------------------------------------------------------------
 
-            var homeCounter by remember { mutableStateOf(0) }
-            var favoriteCounter by remember { mutableStateOf(0) }
-            var profileCounter by remember { mutableStateOf(0) }
+            var homeCounter by remember { mutableIntStateOf(0) }
+            var favoriteCounter by remember { mutableIntStateOf(0) }
+            var profileCounter by remember { mutableIntStateOf(0) }
 
             BottomNavigation {
                 BottomNavigationItem(

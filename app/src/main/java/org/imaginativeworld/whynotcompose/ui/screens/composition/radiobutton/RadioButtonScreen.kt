@@ -43,6 +43,7 @@ import androidx.compose.material.RadioButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -116,7 +117,7 @@ fun RadioGroupSample() {
     // The first item of Pair is the caption and the second item is the value
     // that can be sent to the server or used for other logic.
     val radioOptions = listOf("Happiness" to 1, "Money" to 2, "Both" to 3)
-    val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[0].second) }
+    val (selectedOption, onOptionSelected) = remember { mutableIntStateOf(radioOptions[0].second) }
 
     // Note that Modifier.selectableGroup() is essential to ensure correct accessibility behavior
     Column(Modifier.selectableGroup()) {

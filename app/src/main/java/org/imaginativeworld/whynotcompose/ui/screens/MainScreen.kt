@@ -26,18 +26,13 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
-import org.imaginativeworld.whynotcompose.ui.compositions.CustomSnackbarHost
 
 @Composable
 fun MainScreen(
@@ -74,14 +69,8 @@ fun MainScreenSkeleton(
 ) {
     val navController = rememberNavController()
 
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        snackbarHost = { CustomSnackbarHost(it) }
-    ) { innerPadding ->
-        NavHostMain(
-            modifier = Modifier.padding(innerPadding),
-            navController = navController,
-            turnOnDarkMode = turnOnDarkMode
-        )
-    }
+    NavHostMain(
+        navController = navController,
+        turnOnDarkMode = turnOnDarkMode
+    )
 }

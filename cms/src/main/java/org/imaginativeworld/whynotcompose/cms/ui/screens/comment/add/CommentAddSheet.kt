@@ -31,7 +31,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -175,17 +177,15 @@ fun CommentAddSheetSkeleton(
     }
 
     Scaffold(
-        Modifier
-            .navigationBarsPadding()
-            .imePadding()
-            .statusBarsPadding(),
+        Modifier.heightIn(max = 417.dp),
         topBar = {
             GeneralSheetAppBar(
                 title = "Add Comment",
                 onCancelClicked = goBack
             )
         },
-        snackbarHost = { SnackbarHost(snackbarHostState) }
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+        contentWindowInsets = WindowInsets(0.dp, 0.dp, 0.dp, 0.dp)
     ) { innerPadding ->
         Column(
             Modifier

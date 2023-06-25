@@ -126,6 +126,7 @@ fun CMSNavHost(
         startDestination = Screen.Splash.route
     ) {
         addSplashScreens(navController = navController)
+
         addUserScreens(
             navController = navController,
             turnOnDarkMode = turnOnDarkMode,

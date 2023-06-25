@@ -34,7 +34,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -192,17 +194,15 @@ fun CommentEditSheetSkeleton(
     }
 
     Scaffold(
-        Modifier
-            .navigationBarsPadding()
-            .imePadding()
-            .statusBarsPadding(),
+        Modifier.heightIn(max = 417.dp),
         topBar = {
             GeneralSheetAppBar(
                 title = "Edit Comment",
                 onCancelClicked = goBack
             )
         },
-        snackbarHost = { SnackbarHost(snackbarHostState) }
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+        contentWindowInsets = WindowInsets(0.dp, 0.dp, 0.dp, 0.dp)
     ) { innerPadding ->
         AnimatedVisibility(
             modifier = Modifier.fillMaxWidth(),
@@ -242,9 +242,6 @@ fun CommentEditSheetSkeleton(
                     value = body,
                     onValueChange = { body = it },
                     label = { Text("Body") },
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Email
-                    ),
                     minLines = 5
                 )
 

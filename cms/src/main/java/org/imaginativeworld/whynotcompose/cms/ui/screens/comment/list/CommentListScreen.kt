@@ -188,7 +188,6 @@ fun CommentListScreenSkeleton(
 
     Scaffold(
         Modifier
-            .navigationBarsPadding()
             .imePadding()
             .statusBarsPadding(),
         snackbarHost = { SnackbarHost(snackbarHostState) },

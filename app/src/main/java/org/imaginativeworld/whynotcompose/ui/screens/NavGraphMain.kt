@@ -213,7 +213,7 @@ sealed class TutorialsScreen(val route: String) {
 
 @Composable
 fun NavHostMain(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     navController: NavHostController,
     turnOnDarkMode: (Boolean) -> Unit
 ) {

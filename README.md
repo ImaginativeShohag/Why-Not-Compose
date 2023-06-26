@@ -144,7 +144,6 @@ CMS_API_KEY=YOUR_API_KEY
 
 - [Android official compose samples](https://cs.android.com/androidx/platform/tools/dokka-devsite-plugin/+/master:testData/compose/samples/)
 - [Iconly icon](https://freebiesbug.com/figma-freebies/iconly/)
-- [Loripsum.net](https://loripsum.net)
 
 ## Licence
 

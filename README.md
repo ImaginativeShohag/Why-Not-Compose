@@ -59,10 +59,11 @@ Feel free to request features or suggestions for improvements.
 - Tic-Tac-Toe (Advanced)
 - OneSignal and Broadcast (Intermediate)
 - ExoPlayer (Advanced)
+- CMS (Advanced)
 
-|  ![Preview](images/counter.gif)   | ![Preview](images/animated-visibility.gif) | ![Preview](images/lottie.gif) |
-|:---------------------------------:|:------------------------------------------:|:-----------------------------:|
-| ![Preview](images/exo-player.gif) |     ![Preview](images/tic-tac-toe.gif)     |                               |
+|    ![Counter](images/counter.gif)    | ![Animated Visibility](images/animated-visibility.gif) | ![Lottie](images/lottie.gif) |
+|:------------------------------------:|:------------------------------------------------------:|:----------------------------:|
+| ![Exo Player](images/exo-player.gif) |         ![Tic-Tac-Toe](images/tic-tac-toe.gif)         |    ![CMS](images/cms.gif)    |
 
 # TODO
 

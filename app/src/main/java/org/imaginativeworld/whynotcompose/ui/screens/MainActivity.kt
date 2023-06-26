@@ -69,7 +69,6 @@ class MainActivity : ComponentActivity() {
                 darkTheme = isDarkMode
             ) {
                 MainScreen(
-                    isDarkMode = isDarkMode,
                     turnOnDarkMode = { turnOn ->
                         UIThemeController.updateUITheme(turnOn)
 

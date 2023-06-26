@@ -26,7 +26,8 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.screens
 
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.background
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -69,7 +70,7 @@ fun CMSMainScreenSkeleton(
     val navController = rememberNavController()
 
     CMSNavHost(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.background(MaterialTheme.colorScheme.background),
         navController = navController,
         turnOnDarkMode = turnOnDarkMode,
         goBack = goBack

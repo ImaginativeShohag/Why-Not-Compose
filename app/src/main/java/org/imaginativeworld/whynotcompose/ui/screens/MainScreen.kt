@@ -26,28 +26,18 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens
 
+import androidx.compose.foundation.background
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
 fun MainScreen(
-    isDarkMode: Boolean,
     turnOnDarkMode: (Boolean) -> Unit
 ) {
-    val systemUiController = rememberSystemUiController()
-
-    SideEffect {
-        systemUiController.setSystemBarsColor(
-            color = Color.Transparent,
-            darkIcons = !isDarkMode
-        )
-    }
-
     MainScreenSkeleton(
         turnOnDarkMode = turnOnDarkMode
     )
@@ -70,6 +60,7 @@ fun MainScreenSkeleton(
     val navController = rememberNavController()
 
     NavHostMain(
+        Modifier.background(MaterialTheme.colors.background),
         navController = navController,
         turnOnDarkMode = turnOnDarkMode
     )

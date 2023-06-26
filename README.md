@@ -66,25 +66,31 @@ Feel free to request features or suggestions for improvements.
 
 # TODO
 
-- [ ] Add accompanist WebView
 - [x] Add new Google Map Compose library
+- [x] Add compose BOM: https://developer.android.com/jetpack/androidx/releases/compose
+- [x] Refactor to Gradle Plugins
+- [x] Add notification permission
+- [x] Animated Splash Screen (Introduced in Android 12)
+- Add GitHub actions
+  - [x] ktlint
+  - [x] CodeQL
+  - [ ] Publish to Google Play
+- Migrate to Material 3
+  - [x] CMS
+  - [ ] Full app
+- [ ] Add accompanist WebView
 - [ ] x, y, z translation simulation
 - [ ] Shadow manipulation with device gyroscope
 - [ ] Composition: Bottom Sheet
 - [ ] Fix custom `LazyGridScope.items`
 - [ ] List with `LazyGrid`
 - [ ] Paging with `LazyGrid`
-- [x] Add compose BOM: https://developer.android.com/jetpack/androidx/releases/compose
-- [x] Refactor to Gradle Plugins
-- [-] Add GitHub actions
-- [x] Add notification permission
-- [x] Animated Splash Screen (Introduced in Android 12)
 - [ ] Update to new storage permission
-- [-] Migrate to Material 3
-- [ ] Create color ready for dark and light mode
-- [ ] Add screenshot for CMS module
-- [ ] CMS module: UI Testing
+- CMS
+  - [ ] Add screenshot for CMS module
+  - [ ] CMS module: UI Testing
 - [ ] Auto Theme mode from system
+- [ ] Create color ready for dark and light mode
 
 # Note
 

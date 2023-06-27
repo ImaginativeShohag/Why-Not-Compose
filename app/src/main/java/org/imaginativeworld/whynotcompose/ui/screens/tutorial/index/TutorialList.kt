@@ -126,7 +126,7 @@ data class Tutorial(
             ),
             Tutorial(
                 name = "CMS",
-                description = "Example of a CMS.",
+                description = "Example of a Content Management System.",
                 route = TutorialsScreen.TutorialCMS,
                 level = TutorialLevel.Advanced
             )

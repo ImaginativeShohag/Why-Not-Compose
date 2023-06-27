@@ -111,7 +111,6 @@ fun LottieScreenSkeleton(
                 .padding(innerPadding)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(start = 16.dp, end = 16.dp)
         ) {
             AppComponent.Header(
                 "Lottie",
@@ -121,7 +120,7 @@ fun LottieScreenSkeleton(
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
 
-            Box {
+            Box(Modifier.padding(start = 16.dp, end = 16.dp)) {
                 Card(
                     Modifier
                         .fillMaxWidth()
@@ -201,7 +200,7 @@ fun LottieScreenSkeleton(
                                     }
                                 ),
                             composition = compositionHeart,
-                            progress = heartAnimatable.progress
+                            progress = { heartAnimatable.progress }
                         )
                     }
                 }

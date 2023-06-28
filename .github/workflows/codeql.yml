@@ -21,8 +21,9 @@ on:
     - cron: '15 22 * * 3'
 
 jobs:
-  pre_job:
-    # continue-on-error: true # Uncomment once integration is finished
+  duplicate_job_check:
+    name: Check for Duplicate Job
+    continue-on-error: true
     runs-on: ubuntu-latest
     # Map a step output to a job output
     outputs:

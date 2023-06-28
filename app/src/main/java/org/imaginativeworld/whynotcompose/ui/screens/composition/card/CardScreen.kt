@@ -118,7 +118,7 @@ fun CardScreenSkeleton(
                         modifier = Modifier
                             .padding(16.dp, 8.dp),
                         text = "Smile! :)\n" +
-                                "It's Sunnah."
+                            "It's Sunnah."
                     )
                 }
 

@@ -41,8 +41,11 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Card
@@ -69,14 +72,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.source.dash.DashMediaSource
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
-import com.google.android.exoplayer2.ui.PlayerView
+import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.google.android.exoplayer2.util.Util
 import org.imaginativeworld.whynotcompose.common.compose.composeutils.rememberImagePainter
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
@@ -84,8 +85,12 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
 
 @Composable
-fun ExoPlayerScreen() {
-    ExoPlayerScreenSkeleton()
+fun ExoPlayerScreen(
+    goBack: () -> Unit = {}
+) {
+    ExoPlayerScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -105,17 +110,24 @@ fun ExoPlayerScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun ExoPlayerScreenSkeleton() {
+fun ExoPlayerScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding()
-    ) {
+    ) { innerPadding ->
         Column(
             Modifier
+                .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            AppComponent.Header("ExoPlayer")
+            AppComponent.Header(
+                "ExoPlayer",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
@@ -141,8 +153,8 @@ private fun VideoList(
 ) {
     val lazyListState = rememberLazyListState()
     // play the video on the first visible item in the list
-    val focusIndex by derivedStateOf { lazyListState.firstVisibleItemIndex }
-    val focusIndexOffset by derivedStateOf { lazyListState.firstVisibleItemScrollOffset }
+    val focusIndex by remember { derivedStateOf { lazyListState.firstVisibleItemIndex } }
+    val focusIndexOffset by remember { derivedStateOf { lazyListState.firstVisibleItemScrollOffset } }
 
     val density = LocalDensity.current
 
@@ -177,18 +189,19 @@ fun VideoItem(video: Video, focusedVideo: Boolean) {
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
-
             Box(
-                Modifier.fillMaxWidth()
+                Modifier
+                    .fillMaxWidth()
                     .padding(top = 8.dp)
                     .aspectRatio(video.width.toFloat() / video.height.toFloat())
             ) {
                 Image(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize()
                         .background(MaterialTheme.colors.onSurface.copy(.1f)),
                     painter = rememberImagePainter(data = video.thumb),
                     contentDescription = null,
-                    contentScale = ContentScale.Crop,
+                    contentScale = ContentScale.Crop
                 )
 
                 Player(
@@ -203,7 +216,7 @@ fun VideoItem(video: Video, focusedVideo: Boolean) {
                         .padding(top = 8.dp, end = 8.dp),
                     visible = focusedVideo,
                     enter = fadeIn(),
-                    exit = fadeOut(),
+                    exit = fadeOut()
                 ) {
                     Image(
                         modifier = Modifier
@@ -219,7 +232,7 @@ fun VideoItem(video: Video, focusedVideo: Boolean) {
                 modifier = Modifier.padding(start = 8.dp, top = 2.dp, end = 8.dp, bottom = 0.dp),
                 text = video.title,
                 fontSize = 16.sp,
-                fontWeight = FontWeight.Medium,
+                fontWeight = FontWeight.Medium
             )
 
             Text(
@@ -237,7 +250,7 @@ fun VideoItem(video: Video, focusedVideo: Boolean) {
 private fun Player(modifier: Modifier = Modifier, video: Video, focusedVideo: Boolean) {
     val context = LocalContext.current
     val exoPlayer = remember { SimpleExoPlayerHolder.get(context) }
-    var playerView: PlayerView? = null
+    var playerView: StyledPlayerView? = null
 
     if (focusedVideo) {
         LaunchedEffect(video.url) {
@@ -246,10 +259,12 @@ private fun Player(modifier: Modifier = Modifier, video: Video, focusedVideo: Bo
             val dataSourceFactory = DataSourceHolder.getCacheFactory(context)
             val type = Util.inferContentType(videoUri)
             val source = when (type) {
-                C.TYPE_DASH -> DashMediaSource.Factory(dataSourceFactory)
+                C.CONTENT_TYPE_DASH -> DashMediaSource.Factory(dataSourceFactory)
                     .createMediaSource(MediaItem.fromUri(videoUri))
-                C.TYPE_HLS -> HlsMediaSource.Factory(dataSourceFactory)
+
+                C.CONTENT_TYPE_HLS -> HlsMediaSource.Factory(dataSourceFactory)
                     .createMediaSource(MediaItem.fromUri(videoUri))
+
                 else -> ProgressiveMediaSource.Factory(dataSourceFactory)
                     .createMediaSource(MediaItem.fromUri(videoUri))
             }
@@ -268,7 +283,7 @@ private fun Player(modifier: Modifier = Modifier, video: Video, focusedVideo: Bo
             frameLayout.removeAllViews()
             if (focusedVideo) {
                 playerView = PlayerViewPool.get(frameLayout.context)
-                PlayerView.switchTargetView(
+                StyledPlayerView.switchTargetView(
                     exoPlayer,
                     PlayerViewPool.currentPlayerView,
                     playerView

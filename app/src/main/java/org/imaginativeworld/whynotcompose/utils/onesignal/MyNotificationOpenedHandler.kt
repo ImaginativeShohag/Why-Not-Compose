@@ -30,8 +30,8 @@ import android.app.Application
 import android.content.Intent
 import com.onesignal.OSNotificationOpenedResult
 import com.onesignal.OneSignal
+import org.imaginativeworld.whynotcompose.base.utils.Constants
 import org.imaginativeworld.whynotcompose.ui.screens.MainActivity
-import org.imaginativeworld.whynotcompose.utils.Constants
 import timber.log.Timber
 
 // This fires when a notification is opened by tapping on it.

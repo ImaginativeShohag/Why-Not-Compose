@@ -39,7 +39,9 @@ data class Event<out T>(
     private val id: Int = if (lastId == Int.MAX_VALUE) {
         lastId = Int.MIN_VALUE
         Int.MAX_VALUE
-    } else lastId++,
+    } else {
+        lastId++
+    }
 ) {
     companion object {
         private var lastId = Int.MAX_VALUE
@@ -55,6 +57,8 @@ data class Event<out T>(
             valueSent = true
 
             value
-        } else null
+        } else {
+            null
+        }
     }
 }

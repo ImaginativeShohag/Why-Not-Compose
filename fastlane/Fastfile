@@ -1,0 +1,115 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+  desc "Runs all the tests"
+  lane :test do
+    gradle(task: "test")
+  end
+
+  desc "Submit a new Beta Build to the Google Play"
+  lane :beta do
+    previous_build_number_beta = 0
+    previous_build_number_production = 0
+    current_build_number = 0
+
+    begin
+      previous_build_number_beta = google_play_track_version_codes(track: "beta")[0]
+    rescue
+      puts "Note: Beta build number not found!"
+    end
+
+    begin
+      previous_build_number_production = google_play_track_version_codes(track: "production")[0]
+    rescue
+      puts "Note: Production build number not found!"
+    end
+
+    if previous_build_number_beta > previous_build_number_production
+      current_build_number = previous_build_number_beta + 1
+    else
+      current_build_number = previous_build_number_production + 1
+    end
+
+    puts "Proposed build number: #{current_build_number}"
+
+    gradle(
+        task: "clean bundleRelease",
+        properties: {
+            "android.injected.signing.store.file" => ENV["ANDROID_KEYSTORE_FILE"],
+            "android.injected.signing.store.password" => ENV["ANDROID_KEYSTORE_PASSWORD"],
+            "android.injected.signing.key.alias" => ENV["ANDROID_KEYSTORE_ALIAS"],
+            "android.injected.signing.key.password" => ENV["ANDROID_KEYSTORE_PASSWORD"],
+            "android.injected.version.code" => current_build_number
+        }
+    )
+
+    upload_to_play_store(
+      track: 'beta',
+      skip_upload_metadata: true,
+      skip_upload_changelogs: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+  desc "Deploy a new version to the Google Play"
+  lane :deploy do
+    previous_build_number_beta = 0
+    previous_build_number_production = 0
+    current_build_number = 0
+
+    begin
+      previous_build_number_beta = google_play_track_version_codes(track: "beta")[0]
+    rescue
+      puts "Note: Beta build number not found!"
+    end
+
+    begin
+      previous_build_number_production = google_play_track_version_codes(track: "production")[0]
+    rescue
+      puts "Note: Production build number not found!"
+    end
+
+    if previous_build_number_beta > previous_build_number_production
+      current_build_number = previous_build_number_beta + 1
+    else
+      current_build_number = previous_build_number_production + 1
+    end
+
+    puts "Proposed build number: #{current_build_number}"
+
+    gradle(
+        task: "clean bundleRelease",
+        properties: {
+            "android.injected.signing.store.file" => ENV["ANDROID_KEYSTORE_FILE"],
+            "android.injected.signing.store.password" => ENV["ANDROID_KEYSTORE_PASSWORD"],
+            "android.injected.signing.key.alias" => ENV["ANDROID_KEYSTORE_ALIAS"],
+            "android.injected.signing.key.password" => ENV["ANDROID_KEYSTORE_PASSWORD"],
+            "android.injected.version.code" => current_build_number
+        }
+    )
+
+    upload_to_play_store(
+      track: 'production',
+      skip_upload_metadata: true,
+      skip_upload_changelogs: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+end

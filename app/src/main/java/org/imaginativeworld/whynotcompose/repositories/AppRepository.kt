@@ -28,15 +28,15 @@ package org.imaginativeworld.whynotcompose.repositories
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.imaginativeworld.whynotcompose.network.ApiInterface
-import org.imaginativeworld.whynotcompose.network.SafeApiRequest
-import javax.inject.Inject
+import org.imaginativeworld.whynotcompose.base.network.SafeApiRequest
+import org.imaginativeworld.whynotcompose.base.network.api.GithubApiInterface
 
 class AppRepository @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val api: ApiInterface
+    private val api: GithubApiInterface
 ) {
     // ----------------------------------------------------------------
     // Search Github Repositories
@@ -46,15 +46,14 @@ class AppRepository @Inject constructor(
         page: Int,
         sort: String,
         order: String,
-        query: String,
+        query: String
     ) = withContext(Dispatchers.IO) {
-
         SafeApiRequest.apiRequest(context) {
             api.searchGithubRepo(
                 page = page,
                 sort = sort,
                 order = order,
-                query = query,
+                query = query
             )
         }
     }

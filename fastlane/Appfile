@@ -1,0 +1,2 @@
+json_key_file(ENV["GOOGLE_PLAY_SERVICE_ACCOUNT_KEY"])
+package_name("org.imaginativeworld.whynotcompose")

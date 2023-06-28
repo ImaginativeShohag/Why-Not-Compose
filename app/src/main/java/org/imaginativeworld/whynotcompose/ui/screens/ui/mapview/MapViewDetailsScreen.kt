@@ -31,7 +31,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
@@ -49,8 +52,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.models.MapPlace
 import org.imaginativeworld.whynotcompose.repositories.MapPlaceRepo
@@ -62,7 +63,7 @@ fun MapViewDetailsScreen(
 ) {
     MapViewDetailsScreenSkeleton(
         item = item,
-        goBack = goBack,
+        goBack = goBack
     )
 }
 
@@ -89,15 +90,17 @@ fun MapViewDetailsScreenSkeletonPreviewDark() {
 @Composable
 fun MapViewDetailsScreenSkeleton(
     item: MapPlace,
-    goBack: () -> Unit = {},
+    goBack: () -> Unit = {}
 ) {
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding()
-    ) {
+    ) { innerPadding ->
         Column(
             Modifier
+                .padding(innerPadding)
                 .fillMaxSize()
         ) {
             TopAppBar(
@@ -108,7 +111,7 @@ fun MapViewDetailsScreenSkeleton(
                     }) {
                         Icon(Icons.Rounded.ArrowBack, contentDescription = null)
                     }
-                },
+                }
             )
 
             Row(
@@ -125,12 +128,12 @@ fun MapViewDetailsScreenSkeleton(
                             .alpha(.8f),
                         text = "LATITUDE",
                         fontSize = 12.sp,
-                        fontWeight = FontWeight.Medium,
+                        fontWeight = FontWeight.Medium
                     )
                     Text(
                         modifier = Modifier.align(Alignment.CenterHorizontally),
                         text = "${item.location.latitude}",
-                        fontWeight = FontWeight.Medium,
+                        fontWeight = FontWeight.Medium
                     )
                 }
 
@@ -143,12 +146,12 @@ fun MapViewDetailsScreenSkeleton(
                             .alpha(.8f),
                         text = "LONGITUDE",
                         fontSize = 12.sp,
-                        fontWeight = FontWeight.Medium,
+                        fontWeight = FontWeight.Medium
                     )
                     Text(
                         modifier = Modifier.align(Alignment.CenterHorizontally),
                         text = "${item.location.longitude}",
-                        fontWeight = FontWeight.Medium,
+                        fontWeight = FontWeight.Medium
                     )
                 }
             }

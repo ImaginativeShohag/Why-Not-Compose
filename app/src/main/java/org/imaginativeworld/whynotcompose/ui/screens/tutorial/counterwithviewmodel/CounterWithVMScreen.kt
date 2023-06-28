@@ -26,13 +26,17 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.counterwithviewmodel
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Button
 import androidx.compose.material.Divider
@@ -41,7 +45,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -49,18 +53,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
 fun CounterWithVMScreen(
-    viewModel: CounterWithVMViewModel
+    viewModel: CounterWithVMViewModel,
+    goBack: () -> Unit
 ) {
     val counter = viewModel.counter.collectAsState()
 
     CounterWithVMScreenSkeleton(
+        goBack = goBack,
         counter = counter.value,
         increase = {
             viewModel.increase()
@@ -74,25 +78,25 @@ fun CounterWithVMScreen(
 @Preview
 @Composable
 fun CounterWithVMScreenSkeletonPreview() {
-    val counter = remember { mutableStateOf(0) }
+    var counter by remember { mutableIntStateOf(0) }
 
     AppTheme {
         CounterWithVMScreenSkeleton(
-            counter = counter.value,
+            counter = counter,
             increase = {
-                counter.value += 1
+                counter += 1
             },
             decrease = {
-                counter.value -= 1
+                counter -= 1
             }
         )
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL)
 @Composable
 fun CounterWithVMScreenSkeletonPreviewDark() {
-    var counter by remember { mutableStateOf(0) }
+    var counter by remember { mutableIntStateOf(0) }
 
     AppTheme {
         CounterWithVMScreenSkeleton(
@@ -109,17 +113,26 @@ fun CounterWithVMScreenSkeletonPreviewDark() {
 
 @Composable
 fun CounterWithVMScreenSkeleton(
+    goBack: () -> Unit = {},
     counter: Int,
     increase: () -> Unit,
-    decrease: () -> Unit,
+    decrease: () -> Unit
 ) {
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding()
-    ) {
-        Column(Modifier.fillMaxSize()) {
-            AppComponent.Header("Counter with ViewModel")
+    ) { innerPadding ->
+        Column(
+            Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+        ) {
+            AppComponent.Header(
+                "Counter with ViewModel",
+                goBack = goBack
+            )
 
             Divider()
 
@@ -129,12 +142,12 @@ fun CounterWithVMScreenSkeleton(
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.Center
             ) {
                 Text(
                     modifier = Modifier.padding(top = 32.dp),
                     text = "$counter",
-                    fontSize = 64.sp,
+                    fontSize = 64.sp
                 )
 
                 Row(
@@ -148,7 +161,7 @@ fun CounterWithVMScreenSkeleton(
                         onClick = { increase() }
                     ) {
                         Text(
-                            text = "Increase",
+                            text = "Increase"
                         )
                     }
 
@@ -159,7 +172,7 @@ fun CounterWithVMScreenSkeleton(
                         onClick = { decrease() }
                     ) {
                         Text(
-                            text = "Decrease",
+                            text = "Decrease"
                         )
                     }
                 }

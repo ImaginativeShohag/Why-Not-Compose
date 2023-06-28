@@ -36,9 +36,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
@@ -63,16 +66,18 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieAnimatable
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.airbnb.lottie.compose.resetToBeginning
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
-fun LottieScreen() {
-    LottieScreenSkeleton()
+fun LottieScreen(
+    goBack: () -> Unit
+) {
+    LottieScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -92,32 +97,39 @@ fun LottieScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun LottieScreenSkeleton() {
+fun LottieScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding()
-    ) {
+    ) { innerPadding ->
         Column(
             Modifier
+                .padding(innerPadding)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(start = 16.dp, end = 16.dp)
         ) {
-            AppComponent.Header("Lottie")
+            AppComponent.Header(
+                "Lottie",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
 
-            Box {
+            Box(Modifier.padding(start = 16.dp, end = 16.dp)) {
                 Card(
                     Modifier
                         .fillMaxWidth()
                         .height(256.dp)
                 ) {
-
                     Column(Modifier.fillMaxSize()) {
-                        val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.hubit_bicycle))
+                        val composition by rememberLottieComposition(
+                            LottieCompositionSpec.RawRes(R.raw.hubit_bicycle)
+                        )
 
                         LottieAnimation(
                             modifier = Modifier
@@ -143,9 +155,8 @@ fun LottieScreenSkeleton() {
                     Modifier
                         .align(Alignment.BottomCenter)
                         .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-
                     Text(
                         modifier = Modifier
                             .padding(start = 16.dp)
@@ -180,7 +191,7 @@ fun LottieScreenSkeleton() {
                                             } else {
                                                 heartAnimatable.animate(
                                                     compositionHeart,
-                                                    continueFromPreviousAnimate = false,
+                                                    continueFromPreviousAnimate = false
                                                 )
                                             }
 
@@ -189,7 +200,7 @@ fun LottieScreenSkeleton() {
                                     }
                                 ),
                             composition = compositionHeart,
-                            progress = heartAnimatable.progress
+                            progress = { heartAnimatable.progress }
                         )
                     }
                 }

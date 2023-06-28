@@ -32,21 +32,21 @@ import org.imaginativeworld.whynotcompose.ui.screens.TutorialsScreen
 
 sealed class TutorialLevel(
     val name: String,
-    val color: Color,
+    val color: Color
 ) {
     object Beginner : TutorialLevel(
         name = "Beginner",
-        color = TailwindCSSColor.Green500,
+        color = TailwindCSSColor.Green500
     )
 
     object Intermediate : TutorialLevel(
         name = "Intermediate",
-        color = TailwindCSSColor.Yellow500,
+        color = TailwindCSSColor.Yellow500
     )
 
     object Advanced : TutorialLevel(
         name = "Advanced",
-        color = TailwindCSSColor.Red500,
+        color = TailwindCSSColor.Red500
     )
 }
 
@@ -54,7 +54,7 @@ data class Tutorial(
     val name: String,
     val description: String? = null,
     val route: TutorialsScreen,
-    val level: TutorialLevel,
+    val level: TutorialLevel
 ) {
     companion object {
         val tutorialList = listOf(
@@ -62,68 +62,74 @@ data class Tutorial(
                 name = "Counter",
                 description = "Simple counter.",
                 route = TutorialsScreen.TutorialCounter,
-                level = TutorialLevel.Beginner,
+                level = TutorialLevel.Beginner
             ),
             Tutorial(
                 name = "Counter with ViewModel",
                 description = "Control counter using `ViewModel`.",
                 route = TutorialsScreen.TutorialCounterWithViewModel,
-                level = TutorialLevel.Beginner,
+                level = TutorialLevel.Beginner
             ),
             Tutorial(
                 name = "AnimatedVisibility",
                 description = "Animate UI using `AnimatedVisibility`.",
                 route = TutorialsScreen.TutorialAnimatedVisibility,
-                level = TutorialLevel.Beginner,
+                level = TutorialLevel.Beginner
             ),
             Tutorial(
                 name = "Lottie",
                 description = "Exploring `Lottie`.",
                 route = TutorialsScreen.TutorialLottie,
-                level = TutorialLevel.Beginner,
+                level = TutorialLevel.Beginner
             ),
             Tutorial(
                 name = "Select Image and Crop for Upload",
                 description = "Select image from gallery and crop image using `uCrop`.",
                 route = TutorialsScreen.TutorialSelectImageAndCrop,
-                level = TutorialLevel.Intermediate,
+                level = TutorialLevel.Intermediate
             ),
             Tutorial(
                 name = "Capture Image and Crop for Upload",
                 description = "Capture image from default camera app and crop image using `uCrop`.",
                 route = TutorialsScreen.TutorialCaptureImageAndCrop,
-                level = TutorialLevel.Intermediate,
+                level = TutorialLevel.Intermediate
             ),
             Tutorial(
                 name = "Permission",
                 description = "Check and handle permission from Compose UI.",
                 route = TutorialsScreen.TutorialPermission,
-                level = TutorialLevel.Beginner,
+                level = TutorialLevel.Beginner
             ),
             Tutorial(
                 name = "Data Fetch and Paging",
                 description = "Fetch data from server using `Android Jetpack Paging` library.",
                 route = TutorialsScreen.TutorialDataFetchAndPaging,
-                level = TutorialLevel.Advanced,
+                level = TutorialLevel.Advanced
             ),
             Tutorial(
                 name = "Tic-Tac-Toe",
                 description = "Simple game with (kind of) supervised learning AI.",
                 route = TutorialsScreen.TutorialTicTacToe,
-                level = TutorialLevel.Advanced,
+                level = TutorialLevel.Advanced
             ),
             Tutorial(
                 name = "OneSignal and Broadcast",
                 description = "Send notification with data using `OneSignal`, then send broadcast when a new notification comes. Finally, receive the broadcast and data from Compose UI.",
                 route = TutorialsScreen.TutorialOneSignalAndBroadcast,
-                level = TutorialLevel.Intermediate,
+                level = TutorialLevel.Intermediate
             ),
             Tutorial(
                 name = "ExoPlayer",
                 description = "Example usage of `ExoPlayer` with Compose.",
                 route = TutorialsScreen.TutorialExoPlayer,
-                level = TutorialLevel.Advanced,
+                level = TutorialLevel.Advanced
             ),
+            Tutorial(
+                name = "CMS",
+                description = "Example of a Content Management System.",
+                route = TutorialsScreen.TutorialCMS,
+                level = TutorialLevel.Advanced
+            )
         )
     }
 }

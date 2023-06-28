@@ -80,7 +80,10 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
-fastlane/readme.md
+fastlane/README.md
+fastlane/metadata
+fastlane_beta.sh
+fastlane_production.sh
 
 # Version control
 vcs.xml

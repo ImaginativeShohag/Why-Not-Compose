@@ -26,35 +26,20 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Scaffold
+import androidx.compose.foundation.background
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import com.google.accompanist.insets.ProvideWindowInsets
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
-import org.imaginativeworld.whynotcompose.ui.compositions.CustomSnackbarHost
 
 @Composable
 fun MainScreen(
-    isDarkMode: Boolean,
-    turnOnDarkMode: (Boolean) -> Unit,
+    turnOnDarkMode: (Boolean) -> Unit
 ) {
-    val systemUiController = rememberSystemUiController()
-
-    SideEffect {
-        systemUiController.setSystemBarsColor(
-            color = Color.Transparent,
-            darkIcons = !isDarkMode
-        )
-    }
-
     MainScreenSkeleton(
-        turnOnDarkMode = turnOnDarkMode,
+        turnOnDarkMode = turnOnDarkMode
     )
 }
 
@@ -62,26 +47,21 @@ fun MainScreen(
 @Composable
 fun MainScreenSkeletonPreview() {
     AppTheme {
-        ProvideWindowInsets {
-            MainScreenSkeleton()
-        }
+        MainScreenSkeleton(
+            turnOnDarkMode = {}
+        )
     }
 }
 
 @Composable
 fun MainScreenSkeleton(
-    turnOnDarkMode: (Boolean) -> Unit = {},
+    turnOnDarkMode: (Boolean) -> Unit
 ) {
     val navController = rememberNavController()
 
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        snackbarHost = { CustomSnackbarHost(it) },
-    ) {
-        NavHostMain(
-            modifier = Modifier,
-            navController = navController,
-            turnOnDarkMode = turnOnDarkMode,
-        )
-    }
+    NavHostMain(
+        Modifier.background(MaterialTheme.colors.background),
+        navController = navController,
+        turnOnDarkMode = turnOnDarkMode
+    )
 }

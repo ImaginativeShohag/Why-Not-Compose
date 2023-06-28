@@ -26,8 +26,14 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.home.index
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -37,20 +43,26 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.GridItemSpan
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.windowInsetsTopHeight
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentColor
@@ -58,8 +70,11 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -74,14 +89,17 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsHeight
+import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
+import androidx.core.content.ContextCompat
 import org.imaginativeworld.whynotcompose.BuildConfig
 import org.imaginativeworld.whynotcompose.R
+import org.imaginativeworld.whynotcompose.base.R as BaseR
 import org.imaginativeworld.whynotcompose.base.extensions.openUrl
 import org.imaginativeworld.whynotcompose.base.extensions.shadow
+import org.imaginativeworld.whynotcompose.base.extensions.toast
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
+import org.imaginativeworld.whynotcompose.ui.screens.MainActivity
 import org.imaginativeworld.whynotcompose.ui.screens.Screen
 
 private val menuItems = listOf(
@@ -108,39 +126,87 @@ private val menuItems = listOf(
         icon = R.drawable.ic_round_sticky_note_2_24,
         color = TailwindCSSColor.Purple500,
         route = Screen.Tutorials
-    ),
+    )
 )
 
 @ExperimentalFoundationApi
 @Composable
 fun HomeIndexScreen(
     navigate: (Screen) -> Unit = {},
-    turnOnDarkMode: (Boolean) -> Unit = {},
+    turnOnDarkMode: (Boolean) -> Unit = {}
 ) {
     val context = LocalContext.current
 
     val isDark = !MaterialTheme.colors.isLight
     val (darkModeState, onDarkModeStateChange) = remember { mutableStateOf(isDark) }
+    var showNotificationPermissionRationale by remember { mutableStateOf(false) }
+
+    val requestNotificationPermission =
+        rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { permissionGranted ->
+            showNotificationPermissionRationale = false
+
+            if (!permissionGranted) {
+                context.toast("Notification permission is denied. Some feature will not work.")
+            }
+        }
+
+    val askForNotificationPermission: () -> Unit = {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_DENIED
+        ) {
+            when {
+                ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) == PackageManager.PERMISSION_GRANTED -> {
+                    // no-op
+                }
+
+                shouldShowRequestPermissionRationale(
+                    context as MainActivity,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) -> {
+                    showNotificationPermissionRationale = true
+                }
+
+                else -> {
+                    requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
+            }
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        askForNotificationPermission()
+    }
 
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
-    ) {
-        Column(Modifier.fillMaxSize()) {
+            .navigationBarsPadding()
+            .imePadding()
+    ) { innerPadding ->
+        Column(
+            Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+        ) {
             Box(
                 modifier = Modifier.weight(1f)
             ) {
                 LazyVerticalGrid(
                     modifier = Modifier.fillMaxSize(),
-                    cells = GridCells.Fixed(2),
+                    columns = GridCells.Fixed(2),
                     contentPadding = PaddingValues(24.dp, 8.dp, 24.dp, 24.dp)
                 ) {
                     item(span = { GridItemSpan(maxCurrentLineSpan) }) {
                         Column(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalAlignment = Alignment.CenterHorizontally,
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            Spacer(Modifier.statusBarsHeight())
+                            Spacer(Modifier.windowInsetsTopHeight(WindowInsets.statusBars))
 
                             Text(
                                 modifier = Modifier
@@ -150,9 +216,9 @@ fun HomeIndexScreen(
                                         end = 16.dp
                                     )
                                     .fillMaxWidth(),
-                                text = stringResource(id = R.string.app_name),
+                                text = stringResource(id = BaseR.string.app_name),
                                 style = MaterialTheme.typography.h1,
-                                textAlign = TextAlign.Center,
+                                textAlign = TextAlign.Center
                             )
 
                             Text(
@@ -161,20 +227,55 @@ fun HomeIndexScreen(
                                         start = 16.dp,
                                         top = 4.dp,
                                         end = 16.dp,
-                                        bottom = 32.dp
+                                        bottom = 16.dp
                                     ),
                                 text = "Version ${BuildConfig.VERSION_NAME}",
                                 textAlign = TextAlign.Center,
-                                fontSize = 12.sp,
+                                fontSize = 12.sp
                             )
+
+                            if (showNotificationPermissionRationale) {
+                                Card(
+                                    Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 8.dp)
+                                        .padding(bottom = 16.dp),
+                                    border = BorderStroke(
+                                        width = 1.dp,
+                                        TailwindCSSColor.Yellow500.copy(alpha = 1f)
+                                    )
+                                ) {
+                                    Row(
+                                        Modifier.padding(8.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Text(
+                                            modifier = Modifier
+                                                .padding(8.dp)
+                                                .weight(1f),
+                                            text = "Notification permission is necessary for some sample. Please allow.",
+                                            fontSize = 14.sp
+                                        )
+
+                                        Button(onClick = {
+                                            requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+                                        }) {
+                                            Text("Allow")
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
 
                     item {
                         ModuleButton(
                             name = if (isDark) "Dark Mode" else "Light Mode",
-                            icon = if (isDark) R.drawable.ic_moon_stars
-                            else R.drawable.ic_brightness_high,
+                            icon = if (isDark) {
+                                R.drawable.ic_moon_stars
+                            } else {
+                                R.drawable.ic_brightness_high
+                            },
                             color = TailwindCSSColor.Green500,
                             onClick = {
                                 onDarkModeStateChange(!darkModeState)
@@ -213,7 +314,7 @@ fun HomeIndexScreen(
                 Modifier
                     .fillMaxWidth()
                     .padding(top = 16.dp, bottom = 12.dp),
-                verticalAlignment = Alignment.CenterVertically,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(
                     Modifier
@@ -260,7 +361,9 @@ fun HomeIndexScreen(
                         modifier = Modifier
                             .clip(RoundedCornerShape(8.dp))
                             .clickable {
-                                context.openUrl("https://github.com/ImaginativeShohag/Why-Not-Compose")
+                                context.openUrl(
+                                    "https://github.com/ImaginativeShohag/Why-Not-Compose"
+                                )
                             }
                             .padding(4.dp),
                         text = "GitHub",
@@ -278,7 +381,7 @@ fun ModuleButton(
     name: String,
     @DrawableRes icon: Int,
     color: Color,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     Button(
         modifier = Modifier
@@ -288,7 +391,7 @@ fun ModuleButton(
                 spread = 8.dp,
                 alpha = .25f,
                 color = color,
-                radius = 8.dp,
+                radius = 8.dp
             ),
         shape = MaterialTheme.shapes.medium,
         colors = ButtonDefaults.buttonColors(
@@ -297,27 +400,27 @@ fun ModuleButton(
         ),
         onClick = onClick,
         contentPadding = PaddingValues(8.dp),
-        elevation = null,
+        elevation = null
     ) {
         Column(
             Modifier
                 .fillMaxWidth()
                 .aspectRatio(1f),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Center
         ) {
             Icon(
                 modifier = Modifier.size(32.dp),
                 painter = painterResource(id = icon),
                 contentDescription = name,
-                tint = LocalContentColor.current,
+                tint = LocalContentColor.current
             )
             Text(
                 modifier = Modifier.padding(top = 8.dp),
                 text = name,
                 color = LocalContentColor.current,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }
@@ -343,5 +446,5 @@ data class MenuItem(
     val name: String,
     @DrawableRes val icon: Int,
     val color: Color,
-    val route: Screen,
+    val route: Screen
 )

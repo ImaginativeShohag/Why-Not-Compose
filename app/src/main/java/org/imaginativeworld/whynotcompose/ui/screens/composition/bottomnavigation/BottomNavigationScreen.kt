@@ -29,6 +29,10 @@ package org.imaginativeworld.whynotcompose.ui.screens.composition.bottomnavigati
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.BottomNavigation
@@ -41,19 +45,22 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
-fun BottomNavigationScreen() {
-    BottomNavigationScreenSkeleton()
+fun BottomNavigationScreen(
+    goBack: () -> Unit
+) {
+    BottomNavigationScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -73,18 +80,25 @@ fun BottomNavigationScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun BottomNavigationScreenSkeleton() {
+fun BottomNavigationScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding()
-    ) {
+    ) { innerPadding ->
         Column(
             Modifier
+                .padding(innerPadding)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            AppComponent.Header("Bottom Navigation")
+            AppComponent.Header(
+                "Bottom Navigation",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
@@ -111,7 +125,7 @@ fun BottomNavigationScreenSkeleton() {
 
 @Composable
 private fun BottomNavigationSample() {
-    var selectedItem by remember { mutableStateOf(0) }
+    var selectedItem by remember { mutableIntStateOf(0) }
     val items = listOf("Songs", "Artists", "Playlists")
 
     BottomNavigation {

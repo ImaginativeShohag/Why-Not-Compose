@@ -31,7 +31,7 @@ import android.content.Intent
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.onesignal.OSNotificationReceivedEvent
 import com.onesignal.OneSignal
-import org.imaginativeworld.whynotcompose.utils.Constants
+import org.imaginativeworld.whynotcompose.base.utils.Constants
 import org.json.JSONException
 import timber.log.Timber
 

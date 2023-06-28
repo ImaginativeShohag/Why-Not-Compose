@@ -45,7 +45,10 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -78,8 +81,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.base.extensions.toast
 import org.imaginativeworld.whynotcompose.base.models.Event
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
@@ -87,7 +88,8 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
 fun TicTacToeScreen(
-    viewModel: TicTacToeViewModel
+    viewModel: TicTacToeViewModel,
+    goBack: () -> Unit = {}
 ) {
     val context = LocalContext.current
 
@@ -108,9 +110,10 @@ fun TicTacToeScreen(
         currentPlayingMoves = state.currentPlayingMoves,
         totalNeurons = state.totalNeurons,
         winPosition = state.winPosition,
+        goBack = goBack,
         onBoxClicked = { position ->
             viewModel.act(
-                position = position,
+                position = position
             )
         },
         onRestartClicked = {
@@ -149,8 +152,9 @@ fun TicTacToeScreenSkeleton(
     currentPlayingMoves: String = "",
     totalNeurons: Int = 0,
     winPosition: WinPosition? = null,
-    onBoxClicked: (position: Int) -> Unit = { },
-    onRestartClicked: () -> Unit = {},
+    goBack: () -> Unit = {},
+    onBoxClicked: (position: Int) -> Unit = {},
+    onRestartClicked: () -> Unit = {}
 ) {
     val snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
     val scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState)
@@ -171,9 +175,10 @@ fun TicTacToeScreenSkeleton(
 
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding(),
-        scaffoldState = scaffoldState,
+        scaffoldState = scaffoldState
     ) {
         Column(
             Modifier
@@ -181,7 +186,10 @@ fun TicTacToeScreenSkeleton(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            AppComponent.Header("Tic-Tac-Toe")
+            AppComponent.Header(
+                "Tic-Tac-Toe",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
@@ -200,11 +208,11 @@ fun TicTacToeScreenSkeleton(
                     Text(
                         text = "You",
                         fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
+                        fontWeight = FontWeight.Bold
                     )
                     Text(
                         text = "$userWinCount",
-                        fontSize = 32.sp,
+                        fontSize = 32.sp
                     )
                 }
 
@@ -215,11 +223,11 @@ fun TicTacToeScreenSkeleton(
                     Text(
                         text = "AI",
                         fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
+                        fontWeight = FontWeight.Bold
                     )
                     Text(
                         text = "$aiWinCount",
-                        fontSize = 32.sp,
+                        fontSize = 32.sp
                     )
                 }
             }
@@ -293,7 +301,7 @@ fun TicTacToeScreenSkeleton(
                         append("$totalNeurons")
                     }
                 },
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Center
             )
 
             // ----------------------------------------------------------------
@@ -305,13 +313,13 @@ fun TicTacToeScreenSkeleton(
         AnimatedVisibility(
             visible = loading,
             enter = fadeIn(),
-            exit = fadeOut(),
+            exit = fadeOut()
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(MaterialTheme.colors.onBackground.copy(.5f)),
-                contentAlignment = Alignment.Center,
+                contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = "Working...",
@@ -328,7 +336,7 @@ fun RowScope.Block(
     currentPlayingMoves: String,
     enabled: Boolean,
     isMarked: Boolean,
-    onClick: () -> Unit = {},
+    onClick: () -> Unit = {}
 ) {
     var currentPiece by remember { mutableStateOf<String?>(null) }
 
@@ -337,13 +345,19 @@ fun RowScope.Block(
     }
 
     val backgroundColor by animateColorAsState(
-        targetValue = if (isMarked) MaterialTheme.colors.error
-        else MaterialTheme.colors.background
+        targetValue = if (isMarked) {
+            MaterialTheme.colors.error
+        } else {
+            MaterialTheme.colors.background
+        }
     )
 
     val iconColor by animateColorAsState(
-        targetValue = if (isMarked) MaterialTheme.colors.onError
-        else MaterialTheme.colors.onBackground
+        targetValue = if (isMarked) {
+            MaterialTheme.colors.onError
+        } else {
+            MaterialTheme.colors.onBackground
+        }
     )
 
     Box(
@@ -364,15 +378,16 @@ fun RowScope.Block(
             .clickable(
                 indication = if (currentPiece == null) LocalIndication.current else null,
                 interactionSource = remember { MutableInteractionSource() },
-                enabled = enabled,
+                enabled = enabled
             ) {
-                if (currentPiece == null)
+                if (currentPiece == null) {
                     onClick()
+                }
             },
         contentAlignment = Alignment.Center
     ) {
         AnimatedContent(
-            targetState = currentPiece,
+            targetState = currentPiece
         ) { targetCurrentPiece ->
             Image(
                 modifier = Modifier

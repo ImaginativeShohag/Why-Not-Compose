@@ -1,7 +1,8 @@
 plugins {
-    id("com.android.library")
+    id(Libs.Android.library)
     kotlin("android")
     kotlin("kapt")
+    id(Libs.Google.DevTools.ksp)
 }
 
 android {
@@ -10,16 +11,15 @@ android {
 
     defaultConfig {
         minSdk = BuildConfigConst.minSdk
-        targetSdk = BuildConfigConst.targetSdk
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 
     buildFeatures {
@@ -37,6 +37,8 @@ dependencies {
     // ----------------------------------------------------------------
     // Compose
     // ----------------------------------------------------------------
+    implementation(platform(Libs.AndroidX.Compose.bom))
+
     implementation(Libs.AndroidX.Compose.compiler)
     implementation(Libs.AndroidX.Compose.ui)
     implementation(Libs.AndroidX.Compose.uiUtil)
@@ -70,7 +72,6 @@ dependencies {
     implementation(Libs.AndroidX.Paging.compose)
 
     // Accompanist
-    implementation(Libs.Accompanist.insets)
     implementation(Libs.Accompanist.systemuicontroller)
     implementation(Libs.Accompanist.flowlayout)
     implementation(Libs.Accompanist.pager)
@@ -86,14 +87,23 @@ dependencies {
     // Moshi
     implementation(Libs.Square.Retrofit.converterMoshi)
     implementation(Libs.Square.Moshi.core)
-    kapt(Libs.Square.Moshi.codegen)
+    ksp(Libs.Square.Moshi.codegen)
 
     // ViewModel and LiveData
-    implementation(Libs.AndroidX.Lifecycle.viewmodel)
+    implementation(Libs.AndroidX.Lifecycle.viewModel)
     implementation(Libs.AndroidX.Lifecycle.livedata)
     implementation(Libs.AndroidX.Lifecycle.common)
     implementation(Libs.AndroidX.Lifecycle.runtime)
 
     // Timber
     implementation(Libs.timber)
+
+    // Hilt
+    implementation(Libs.Google.Hilt.core)
+    kapt(Libs.Google.Hilt.compiler)
+    implementation(Libs.AndroidX.Hilt.navigationCompose)
+
+    // Room Persistence Library
+    implementation(Libs.AndroidX.Room.runtime)
+    ksp(Libs.AndroidX.Room.compiler)
 }

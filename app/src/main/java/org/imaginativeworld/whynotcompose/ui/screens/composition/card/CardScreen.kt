@@ -30,7 +30,10 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
@@ -39,7 +42,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -48,14 +51,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
-fun CardScreen() {
-    CardScreenSkeleton()
+fun CardScreen(
+    goBack: () -> Unit
+) {
+    CardScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -75,19 +80,26 @@ fun CardScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun CardScreenSkeleton() {
+fun CardScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding()
-    ) {
+    ) { innerPadding ->
         Column(
             Modifier
+                .padding(innerPadding)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(start = 16.dp, end = 16.dp)
         ) {
-            AppComponent.Header("Card")
+            AppComponent.Header(
+                "Card",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
@@ -114,7 +126,7 @@ fun CardScreenSkeleton() {
 
             AppComponent.MediumSpacer()
 
-            var count by remember { mutableStateOf(0) }
+            var count by remember { mutableIntStateOf(0) }
 
             Card(
                 modifier = Modifier
@@ -125,16 +137,16 @@ fun CardScreenSkeleton() {
                     Modifier
                         .fillMaxWidth()
                         .padding(16.dp, 8.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
                         text = "You Clicked This Card",
-                        textAlign = TextAlign.Center,
+                        textAlign = TextAlign.Center
                     )
                     Text(
                         text = "$count time${if (count > 1) "s" else ""}",
                         textAlign = TextAlign.Center,
-                        fontSize = 24.sp,
+                        fontSize = 24.sp
                     )
                 }
             }

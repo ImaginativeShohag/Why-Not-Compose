@@ -29,7 +29,10 @@ package org.imaginativeworld.whynotcompose.ui.screens.composition.snackbar
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ButtonDefaults
@@ -59,8 +62,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.base.models.Event
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
@@ -68,9 +69,11 @@ import org.imaginativeworld.whynotcompose.ui.screens.CompositionsScreen
 
 @Composable
 fun SnackbarScreen(
+    goBack: () -> Unit,
     navigate: (String) -> Unit
 ) {
     SnackbarScreenSkeleton(
+        goBack = goBack,
         navigate = navigate
     )
 }
@@ -85,27 +88,31 @@ fun SnackbarScreenSkeletonPreview() {
 
 @Composable
 fun SnackbarScreenSkeleton(
+    goBack: () -> Unit = {},
     navigate: (String) -> Unit = {}
 ) {
-
     val scaffoldState = rememberScaffoldState()
 
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding(),
         scaffoldState = scaffoldState,
         snackbarHost = { CustomSnackbarHost(state = it) }
-    ) {
+    ) { innerPadding ->
         Column(
             Modifier
+                .padding(innerPadding)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(start = 32.dp, end = 32.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-            AppComponent.Header("Snackbar")
+            AppComponent.Header(
+                "Snackbar",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
@@ -182,7 +189,7 @@ fun CustomSnackbarHost(state: SnackbarHostState) {
     SnackbarHost(state) { data ->
         CustomSnackbar(
             modifier = Modifier,
-            snackbarData = data,
+            snackbarData = data
         )
     }
 }

@@ -29,26 +29,8 @@ package org.imaginativeworld.whynotcompose.utils.extensions
 import android.content.Context
 import android.net.Uri
 import androidx.core.content.FileProvider
-import org.imaginativeworld.whynotcompose.BuildConfig
 import java.io.File
-import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-
-@Throws(IOException::class)
-fun Context.createImageFile(): File {
-    // Create an image file name
-    val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(Date())
-    val storageDir = cacheDir
-    return File.createTempFile(
-        "JPEG_${timeStamp}_", /* prefix */
-        ".jpg", /* suffix */
-        storageDir /* directory */
-    ).apply {
-        deleteOnExit()
-    }
-}
+import org.imaginativeworld.whynotcompose.BuildConfig
 
 fun File.getUriForFile(context: Context): Uri {
     return FileProvider.getUriForFile(

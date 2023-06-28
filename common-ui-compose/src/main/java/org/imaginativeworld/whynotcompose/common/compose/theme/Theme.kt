@@ -31,7 +31,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val DarkColorPalette = darkColors(
     primary = TailwindCSSColor.Green700,
@@ -45,7 +47,7 @@ private val DarkColorPalette = darkColors(
     onPrimary = TailwindCSSColor.Gray50,
     onSecondary = TailwindCSSColor.Gray50,
     onBackground = TailwindCSSColor.Gray50,
-    onSurface = TailwindCSSColor.Gray50,
+    onSurface = TailwindCSSColor.Gray50
 )
 
 private val LightColorPalette = lightColors(
@@ -60,7 +62,7 @@ private val LightColorPalette = lightColors(
     onPrimary = TailwindCSSColor.Gray50,
     onSecondary = TailwindCSSColor.Gray50,
     onBackground = TailwindCSSColor.Gray900,
-    onSurface = TailwindCSSColor.Gray900,
+    onSurface = TailwindCSSColor.Gray900
 )
 
 @Composable
@@ -68,6 +70,15 @@ fun AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
+    val systemUiController = rememberSystemUiController()
+
+    SideEffect {
+        systemUiController.setSystemBarsColor(
+            color = Color.Transparent,
+            darkIcons = !darkTheme
+        )
+    }
+
     val colors = if (darkTheme) {
         DarkColorPalette
     } else {

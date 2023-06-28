@@ -29,32 +29,31 @@ package org.imaginativeworld.whynotcompose.datasource
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import okio.IOException
-import org.imaginativeworld.whynotcompose.models.github.GithubRepo
-import org.imaginativeworld.whynotcompose.network.ApiException
+import org.imaginativeworld.whynotcompose.base.models.github.GithubRepo
+import org.imaginativeworld.whynotcompose.base.network.ApiException
 import org.imaginativeworld.whynotcompose.repositories.AppRepository
 import retrofit2.HttpException
 
 class GithubRepoDataSource(
     private val repository: AppRepository,
-    private val query: String,
+    private val query: String
 ) : PagingSource<Int, GithubRepo>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, GithubRepo> {
         val pagePosition = params.key ?: 1
 
         return try {
-
             val response = repository.searchGithubRepo(
                 page = pagePosition,
                 sort = "stars",
                 order = "desc",
-                query = query,
+                query = query
             )
 
-            val result = response.items
+            val result = response?.items
 
             if (result == null) {
-                LoadResult.Error(ApiException(response.message ?: "No data returned!"))
+                LoadResult.Error(ApiException(response?.message ?: "No data returned!"))
             } else {
                 val nextKey = if (result.isEmpty()) {
                     null

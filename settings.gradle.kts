@@ -1,9 +1,17 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+        maven(url = "https://jitpack.io")
+    }
+}
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
+        gradlePluginPortal()
         maven(url = "https://jitpack.io")
     }
 }
@@ -13,3 +21,4 @@ include(":tictactoe")
 include(":common-ui-compose")
 include(":base")
 include(":exoplayer")
+include(":cms")

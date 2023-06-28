@@ -31,7 +31,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.Divider
@@ -40,23 +43,25 @@ import androidx.compose.material.RadioButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 private val ELEMENT_HEIGHT = 56.dp
 
 @Composable
-fun RadioButtonScreen() {
-    RadioButtonScreenSkeleton()
+fun RadioButtonScreen(
+    goBack: () -> Unit
+) {
+    RadioButtonScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -68,18 +73,25 @@ fun RadioButtonScreenSkeletonPreview() {
 }
 
 @Composable
-fun RadioButtonScreenSkeleton() {
+fun RadioButtonScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding()
-    ) {
+    ) { innerPadding ->
         Column(
             Modifier
+                .padding(innerPadding)
                 .fillMaxSize()
                 .padding(start = 16.dp, end = 16.dp)
         ) {
-            AppComponent.Header("Radio Button")
+            AppComponent.Header(
+                "Radio Button",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
@@ -104,7 +116,7 @@ fun RadioGroupSample() {
     // The first item of Pair is the caption and the second item is the value
     // that can be sent to the server or used for other logic.
     val radioOptions = listOf("Happiness" to 1, "Money" to 2, "Both" to 3)
-    val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[0].second) }
+    val (selectedOption, onOptionSelected) = remember { mutableIntStateOf(radioOptions[0].second) }
 
     // Note that Modifier.selectableGroup() is essential to ensure correct accessibility behavior
     Column(Modifier.selectableGroup()) {

@@ -1,5 +1,5 @@
 plugins {
-    id("com.android.library")
+    id(Libs.Android.library)
     kotlin("android")
     kotlin("kapt")
 }
@@ -10,35 +10,34 @@ android {
 
     defaultConfig {
         minSdk = BuildConfigConst.minSdk
-        targetSdk = BuildConfigConst.targetSdk
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
 
-        freeCompilerArgs = freeCompilerArgs + "-Xallow-jvm-ir-dependencies"
-        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
+        freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.RequiresOptIn"
 
         // Enable experimental coroutines APIs, including Flow
-        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.Experimental"
+        freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.Experimental"
 
         // Enable experimental compose APIs
         freeCompilerArgs =
-            freeCompilerArgs + "-Xopt-in=androidx.compose.material.ExperimentalMaterialApi"
+            freeCompilerArgs + "-opt-in=androidx.compose.material.ExperimentalMaterialApi"
         freeCompilerArgs =
-            freeCompilerArgs + "-Xopt-in=androidx.compose.animation.ExperimentalAnimationApi"
+            freeCompilerArgs + "-opt-in=androidx.compose.animation.ExperimentalAnimationApi"
         freeCompilerArgs =
-            freeCompilerArgs + "-Xopt-in=androidx.compose.ui.ExperimentalComposeUiApi"
+            freeCompilerArgs + "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi"
         freeCompilerArgs =
-            freeCompilerArgs + "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi"
+            freeCompilerArgs + "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi"
     }
 
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 
@@ -59,6 +58,8 @@ dependencies {
     // ----------------------------------------------------------------
     // Compose
     // ----------------------------------------------------------------
+    implementation(platform(Libs.AndroidX.Compose.bom))
+
     implementation(Libs.AndroidX.Compose.compiler)
     implementation(Libs.AndroidX.Compose.ui)
     implementation(Libs.AndroidX.Compose.uiUtil)
@@ -92,7 +93,6 @@ dependencies {
     implementation(Libs.AndroidX.Paging.compose)
 
     // Accompanist
-    implementation(Libs.Accompanist.insets)
     implementation(Libs.Accompanist.systemuicontroller)
     implementation(Libs.Accompanist.flowlayout)
     implementation(Libs.Accompanist.pager)
@@ -105,7 +105,7 @@ dependencies {
     implementation(Libs.timber)
 
     // Hilt
-    implementation(Libs.Hilt.core)
-    kapt(Libs.Hilt.compiler)
-    implementation(Libs.Hilt.navigationCompose)
+    implementation(Libs.Google.Hilt.core)
+    kapt(Libs.Google.Hilt.compiler)
+    implementation(Libs.AndroidX.Hilt.navigationCompose)
 }

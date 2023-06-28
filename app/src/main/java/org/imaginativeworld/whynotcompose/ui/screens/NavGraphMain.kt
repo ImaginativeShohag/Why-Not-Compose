@@ -38,6 +38,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import org.imaginativeworld.whynotcompose.base.extensions.getJsonFromObj
+import org.imaginativeworld.whynotcompose.base.extensions.getObjFromJson
+import org.imaginativeworld.whynotcompose.cms.ui.screens.CMSMainScreen
 import org.imaginativeworld.whynotcompose.exoplayer.ExoPlayerScreen
 import org.imaginativeworld.whynotcompose.models.MapPlace
 import org.imaginativeworld.whynotcompose.tictactoe.TicTacToeScreen
@@ -106,8 +109,6 @@ import org.imaginativeworld.whynotcompose.ui.screens.ui.otpcodeverify.OtpCodeVer
 import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.WebViewScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.WebViewTarget
 import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.WebViewViewModel
-import org.imaginativeworld.whynotcompose.utils.extensions.getJsonFromObj
-import org.imaginativeworld.whynotcompose.utils.extensions.getObjFromJson
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")
@@ -203,6 +204,7 @@ sealed class TutorialsScreen(val route: String) {
     object TutorialTicTacToe : TutorialsScreen("tutorial/tic-tac-toe")
     object TutorialOneSignalAndBroadcast : TutorialsScreen("tutorial/onesignal-and-broadcast")
     object TutorialExoPlayer : TutorialsScreen("tutorial/exoplayer")
+    object TutorialCMS : TutorialsScreen("tutorial/cms")
 }
 
 // ================================================================
@@ -211,9 +213,9 @@ sealed class TutorialsScreen(val route: String) {
 
 @Composable
 fun NavHostMain(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     navController: NavHostController,
-    turnOnDarkMode: (Boolean) -> Unit,
+    turnOnDarkMode: (Boolean) -> Unit
 ) {
     NavHost(
         modifier = modifier,
@@ -222,7 +224,7 @@ fun NavHostMain(
     ) {
         addHomeScreens(
             navController = navController,
-            turnOnDarkMode = turnOnDarkMode,
+            turnOnDarkMode = turnOnDarkMode
         )
         addAnimationScreens(
             navController = navController
@@ -234,7 +236,8 @@ fun NavHostMain(
             navController = navController
         )
         addTutorialScreens(
-            navController = navController
+            navController = navController,
+            turnOnDarkMode = turnOnDarkMode
         )
     }
 }
@@ -245,7 +248,7 @@ fun NavHostMain(
 
 private fun NavGraphBuilder.addHomeScreens(
     navController: NavHostController,
-    turnOnDarkMode: (Boolean) -> Unit,
+    turnOnDarkMode: (Boolean) -> Unit
 ) {
     navigation(
         route = Screen.Home.route,
@@ -256,13 +259,13 @@ private fun NavGraphBuilder.addHomeScreens(
         )
         addHomeIndexScreen(
             navController = navController,
-            turnOnDarkMode = turnOnDarkMode,
+            turnOnDarkMode = turnOnDarkMode
         )
     }
 }
 
 private fun NavGraphBuilder.addAnimationScreens(
-    navController: NavHostController,
+    navController: NavHostController
 ) {
     navigation(
         route = Screen.Animations.route,
@@ -293,7 +296,7 @@ private fun NavGraphBuilder.addAnimationScreens(
 }
 
 private fun NavGraphBuilder.addCompositionScreens(
-    navController: NavHostController,
+    navController: NavHostController
 ) {
     navigation(
         route = Screen.Compositions.route,
@@ -306,86 +309,155 @@ private fun NavGraphBuilder.addCompositionScreens(
         // Below compositions will be just few lines.
         // So, we will not use functions for those.
         composable(CompositionsScreen.CompositionAppBar.route) {
-            AppBarScreen()
+            AppBarScreen(
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(CompositionsScreen.CompositionButton.route) {
-            ButtonScreen()
+            ButtonScreen(
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(CompositionsScreen.CompositionCard.route) {
-            CardScreen()
+            CardScreen(
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(CompositionsScreen.CompositionCheckBox.route) {
-            CheckBoxScreen()
+            CheckBoxScreen(
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(CompositionsScreen.CompositionDialog.route) {
-            DialogScreen()
+            DialogScreen(
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(CompositionsScreen.CompositionDropDownMenu.route) {
-            DropDownMenuScreen()
+            DropDownMenuScreen(
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(CompositionsScreen.CompositionListIndex.route) {
             ListIndexScreen(
+                goBack = {
+                    navController.popBackStack()
+                },
                 navigate = { screen ->
                     navController.navigate(screen.route)
-                },
+                }
             )
         }
 
         composable(CompositionsScreen.CompositionListColumn.route) {
-            ListColumnScreen()
+            ListColumnScreen(
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(CompositionsScreen.CompositionListRow.route) {
-            ListRowScreen()
+            ListRowScreen(
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(CompositionsScreen.CompositionListLazyColumnIndex.route) {
             LazyColumnIndexScreen(
+                goBack = {
+                    navController.popBackStack()
+                },
                 navigate = { screen ->
                     navController.navigate(screen.route)
-                },
+                }
             )
         }
 
         composable(CompositionsScreen.CompositionListLazyColumnOne.route) {
-            LazyColumnSampleOneScreen()
+            LazyColumnSampleOneScreen(
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(CompositionsScreen.CompositionListLazyColumnTwo.route) {
-            LazyColumnSampleTwoScreen()
+            LazyColumnSampleTwoScreen(
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(CompositionsScreen.CompositionListLazyRow.route) {
-            LazyRowScreen()
+            LazyRowScreen(
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(CompositionsScreen.CompositionListGridVertical.route) {
-            LazyVerticalGridScreen()
+            LazyVerticalGridScreen(
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(CompositionsScreen.CompositionListItem.route) {
-            ListItemScreen()
+            ListItemScreen(
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(CompositionsScreen.CompositionLoadingIndicator.route) {
-            LoadingIndicatorScreen()
+            LoadingIndicatorScreen(
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(CompositionsScreen.CompositionRadioButton.route) {
-            RadioButtonScreen()
+            RadioButtonScreen(
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(CompositionsScreen.CompositionScaffoldIndex.route) {
             ScaffoldIndexScreen(
+                goBack = {
+                    navController.popBackStack()
+                },
                 navigate = { screen ->
                     navController.navigate(screen.route)
-                },
+                }
             )
         }
 
@@ -411,6 +483,9 @@ private fun NavGraphBuilder.addCompositionScreens(
 
         composable(CompositionsScreen.CompositionSnackbar.route) {
             SnackbarScreen(
+                goBack = {
+                    navController.popBackStack()
+                },
                 navigate = { route ->
                     navController.navigate(route)
                 }
@@ -418,45 +493,81 @@ private fun NavGraphBuilder.addCompositionScreens(
         }
 
         composable(CompositionsScreen.CompositionSwitch.route) {
-            SwitchScreen()
+            SwitchScreen(
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(CompositionsScreen.CompositionTextField.route) {
-            TextFieldScreen()
+            TextFieldScreen(
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(CompositionsScreen.CompositionSwipeToDismiss.route) {
-            SwipeToDismissScreen()
+            SwipeToDismissScreen(
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(CompositionsScreen.CompositionSwipeRefresh.route) {
-            SwipeRefreshScreen()
+            SwipeRefreshScreen(
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(CompositionsScreen.CompositionBadge.route) {
-            BadgeScreen()
+            BadgeScreen(
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(CompositionsScreen.CompositionFloatingActionButton.route) {
-            FloatingActionButtonScreen()
+            FloatingActionButtonScreen(
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(CompositionsScreen.CompositionSlider.route) {
-            SliderScreen()
+            SliderScreen(
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(CompositionsScreen.CompositionText.route) {
-            TextScreen()
+            TextScreen(
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(CompositionsScreen.CompositionBottomNavigation.route) {
-            BottomNavigationScreen()
+            BottomNavigationScreen(
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }
 
 private fun NavGraphBuilder.addUiScreens(
-    navController: NavHostController,
+    navController: NavHostController
 ) {
     navigation(
         route = Screen.UIs.route,
@@ -524,13 +635,15 @@ private fun NavGraphBuilder.addUiScreens(
 
 private fun NavGraphBuilder.addTutorialScreens(
     navController: NavHostController,
+    turnOnDarkMode: (Boolean) -> Unit
 ) {
     navigation(
         route = Screen.Tutorials.route,
         startDestination = TutorialsScreen.TutorialIndex.route
     ) {
         addTutorialIndexScreen(
-            navController = navController
+            navController = navController,
+            turnOnDarkMode = turnOnDarkMode
         )
 
         // Below compositions will be just few lines.
@@ -546,7 +659,7 @@ private fun NavGraphBuilder.addTutorialScreens(
 // ================================================================
 
 private fun NavGraphBuilder.addHomeSplashScreen(
-    navController: NavHostController,
+    navController: NavHostController
 ) {
     composable(HomeScreen.Splash.route) {
         SplashScreen(
@@ -563,7 +676,7 @@ private fun NavGraphBuilder.addHomeSplashScreen(
 
 private fun NavGraphBuilder.addHomeIndexScreen(
     navController: NavHostController,
-    turnOnDarkMode: (Boolean) -> Unit,
+    turnOnDarkMode: (Boolean) -> Unit
 ) {
     composable(HomeScreen.HomeIndex.route) {
         HomeIndexScreen(
@@ -578,13 +691,16 @@ private fun NavGraphBuilder.addHomeIndexScreen(
 // ----------------------------------------------------------------
 
 private fun NavGraphBuilder.addAnimationIndexScreen(
-    navController: NavHostController,
+    navController: NavHostController
 ) {
     composable(AnimationsScreen.AnimationIndex.route) {
         AnimationIndexScreen(
+            goBack = {
+                navController.popBackStack()
+            },
             navigate = { screen ->
                 navController.navigate(screen.route)
-            },
+            }
         )
     }
 }
@@ -592,10 +708,13 @@ private fun NavGraphBuilder.addAnimationIndexScreen(
 // ----------------------------------------------------------------
 
 private fun NavGraphBuilder.addCompositionIndexScreen(
-    navController: NavHostController,
+    navController: NavHostController
 ) {
     composable(CompositionsScreen.CompositionIndex.route) {
         CompositionIndexScreen(
+            goBack = {
+                navController.popBackStack()
+            },
             navigate = { screen ->
                 navController.navigate(screen.route)
             }
@@ -606,10 +725,13 @@ private fun NavGraphBuilder.addCompositionIndexScreen(
 // ----------------------------------------------------------------
 
 private fun NavGraphBuilder.addUiIndexScreen(
-    navController: NavHostController,
+    navController: NavHostController
 ) {
     composable(UIsScreen.UiIndex.route) {
         UiIndexScreen(
+            goBack = {
+                navController.popBackStack()
+            },
             navigate = { screen ->
                 navController.navigate(screen.route)
             }
@@ -621,9 +743,13 @@ private fun NavGraphBuilder.addUiIndexScreen(
 
 private fun NavGraphBuilder.addTutorialIndexScreen(
     navController: NavHostController,
+    turnOnDarkMode: (Boolean) -> Unit
 ) {
     composable(TutorialsScreen.TutorialIndex.route) {
         TutorialIndexScreen(
+            goBack = {
+                navController.popBackStack()
+            },
             navigate = { screen ->
                 navController.navigate(screen.route)
             }
@@ -631,30 +757,48 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
     }
 
     composable(TutorialsScreen.TutorialCounter.route) {
-        CounterScreen()
+        CounterScreen(
+            goBack = {
+                navController.popBackStack()
+            }
+        )
     }
 
     composable(TutorialsScreen.TutorialCounterWithViewModel.route) {
         val viewModel: CounterWithVMViewModel = hiltViewModel()
 
         CounterWithVMScreen(
-            viewModel = viewModel
+            viewModel = viewModel,
+            goBack = {
+                navController.popBackStack()
+            }
         )
     }
 
     composable(TutorialsScreen.TutorialAnimatedVisibility.route) {
-        AnimatedVisibilityScreen()
+        AnimatedVisibilityScreen(
+            goBack = {
+                navController.popBackStack()
+            }
+        )
     }
 
     composable(TutorialsScreen.TutorialLottie.route) {
-        LottieScreen()
+        LottieScreen(
+            goBack = {
+                navController.popBackStack()
+            }
+        )
     }
 
     composable(TutorialsScreen.TutorialSelectImageAndCrop.route) {
         val viewModel: SelectImageAndCropViewModel = hiltViewModel()
 
         SelectImageAndCropScreen(
-            viewModel = viewModel
+            viewModel = viewModel,
+            goBack = {
+                navController.popBackStack()
+            }
         )
     }
 
@@ -662,19 +806,29 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
         val viewModel: CaptureImageAndCropViewModel = hiltViewModel()
 
         CaptureImageAndCropScreen(
-            viewModel = viewModel
+            viewModel = viewModel,
+            goBack = {
+                navController.popBackStack()
+            }
         )
     }
 
     composable(TutorialsScreen.TutorialPermission.route) {
-        PermissionScreen()
+        PermissionScreen(
+            goBack = {
+                navController.popBackStack()
+            }
+        )
     }
 
     composable(TutorialsScreen.TutorialDataFetchAndPaging.route) {
         val viewModel: DataFetchAndPagingViewModel = hiltViewModel()
 
         DataFetchAndPagingScreen(
-            viewModel = viewModel
+            viewModel = viewModel,
+            goBack = {
+                navController.popBackStack()
+            }
         )
     }
 
@@ -687,11 +841,24 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
     }
 
     composable(TutorialsScreen.TutorialOneSignalAndBroadcast.route) {
-        OneSignalAndBroadcastScreen()
+        OneSignalAndBroadcastScreen(
+            goBack = {
+                navController.popBackStack()
+            }
+        )
     }
 
     composable(TutorialsScreen.TutorialExoPlayer.route) {
         ExoPlayerScreen()
+    }
+
+    composable(TutorialsScreen.TutorialCMS.route) {
+        CMSMainScreen(
+            turnOnDarkMode = turnOnDarkMode,
+            goBack = {
+                navController.popBackStack()
+            }
+        )
     }
 }
 

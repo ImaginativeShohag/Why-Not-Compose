@@ -36,8 +36,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
@@ -72,8 +75,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
@@ -89,8 +90,12 @@ fun defaultButtonBackgroundBrush(
 )
 
 @Composable
-fun ButtonScreen() {
-    ButtonScreenSkeleton()
+fun ButtonScreen(
+    goBack: () -> Unit
+) {
+    ButtonScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -102,22 +107,27 @@ fun ButtonScreenSkeletonPreview() {
 }
 
 @Composable
-fun ButtonScreenSkeleton() {
-
+fun ButtonScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding()
-    ) {
+    ) { innerPadding ->
         Column(
             Modifier
+                .padding(innerPadding)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(start = 32.dp, end = 32.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-            AppComponent.Header("Button")
+            AppComponent.Header(
+                "Button",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
@@ -163,7 +173,7 @@ fun ButtonScreenSkeleton() {
                     Icons.Filled.Favorite,
                     contentDescription = null,
                     modifier = Modifier.size(ButtonDefaults.IconSize),
-                    tint = Color.White,
+                    tint = Color.White
                 )
                 Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                 Text(
@@ -187,7 +197,9 @@ fun ButtonScreenSkeleton() {
             var checked by remember { mutableStateOf(false) }
 
             IconToggleButton(checked = checked, onCheckedChange = { checked = it }) {
-                val tint by animateColorAsState(if (checked) Color(0xFFEC407A) else Color(0xFFB0BEC5))
+                val tint by animateColorAsState(
+                    if (checked) Color(0xFFEC407A) else Color(0xFFB0BEC5)
+                )
                 Icon(
                     Icons.Filled.Favorite,
                     contentDescription = "Localized description",
@@ -230,7 +242,7 @@ fun ButtonScreenSkeleton() {
             SolidButton(
                 text = "Like",
                 endIcon = R.drawable.ic_danger_circle,
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -241,7 +253,7 @@ fun ButtonScreenSkeleton() {
                 text = "Like",
                 startIcon = R.drawable.ic_danger_circle,
                 endIcon = R.drawable.ic_danger_circle,
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -260,7 +272,7 @@ fun ButtonScreenSkeleton() {
             SolidWideButton(
                 modifier = Modifier.fillMaxWidth(),
                 text = "Like",
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -271,7 +283,7 @@ fun ButtonScreenSkeleton() {
                 modifier = Modifier.fillMaxWidth(),
                 text = "Like",
                 startIcon = R.drawable.ic_danger_circle,
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -282,7 +294,7 @@ fun ButtonScreenSkeleton() {
                 modifier = Modifier.fillMaxWidth(),
                 text = "Like",
                 endIcon = R.drawable.ic_danger_circle,
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -294,7 +306,7 @@ fun ButtonScreenSkeleton() {
                 text = "Like",
                 startIcon = R.drawable.ic_danger_circle,
                 endIcon = R.drawable.ic_danger_circle,
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -332,7 +344,7 @@ fun ButtonScreenSkeleton() {
             GradientButton(
                 text = "Like",
                 endIcon = R.drawable.ic_danger_circle,
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -343,7 +355,7 @@ fun ButtonScreenSkeleton() {
                 text = "Like",
                 startIcon = R.drawable.ic_danger_circle,
                 endIcon = R.drawable.ic_danger_circle,
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -362,7 +374,7 @@ fun ButtonScreenSkeleton() {
             GradientWideButton(
                 modifier = Modifier.fillMaxWidth(),
                 text = "Like",
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -373,7 +385,7 @@ fun ButtonScreenSkeleton() {
                 modifier = Modifier.fillMaxWidth(),
                 text = "Like",
                 startIcon = R.drawable.ic_danger_circle,
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -384,7 +396,7 @@ fun ButtonScreenSkeleton() {
                 modifier = Modifier.fillMaxWidth(),
                 text = "Like",
                 endIcon = R.drawable.ic_danger_circle,
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -396,7 +408,7 @@ fun ButtonScreenSkeleton() {
                 text = "Like",
                 startIcon = R.drawable.ic_danger_circle,
                 endIcon = R.drawable.ic_danger_circle,
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -414,7 +426,7 @@ fun ButtonScreenSkeleton() {
 
             BorderedButton(
                 text = "Like",
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -424,7 +436,7 @@ fun ButtonScreenSkeleton() {
             BorderedButton(
                 text = "Like",
                 startIcon = R.drawable.ic_danger_circle,
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -434,7 +446,7 @@ fun ButtonScreenSkeleton() {
             BorderedButton(
                 text = "Like",
                 endIcon = R.drawable.ic_danger_circle,
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -445,7 +457,7 @@ fun ButtonScreenSkeleton() {
                 text = "Like",
                 startIcon = R.drawable.ic_danger_circle,
                 endIcon = R.drawable.ic_danger_circle,
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -464,7 +476,7 @@ fun ButtonScreenSkeleton() {
             BorderedWideButton(
                 modifier = Modifier.fillMaxWidth(),
                 text = "Like",
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -475,7 +487,7 @@ fun ButtonScreenSkeleton() {
                 modifier = Modifier.fillMaxWidth(),
                 text = "Like",
                 startIcon = R.drawable.ic_danger_circle,
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -486,7 +498,7 @@ fun ButtonScreenSkeleton() {
                 modifier = Modifier.fillMaxWidth(),
                 text = "Like",
                 endIcon = R.drawable.ic_danger_circle,
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -498,7 +510,7 @@ fun ButtonScreenSkeleton() {
                 text = "Like",
                 startIcon = R.drawable.ic_danger_circle,
                 endIcon = R.drawable.ic_danger_circle,
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -516,7 +528,7 @@ fun ButtonScreenSkeleton() {
 
             BorderlessButton(
                 text = "Like",
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -526,7 +538,7 @@ fun ButtonScreenSkeleton() {
             BorderlessButton(
                 text = "Like",
                 startIcon = R.drawable.ic_danger_circle,
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -536,7 +548,7 @@ fun ButtonScreenSkeleton() {
             BorderlessButton(
                 text = "Like",
                 endIcon = R.drawable.ic_danger_circle,
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -547,7 +559,7 @@ fun ButtonScreenSkeleton() {
                 text = "Like",
                 startIcon = R.drawable.ic_danger_circle,
                 endIcon = R.drawable.ic_danger_circle,
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -566,7 +578,7 @@ fun ButtonScreenSkeleton() {
             BorderlessWideButton(
                 modifier = Modifier.fillMaxWidth(),
                 text = "Like",
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -577,7 +589,7 @@ fun ButtonScreenSkeleton() {
                 modifier = Modifier.fillMaxWidth(),
                 text = "Like",
                 startIcon = R.drawable.ic_danger_circle,
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -588,7 +600,7 @@ fun ButtonScreenSkeleton() {
                 modifier = Modifier.fillMaxWidth(),
                 text = "Like",
                 endIcon = R.drawable.ic_danger_circle,
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -600,7 +612,7 @@ fun ButtonScreenSkeleton() {
                 text = "Like",
                 startIcon = R.drawable.ic_danger_circle,
                 endIcon = R.drawable.ic_danger_circle,
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -619,7 +631,7 @@ fun ButtonScreenSkeleton() {
             SolidIconButton(
                 icon = R.drawable.ic_danger_circle,
                 contentDescription = null,
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -629,7 +641,7 @@ fun ButtonScreenSkeleton() {
             GradientIconButton(
                 icon = R.drawable.ic_danger_circle,
                 contentDescription = null,
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -639,7 +651,7 @@ fun ButtonScreenSkeleton() {
             BorderlessIconButton(
                 icon = R.drawable.ic_danger_circle,
                 contentDescription = null,
-                onClick = {},
+                onClick = {}
             )
 
             // ----------------------------------------------------------------
@@ -671,7 +683,7 @@ fun SolidButton(
         modifier = modifier.height(height),
         shape = shape,
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = backgroundColor,
+            backgroundColor = backgroundColor
         ),
         onClick = {
             currentFocus.clearFocus()
@@ -684,7 +696,7 @@ fun SolidButton(
                 painterResource(id = startIcon),
                 contentDescription = text,
                 modifier = Modifier.size(ButtonDefaults.IconSize),
-                tint = Color.White,
+                tint = Color.White
             )
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
         }
@@ -702,7 +714,7 @@ fun SolidButton(
                 painterResource(id = endIcon),
                 contentDescription = text,
                 modifier = Modifier.size(ButtonDefaults.IconSize),
-                tint = Color.White,
+                tint = Color.White
             )
         }
     }
@@ -729,7 +741,7 @@ fun SolidWideButton(
         shape = shape,
         colors = ButtonDefaults.buttonColors(
             backgroundColor = backgroundColor,
-            contentColor = Color.White,
+            contentColor = Color.White
         ),
         onClick = {
             currentFocus.clearFocus()
@@ -741,7 +753,7 @@ fun SolidWideButton(
             Icon(
                 modifier = Modifier.size(ButtonDefaults.IconSize),
                 painter = painterResource(id = startIcon),
-                contentDescription = text,
+                contentDescription = text
             )
             Spacer(Modifier.size(horizontalPadding))
         }
@@ -750,7 +762,7 @@ fun SolidWideButton(
             modifier = Modifier
                 .padding(
                     start = if (startIcon != null) 0.dp else ButtonDefaults.IconSize + horizontalPadding,
-                    end = if (endIcon != null) 0.dp else ButtonDefaults.IconSize + horizontalPadding,
+                    end = if (endIcon != null) 0.dp else ButtonDefaults.IconSize + horizontalPadding
                 )
                 .weight(1f),
             text = text,
@@ -758,7 +770,7 @@ fun SolidWideButton(
             style = MaterialTheme.typography.button,
             textAlign = TextAlign.Center,
             maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
+            overflow = TextOverflow.Ellipsis
         )
 
         if (endIcon != null) {
@@ -766,7 +778,7 @@ fun SolidWideButton(
             Icon(
                 modifier = Modifier.size(ButtonDefaults.IconSize),
                 painter = painterResource(id = endIcon),
-                contentDescription = text,
+                contentDescription = text
             )
         }
     }
@@ -809,7 +821,7 @@ fun GradientButton(
                 painterResource(id = startIcon),
                 contentDescription = text,
                 modifier = Modifier.size(ButtonDefaults.IconSize),
-                tint = Color.White,
+                tint = Color.White
             )
         }
 
@@ -829,7 +841,7 @@ fun GradientButton(
                 painterResource(id = endIcon),
                 contentDescription = text,
                 modifier = Modifier.size(ButtonDefaults.IconSize),
-                tint = Color.White,
+                tint = Color.White
             )
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
         }
@@ -859,7 +871,7 @@ fun GradientWideButton(
                 shape = shape
             ),
         colors = ButtonDefaults.textButtonColors(
-            contentColor = Color.White,
+            contentColor = Color.White
         ),
         shape = shape,
         onClick = {
@@ -874,7 +886,7 @@ fun GradientWideButton(
                 modifier = Modifier.size(ButtonDefaults.IconSize),
                 painter = painterResource(id = startIcon),
                 contentDescription = text,
-                tint = Color.White,
+                tint = Color.White
             )
         }
 
@@ -884,7 +896,7 @@ fun GradientWideButton(
             modifier = Modifier
                 .padding(
                     start = if (startIcon != null) 0.dp else ButtonDefaults.IconSize + horizontalPadding,
-                    end = if (endIcon != null) 0.dp else ButtonDefaults.IconSize + horizontalPadding,
+                    end = if (endIcon != null) 0.dp else ButtonDefaults.IconSize + horizontalPadding
                 )
                 .weight(1f),
             text = text,
@@ -892,7 +904,7 @@ fun GradientWideButton(
             style = MaterialTheme.typography.button,
             textAlign = TextAlign.Center,
             maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
+            overflow = TextOverflow.Ellipsis
         )
 
         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
@@ -902,7 +914,7 @@ fun GradientWideButton(
                 modifier = Modifier.size(ButtonDefaults.IconSize),
                 painter = painterResource(id = endIcon),
                 contentDescription = text,
-                tint = Color.White,
+                tint = Color.White
             )
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
         }
@@ -931,7 +943,7 @@ fun BorderedButton(
             .height(height),
         border = BorderStroke(
             width = 2.dp,
-            brush = borderGradient,
+            brush = borderGradient
         ),
         shape = shape,
         colors = ButtonDefaults.outlinedButtonColors(
@@ -948,7 +960,7 @@ fun BorderedButton(
                 painterResource(id = startIcon),
                 contentDescription = text,
                 modifier = Modifier.size(ButtonDefaults.IconSize),
-                tint = MaterialTheme.colors.primary,
+                tint = MaterialTheme.colors.primary
             )
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
         }
@@ -965,7 +977,7 @@ fun BorderedButton(
                 painterResource(id = endIcon),
                 contentDescription = text,
                 modifier = Modifier.size(ButtonDefaults.IconSize),
-                tint = MaterialTheme.colors.primary,
+                tint = MaterialTheme.colors.primary
             )
         }
     }
@@ -991,7 +1003,7 @@ fun BorderedWideButton(
             .height(height),
         border = BorderStroke(
             width = 2.dp,
-            brush = borderGradient,
+            brush = borderGradient
         ),
         shape = shape,
         colors = ButtonDefaults.outlinedButtonColors(
@@ -1008,7 +1020,7 @@ fun BorderedWideButton(
                 modifier = Modifier.size(ButtonDefaults.IconSize),
                 painter = painterResource(id = startIcon),
                 contentDescription = text,
-                tint = MaterialTheme.colors.primary,
+                tint = MaterialTheme.colors.primary
             )
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
         }
@@ -1017,7 +1029,7 @@ fun BorderedWideButton(
             modifier = Modifier
                 .padding(
                     start = if (startIcon != null) 0.dp else ButtonDefaults.IconSize + horizontalPadding,
-                    end = if (endIcon != null) 0.dp else ButtonDefaults.IconSize + horizontalPadding,
+                    end = if (endIcon != null) 0.dp else ButtonDefaults.IconSize + horizontalPadding
                 )
                 .weight(1f),
             text = text,
@@ -1025,7 +1037,7 @@ fun BorderedWideButton(
             style = MaterialTheme.typography.button,
             textAlign = TextAlign.Center,
             maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
+            overflow = TextOverflow.Ellipsis
         )
 
         if (endIcon != null) {
@@ -1034,7 +1046,7 @@ fun BorderedWideButton(
                 modifier = Modifier.size(ButtonDefaults.IconSize),
                 painter = painterResource(id = endIcon),
                 contentDescription = text,
-                tint = MaterialTheme.colors.primary,
+                tint = MaterialTheme.colors.primary
             )
         }
     }
@@ -1071,7 +1083,7 @@ fun BorderlessButton(
             Icon(
                 painterResource(id = startIcon),
                 contentDescription = text,
-                modifier = Modifier.size(ButtonDefaults.IconSize),
+                modifier = Modifier.size(ButtonDefaults.IconSize)
             )
         }
 
@@ -1089,7 +1101,7 @@ fun BorderlessButton(
             Icon(
                 painterResource(id = endIcon),
                 contentDescription = text,
-                modifier = Modifier.size(ButtonDefaults.IconSize),
+                modifier = Modifier.size(ButtonDefaults.IconSize)
             )
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
         }
@@ -1125,7 +1137,7 @@ fun BorderlessWideButton(
             Icon(
                 modifier = Modifier.size(ButtonDefaults.IconSize),
                 painter = painterResource(id = startIcon),
-                contentDescription = text,
+                contentDescription = text
             )
         }
 
@@ -1135,7 +1147,7 @@ fun BorderlessWideButton(
             modifier = Modifier
                 .padding(
                     start = if (startIcon != null) 0.dp else ButtonDefaults.IconSize + horizontalPadding,
-                    end = if (endIcon != null) 0.dp else ButtonDefaults.IconSize + horizontalPadding,
+                    end = if (endIcon != null) 0.dp else ButtonDefaults.IconSize + horizontalPadding
                 )
                 .weight(1f),
             text = text,
@@ -1143,7 +1155,7 @@ fun BorderlessWideButton(
             style = MaterialTheme.typography.button,
             textAlign = TextAlign.Center,
             maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
+            overflow = TextOverflow.Ellipsis
         )
 
         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
@@ -1152,7 +1164,7 @@ fun BorderlessWideButton(
             Icon(
                 modifier = Modifier.size(ButtonDefaults.IconSize),
                 painter = painterResource(id = endIcon),
-                contentDescription = text,
+                contentDescription = text
             )
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
         }
@@ -1180,14 +1192,14 @@ fun SolidIconButton(
         shape = shape,
         colors = ButtonDefaults.textButtonColors(
             contentColor = Color.White,
-            backgroundColor = backgroundColor,
+            backgroundColor = backgroundColor
         ),
         contentPadding = PaddingValues(0.dp),
         onClick = {
             currentFocus.clearFocus()
 
             onClick()
-        },
+        }
     ) {
         Icon(
             modifier = Modifier.size(ButtonDefaults.IconSize),
@@ -1266,7 +1278,7 @@ fun BorderlessIconButton(
         Icon(
             modifier = Modifier.size(ButtonDefaults.IconSize),
             painter = painterResource(id = icon),
-            contentDescription = contentDescription,
+            contentDescription = contentDescription
         )
     }
 }

@@ -34,16 +34,22 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -53,22 +59,23 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import com.onesignal.OneSignal
 import org.imaginativeworld.whynotcompose.base.extensions.toast
+import org.imaginativeworld.whynotcompose.base.utils.Constants
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
-import org.imaginativeworld.whynotcompose.utils.Constants
 import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
 
 @Composable
-fun OneSignalAndBroadcastScreen() {
+fun OneSignalAndBroadcastScreen(
+    goBack: () -> Unit
+) {
     val context = LocalContext.current
 
-    var counter by remember { mutableStateOf(0) }
+    var showError by remember { mutableStateOf("") }
+    var counter by remember { mutableIntStateOf(0) }
     var currentValue by remember { mutableStateOf("$counter") }
 
     DisposableEffect(context) {
@@ -96,12 +103,15 @@ fun OneSignalAndBroadcastScreen() {
     }
 
     OneSignalAndBroadcastScreenSkeleton(
+        goBack = goBack,
         currentValue = currentValue,
         sendNotification = {
             try {
                 counter++
 
-                sendNewNotification(counter.toString())
+                sendNewNotification(counter.toString()) { errorMessage ->
+                    showError = errorMessage
+                }
             } catch (e: JSONException) {
                 e.printStackTrace()
 
@@ -109,12 +119,31 @@ fun OneSignalAndBroadcastScreen() {
             }
         }
     )
+
+    if (showError.isNotBlank()) {
+        AlertDialog(
+            onDismissRequest = {
+                showError = ""
+            },
+            confirmButton = {
+                TextButton(onClick = { showError = "" }) {
+                    Text("Ok")
+                }
+            },
+            title = {
+                Text("Error!")
+            },
+            text = {
+                Text(showError)
+            }
+        )
+    }
 }
 
 /**
  * Send a new OneSignal notification to the current app user with given [value].
  */
-private fun sendNewNotification(value: String) {
+private fun sendNewNotification(value: String, onError: (String) -> Unit) {
     if (OneSignal.getDeviceState() != null && OneSignal.getDeviceState()!!.isSubscribed) {
         // This is the current device OneSignal userId.
         val userId = OneSignal.getDeviceState()!!.userId
@@ -144,7 +173,10 @@ private fun sendNewNotification(value: String) {
             }
         )
     } else {
-        throw Exception("OneSignal is not initialized yet or user is not subscribed!")
+        onError(
+            "OneSignal is not initialized yet or the user is not subscribed! " +
+                "Another reason could be notification permission is not allowed."
+        )
     }
 }
 
@@ -166,20 +198,26 @@ fun OneSignalAndBroadcastScreenSkeletonPreviewDark() {
 
 @Composable
 fun OneSignalAndBroadcastScreenSkeleton(
+    goBack: () -> Unit = {},
     currentValue: String = "",
     sendNotification: () -> Unit = {}
 ) {
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding()
-    ) {
+    ) { innerPadding ->
         Column(
             Modifier
+                .padding(innerPadding)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            AppComponent.Header("OneSignal and Broadcast")
+            AppComponent.Header(
+                "OneSignal and Broadcast",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
@@ -194,9 +232,8 @@ fun OneSignalAndBroadcastScreenSkeleton(
                 Modifier
                     .padding(start = 16.dp, end = 16.dp)
                     .fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
                 Text("Current value: $currentValue")
 
                 AppComponent.MediumSpacer()

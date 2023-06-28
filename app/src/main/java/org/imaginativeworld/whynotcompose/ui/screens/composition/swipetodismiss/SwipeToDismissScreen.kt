@@ -39,7 +39,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
@@ -60,10 +63,10 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.rememberDismissState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -73,10 +76,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.models.ListItem
@@ -88,10 +88,13 @@ import org.imaginativeworld.whynotcompose.repositories.MockData
 private val dummyItems = MockData.dummyListItem.toList()
 
 @Composable
-fun SwipeToDismissScreen() {
+fun SwipeToDismissScreen(
+    goBack: () -> Unit
+) {
     val items = remember { mutableStateOf(dummyItems) }
 
     SwipeToDismissScreenSkeleton(
+        goBack = goBack,
         items = items.value,
         onDelete = {
             items.value = items.value.toMutableList().apply {
@@ -137,21 +140,25 @@ fun SwipeToDismissScreenSkeletonPreviewDark() {
 
 @Composable
 fun SwipeToDismissScreenSkeleton(
+    goBack: () -> Unit = {},
     items: List<ListItem>,
-    onDelete: (ListItem) -> Unit,
+    onDelete: (ListItem) -> Unit
 ) {
-    val scope = rememberCoroutineScope()
-
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding()
-    ) {
+    ) { innerPadding ->
         Column(
             Modifier
+                .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            AppComponent.Header("SwipeToDismiss")
+            AppComponent.Header(
+                "SwipeToDismiss",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
@@ -190,8 +197,8 @@ fun SwipeToDismissScreenSkeleton(
                         }
                     )
 
-                    if (deleted) {
-                        scope.launch {
+                    LaunchedEffect(deleted) {
+                        if (deleted) {
                             delay(500)
 
                             onDelete(item)
@@ -203,7 +210,6 @@ fun SwipeToDismissScreenSkeleton(
                         enter = expandVertically(),
                         exit = shrinkVertically()
                     ) {
-
                         SwipeToDismiss(
                             state = dismissState,
                             modifier = Modifier.padding(vertical = 4.dp),
@@ -261,7 +267,7 @@ fun SwipeToDismissScreenSkeleton(
                                             Text(
                                                 item.name,
                                                 fontWeight = if (unread) FontWeight.Bold else null,
-                                                textDecoration = if (unread) TextDecoration.None else TextDecoration.LineThrough,
+                                                textDecoration = if (unread) TextDecoration.None else TextDecoration.LineThrough
                                             )
                                         },
                                         secondaryText = { Text("Swipe me left or right!") }

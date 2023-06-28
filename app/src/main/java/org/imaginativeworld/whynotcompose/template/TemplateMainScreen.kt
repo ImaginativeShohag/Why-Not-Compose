@@ -27,21 +27,23 @@
 package org.imaginativeworld.whynotcompose.template
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
 fun TemplateMainScreen(
     isDarkMode: Boolean,
-    turnOnDarkMode: (Boolean) -> Unit,
+    turnOnDarkMode: (Boolean) -> Unit
 ) {
     val systemUiController = rememberSystemUiController()
 
@@ -67,13 +69,15 @@ fun TemplateMainScreenSkeletonPreview() {
 
 @Composable
 fun TemplateMainScreenSkeleton(
-    turnOnDarkMode: (Boolean) -> Unit = {},
+    turnOnDarkMode: (Boolean) -> Unit = {}
 ) {
-    Scaffold {
+    Scaffold { innerPadding ->
         Box(
             modifier = Modifier
-                .navigationBarsWithImePadding()
-                .statusBarsPadding(),
+                .padding(innerPadding)
+                .navigationBarsPadding()
+                .imePadding()
+                .statusBarsPadding()
         ) {
             // Your Content Here.
         }

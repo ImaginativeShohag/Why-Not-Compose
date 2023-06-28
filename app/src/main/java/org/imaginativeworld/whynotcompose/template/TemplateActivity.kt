@@ -35,15 +35,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
-import com.google.accompanist.insets.ProvideWindowInsets
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.base.extensions.toast
+import org.imaginativeworld.whynotcompose.base.utils.SharedPref
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
-import org.imaginativeworld.whynotcompose.utils.SharedPref
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class TemplateActivity : ComponentActivity() {
@@ -65,16 +64,14 @@ class TemplateActivity : ComponentActivity() {
             AppTheme(
                 darkTheme = isDarkMode
             ) {
-                ProvideWindowInsets {
-                    TemplateMainScreen(
-                        isDarkMode = isDarkMode,
-                        turnOnDarkMode = { turnOn ->
-                            isDarkMode = turnOn
+                TemplateMainScreen(
+                    isDarkMode = isDarkMode,
+                    turnOnDarkMode = { turnOn ->
+                        isDarkMode = turnOn
 
-                            sharedPref.setDarkMode(turnOn)
-                        }
-                    )
-                }
+                        sharedPref.setDarkMode(turnOn)
+                    }
+                )
             }
         }
 

@@ -29,6 +29,10 @@ package org.imaginativeworld.whynotcompose.ui.screens.composition.list.lazycolum
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -38,16 +42,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 // Source: https://cs.android.com/androidx/platform/tools/dokka-devsite-plugin/+/master:testData/compose/samples/foundation/samples/LazyDslSamples.kt
 
 @Composable
-fun LazyColumnSampleOneScreen() {
-    LazyColumnSampleOneScreenSkeleton()
+fun LazyColumnSampleOneScreen(
+    goBack: () -> Unit
+) {
+    LazyColumnSampleOneScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -69,17 +75,24 @@ fun LazyColumnSampleOneScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun LazyColumnSampleOneScreenSkeleton() {
+fun LazyColumnSampleOneScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding()
-    ) {
+    ) { innerPadding ->
         Column(
             Modifier
+                .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            AppComponent.Header("Basic Sample")
+            AppComponent.Header(
+                "Basic Sample",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

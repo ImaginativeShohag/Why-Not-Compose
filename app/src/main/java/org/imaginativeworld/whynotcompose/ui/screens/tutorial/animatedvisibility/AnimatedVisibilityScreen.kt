@@ -34,8 +34,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
@@ -52,15 +55,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
-fun AnimatedVisibilityScreen() {
-    AnimatedVisibilityScreenSkeleton()
+fun AnimatedVisibilityScreen(
+    goBack: () -> Unit
+) {
+    AnimatedVisibilityScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -80,14 +85,24 @@ fun AnimatedVisibilityScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun AnimatedVisibilityScreenSkeleton() {
+fun AnimatedVisibilityScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding()
-    ) {
-        Column(Modifier.fillMaxSize()) {
-            AppComponent.Header("AnimatedVisibility")
+    ) { innerPadding ->
+        Column(
+            Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+        ) {
+            AppComponent.Header(
+                "AnimatedVisibility",
+                goBack = goBack
+            )
 
             Divider()
 
@@ -97,7 +112,7 @@ fun AnimatedVisibilityScreenSkeleton() {
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.Center
             ) {
                 Card {
                     var expanded by remember { mutableStateOf(false) }
@@ -106,7 +121,7 @@ fun AnimatedVisibilityScreenSkeleton() {
                         Modifier
                             .clickable { expanded = !expanded }
                             .padding(16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Image(
                             modifier = Modifier
@@ -120,7 +135,7 @@ fun AnimatedVisibilityScreenSkeleton() {
                                     .padding(top = 16.dp),
                                 text = "Jetpack\nCompose",
                                 style = MaterialTheme.typography.h2,
-                                textAlign = TextAlign.Center,
+                                textAlign = TextAlign.Center
                             )
                         }
                     }

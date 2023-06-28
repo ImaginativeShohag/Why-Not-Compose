@@ -30,6 +30,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import javax.inject.Inject
+import kotlin.random.Random
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -37,8 +39,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.base.models.Event
-import javax.inject.Inject
-import kotlin.random.Random
 
 // Code resend counter interval in seconds
 private const val RESEND_COUNTER_INTERVAL_SEC = 30
@@ -64,13 +64,13 @@ class OtpCodeVerifyViewModel @Inject constructor() : ViewModel() {
             combine(
                 _eventShowLoading,
                 _eventShowMessage,
-                _eventSuccess,
+                _eventSuccess
             ) { showLoading, showMessage, success ->
 
                 OtpCodeVerifyViewState(
                     loading = showLoading,
                     message = showMessage,
-                    success = success,
+                    success = success
                 )
             }.catch { throwable ->
                 // TODO: emit a UI error here. For now we'll just rethrow
@@ -88,7 +88,6 @@ class OtpCodeVerifyViewModel @Inject constructor() : ViewModel() {
         phone: String,
         code: String
     ) = viewModelScope.launch {
-
         _eventShowLoading.value = true
 
         // Simulating network delay
@@ -111,7 +110,6 @@ class OtpCodeVerifyViewModel @Inject constructor() : ViewModel() {
     fun sendOtp(
         phone: String
     ) = viewModelScope.launch {
-
         _eventShowLoading.value = true
 
         // Simulating network delay
@@ -152,8 +150,9 @@ class OtpCodeVerifyViewModel @Inject constructor() : ViewModel() {
 
                 counterSec--
 
-                if (counterSec < 0)
+                if (counterSec < 0) {
                     break
+                }
 
                 delay(1000)
             }
@@ -183,5 +182,5 @@ class OtpCodeVerifyViewModel @Inject constructor() : ViewModel() {
 data class OtpCodeVerifyViewState(
     val loading: Boolean = false,
     val message: Event<String>? = null,
-    val success: Boolean = false,
+    val success: Boolean = false
 )

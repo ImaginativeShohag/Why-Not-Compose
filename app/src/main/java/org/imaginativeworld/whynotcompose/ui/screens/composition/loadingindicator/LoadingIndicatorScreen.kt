@@ -49,9 +49,12 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.progressSemantics
 import androidx.compose.foundation.rememberScrollState
@@ -71,6 +74,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -84,15 +88,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import kotlinx.coroutines.delay
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
-fun LoadingIndicatorScreen() {
-    LoadingIndicatorScreenSkeleton()
+fun LoadingIndicatorScreen(
+    goBack: () -> Unit
+) {
+    LoadingIndicatorScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -114,22 +120,28 @@ fun LoadingIndicatorScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun LoadingIndicatorScreenSkeleton() {
-
+fun LoadingIndicatorScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     var showLoading by remember { mutableStateOf(false) }
 
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding()
-    ) {
+    ) { innerPadding ->
         Column(
             Modifier
+                .padding(innerPadding)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(start = 16.dp, end = 16.dp)
         ) {
-            AppComponent.Header("Loading Indicator")
+            AppComponent.Header(
+                "Loading Indicator",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
@@ -151,7 +163,7 @@ fun LoadingIndicatorScreenSkeleton() {
 
             AppComponent.MediumSpacer()
 
-            var progress1 by remember { mutableStateOf(0.1f) }
+            var progress1 by remember { mutableFloatStateOf(0.1f) }
             val animatedProgress1 by animateFloatAsState(
                 targetValue = progress1,
                 animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
@@ -191,7 +203,7 @@ fun LoadingIndicatorScreenSkeleton() {
 
             AppComponent.MediumSpacer()
 
-            var progress3 by remember { mutableStateOf(0.1f) }
+            var progress3 by remember { mutableFloatStateOf(0.1f) }
             val animatedProgress3 by animateFloatAsState(
                 targetValue = progress3,
                 animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
@@ -236,7 +248,7 @@ fun LoadingIndicatorScreenSkeleton() {
 
             AppComponent.MediumSpacer()
 
-            var progress2 by remember { mutableStateOf(0.1f) }
+            var progress2 by remember { mutableFloatStateOf(0.1f) }
             val animatedProgress2 by animateFloatAsState(
                 targetValue = progress2,
                 animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
@@ -352,7 +364,6 @@ fun FullscreenLoadingIndicator(
         enter = fadeIn(),
         exit = fadeOut()
     ) {
-
         Box(
             Modifier
                 .fillMaxSize()
@@ -393,7 +404,9 @@ private fun RoundedLinearProgressIndicator(
     modifier: Modifier = Modifier,
     height: Dp = 8.dp,
     color: Color = MaterialTheme.colors.primary,
-    backgroundColor: Color = color.copy(alpha = ProgressIndicatorDefaults.IndicatorBackgroundOpacity)
+    backgroundColor: Color = color.copy(
+        alpha = ProgressIndicatorDefaults.IndicatorBackgroundOpacity
+    )
 ) {
     val infiniteTransition = rememberInfiniteTransition()
     val animatedColor by infiniteTransition.animateColor(
@@ -415,7 +428,6 @@ private fun RoundedLinearProgressIndicator(
             .progressSemantics(progress)
             .fillMaxWidth()
     ) {
-
         Row(
             Modifier
                 .align(Alignment.Center)
@@ -443,7 +455,9 @@ private fun RoundedLinearProgressIndicator(
     modifier: Modifier = Modifier,
     height: Dp = 8.dp,
     color: Color = MaterialTheme.colors.primary,
-    backgroundColor: Color = color.copy(alpha = ProgressIndicatorDefaults.IndicatorBackgroundOpacity)
+    backgroundColor: Color = color.copy(
+        alpha = ProgressIndicatorDefaults.IndicatorBackgroundOpacity
+    )
 ) {
     val infiniteTransition = rememberInfiniteTransition()
     val animatedColor by infiniteTransition.animateColor(
@@ -468,7 +482,6 @@ private fun RoundedLinearProgressIndicator(
         modifier
             .fillMaxWidth()
     ) {
-
         Row(
             Modifier
                 .align(Alignment.Center)

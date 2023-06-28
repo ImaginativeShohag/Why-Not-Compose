@@ -31,7 +31,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Divider
@@ -48,16 +51,18 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 private val ELEMENT_HEIGHT = 56.dp
 
 @Composable
-fun CheckBoxScreen() {
-    CheckBoxScreenSkeleton()
+fun CheckBoxScreen(
+    goBack: () -> Unit
+) {
+    CheckBoxScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -69,18 +74,25 @@ fun CheckBoxScreenSkeletonPreview() {
 }
 
 @Composable
-fun CheckBoxScreenSkeleton() {
+fun CheckBoxScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding()
-    ) {
+    ) { innerPadding ->
         Column(
             Modifier
+                .padding(innerPadding)
                 .fillMaxSize()
                 .padding(start = 16.dp, end = 16.dp)
         ) {
-            AppComponent.Header("Check Box")
+            AppComponent.Header(
+                "Check Box",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
@@ -132,9 +144,13 @@ fun TriStateCheckboxSample() {
 
         // TriStateCheckbox state reflects state of dependent checkboxes
         val parentState = remember(state1, state2) {
-            if (state1 && state2) ToggleableState.On
-            else if (!state1 && !state2) ToggleableState.Off
-            else ToggleableState.Indeterminate
+            if (state1 && state2) {
+                ToggleableState.On
+            } else if (!state1 && !state2) {
+                ToggleableState.Off
+            } else {
+                ToggleableState.Indeterminate
+            }
         }
         // click on TriStateCheckbox can set state for dependent checkboxes
         val onParentClick = {
@@ -146,7 +162,7 @@ fun TriStateCheckboxSample() {
         GeneralTriStateCheckBox(
             text = "Love you Life",
             state = parentState,
-            onClick = onParentClick,
+            onClick = onParentClick
         )
         Column(Modifier.padding(32.dp, 0.dp, 0.dp, 0.dp)) {
             GeneralCheckBox(

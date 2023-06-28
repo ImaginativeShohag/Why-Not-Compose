@@ -35,8 +35,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
@@ -61,8 +64,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
@@ -70,8 +71,12 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 private val ELEMENT_HEIGHT = 48.dp
 
 @Composable
-fun DropDownMenuScreen() {
-    DropDownMenuScreenSkeleton()
+fun DropDownMenuScreen(
+    goBack: () -> Unit
+) {
+    DropDownMenuScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -91,18 +96,25 @@ fun DropDownMenuScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun DropDownMenuScreenSkeleton() {
+fun DropDownMenuScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding()
-    ) {
+    ) { innerPadding ->
         Column(
             Modifier
+                .padding(innerPadding)
                 .fillMaxSize()
                 .padding(start = 16.dp, end = 16.dp)
         ) {
-            AppComponent.Header("DropDown Menu")
+            AppComponent.Header(
+                "DropDown Menu",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
@@ -118,7 +130,7 @@ fun DropDownMenuScreenSkeleton() {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentSize(Alignment.TopCenter),
+                    .wrapContentSize(Alignment.TopCenter)
             ) {
                 IconButton(onClick = { expanded = true }) {
                     Icon(Icons.Default.MoreVert, contentDescription = "Localized description")
@@ -170,7 +182,7 @@ fun DropDownMenuScreenSkeleton() {
                 "Bangladesh",
                 "Pakistan",
                 "Palestine",
-                "Malaysia",
+                "Malaysia"
             )
             var selectedItem1 by remember { mutableStateOf("") }
             var selectedItem2 by remember { mutableStateOf("Bangladesh") }
@@ -243,7 +255,7 @@ fun <E> DropDownSpinner(
             expanded = isOpen,
             onDismissRequest = {
                 isOpen = false
-            },
+            }
         ) {
             itemList?.forEachIndexed { index, item ->
                 DropdownMenuItem(

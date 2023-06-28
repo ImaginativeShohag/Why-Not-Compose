@@ -29,7 +29,10 @@ package org.imaginativeworld.whynotcompose.ui.screens.composition.badge
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Badge
@@ -46,14 +49,12 @@ import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import org.imaginativeworld.whynotcompose.base.extensions.toWords
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
@@ -62,8 +63,12 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 // https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:compose/material/material/samples/src/main/java/androidx/compose/material/samples/BadgeSamples.kt
 
 @Composable
-fun BadgeScreen() {
-    BadgeScreenSkeleton()
+fun BadgeScreen(
+    goBack: () -> Unit
+) {
+    BadgeScreenSkeleton(
+        goBack = goBack
+    )
 }
 
 @Preview
@@ -83,19 +88,26 @@ fun BadgeScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun BadgeScreenSkeleton() {
+fun BadgeScreenSkeleton(
+    goBack: () -> Unit = {}
+) {
     Scaffold(
         Modifier
-            .navigationBarsWithImePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .statusBarsPadding()
-    ) {
+    ) { innerPadding ->
         Column(
             Modifier
+                .padding(innerPadding)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(start = 16.dp, end = 16.dp)
         ) {
-            AppComponent.Header("Badge")
+            AppComponent.Header(
+                "Badge",
+                goBack = goBack
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
@@ -106,9 +118,9 @@ fun BadgeScreenSkeleton() {
 
             // ----------------------------------------------------------------
 
-            var homeCounter by remember { mutableStateOf(0) }
-            var favoriteCounter by remember { mutableStateOf(0) }
-            var profileCounter by remember { mutableStateOf(0) }
+            var homeCounter by remember { mutableIntStateOf(0) }
+            var favoriteCounter by remember { mutableIntStateOf(0) }
+            var profileCounter by remember { mutableIntStateOf(0) }
 
             BottomNavigation {
                 BottomNavigationItem(
@@ -150,8 +162,11 @@ fun BadgeScreenSkeleton() {
                         BadgedBox(badge = {
                             Badge {
                                 Text(
-                                    if (profileCounter > 9) "infinite"
-                                    else profileCounter.toWords()
+                                    if (profileCounter > 9) {
+                                        "infinite"
+                                    } else {
+                                        profileCounter.toWords()
+                                    }
                                 )
                             }
                         }) {

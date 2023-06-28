@@ -38,12 +38,12 @@ import android.webkit.WebViewClient
 import androidx.lifecycle.ViewModel
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.lang.ref.WeakReference
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.imaginativeworld.whynotcompose.BuildConfig
 import timber.log.Timber
-import java.lang.ref.WeakReference
-import javax.inject.Inject
 
 /**
  * We are using this to hide the default error page.
@@ -89,7 +89,6 @@ class WebViewViewModel @Inject constructor() : ViewModel() {
         this._webView = WeakReference(webView)
 
         webView.apply {
-
             val webSettings = this.settings
 
             webSettings.run {
@@ -108,7 +107,7 @@ class WebViewViewModel @Inject constructor() : ViewModel() {
                     if (url != CUSTOM_BLANK) {
                         _state.value = _state.value.copy(
                             loadingProgress = 0,
-                            error = null,
+                            error = null
                         )
                     }
 
@@ -119,7 +118,7 @@ class WebViewViewModel @Inject constructor() : ViewModel() {
                     Timber.e("onPageFinished")
 
                     _state.value = _state.value.copy(
-                        loadingProgress = null,
+                        loadingProgress = null
                     )
 
                     _swipeRefreshLayout?.get()?.isRefreshing = false
@@ -170,7 +169,7 @@ class WebViewViewModel @Inject constructor() : ViewModel() {
                         error = WebViewError(
                             errorCode = errorCode,
                             description = description,
-                            failingUrl = failingUrl,
+                            failingUrl = failingUrl
                         )
                     )
                 }
@@ -184,7 +183,7 @@ class WebViewViewModel @Inject constructor() : ViewModel() {
                     Timber.e("onProgressChanged: newProgress: $newProgress")
 
                     _state.value = _state.value.copy(
-                        loadingProgress = newProgress,
+                        loadingProgress = newProgress
                     )
                 }
             }
@@ -216,11 +215,11 @@ class WebViewViewModel @Inject constructor() : ViewModel() {
 
 data class WebViewState(
     val loadingProgress: Int? = null,
-    val error: WebViewError? = null,
+    val error: WebViewError? = null
 )
 
 data class WebViewError(
     val errorCode: Int,
     val description: String?,
-    val failingUrl: String?,
+    val failingUrl: String?
 )

@@ -100,7 +100,6 @@ object Libs {
         const val systemuicontroller =
             "com.google.accompanist:accompanist-systemuicontroller:$version"
         const val flowlayout = "com.google.accompanist:accompanist-flowlayout:$version"
-        const val pager = "com.google.accompanist:accompanist-pager:$version"
         const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:$version"
         const val placeholder = "com.google.accompanist:accompanist-placeholder-material:$version"
     }
@@ -133,7 +132,7 @@ object Libs {
         }
 
         object Compose {
-            private const val bomVersion = "2023.05.01"
+            private const val bomVersion = "2023.06.00"
             const val compilerVersion = "1.4.7"
             private const val runtimeTracingVersion = "1.0.0-alpha02"
 
@@ -165,7 +164,7 @@ object Libs {
             const val toolingPreview = "androidx.compose.ui:ui-tooling-preview"
 
             const val viewBinding = "androidx.compose.ui:ui-viewbinding"
-            const val animation = "androidx.compose.animation:animation"
+            const val animation = "androidx.compose.animation:animation:1.5.0-beta02"
 
             const val test = "androidx.compose.ui:ui-test"
             const val uiTest = "androidx.compose.ui:ui-test-junit4"

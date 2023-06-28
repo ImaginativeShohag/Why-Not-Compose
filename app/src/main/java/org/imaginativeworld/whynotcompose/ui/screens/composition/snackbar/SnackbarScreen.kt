@@ -106,8 +106,6 @@ fun SnackbarScreenSkeleton(
                 .padding(innerPadding)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(start = 32.dp, end = 32.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AppComponent.Header(
                 "Snackbar",
@@ -117,63 +115,71 @@ fun SnackbarScreenSkeleton(
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
-
             Divider()
 
-            AppComponent.SubHeader("Official Examples")
+            Column(
+                Modifier.padding(start = 16.dp, end = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AppComponent.SubHeader("Official Examples")
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            OutlinedButton(onClick = {
-                navigate(CompositionsScreen.CompositionScaffoldThree.route)
-            }) {
-                Text("Scaffold With Simple Snackbar")
-            }
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            OutlinedButton(onClick = {
-                navigate(CompositionsScreen.CompositionScaffoldFour.route)
-            }) {
-                Text("Scaffold With Custom Snackbar")
-            }
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            OutlinedButton(onClick = {
-                navigate(CompositionsScreen.CompositionScaffoldFive.route)
-            }) {
-                Text("Scaffold With Coroutines Snackbar")
-            }
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            Divider()
-
-            AppComponent.SubHeader("Custom Snackbar")
-
-            // ----------------------------------------------------------------
-
-            var showMessage by remember { mutableStateOf<Event<String>?>(null) }
-
-            LaunchedEffect(showMessage) {
-                showMessage?.let { message ->
-                    scaffoldState.snackbarHostState.showSnackbar(message.value)
+                OutlinedButton(onClick = {
+                    navigate(CompositionsScreen.CompositionScaffoldThree.route)
+                }) {
+                    Text("Scaffold With Simple Snackbar")
                 }
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                OutlinedButton(onClick = {
+                    navigate(CompositionsScreen.CompositionScaffoldFour.route)
+                }) {
+                    Text("Scaffold With Custom Snackbar")
+                }
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                OutlinedButton(onClick = {
+                    navigate(CompositionsScreen.CompositionScaffoldFive.route)
+                }) {
+                    Text("Scaffold With Coroutines Snackbar")
+                }
+
+                // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
             }
 
-            OutlinedButton(onClick = {
-                showMessage = Event("Hi! I am a Snackbar!")
-            }) {
-                Text("Show Snackbar")
+            Divider()
+
+            Column(
+                Modifier.padding(start = 16.dp, end = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AppComponent.SubHeader("Custom Snackbar")
+
+                // ----------------------------------------------------------------
+
+                var showMessage by remember { mutableStateOf<Event<String>?>(null) }
+
+                LaunchedEffect(showMessage) {
+                    showMessage?.let { message ->
+                        scaffoldState.snackbarHostState.showSnackbar(message.value)
+                    }
+                }
+
+                OutlinedButton(onClick = {
+                    showMessage = Event("Hi! I am a Snackbar!")
+                }) {
+                    Text("Show Snackbar")
+                }
             }
 
             // ----------------------------------------------------------------

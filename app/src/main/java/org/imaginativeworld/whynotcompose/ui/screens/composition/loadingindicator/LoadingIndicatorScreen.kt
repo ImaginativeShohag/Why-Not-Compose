@@ -136,7 +136,6 @@ fun LoadingIndicatorScreenSkeleton(
                 .padding(innerPadding)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(start = 16.dp, end = 16.dp)
         ) {
             AppComponent.Header(
                 "Loading Indicator",
@@ -148,178 +147,203 @@ fun LoadingIndicatorScreenSkeleton(
 
             Divider()
 
-            AppComponent.SubHeader("Linear Progress Indicator")
-
-            // ----------------------------------------------------------------
-
             Column(
-                modifier = Modifier.fillMaxWidth(),
+                Modifier.padding(start = 16.dp, end = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                LinearProgressIndicator()
-            }
+                AppComponent.SubHeader("Linear Progress Indicator")
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
-
-            var progress1 by remember { mutableFloatStateOf(0.1f) }
-            val animatedProgress1 by animateFloatAsState(
-                targetValue = progress1,
-                animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
-            )
-
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                LinearProgressIndicator(progress = animatedProgress1)
-
-                Spacer(Modifier.requiredHeight(32.dp))
-
-                OutlinedButton(
-                    onClick = {
-                        if (progress1 < 1f) progress1 += 0.1f
-                    }
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text("Increase")
+                    LinearProgressIndicator()
                 }
-            }
 
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
+                AppComponent.MediumSpacer()
 
-            Divider()
-
-            AppComponent.SubHeader("Rounded Linear Progress Indicator")
-
-            // ----------------------------------------------------------------
-
-            RoundedLinearProgressIndicator()
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            var progress3 by remember { mutableFloatStateOf(0.1f) }
-            val animatedProgress3 by animateFloatAsState(
-                targetValue = progress3,
-                animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
-            )
-
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                RoundedLinearProgressIndicator(progress = animatedProgress3)
-
-                Spacer(Modifier.requiredHeight(32.dp))
-
-                OutlinedButton(
-                    onClick = {
-                        if (progress3 < 1f) progress3 += 0.1f
-                    }
-                ) {
-                    Text("Increase")
-                }
-            }
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            Divider()
-
-            AppComponent.SubHeader("Circular Progress Indicator")
-
-            // ----------------------------------------------------------------
-
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                CircularProgressIndicator()
-            }
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            var progress2 by remember { mutableFloatStateOf(0.1f) }
-            val animatedProgress2 by animateFloatAsState(
-                targetValue = progress2,
-                animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
-            )
-
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                CircularProgressIndicator(progress = animatedProgress2)
-
-                Spacer(Modifier.requiredHeight(32.dp))
-
-                OutlinedButton(
-                    onClick = {
-                        if (progress2 < 1f) progress2 += 0.1f
-                    }
-                ) {
-                    Text("Increase")
-                }
-            }
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            Divider()
-
-            AppComponent.SubHeader("Capsule Loading Indicator")
-
-            // ----------------------------------------------------------------
-
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center
-            ) {
-                CapsuleLoadingIndicator(
-                    show = true
+                var progress1 by remember { mutableFloatStateOf(0.1f) }
+                val animatedProgress1 by animateFloatAsState(
+                    targetValue = progress1,
+                    animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
                 )
+
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    LinearProgressIndicator(progress = animatedProgress1)
+
+                    Spacer(Modifier.requiredHeight(32.dp))
+
+                    OutlinedButton(
+                        onClick = {
+                            if (progress1 < 1f) progress1 += 0.1f
+                        }
+                    ) {
+                        Text("Increase")
+                    }
+                }
+
+                // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
             }
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
 
             Divider()
 
-            AppComponent.SubHeader("Loading Indicator")
+            Column(
+                Modifier.padding(start = 16.dp, end = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AppComponent.SubHeader("Rounded Linear Progress Indicator")
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
+                RoundedLinearProgressIndicator()
 
-            // Auto hide the loading.
-            LaunchedEffect(showLoading) {
-                if (showLoading) {
-                    delay(3000)
+                // ----------------------------------------------------------------
 
-                    showLoading = false
+                AppComponent.MediumSpacer()
+
+                var progress3 by remember { mutableFloatStateOf(0.1f) }
+                val animatedProgress3 by animateFloatAsState(
+                    targetValue = progress3,
+                    animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
+                )
+
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    RoundedLinearProgressIndicator(progress = animatedProgress3)
+
+                    Spacer(Modifier.requiredHeight(32.dp))
+
+                    OutlinedButton(
+                        onClick = {
+                            if (progress3 < 1f) progress3 += 0.1f
+                        }
+                    ) {
+                        Text("Increase")
+                    }
                 }
+
+                // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
             }
 
-            Button(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                onClick = {
-                    showLoading = true
-                }
+            Divider()
+
+            Column(
+                Modifier.padding(start = 16.dp, end = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text("Show Loading")
+                AppComponent.SubHeader("Circular Progress Indicator")
+
+                // ----------------------------------------------------------------
+
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    CircularProgressIndicator()
+                }
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                var progress2 by remember { mutableFloatStateOf(0.1f) }
+                val animatedProgress2 by animateFloatAsState(
+                    targetValue = progress2,
+                    animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
+                )
+
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    CircularProgressIndicator(progress = animatedProgress2)
+
+                    Spacer(Modifier.requiredHeight(32.dp))
+
+                    OutlinedButton(
+                        onClick = {
+                            if (progress2 < 1f) progress2 += 0.1f
+                        }
+                    ) {
+                        Text("Increase")
+                    }
+                }
+
+                // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+            }
+
+            Divider()
+
+            Column(
+                Modifier.padding(start = 16.dp, end = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AppComponent.SubHeader("Capsule Loading Indicator")
+
+                // ----------------------------------------------------------------
+
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CapsuleLoadingIndicator(
+                        show = true
+                    )
+                }
+
+                // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+            }
+
+            Divider()
+
+            Column(
+                Modifier.padding(start = 16.dp, end = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AppComponent.SubHeader("Loading Indicator")
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                // Auto hide the loading.
+                LaunchedEffect(showLoading) {
+                    if (showLoading) {
+                        delay(3000)
+
+                        showLoading = false
+                    }
+                }
+
+                Button(
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    onClick = {
+                        showLoading = true
+                    }
+                ) {
+                    Text("Show Loading")
+                }
             }
 
             // ----------------------------------------------------------------

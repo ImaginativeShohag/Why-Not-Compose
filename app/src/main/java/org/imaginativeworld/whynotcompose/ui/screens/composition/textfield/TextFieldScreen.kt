@@ -176,7 +176,6 @@ fun TextFieldScreenSkeleton(
                 .padding(innerPadding)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(start = 16.dp, end = 16.dp)
         ) {
             AppComponent.Header(
                 "Text Field",
@@ -188,254 +187,262 @@ fun TextFieldScreenSkeleton(
 
             Divider()
 
-            AppComponent.SubHeader("Official Samples")
+            Column(Modifier.padding(start = 16.dp, end = 16.dp)) {
+                AppComponent.SubHeader("Official Samples")
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            SimpleTextFieldSample()
+                SimpleTextFieldSample()
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
+                AppComponent.MediumSpacer()
 
-            SimpleOutlinedTextFieldSample()
+                SimpleOutlinedTextFieldSample()
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
+                AppComponent.MediumSpacer()
 
-            TextFieldWithIcons()
+                TextFieldWithIcons()
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
+                AppComponent.MediumSpacer()
 
-            TextFieldWithPlaceholder()
+                TextFieldWithPlaceholder()
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
+                AppComponent.MediumSpacer()
 
-            TextFieldWithErrorState()
+                TextFieldWithErrorState()
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
+                AppComponent.MediumSpacer()
 
-            TextFieldWithHelperMessage()
+                TextFieldWithHelperMessage()
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
+                AppComponent.MediumSpacer()
 
-            PasswordTextField()
+                PasswordTextField()
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
+                AppComponent.MediumSpacer()
 
-            TextFieldSample()
+                TextFieldSample()
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
+                AppComponent.MediumSpacer()
 
-            OutlinedTextFieldSample()
+                OutlinedTextFieldSample()
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
+                AppComponent.MediumSpacer()
 
-            TextFieldWithHideKeyboardOnImeAction()
+                TextFieldWithHideKeyboardOnImeAction()
 
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
-
-            Divider()
-
-            AppComponent.SubHeader("Cut-Copy-Paste Disabled")
-
-            // ----------------------------------------------------------------
-
-            TextFieldWithCutCopyPasteDisabled()
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
+                AppComponent.MediumSpacer()
+            }
 
             Divider()
 
-            AppComponent.SubHeader("Custom Type One")
+            Column(Modifier.padding(start = 16.dp, end = 16.dp)) {
+                AppComponent.SubHeader("Cut-Copy-Paste Disabled")
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            TextInputFieldOne(
-                textFieldValue = remember { mutableStateOf(TextFieldValue()) },
-                placeholder = "I am  a placeholder",
-                keyboardType = KeyboardType.Text
-            )
+                TextFieldWithCutCopyPasteDisabled()
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
+                AppComponent.MediumSpacer()
+            }
 
-            TextInputFieldOne(
-                textFieldValue = remember { mutableStateOf(TextFieldValue()) },
-                placeholder = "I am  a placeholder",
-                isError = true
-            )
+            Divider()
 
-            // ----------------------------------------------------------------
+            Column(Modifier.padding(start = 16.dp, end = 16.dp)) {
+                AppComponent.SubHeader("Custom Type One")
 
-            AppComponent.MediumSpacer()
+                // ----------------------------------------------------------------
 
-            TextInputFieldOne(
-                textFieldValue = remember {
-                    mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet"))
-                },
-                placeholder = "I am  a placeholder"
-            )
+                TextInputFieldOne(
+                    textFieldValue = remember { mutableStateOf(TextFieldValue()) },
+                    placeholder = "I am  a placeholder",
+                    keyboardType = KeyboardType.Text
+                )
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
+                AppComponent.MediumSpacer()
 
-            TextInputFieldOne(
-                textFieldValue = remember {
-                    mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet"))
-                },
-                isError = true
-            )
+                TextInputFieldOne(
+                    textFieldValue = remember { mutableStateOf(TextFieldValue()) },
+                    placeholder = "I am  a placeholder",
+                    isError = true
+                )
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
+                AppComponent.MediumSpacer()
 
-            TextInputFieldOne(
-                modifier = Modifier
-                    .height(128.dp),
-                textFieldValue = remember { mutableStateOf(TextFieldValue()) },
-                placeholder = "I am a multi-line placeholder.\nHere is another line.",
-                keyboardType = KeyboardType.Text,
-                singleLine = false
-            )
+                TextInputFieldOne(
+                    textFieldValue = remember {
+                        mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet"))
+                    },
+                    placeholder = "I am  a placeholder"
+                )
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
+                AppComponent.MediumSpacer()
 
-            TextInputFieldOne(
-                modifier = Modifier
-                    .height(128.dp),
-                textFieldValue = remember {
-                    mutableStateOf(
-                        TextFieldValue(
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                TextInputFieldOne(
+                    textFieldValue = remember {
+                        mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet"))
+                    },
+                    isError = true
+                )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                TextInputFieldOne(
+                    modifier = Modifier
+                        .height(128.dp),
+                    textFieldValue = remember { mutableStateOf(TextFieldValue()) },
+                    placeholder = "I am a multi-line placeholder.\nHere is another line.",
+                    keyboardType = KeyboardType.Text,
+                    singleLine = false
+                )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                TextInputFieldOne(
+                    modifier = Modifier
+                        .height(128.dp),
+                    textFieldValue = remember {
+                        mutableStateOf(
+                            TextFieldValue(
+                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                            )
                         )
-                    )
-                },
-                placeholder = "I am a multi-line placeholder.\nHere is another line.",
-                keyboardType = KeyboardType.Text,
-                singleLine = false
-            )
+                    },
+                    placeholder = "I am a multi-line placeholder.\nHere is another line.",
+                    keyboardType = KeyboardType.Text,
+                    singleLine = false
+                )
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
+                AppComponent.MediumSpacer()
 
-            PasswordInputFieldOne(
-                textFieldValue = remember { mutableStateOf(TextFieldValue()) }
-            )
+                PasswordInputFieldOne(
+                    textFieldValue = remember { mutableStateOf(TextFieldValue()) }
+                )
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
+                AppComponent.MediumSpacer()
 
-            PasswordInputFieldOne(
-                textFieldValue = remember { mutableStateOf(TextFieldValue()) },
-                isError = true
-            )
+                PasswordInputFieldOne(
+                    textFieldValue = remember { mutableStateOf(TextFieldValue()) },
+                    isError = true
+                )
 
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
+                AppComponent.MediumSpacer()
+            }
 
             Divider()
 
-            AppComponent.SubHeader("Custom Type Two")
+            Column(Modifier.padding(start = 16.dp, end = 16.dp)) {
+                AppComponent.SubHeader("Custom Type Two")
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            TextInputFieldTwo(
-                textFieldValue = remember { mutableStateOf(TextFieldValue()) },
-                placeholder = "I am  a placeholder",
-                keyboardType = KeyboardType.Text
-            )
+                TextInputFieldTwo(
+                    textFieldValue = remember { mutableStateOf(TextFieldValue()) },
+                    placeholder = "I am  a placeholder",
+                    keyboardType = KeyboardType.Text
+                )
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
+                AppComponent.MediumSpacer()
 
-            TextInputFieldTwo(
-                textFieldValue = remember {
-                    mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet"))
-                },
-                placeholder = "I am  a placeholder"
-            )
+                TextInputFieldTwo(
+                    textFieldValue = remember {
+                        mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet"))
+                    },
+                    placeholder = "I am  a placeholder"
+                )
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
+                AppComponent.MediumSpacer()
 
-            TextInputFieldTwo(
-                modifier = Modifier
-                    .height(128.dp),
-                textFieldValue = remember { mutableStateOf(TextFieldValue()) },
-                placeholder = "I am  a placeholder",
-                keyboardType = KeyboardType.Text,
-                singleLine = false
-            )
+                TextInputFieldTwo(
+                    modifier = Modifier
+                        .height(128.dp),
+                    textFieldValue = remember { mutableStateOf(TextFieldValue()) },
+                    placeholder = "I am  a placeholder",
+                    keyboardType = KeyboardType.Text,
+                    singleLine = false
+                )
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
+                AppComponent.MediumSpacer()
 
-            TextInputFieldTwo(
-                modifier = Modifier
-                    .height(128.dp),
-                textFieldValue = remember {
-                    mutableStateOf(
-                        TextFieldValue(
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                TextInputFieldTwo(
+                    modifier = Modifier
+                        .height(128.dp),
+                    textFieldValue = remember {
+                        mutableStateOf(
+                            TextFieldValue(
+                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                            )
                         )
-                    )
-                },
-                placeholder = "I am  a placeholder",
-                keyboardType = KeyboardType.Text,
-                singleLine = false
-            )
+                    },
+                    placeholder = "I am  a placeholder",
+                    keyboardType = KeyboardType.Text,
+                    singleLine = false
+                )
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
+                AppComponent.MediumSpacer()
 
-            PasswordInputFieldTwo(
-                textFieldValue = remember { mutableStateOf(TextFieldValue()) },
-                placeholder = "Password"
-            )
+                PasswordInputFieldTwo(
+                    textFieldValue = remember { mutableStateOf(TextFieldValue()) },
+                    placeholder = "Password"
+                )
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
+                AppComponent.MediumSpacer()
 
-            PasswordInputFieldTwo(
-                textFieldValue = remember { mutableStateOf(TextFieldValue("123456")) },
-                placeholder = "Password"
-            )
+                PasswordInputFieldTwo(
+                    textFieldValue = remember { mutableStateOf(TextFieldValue("123456")) },
+                    placeholder = "Password"
+                )
+            }
 
             // ----------------------------------------------------------------
 

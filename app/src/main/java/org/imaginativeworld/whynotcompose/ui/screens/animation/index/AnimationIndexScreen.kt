@@ -87,6 +87,8 @@ fun AnimationIndexSkeleton(
                 goBack = goBack
             )
 
+            Divider()
+
             LazyColumn(Modifier.fillMaxSize()) {
                 itemsIndexed(Animation.animationList) { index, item ->
 

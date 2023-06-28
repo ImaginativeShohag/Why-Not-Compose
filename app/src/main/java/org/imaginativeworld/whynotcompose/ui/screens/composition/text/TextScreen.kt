@@ -104,7 +104,6 @@ fun TextScreenSkeleton(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
         ) {
             AppComponent.Header(
                 "Text",
@@ -120,6 +119,7 @@ fun TextScreenSkeleton(
                 Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp)
+                    .verticalScroll(rememberScrollState())
             ) {
                 // ----------------------------------------------------------------
 
@@ -279,17 +279,17 @@ fun TextScreenSkeleton(
                             end = offset
                         )
                             .firstOrNull()?.let { annotation ->
-                                // If yes, we log its value
-                                context.toast("Clicked URL: " + annotation.item)
-                            }
+                            // If yes, we log its value
+                            context.toast("Clicked URL: " + annotation.item)
+                        }
                     }
                 )
+
+                // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
+
+                AppComponent.BigSpacer()
             }
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            AppComponent.BigSpacer()
         }
     }
 }

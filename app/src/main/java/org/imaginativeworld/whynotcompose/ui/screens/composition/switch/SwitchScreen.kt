@@ -86,7 +86,6 @@ fun SwitchScreenSkeleton(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
-                .padding(start = 16.dp, end = 16.dp)
         ) {
             AppComponent.Header(
                 "Switch",
@@ -98,48 +97,52 @@ fun SwitchScreenSkeleton(
 
             Divider()
 
-            AppComponent.SubHeader("Start Switch")
+            Column(Modifier.padding(start = 16.dp, end = 16.dp)) {
+                AppComponent.SubHeader("Start Switch")
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            val (state1, onStateChange1) = remember { mutableStateOf(true) }
-            val (state2, onStateChange2) = remember { mutableStateOf(false) }
+                val (state1, onStateChange1) = remember { mutableStateOf(true) }
+                val (state2, onStateChange2) = remember { mutableStateOf(false) }
 
-            GeneralStartSwitch(
-                text = "Do what you Love",
-                state = state1,
-                onStateChange = onStateChange1
-            )
+                GeneralStartSwitch(
+                    text = "Do what you Love",
+                    state = state1,
+                    onStateChange = onStateChange1
+                )
 
-            GeneralStartSwitch(
-                text = "Love what you Do",
-                state = state2,
-                onStateChange = onStateChange2
-            )
+                GeneralStartSwitch(
+                    text = "Love what you Do",
+                    state = state2,
+                    onStateChange = onStateChange2
+                )
+            }
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
 
             Divider()
 
-            AppComponent.SubHeader("End Switch")
+            Column(Modifier.padding(start = 16.dp, end = 16.dp)) {
+                AppComponent.SubHeader("End Switch")
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            val (state3, onStateChange3) = remember { mutableStateOf(false) }
-            val (state4, onStateChange4) = remember { mutableStateOf(true) }
+                val (state3, onStateChange3) = remember { mutableStateOf(false) }
+                val (state4, onStateChange4) = remember { mutableStateOf(true) }
 
-            GeneralEndSwitch(
-                text = "Do what you Love",
-                state = state3,
-                onStateChange = onStateChange3
-            )
+                GeneralEndSwitch(
+                    text = "Do what you Love",
+                    state = state3,
+                    onStateChange = onStateChange3
+                )
 
-            GeneralEndSwitch(
-                text = "Love what you Do",
-                state = state4,
-                onStateChange = onStateChange4
-            )
+                GeneralEndSwitch(
+                    text = "Love what you Do",
+                    state = state4,
+                    onStateChange = onStateChange4
+                )
+            }
 
             // ----------------------------------------------------------------
 

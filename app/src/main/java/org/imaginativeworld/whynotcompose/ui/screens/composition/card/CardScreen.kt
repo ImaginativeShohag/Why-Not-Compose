@@ -94,7 +94,6 @@ fun CardScreenSkeleton(
                 .padding(innerPadding)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(start = 16.dp, end = 16.dp)
         ) {
             AppComponent.Header(
                 "Card",
@@ -106,55 +105,57 @@ fun CardScreenSkeleton(
 
             Divider()
 
-            AppComponent.SubHeader("Simple Card")
+            Column(Modifier.padding(start = 16.dp, end = 16.dp)) {
+                AppComponent.SubHeader("Simple Card")
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            Card(
-                Modifier
-                    .fillMaxWidth()
-            ) {
-                Text(
-                    modifier = Modifier
-                        .padding(16.dp, 8.dp),
-                    text = "Smile! :)\n" +
-                        "It's Sunnah."
-                )
-            }
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            var count by remember { mutableIntStateOf(0) }
-
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                onClick = { count++ }
-            ) {
-                Column(
+                Card(
                     Modifier
                         .fillMaxWidth()
-                        .padding(16.dp, 8.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "You Clicked This Card",
-                        textAlign = TextAlign.Center
-                    )
-                    Text(
-                        text = "$count time${if (count > 1) "s" else ""}",
-                        textAlign = TextAlign.Center,
-                        fontSize = 24.sp
+                        modifier = Modifier
+                            .padding(16.dp, 8.dp),
+                        text = "Smile! :)\n" +
+                                "It's Sunnah."
                     )
                 }
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                var count by remember { mutableIntStateOf(0) }
+
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    onClick = { count++ }
+                ) {
+                    Column(
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp, 8.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = "You Clicked This Card",
+                            textAlign = TextAlign.Center
+                        )
+                        Text(
+                            text = "$count time${if (count > 1) "s" else ""}",
+                            textAlign = TextAlign.Center,
+                            fontSize = 24.sp
+                        )
+                    }
+                }
+
+                // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
+
+                AppComponent.BigSpacer()
             }
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            AppComponent.BigSpacer()
         }
     }
 }

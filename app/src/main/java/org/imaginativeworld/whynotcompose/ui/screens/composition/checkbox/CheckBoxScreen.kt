@@ -87,7 +87,6 @@ fun CheckBoxScreenSkeleton(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
-                .padding(start = 16.dp, end = 16.dp)
         ) {
             AppComponent.Header(
                 "Check Box",
@@ -99,38 +98,42 @@ fun CheckBoxScreenSkeleton(
 
             Divider()
 
-            AppComponent.SubHeader("Simple Check Box")
+            Column(Modifier.padding(start = 16.dp, end = 16.dp)) {
+                AppComponent.SubHeader("Simple Check Box")
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            val (state1, onStateChange1) = remember { mutableStateOf(false) }
-            val (state2, onStateChange2) = remember { mutableStateOf(true) }
+                val (state1, onStateChange1) = remember { mutableStateOf(false) }
+                val (state2, onStateChange2) = remember { mutableStateOf(true) }
 
-            GeneralCheckBox(
-                text = "Do what you Love",
-                state = state1,
-                onStateChange = onStateChange1
-            )
-            GeneralCheckBox(
-                text = "Love what you Do",
-                state = state2,
-                onStateChange = onStateChange2
-            )
+                GeneralCheckBox(
+                    text = "Do what you Love",
+                    state = state1,
+                    onStateChange = onStateChange1
+                )
+                GeneralCheckBox(
+                    text = "Love what you Do",
+                    state = state2,
+                    onStateChange = onStateChange2
+                )
+            }
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
 
             Divider()
 
-            AppComponent.SubHeader("Tri-State Check Box")
+            Column(Modifier.padding(start = 16.dp, end = 16.dp)) {
+                AppComponent.SubHeader("Tri-State Check Box")
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            TriStateCheckboxSample()
+                TriStateCheckboxSample()
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.BigSpacer()
+                AppComponent.BigSpacer()
+            }
         }
     }
 }

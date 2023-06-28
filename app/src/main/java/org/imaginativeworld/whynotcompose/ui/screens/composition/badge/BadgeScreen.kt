@@ -102,7 +102,6 @@ fun BadgeScreenSkeleton(
                 .padding(innerPadding)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(start = 16.dp, end = 16.dp)
         ) {
             AppComponent.Header(
                 "Badge",

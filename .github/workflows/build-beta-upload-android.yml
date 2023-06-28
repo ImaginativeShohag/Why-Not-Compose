@@ -1,10 +1,10 @@
-name: Android Build & Deploy
+name: Android Build & Deploy (Beta)
 
 on:
   pull_request:
     types:
       - closed
-    branches: [ "main" ]
+    branches: [ "dev" ]
 
 jobs:
   deploy:

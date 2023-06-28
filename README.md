@@ -20,6 +20,12 @@ Feel free to request features or suggestions for improvements.
 - Everywhere dark mode support
 - A lot of Ready to use compositions
 - Gradle Kotlin DSL
+- CI/CD
+  - ktlint
+  - CodeQL
+  - Publish to Google Play
+- Material 3 examples
+- Animated Splash Screen (Introduced in Android 12)
 
 [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" style="width:256px">](https://play.google.com/store/apps/details?id=org.imaginativeworld.whynotcompose)
 
@@ -71,11 +77,6 @@ Feel free to request features or suggestions for improvements.
 - [x] Add compose BOM: https://developer.android.com/jetpack/androidx/releases/compose
 - [x] Refactor to Gradle Plugins
 - [x] Add notification permission
-- [x] Animated Splash Screen (Introduced in Android 12)
-- Add GitHub actions
-  - [x] ktlint
-  - [x] CodeQL
-  - [ ] Publish to Google Play
 - Migrate to Material 3
   - [x] CMS
   - [ ] Full app

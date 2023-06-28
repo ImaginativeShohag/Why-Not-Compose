@@ -1,0 +1,53 @@
+name: Android Build & Deploy
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up ruby env
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.2
+          bundler-cache: true
+
+      - name: Run tests
+        run: bundle exec fastlane android test
+
+      - name: Decode Service Account Key JSON File
+        uses: timheuer/base64-to-file@v1
+        id: service_account_json_file
+        with:
+          fileName: "serviceAccount.json"
+          encodedString: ${{ secrets.PLAY_STORE_CREDENTIALS }}
+
+      - name: Decode Keystore File
+        uses: timheuer/base64-to-file@v1
+        id: android_keystore
+        with:
+          fileName: "android_keystore.keystore"
+          encodedString: ${{ secrets.KEYSTORE }}
+
+      - name: Build & deploy Android release
+        run: bundle exec fastlane android beta
+        env:
+          ANDROID_KEYSTORE_FILE: ${{ steps.android_keystore.outputs.filePath }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS}}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          GOOGLE_PLAY_SERVICE_ACCOUNT_KEY: ${{ steps.service_account_json_file.outputs.filePath }}
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: assets
+          path: |
+            ${{ github.workspace }}/app/build/outputs/bundle/release

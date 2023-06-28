@@ -39,8 +39,8 @@ jobs:
           do_not_skip: '["workflow_dispatch", "schedule"]'
 
   analyze:
-    needs: pre_job
-    if: needs.pre_job.outputs.should_skip != 'true'
+    needs: duplicate_job_check
+    if: needs.duplicate_job_check.outputs.should_skip != 'true'
     name: Analyze
     runs-on: ubuntu-latest
     permissions:

@@ -19,6 +19,13 @@ jobs:
           ruby-version: 3.2.2
           bundler-cache: true
 
+      # Set up your GitHub Actions workflow with a specific version of Java
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
       - name: Run tests
         run: bundle exec fastlane android test
 

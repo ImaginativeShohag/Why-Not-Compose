@@ -18,7 +18,8 @@ jobs:
 
       - name: Initialize local properties
         env:
-          API_KEY: ${{ secrets.MAPS_API_KEY }}
+          MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
+          CMS_API_KEY: ${{ secrets.CMS_API_KEY }}
         run: echo MAPS_API_KEY="$MAPS_API_KEY" >> ./local.properties ; echo CMS_API_KEY="$CMS_API_KEY" >> ./local.properties
 
       # Set up your GitHub Actions workflow with a specific version of Java

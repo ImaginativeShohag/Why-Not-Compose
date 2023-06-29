@@ -18,8 +18,8 @@ android {
         applicationId = "org.imaginativeworld.whynotcompose"
         minSdk = BuildConfigConst.minSdk
         targetSdk = BuildConfigConst.targetSdk
-        versionCode = 3
-        versionName = "5.0.0.230628" // Major.Minor.Patch.YYMMDD
+        versionCode = (findProperty("android.injected.version.code") as? String)?.toIntOrNull() ?: 1
+        versionName = "5.0.0.${getCurrentDateAsYYMMDD()}" // Major.Minor.Patch.YYMMDD
         vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

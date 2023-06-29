@@ -1,4 +1,6 @@
 import java.io.File
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 /**
  * Get local properties.
@@ -16,4 +18,9 @@ fun getLocalProperty(key: String, file: String = "local.properties"): String {
     }
 
     return properties.getProperty(key)
+}
+
+fun getCurrentDateAsYYMMDD(): String {
+    val formatter = DateTimeFormatter.ofPattern("yyMMdd")
+    return LocalDateTime.now().format(formatter)
 }

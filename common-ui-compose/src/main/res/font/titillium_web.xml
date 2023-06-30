@@ -23,7 +23,8 @@
   ~ imaginativeshohag@gmail.com
   ~
   ~ Source: https://github.com/ImaginativeShohag/Why-Not-Compose
-  -->
+-->
+
 <font-family xmlns:app="http://schemas.android.com/apk/res-auto">
     <font
         app:font="@font/titillium_web_regular"

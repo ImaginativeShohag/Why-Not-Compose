@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Md. Mahmudul Hasan Shohag
+ * Copyright $YEAR Md. Mahmudul Hasan Shohag
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,13 +24,3 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-plugins {
-    `kotlin-dsl`
-}
-
-repositories {
-    google()
-    mavenCentral()
-    gradlePluginPortal()
-    maven(url = "https://jitpack.io")
-}

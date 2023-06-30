@@ -75,6 +75,7 @@ dependencies {
     // Integration with observables
     implementation(Libs.AndroidX.Compose.runtime)
     implementation(Libs.AndroidX.Compose.runtimeLivedata)
+    implementation(Libs.AndroidX.Compose.runtimeTracing)
     // Compose Navigation Component
     implementation(Libs.AndroidX.Navigation.compose)
     // Constraint Layout
@@ -91,7 +92,6 @@ dependencies {
     // Accompanist
     implementation(Libs.Accompanist.systemuicontroller)
     implementation(Libs.Accompanist.flowlayout)
-    implementation(Libs.Accompanist.pager)
     implementation(Libs.Accompanist.swipeRefresh)
     implementation(Libs.Accompanist.placeholder)
 

@@ -86,7 +86,6 @@ fun RadioButtonScreenSkeleton(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
-                .padding(start = 16.dp, end = 16.dp)
         ) {
             AppComponent.Header(
                 "Radio Button",
@@ -98,11 +97,16 @@ fun RadioButtonScreenSkeleton(
 
             Divider()
 
-            AppComponent.SubHeader("Simple Radio Button")
+            Column(
+                Modifier.padding(start = 16.dp, end = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AppComponent.SubHeader("Simple Radio Button")
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            RadioGroupSample()
+                RadioGroupSample()
+            }
 
             // ----------------------------------------------------------------
 

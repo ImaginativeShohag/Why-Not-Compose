@@ -45,6 +45,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -94,7 +95,6 @@ fun FloatingActionButtonScreenSkeleton(
                 .padding(innerPadding)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(start = 16.dp, end = 16.dp)
         ) {
             AppComponent.Header(
                 "FloatingActionButton",
@@ -108,41 +108,46 @@ fun FloatingActionButtonScreenSkeleton(
 
             // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
+            Column(
+                Modifier.padding(start = 16.dp, end = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AppComponent.MediumSpacer()
 
-            FloatingActionButton(onClick = { /*do something*/ }) {
-                Icon(Icons.Filled.Favorite, contentDescription = "Localized description")
+                FloatingActionButton(onClick = { /*do something*/ }) {
+                    Icon(Icons.Filled.Favorite, contentDescription = "Localized description")
+                }
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                ExtendedFloatingActionButton(
+                    text = { Text("EXTENDED") },
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                ExtendedFloatingActionButton(
+                    icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
+                    text = { Text("ADD TO BASKET") },
+                    onClick = { /*do something*/ }
+                )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                ExtendedFloatingActionButton(
+                    icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
+                    text = { Text("FLUID FAB") },
+                    onClick = { /*do something*/ },
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            ExtendedFloatingActionButton(
-                text = { Text("EXTENDED") },
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            ExtendedFloatingActionButton(
-                icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
-                text = { Text("ADD TO BASKET") },
-                onClick = { /*do something*/ }
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            ExtendedFloatingActionButton(
-                icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
-                text = { Text("FLUID FAB") },
-                onClick = { /*do something*/ },
-                modifier = Modifier.fillMaxWidth()
-            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

@@ -52,8 +52,8 @@ platform :android do
         properties: {
             "android.injected.signing.store.file" => ENV["ANDROID_KEYSTORE_FILE"],
             "android.injected.signing.store.password" => ENV["ANDROID_KEYSTORE_PASSWORD"],
-            "android.injected.signing.key.alias" => ENV["ANDROID_KEYSTORE_ALIAS"],
-            "android.injected.signing.key.password" => ENV["ANDROID_KEYSTORE_PASSWORD"],
+            "android.injected.signing.key.alias" => ENV["ANDROID_KEY_ALIAS"],
+            "android.injected.signing.key.password" => ENV["ANDROID_KEY_PASSWORD"],
             "android.injected.version.code" => current_build_number
         }
     )
@@ -98,8 +98,8 @@ platform :android do
         properties: {
             "android.injected.signing.store.file" => ENV["ANDROID_KEYSTORE_FILE"],
             "android.injected.signing.store.password" => ENV["ANDROID_KEYSTORE_PASSWORD"],
-            "android.injected.signing.key.alias" => ENV["ANDROID_KEYSTORE_ALIAS"],
-            "android.injected.signing.key.password" => ENV["ANDROID_KEYSTORE_PASSWORD"],
+            "android.injected.signing.key.alias" => ENV["ANDROID_KEY_ALIAS"],
+            "android.injected.signing.key.password" => ENV["ANDROID_KEY_PASSWORD"],
             "android.injected.version.code" => current_build_number
         }
     )

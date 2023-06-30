@@ -87,6 +87,8 @@ fun CompositionIndexSkeleton(
                 goBack = goBack
             )
 
+            Divider()
+
             LazyColumn(Modifier.fillMaxSize()) {
                 itemsIndexed(Composition.compositionList) { index, item ->
 

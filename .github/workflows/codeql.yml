@@ -16,12 +16,31 @@ on:
     branches: [ "main", dev ]
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ "main" ]
+    branches: [ "main", dev ]
   schedule:
     - cron: '15 22 * * 3'
 
 jobs:
+  duplicate_job_check:
+    name: Check for Duplicate Job
+    continue-on-error: true
+    runs-on: ubuntu-latest
+    # Map a step output to a job output
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@v5
+        with:
+          # All of these options are optional, so you can remove them if you are happy with the defaults
+          concurrent_skipping: 'same_content_newer'
+          skip_after_successful_duplicate: 'true'
+          paths_ignore: '["**/README.md", "**/docs/**"]'
+          do_not_skip: '["workflow_dispatch", "schedule"]'
+
   analyze:
+    needs: duplicate_job_check
+    if: needs.duplicate_job_check.outputs.should_skip != 'true'
     name: Analyze
     runs-on: ubuntu-latest
     permissions:
@@ -44,9 +63,9 @@ jobs:
 
       - name: Initialize local properties
         env:
-          API_KEY: ${{ secrets.MAPS_API_KEY }}
-        run: echo MAPS_API_KEY="$MAPS_API_KEY" > ./local.properties ; echo CMS_API_KEY="$CMS_API_KEY" > ./local.properties
-
+          MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
+          CMS_API_KEY: ${{ secrets.CMS_API_KEY }}
+        run: echo MAPS_API_KEY="$MAPS_API_KEY" >> ./local.properties ; echo CMS_API_KEY="$CMS_API_KEY" >> ./local.properties
 
       # Set up your GitHub Actions workflow with a specific version of Java
       - name: Setup Java JDK

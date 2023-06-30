@@ -109,7 +109,6 @@ fun DropDownMenuScreenSkeleton(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
-                .padding(start = 16.dp, end = 16.dp)
         ) {
             AppComponent.Header(
                 "DropDown Menu",
@@ -135,6 +134,7 @@ fun DropDownMenuScreenSkeleton(
                 IconButton(onClick = { expanded = true }) {
                     Icon(Icons.Default.MoreVert, contentDescription = "Localized description")
                 }
+
                 DropdownMenu(
                     expanded = expanded,
                     onDismissRequest = { expanded = false }
@@ -188,7 +188,7 @@ fun DropDownMenuScreenSkeleton(
             var selectedItem2 by remember { mutableStateOf("Bangladesh") }
 
             DropDownSpinner(
-                modifier = Modifier.padding(10.dp),
+                modifier = Modifier.padding(start = 16.dp, end = 16.dp),
                 defaultText = "Select Country...",
                 selectedItem = selectedItem1,
                 onItemSelected = { index, item ->
@@ -198,7 +198,7 @@ fun DropDownMenuScreenSkeleton(
             )
 
             DropDownSpinner(
-                modifier = Modifier.padding(10.dp),
+                modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
                 defaultText = "Select Country...",
                 selectedItem = selectedItem2,
                 onItemSelected = { index, item ->

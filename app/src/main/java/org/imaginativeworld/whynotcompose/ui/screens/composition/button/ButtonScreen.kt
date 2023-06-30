@@ -79,8 +79,6 @@ import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
-private val ELEMENT_HEIGHT = 48.dp
-
 @Composable
 fun defaultButtonBackgroundBrush(
     alpha: Float = 1f
@@ -120,8 +118,7 @@ fun ButtonScreenSkeleton(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(start = 32.dp, end = 32.dp),
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AppComponent.Header(
@@ -134,530 +131,580 @@ fun ButtonScreenSkeleton(
 
             Divider()
 
-            AppComponent.SubHeader("Official Examples")
+            Column(
+                Modifier.padding(start = 16.dp, end = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AppComponent.SubHeader("Official Examples")
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            Button(onClick = { /* Do something! */ }) {
-                Text(
-                    "Button"
-                )
+                Button(onClick = { /* Do something! */ }) {
+                    Text(
+                        "Button"
+                    )
+                }
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                OutlinedButton(onClick = { /* Do something! */ }) {
+                    Text(
+                        "Outlined Button"
+                    )
+                }
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                TextButton(onClick = { /* Do something! */ }) {
+                    Text(
+                        "Text Button"
+                    )
+                }
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                Button(onClick = { /* Do something! */ }) {
+                    Icon(
+                        Icons.Filled.Favorite,
+                        contentDescription = null,
+                        modifier = Modifier.size(ButtonDefaults.IconSize),
+                        tint = Color.White
+                    )
+                    Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+                    Text(
+                        "Like",
+                        color = Color.White
+                    )
+                }
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                IconButton(onClick = { /* doSomething() */ }) {
+                    Icon(Icons.Filled.Favorite, contentDescription = "Localized description")
+                }
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                var checked by remember { mutableStateOf(false) }
+
+                IconToggleButton(checked = checked, onCheckedChange = { checked = it }) {
+                    val tint by animateColorAsState(
+                        if (checked) Color(0xFFEC407A) else Color(0xFFB0BEC5)
+                    )
+                    Icon(
+                        Icons.Filled.Favorite,
+                        contentDescription = "Localized description",
+                        tint = tint
+                    )
+                }
+
+                // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
             }
 
-            // ----------------------------------------------------------------
+            Divider()
 
-            AppComponent.MediumSpacer()
+            Column(
+                Modifier.padding(start = 16.dp, end = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AppComponent.SubHeader("Solid Buttons")
 
-            OutlinedButton(onClick = { /* Do something! */ }) {
-                Text(
-                    "Outlined Button"
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                SolidButton(
+                    text = "Like",
+                    onClick = {}
                 )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                SolidButton(
+                    text = "Like",
+                    startIcon = R.drawable.ic_danger_circle,
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                SolidButton(
+                    text = "Like",
+                    endIcon = R.drawable.ic_danger_circle,
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                SolidButton(
+                    text = "Like",
+                    startIcon = R.drawable.ic_danger_circle,
+                    endIcon = R.drawable.ic_danger_circle,
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
             }
 
-            // ----------------------------------------------------------------
+            Divider()
 
-            AppComponent.MediumSpacer()
+            Column(
+                Modifier.padding(start = 16.dp, end = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AppComponent.SubHeader("Solid Wide Buttons")
 
-            TextButton(onClick = { /* Do something! */ }) {
-                Text(
-                    "Text Button"
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                SolidWideButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "Like",
+                    onClick = {}
                 )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                SolidWideButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "Like",
+                    startIcon = R.drawable.ic_danger_circle,
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                SolidWideButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "Like",
+                    endIcon = R.drawable.ic_danger_circle,
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                SolidWideButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "Like",
+                    startIcon = R.drawable.ic_danger_circle,
+                    endIcon = R.drawable.ic_danger_circle,
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
             }
 
-            // ----------------------------------------------------------------
+            Divider()
 
-            AppComponent.MediumSpacer()
+            Column(
+                Modifier.padding(start = 16.dp, end = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AppComponent.SubHeader("Gradient Buttons")
 
-            Button(onClick = { /* Do something! */ }) {
-                Icon(
-                    Icons.Filled.Favorite,
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                GradientButton(
+                    text = "Like",
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                GradientButton(
+                    text = "Like",
+                    startIcon = R.drawable.ic_danger_circle,
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                GradientButton(
+                    text = "Like",
+                    endIcon = R.drawable.ic_danger_circle,
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                GradientButton(
+                    text = "Like",
+                    startIcon = R.drawable.ic_danger_circle,
+                    endIcon = R.drawable.ic_danger_circle,
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+            }
+
+            Divider()
+
+            Column(
+                Modifier.padding(start = 16.dp, end = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AppComponent.SubHeader("Gradient Wide Buttons")
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                GradientWideButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "Like",
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                GradientWideButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "Like",
+                    startIcon = R.drawable.ic_danger_circle,
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                GradientWideButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "Like",
+                    endIcon = R.drawable.ic_danger_circle,
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                GradientWideButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "Like",
+                    startIcon = R.drawable.ic_danger_circle,
+                    endIcon = R.drawable.ic_danger_circle,
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+            }
+
+            Divider()
+
+            Column(
+                Modifier.padding(start = 16.dp, end = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AppComponent.SubHeader("Bordered Buttons")
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                BorderedButton(
+                    text = "Like",
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                BorderedButton(
+                    text = "Like",
+                    startIcon = R.drawable.ic_danger_circle,
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                BorderedButton(
+                    text = "Like",
+                    endIcon = R.drawable.ic_danger_circle,
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                BorderedButton(
+                    text = "Like",
+                    startIcon = R.drawable.ic_danger_circle,
+                    endIcon = R.drawable.ic_danger_circle,
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+            }
+
+            Divider()
+
+            Column(
+                Modifier.padding(start = 16.dp, end = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AppComponent.SubHeader("Bordered Wide Buttons")
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                BorderedWideButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "Like",
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                BorderedWideButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "Like",
+                    startIcon = R.drawable.ic_danger_circle,
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                BorderedWideButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "Like",
+                    endIcon = R.drawable.ic_danger_circle,
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                BorderedWideButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "Like",
+                    startIcon = R.drawable.ic_danger_circle,
+                    endIcon = R.drawable.ic_danger_circle,
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+            }
+
+            Divider()
+
+            Column(
+                Modifier.padding(start = 16.dp, end = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AppComponent.SubHeader("Borderless Buttons")
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                BorderlessButton(
+                    text = "Like",
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                BorderlessButton(
+                    text = "Like",
+                    startIcon = R.drawable.ic_danger_circle,
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                BorderlessButton(
+                    text = "Like",
+                    endIcon = R.drawable.ic_danger_circle,
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                BorderlessButton(
+                    text = "Like",
+                    startIcon = R.drawable.ic_danger_circle,
+                    endIcon = R.drawable.ic_danger_circle,
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+            }
+
+            Divider()
+
+            Column(
+                Modifier.padding(start = 16.dp, end = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AppComponent.SubHeader("Borderless Wide Buttons")
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                BorderlessWideButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "Like",
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                BorderlessWideButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "Like",
+                    startIcon = R.drawable.ic_danger_circle,
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                BorderlessWideButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "Like",
+                    endIcon = R.drawable.ic_danger_circle,
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                BorderlessWideButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "Like",
+                    startIcon = R.drawable.ic_danger_circle,
+                    endIcon = R.drawable.ic_danger_circle,
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+            }
+
+            Divider()
+
+            Column(
+                Modifier.padding(start = 16.dp, end = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AppComponent.SubHeader("Icon Buttons")
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                SolidIconButton(
+                    icon = R.drawable.ic_danger_circle,
                     contentDescription = null,
-                    modifier = Modifier.size(ButtonDefaults.IconSize),
-                    tint = Color.White
+                    onClick = {}
                 )
-                Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                Text(
-                    "Like",
-                    color = Color.White
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                GradientIconButton(
+                    icon = R.drawable.ic_danger_circle,
+                    contentDescription = null,
+                    onClick = {}
                 )
+
+                // ----------------------------------------------------------------
+
+                AppComponent.MediumSpacer()
+
+                BorderlessIconButton(
+                    icon = R.drawable.ic_danger_circle,
+                    contentDescription = null,
+                    onClick = {}
+                )
+
+                // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
+
+                AppComponent.BigSpacer()
             }
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            IconButton(onClick = { /* doSomething() */ }) {
-                Icon(Icons.Filled.Favorite, contentDescription = "Localized description")
-            }
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            var checked by remember { mutableStateOf(false) }
-
-            IconToggleButton(checked = checked, onCheckedChange = { checked = it }) {
-                val tint by animateColorAsState(
-                    if (checked) Color(0xFFEC407A) else Color(0xFFB0BEC5)
-                )
-                Icon(
-                    Icons.Filled.Favorite,
-                    contentDescription = "Localized description",
-                    tint = tint
-                )
-            }
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            Divider()
-
-            AppComponent.SubHeader("Solid Buttons")
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            SolidButton(
-                text = "Like",
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            SolidButton(
-                text = "Like",
-                startIcon = R.drawable.ic_danger_circle,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            SolidButton(
-                text = "Like",
-                endIcon = R.drawable.ic_danger_circle,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            SolidButton(
-                text = "Like",
-                startIcon = R.drawable.ic_danger_circle,
-                endIcon = R.drawable.ic_danger_circle,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            Divider()
-
-            AppComponent.SubHeader("Solid Wide Buttons")
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            SolidWideButton(
-                modifier = Modifier.fillMaxWidth(),
-                text = "Like",
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            SolidWideButton(
-                modifier = Modifier.fillMaxWidth(),
-                text = "Like",
-                startIcon = R.drawable.ic_danger_circle,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            SolidWideButton(
-                modifier = Modifier.fillMaxWidth(),
-                text = "Like",
-                endIcon = R.drawable.ic_danger_circle,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            SolidWideButton(
-                modifier = Modifier.fillMaxWidth(),
-                text = "Like",
-                startIcon = R.drawable.ic_danger_circle,
-                endIcon = R.drawable.ic_danger_circle,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            Divider()
-
-            AppComponent.SubHeader("Gradient Buttons")
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            GradientButton(
-                text = "Like",
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            GradientButton(
-                text = "Like",
-                startIcon = R.drawable.ic_danger_circle,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            GradientButton(
-                text = "Like",
-                endIcon = R.drawable.ic_danger_circle,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            GradientButton(
-                text = "Like",
-                startIcon = R.drawable.ic_danger_circle,
-                endIcon = R.drawable.ic_danger_circle,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            Divider()
-
-            AppComponent.SubHeader("Gradient Wide Buttons")
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            GradientWideButton(
-                modifier = Modifier.fillMaxWidth(),
-                text = "Like",
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            GradientWideButton(
-                modifier = Modifier.fillMaxWidth(),
-                text = "Like",
-                startIcon = R.drawable.ic_danger_circle,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            GradientWideButton(
-                modifier = Modifier.fillMaxWidth(),
-                text = "Like",
-                endIcon = R.drawable.ic_danger_circle,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            GradientWideButton(
-                modifier = Modifier.fillMaxWidth(),
-                text = "Like",
-                startIcon = R.drawable.ic_danger_circle,
-                endIcon = R.drawable.ic_danger_circle,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            Divider()
-
-            AppComponent.SubHeader("Bordered Buttons")
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            BorderedButton(
-                text = "Like",
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            BorderedButton(
-                text = "Like",
-                startIcon = R.drawable.ic_danger_circle,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            BorderedButton(
-                text = "Like",
-                endIcon = R.drawable.ic_danger_circle,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            BorderedButton(
-                text = "Like",
-                startIcon = R.drawable.ic_danger_circle,
-                endIcon = R.drawable.ic_danger_circle,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            Divider()
-
-            AppComponent.SubHeader("Bordered Wide Buttons")
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            BorderedWideButton(
-                modifier = Modifier.fillMaxWidth(),
-                text = "Like",
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            BorderedWideButton(
-                modifier = Modifier.fillMaxWidth(),
-                text = "Like",
-                startIcon = R.drawable.ic_danger_circle,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            BorderedWideButton(
-                modifier = Modifier.fillMaxWidth(),
-                text = "Like",
-                endIcon = R.drawable.ic_danger_circle,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            BorderedWideButton(
-                modifier = Modifier.fillMaxWidth(),
-                text = "Like",
-                startIcon = R.drawable.ic_danger_circle,
-                endIcon = R.drawable.ic_danger_circle,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            Divider()
-
-            AppComponent.SubHeader("Borderless Buttons")
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            BorderlessButton(
-                text = "Like",
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            BorderlessButton(
-                text = "Like",
-                startIcon = R.drawable.ic_danger_circle,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            BorderlessButton(
-                text = "Like",
-                endIcon = R.drawable.ic_danger_circle,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            BorderlessButton(
-                text = "Like",
-                startIcon = R.drawable.ic_danger_circle,
-                endIcon = R.drawable.ic_danger_circle,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            Divider()
-
-            AppComponent.SubHeader("Borderless Wide Buttons")
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            BorderlessWideButton(
-                modifier = Modifier.fillMaxWidth(),
-                text = "Like",
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            BorderlessWideButton(
-                modifier = Modifier.fillMaxWidth(),
-                text = "Like",
-                startIcon = R.drawable.ic_danger_circle,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            BorderlessWideButton(
-                modifier = Modifier.fillMaxWidth(),
-                text = "Like",
-                endIcon = R.drawable.ic_danger_circle,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            BorderlessWideButton(
-                modifier = Modifier.fillMaxWidth(),
-                text = "Like",
-                startIcon = R.drawable.ic_danger_circle,
-                endIcon = R.drawable.ic_danger_circle,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            Divider()
-
-            AppComponent.SubHeader("Icon Buttons")
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            SolidIconButton(
-                icon = R.drawable.ic_danger_circle,
-                contentDescription = null,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            GradientIconButton(
-                icon = R.drawable.ic_danger_circle,
-                contentDescription = null,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            BorderlessIconButton(
-                icon = R.drawable.ic_danger_circle,
-                contentDescription = null,
-                onClick = {}
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            AppComponent.BigSpacer()
         }
     }
 }

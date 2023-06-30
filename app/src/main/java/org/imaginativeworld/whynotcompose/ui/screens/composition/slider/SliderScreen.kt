@@ -92,7 +92,6 @@ fun SliderScreenSkeleton(
                 .padding(innerPadding)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(start = 16.dp, end = 16.dp)
         ) {
             AppComponent.Header(
                 "Slider",
@@ -104,34 +103,36 @@ fun SliderScreenSkeleton(
 
             Divider()
 
-            AppComponent.MediumSpacer()
+            Column(Modifier.padding(start = 16.dp, end = 16.dp)) {
+                AppComponent.MediumSpacer()
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            var sliderPosition by remember { mutableFloatStateOf(0f) }
-            Text(text = sliderPosition.toString())
-            Slider(value = sliderPosition, onValueChange = { sliderPosition = it })
+                var sliderPosition by remember { mutableFloatStateOf(0f) }
+                Text(text = String.format("%.2f", sliderPosition))
+                Slider(value = sliderPosition, onValueChange = { sliderPosition = it })
 
-            // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
 
-            AppComponent.MediumSpacer()
+                AppComponent.MediumSpacer()
 
-            var stepSliderPosition by remember { mutableFloatStateOf(0f) }
-            Text(text = stepSliderPosition.toString())
-            Slider(
-                value = stepSliderPosition,
-                onValueChange = { stepSliderPosition = it },
-                valueRange = 0f..100f,
-                onValueChangeFinished = {
-                    // launch some business logic update with the state you hold
-                    // viewModel.updateSelectedSliderValue(sliderPosition)
-                },
-                steps = 5,
-                colors = SliderDefaults.colors(
-                    thumbColor = MaterialTheme.colors.secondary,
-                    activeTrackColor = MaterialTheme.colors.secondary
+                var stepSliderPosition by remember { mutableFloatStateOf(0f) }
+                Text(text = String.format("%.2f", stepSliderPosition))
+                Slider(
+                    value = stepSliderPosition,
+                    onValueChange = { stepSliderPosition = it },
+                    valueRange = 0f..100f,
+                    onValueChangeFinished = {
+                        // launch some business logic update with the state you hold
+                        // viewModel.updateSelectedSliderValue(sliderPosition)
+                    },
+                    steps = 5,
+                    colors = SliderDefaults.colors(
+                        thumbColor = MaterialTheme.colors.secondary,
+                        activeTrackColor = MaterialTheme.colors.secondary
+                    )
                 )
-            )
+            }
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

@@ -83,6 +83,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -229,9 +230,10 @@ fun HomeIndexScreen(
                                         end = 16.dp,
                                         bottom = 16.dp
                                     ),
-                                text = "Version ${BuildConfig.VERSION_NAME}",
+                                text = "Version ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
                                 textAlign = TextAlign.Center,
-                                fontSize = 12.sp
+                                fontSize = 12.sp,
+                                fontFamily = FontFamily.Monospace
                             )
 
                             if (showNotificationPermissionRationale) {

@@ -86,7 +86,7 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
 
 @Composable
 fun ExoPlayerScreen(
-    goBack: () -> Unit = {}
+    goBack: () -> Unit
 ) {
     ExoPlayerScreenSkeleton(
         goBack = goBack

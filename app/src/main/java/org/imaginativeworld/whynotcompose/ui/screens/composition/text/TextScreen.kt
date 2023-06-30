@@ -104,7 +104,6 @@ fun TextScreenSkeleton(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
         ) {
             AppComponent.Header(
                 "Text",
@@ -120,6 +119,7 @@ fun TextScreenSkeleton(
                 Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp)
+                    .verticalScroll(rememberScrollState())
             ) {
                 // ----------------------------------------------------------------
 
@@ -284,12 +284,12 @@ fun TextScreenSkeleton(
                             }
                     }
                 )
+
+                // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
+
+                AppComponent.BigSpacer()
             }
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            AppComponent.BigSpacer()
         }
     }
 }

@@ -87,6 +87,8 @@ fun UiIndexSkeleton(
                 goBack = goBack
             )
 
+            Divider()
+
             LazyColumn(Modifier.fillMaxSize()) {
                 itemsIndexed(Ui.uiList) { index, item ->
 

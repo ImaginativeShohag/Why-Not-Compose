@@ -96,6 +96,8 @@ fun TutorialIndexSkeleton(
                 goBack = goBack
             )
 
+            Divider()
+
             LazyColumn(
                 Modifier
                     .weight(1f)

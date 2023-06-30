@@ -89,7 +89,7 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 @Composable
 fun TicTacToeScreen(
     viewModel: TicTacToeViewModel,
-    goBack: () -> Unit = {}
+    goBack: () -> Unit
 ) {
     val context = LocalContext.current
 

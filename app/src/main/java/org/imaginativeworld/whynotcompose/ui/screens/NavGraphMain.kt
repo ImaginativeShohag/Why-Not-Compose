@@ -836,7 +836,10 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
         val viewModel: TicTacToeViewModel = hiltViewModel()
 
         TicTacToeScreen(
-            viewModel = viewModel
+            viewModel = viewModel,
+            goBack = {
+                navController.popBackStack()
+            }
         )
     }
 
@@ -849,7 +852,11 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
     }
 
     composable(TutorialsScreen.TutorialExoPlayer.route) {
-        ExoPlayerScreen()
+        ExoPlayerScreen(
+            goBack = {
+                navController.popBackStack()
+            }
+        )
     }
 
     composable(TutorialsScreen.TutorialCMS.route) {

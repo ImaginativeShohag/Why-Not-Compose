@@ -17,8 +17,8 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Why Not Compose!"
 include(":app")
-include(":tictactoe")
-include(":common-ui-compose")
 include(":base")
+include(":common-ui-compose")
+include(":tictactoe")
 include(":exoplayer")
 include(":cms")

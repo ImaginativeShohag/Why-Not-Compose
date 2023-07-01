@@ -58,7 +58,7 @@ class AppModule {
     fun provideGithubApiInterface(moshi: Moshi): GithubApiInterface {
         return ApiClient.getRetrofit(
             moshi,
-            Constants.CMS_SERVER_ENDPOINT + "/"
+            Constants.SERVER_ENDPOINT + "/"
         ).create(GithubApiInterface::class.java)
     }
 }

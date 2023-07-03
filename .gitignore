@@ -1,11 +1,8 @@
-.idea
+.idea/*
 .gradle
 /local.properties
 .DS_Store
 /captures
-
-# IntelliJ project icon
-!.idea/icon.svg
 
 # Source: https://github.com/github/gitignore/blob/master/Android.gitignore
 
@@ -100,3 +97,6 @@ lint/tmp/
 
 # Android Profiling
 *.hprof
+
+# IntelliJ project icon
+!.idea/icon.svg

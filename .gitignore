@@ -4,6 +4,9 @@
 .DS_Store
 /captures
 
+# IntelliJ project icon
+!.idea/icon.svg
+
 # Source: https://github.com/github/gitignore/blob/master/Android.gitignore
 
 # Built application files

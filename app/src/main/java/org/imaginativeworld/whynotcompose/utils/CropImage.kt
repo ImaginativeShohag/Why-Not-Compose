@@ -55,10 +55,13 @@ import timber.log.Timber
  * ```
  */
 @Suppress("KotlinConstantConditions")
-class SquireCropImage : ActivityResultContract<Pair<Uri, Uri>, Uri?>() {
+class CropImage(
+    private val aspectRatioX: Float = 1f,
+    private val aspectRatioY: Float = 1f
+) : ActivityResultContract<Pair<Uri, Uri>, Uri?>() {
     override fun createIntent(context: Context, input: Pair<Uri, Uri>): Intent =
         UCrop.of(input.first, input.second)
-            .withAspectRatio(1f, 1f)
+            .withAspectRatio(aspectRatioX, aspectRatioY)
             .getIntent(context)
 
     override fun parseResult(resultCode: Int, intent: Intent?): Uri? {

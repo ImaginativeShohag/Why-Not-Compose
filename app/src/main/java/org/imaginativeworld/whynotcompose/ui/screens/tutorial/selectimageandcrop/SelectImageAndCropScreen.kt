@@ -65,7 +65,7 @@ import org.imaginativeworld.whynotcompose.common.compose.R as CommonR
 import org.imaginativeworld.whynotcompose.common.compose.composeutils.rememberImagePainter
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
-import org.imaginativeworld.whynotcompose.utils.SquireCropImage
+import org.imaginativeworld.whynotcompose.utils.CropImage
 
 @Composable
 fun SelectImageAndCropScreen(
@@ -78,7 +78,7 @@ fun SelectImageAndCropScreen(
 
     var imageUri by remember { mutableStateOf<Uri?>(null) }
 
-    val uCropLauncher = rememberLauncherForActivityResult(SquireCropImage()) { uri ->
+    val uCropLauncher = rememberLauncherForActivityResult(CropImage()) { uri ->
         imageUri = uri
 
         uri?.apply {

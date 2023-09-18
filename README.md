@@ -66,6 +66,7 @@ Feel free to request features or suggestions for improvements.
 - OneSignal and Broadcast (Intermediate)
 - ExoPlayer (Advanced)
 - CMS (Advanced)
+- Deep Link (Intermediate)
 
 |    ![Counter](images/counter.gif)    | ![Animated Visibility](images/animated-visibility.gif) | ![Lottie](images/lottie.gif) |
 |:------------------------------------:|:------------------------------------------------------:|:----------------------------:|
@@ -90,9 +91,10 @@ Feel free to request features or suggestions for improvements.
 - [ ] Update to new storage permission
 - CMS
   - [ ] Add screenshot for CMS module
-  - [ ] CMS module: UI Testing
+  - [x] CMS module: UI Testing
 - [ ] Auto Theme mode from system
 - [ ] Create color ready for dark and light mode
+- [ ] AlarmManager example
 
 # Note
 

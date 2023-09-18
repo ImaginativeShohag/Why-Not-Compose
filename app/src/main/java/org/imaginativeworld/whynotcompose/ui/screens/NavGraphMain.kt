@@ -94,6 +94,7 @@ import org.imaginativeworld.whynotcompose.ui.screens.tutorial.counterwithviewmod
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.counterwithviewmodel.CounterWithVMViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging.DataFetchAndPagingScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging.DataFetchAndPagingViewModel
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.deeplink.DeepLinkScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.index.TutorialIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.lottie.LottieScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.onesignalandbroadcast.OneSignalAndBroadcastScreen
@@ -205,6 +206,7 @@ sealed class TutorialsScreen(val route: String) {
     object TutorialOneSignalAndBroadcast : TutorialsScreen("tutorial/onesignal-and-broadcast")
     object TutorialExoPlayer : TutorialsScreen("tutorial/exoplayer")
     object TutorialCMS : TutorialsScreen("tutorial/cms")
+    object TutorialDeepLink : TutorialsScreen("tutorial/deep-link")
 }
 
 // ================================================================
@@ -862,6 +864,14 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
     composable(TutorialsScreen.TutorialCMS.route) {
         CMSMainScreen(
             turnOnDarkMode = turnOnDarkMode,
+            goBack = {
+                navController.popBackStack()
+            }
+        )
+    }
+
+    composable(TutorialsScreen.TutorialDeepLink.route) {
+        DeepLinkScreen(
             goBack = {
                 navController.popBackStack()
             }

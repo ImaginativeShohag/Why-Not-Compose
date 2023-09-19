@@ -21,9 +21,9 @@ Feel free to request features or suggestions for improvements.
 - A lot of Ready to use compositions
 - Gradle Kotlin DSL
 - CI/CD
-  - ktlint
-  - CodeQL
-  - Publish to Google Play
+    - ktlint
+    - CodeQL
+    - Publish to Google Play
 - Material 3 examples
 - Animated Splash Screen (Introduced in Android 12)
 
@@ -66,20 +66,18 @@ Feel free to request features or suggestions for improvements.
 - OneSignal and Broadcast (Intermediate)
 - ExoPlayer (Advanced)
 - CMS (Advanced)
+- [Deep Link](https://developer.android.com/training/app-links) (Intermediate)
 
 |    ![Counter](images/counter.gif)    | ![Animated Visibility](images/animated-visibility.gif) | ![Lottie](images/lottie.gif) |
 |:------------------------------------:|:------------------------------------------------------:|:----------------------------:|
 | ![Exo Player](images/exo-player.gif) |         ![Tic-Tac-Toe](images/tic-tac-toe.gif)         |    ![CMS](images/cms.gif)    |
+|  ![Preview](images/deep-links.gif)   |                                                        |                              |
 
 # TODO
 
-- [x] Add new Google Map Compose library
-- [x] Add compose BOM: https://developer.android.com/jetpack/androidx/releases/compose
-- [x] Refactor to Gradle Plugins
-- [x] Add notification permission
 - Migrate to Material 3
-  - [x] CMS
-  - [ ] Full app
+    - [x] CMS
+    - [ ] Full app
 - [ ] Add accompanist WebView
 - [ ] x, y, z translation simulation
 - [ ] Shadow manipulation with device gyroscope
@@ -88,11 +86,9 @@ Feel free to request features or suggestions for improvements.
 - [ ] List with `LazyGrid`
 - [ ] Paging with `LazyGrid`
 - [ ] Update to new storage permission
-- CMS
-  - [ ] Add screenshot for CMS module
-  - [ ] CMS module: UI Testing
 - [ ] Auto Theme mode from system
 - [ ] Create color ready for dark and light mode
+- [ ] AlarmManager example
 
 # Note
 
@@ -119,15 +115,16 @@ Open the `local.properties` in your project level directory, and then add the fo
 Replace `YOUR_API_KEY` with your API key.
 
 ```groovy
-MAPS_API_KEY=YOUR_API_KEY
+MAPS_API_KEY = YOUR_API_KEY
 ```
 
 ### Go REST API Key
 
-Open the `local.properties` in your project level directory, and then add the following code. Replace `YOUR_API_KEY` with your [Go REST](https://gorest.co.in) API key.
+Open the `local.properties` in your project level directory, and then add the following code.
+Replace `YOUR_API_KEY` with your [Go REST](https://gorest.co.in) API key.
 
 ```groovy
-CMS_API_KEY=YOUR_API_KEY
+CMS_API_KEY = YOUR_API_KEY
 ```
 
 ## Other Interesting Repos

@@ -71,7 +71,7 @@ Feel free to request features or suggestions for improvements.
 |    ![Counter](images/counter.gif)    | ![Animated Visibility](images/animated-visibility.gif) | ![Lottie](images/lottie.gif) |
 |:------------------------------------:|:------------------------------------------------------:|:----------------------------:|
 | ![Exo Player](images/exo-player.gif) |         ![Tic-Tac-Toe](images/tic-tac-toe.gif)         |    ![CMS](images/cms.gif)    |
-|  ![Preview](images/deep-links.gif)   |                                                        |                              |
+| ![Deep Links](images/deep-links.gif) |                                                        |                              |
 
 # TODO
 
@@ -115,7 +115,7 @@ Open the `local.properties` in your project level directory, and then add the fo
 Replace `YOUR_API_KEY` with your API key.
 
 ```groovy
-MAPS_API_KEY = YOUR_API_KEY
+MAPS_API_KEY=YOUR_API_KEY
 ```
 
 ### Go REST API Key
@@ -124,7 +124,7 @@ Open the `local.properties` in your project level directory, and then add the fo
 Replace `YOUR_API_KEY` with your [Go REST](https://gorest.co.in) API key.
 
 ```groovy
-CMS_API_KEY = YOUR_API_KEY
+CMS_API_KEY=YOUR_API_KEY
 ```
 
 ## Other Interesting Repos

@@ -66,7 +66,7 @@ Feel free to request features or suggestions for improvements.
 - OneSignal and Broadcast (Intermediate)
 - ExoPlayer (Advanced)
 - CMS (Advanced)
-- Deep Link (Intermediate)
+- [Deep Link](https://developer.android.com/training/app-links) (Intermediate)
 
 |    ![Counter](images/counter.gif)    | ![Animated Visibility](images/animated-visibility.gif) | ![Lottie](images/lottie.gif) |
 |:------------------------------------:|:------------------------------------------------------:|:----------------------------:|

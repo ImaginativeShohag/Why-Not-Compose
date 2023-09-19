@@ -1,4 +1,4 @@
-package org.imaginativeworld.whynotcompose.ui.screens.tutorial.deeplink
+package org.imaginativeworld.whynotcompose.ui.screens.tutorial.deeplinks
 
 import android.content.Intent
 import android.content.res.Configuration
@@ -34,7 +34,7 @@ import org.imaginativeworld.whynotcompose.common.compose.compositions.AppCompone
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 /***
- * Try Deep-Link (for Debug):
+ * Try Deep-Links:
  *
  * ```bash
  * adb shell am start -W -a android.intent.action.VIEW -d "app://why-not-compose" org.imaginativeworld.whynotcompose.debug
@@ -42,7 +42,7 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
  * adb shell am start -W -a android.intent.action.VIEW -d "https://imaginativeworld.org/why-not-compose" org.imaginativeworld.whynotcompose.debug
  * ```
  *
- * Test Deep-Link:
+ * Test Deep-Links:
  *
  * ```bash
  * adb shell am start -a android.intent.action.VIEW -c android.intent.category.BROWSABLE -d "http://imaginativeworld.org/why-not-compose"
@@ -72,7 +72,7 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
  * https://digitalassetlinks.googleapis.com/v1/statements:list?source.web.site=https://imaginativeworld.org&relation=delegate_permission/common.handle_all_urls
  */
 
-class DeepLinkActivity : ComponentActivity() {
+class DeepLinksActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -89,7 +89,7 @@ class DeepLinkActivity : ComponentActivity() {
             AppTheme(
                 darkTheme = isDarkMode
             ) {
-                DeepLinkReceiverScreen(
+                DeepLinksReceiverScreen(
                     goBack = {
                         finish()
                     },
@@ -103,9 +103,9 @@ class DeepLinkActivity : ComponentActivity() {
 
 @Preview
 @Composable
-fun DeepLinkReceiverScreenPreview() {
+fun DeepLinksReceiverScreenPreview() {
     AppTheme {
-        DeepLinkReceiverScreen(
+        DeepLinksReceiverScreen(
             action = "Lorem",
             data = "Ipsum"
         )
@@ -114,9 +114,9 @@ fun DeepLinkReceiverScreenPreview() {
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun DeepLinkReceiverScreenPreviewDark() {
+fun DeepLinksReceiverScreenPreviewDark() {
     AppTheme {
-        DeepLinkReceiverScreen(
+        DeepLinksReceiverScreen(
             action = "Lorem",
             data = "Ipsum"
         )
@@ -124,7 +124,7 @@ fun DeepLinkReceiverScreenPreviewDark() {
 }
 
 @Composable
-fun DeepLinkReceiverScreen(
+fun DeepLinksReceiverScreen(
     goBack: () -> Unit = {},
     action: String,
     data: String
@@ -136,14 +136,22 @@ fun DeepLinkReceiverScreen(
                 .navigationBarsPadding()
                 .imePadding()
                 .statusBarsPadding()
-                .fillMaxSize()
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AppComponent.Header(
-                "Deep Link Receiver",
+                "Deep Links Receiver",
                 goBack = goBack
             )
 
             Divider()
+
+            Text(
+                modifier = Modifier.padding(top = 16.dp),
+                text = "This activity will only open from the deep-links.",
+                fontSize = 16.sp,
+                textAlign = TextAlign.Center
+            )
 
             Column(
                 Modifier

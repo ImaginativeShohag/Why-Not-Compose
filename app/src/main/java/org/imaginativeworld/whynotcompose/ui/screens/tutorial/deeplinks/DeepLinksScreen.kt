@@ -1,4 +1,4 @@
-package org.imaginativeworld.whynotcompose.ui.screens.tutorial.deeplink
+package org.imaginativeworld.whynotcompose.ui.screens.tutorial.deeplinks
 
 import android.content.Intent
 import android.content.pm.verify.domain.DomainVerificationManager
@@ -46,7 +46,7 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
  */
 
 @Composable
-fun DeepLinkScreen(
+fun DeepLinksScreen(
     goBack: () -> Unit
 ) {
     val context = LocalContext.current
@@ -98,26 +98,28 @@ fun DeepLinkScreen(
         }
     }
 
-    DeepLinkScreenSkeleton(
+    DeepLinksScreenSkeleton(
         goBack = goBack,
         verifiedDomains = verifiedDomains,
         selectedDomains = selectedDomains,
         unapprovedDomains = unapprovedDomains,
         onUpdateOpenByDefaultClicked = {
-            val intent = Intent(
-                Settings.ACTION_APP_OPEN_BY_DEFAULT_SETTINGS,
-                Uri.parse("package:${context.packageName}")
-            )
-            context.startActivity(intent)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                val intent = Intent(
+                    Settings.ACTION_APP_OPEN_BY_DEFAULT_SETTINGS,
+                    Uri.parse("package:${context.packageName}")
+                )
+                context.startActivity(intent)
+            }
         }
     )
 }
 
 @Preview
 @Composable
-fun DeepLinkScreenSkeletonPreview() {
+fun DeepLinksScreenSkeletonPreview() {
     AppTheme {
-        DeepLinkScreenSkeleton(
+        DeepLinksScreenSkeleton(
             verifiedDomains = "Lorem",
             selectedDomains = "Ipsum",
             unapprovedDomains = "Dolor"
@@ -127,9 +129,9 @@ fun DeepLinkScreenSkeletonPreview() {
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun DeepLinkScreenSkeletonPreviewDark() {
+fun DeepLinksScreenSkeletonPreviewDark() {
     AppTheme {
-        DeepLinkScreenSkeleton(
+        DeepLinksScreenSkeleton(
             verifiedDomains = "Lorem",
             selectedDomains = "Ipsum",
             unapprovedDomains = "Dolor"
@@ -138,7 +140,7 @@ fun DeepLinkScreenSkeletonPreviewDark() {
 }
 
 @Composable
-fun DeepLinkScreenSkeleton(
+fun DeepLinksScreenSkeleton(
     goBack: () -> Unit = {},
     verifiedDomains: String,
     selectedDomains: String,
@@ -278,6 +280,7 @@ fun DeepLinkScreenSkeleton(
 
                     Button(
                         modifier = Modifier.padding(top = 16.dp),
+                        enabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,
                         onClick = {
                             onUpdateOpenByDefaultClicked()
                         }) {

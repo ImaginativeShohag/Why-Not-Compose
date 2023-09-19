@@ -42,7 +42,7 @@
         </activity>
 
         <activity
-            android:name=".ui.screens.tutorial.deeplink.DeepLinkActivity"
+            android:name=".ui.screens.tutorial.deeplinks.DeepLinksActivity"
             android:exported="true"
             android:theme="@style/Theme.WhyNotCompose">
             <intent-filter>

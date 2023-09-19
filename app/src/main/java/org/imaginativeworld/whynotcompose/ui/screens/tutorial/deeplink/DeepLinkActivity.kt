@@ -41,6 +41,35 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
  * adb shell am start -W -a android.intent.action.VIEW -d "http://imaginativeworld.org/why-not-compose" org.imaginativeworld.whynotcompose.debug
  * adb shell am start -W -a android.intent.action.VIEW -d "https://imaginativeworld.org/why-not-compose" org.imaginativeworld.whynotcompose.debug
  * ```
+ *
+ * Test Deep-Link:
+ *
+ * ```bash
+ * adb shell am start -a android.intent.action.VIEW -c android.intent.category.BROWSABLE -d "http://imaginativeworld.org/why-not-compose"
+ * adb shell am start -a android.intent.action.VIEW -c android.intent.category.BROWSABLE -d "https://imaginativeworld.org/why-not-compose"
+ * ```
+ *
+ * Check the verification status:
+ *
+ * ```bash
+ * adb shell pm get-app-links --user cur org.imaginativeworld.whynotcompose.debug
+ * ```
+ *
+ * Reset verification status:
+ *
+ * ```bash
+ * adb shell pm set-app-links --package org.imaginativeworld.whynotcompose.debug 0 all
+ * ```
+ *
+ * Invoke the domain verification process
+ *
+ * ```bash
+ * adb shell pm verify-app-links --re-verify org.imaginativeworld.whynotcompose.debug
+ * ```
+ *
+ * Confirm the Digital Asset Links files
+ *
+ * https://digitalassetlinks.googleapis.com/v1/statements:list?source.web.site=https://imaginativeworld.org&relation=delegate_permission/common.handle_all_urls
  */
 
 class DeepLinkActivity : ComponentActivity() {
@@ -100,15 +129,13 @@ fun DeepLinkReceiverScreen(
     action: String,
     data: String
 ) {
-    Scaffold(
-        Modifier
-            .navigationBarsPadding()
-            .imePadding()
-            .statusBarsPadding()
-    ) { innerPadding ->
+    Scaffold { innerPadding ->
         Column(
             Modifier
                 .padding(innerPadding)
+                .navigationBarsPadding()
+                .imePadding()
+                .statusBarsPadding()
                 .fillMaxSize()
         ) {
             AppComponent.Header(

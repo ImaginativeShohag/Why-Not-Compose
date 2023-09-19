@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.selectimageandcrop
 
-import android.Manifest
 import android.content.res.Configuration
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -65,7 +64,7 @@ import org.imaginativeworld.whynotcompose.common.compose.R as CommonR
 import org.imaginativeworld.whynotcompose.common.compose.composeutils.rememberImagePainter
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
-import org.imaginativeworld.whynotcompose.utils.SquireCropImage
+import org.imaginativeworld.whynotcompose.utils.CropImage
 
 @Composable
 fun SelectImageAndCropScreen(
@@ -78,7 +77,7 @@ fun SelectImageAndCropScreen(
 
     var imageUri by remember { mutableStateOf<Uri?>(null) }
 
-    val uCropLauncher = rememberLauncherForActivityResult(SquireCropImage()) { uri ->
+    val uCropLauncher = rememberLauncherForActivityResult(CropImage()) { uri ->
         imageUri = uri
 
         uri?.apply {
@@ -105,23 +104,13 @@ fun SelectImageAndCropScreen(
             }
         }
 
-    val requestStoragePermission =
-        rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { permissionGranted ->
-
-            if (permissionGranted) {
-                imageSelectorLauncher.launch("image/*")
-            } else {
-                context.toast("Please allow storage permission for select image.")
-            }
-        }
-
     // ----------------------------------------------------------------
 
     SelectImageAndCropScreenSkeleton(
         goBack = goBack,
         imagePath = imageUri,
         onChooseImageClicked = {
-            requestStoragePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            imageSelectorLauncher.launch("image/*")
         }
     )
 }

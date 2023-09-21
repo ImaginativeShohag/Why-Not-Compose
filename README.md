@@ -89,6 +89,7 @@ Feel free to request features or suggestions for improvements.
 - [ ] Auto Theme mode from system
 - [ ] Create color ready for dark and light mode
 - [ ] AlarmManager example
+- [ ] Update `CheckBox` code (see example from AOSP)
 
 # Note
 

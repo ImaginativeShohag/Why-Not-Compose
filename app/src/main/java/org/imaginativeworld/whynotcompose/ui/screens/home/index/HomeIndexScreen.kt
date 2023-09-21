@@ -35,6 +35,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -69,6 +70,7 @@ import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -296,6 +298,55 @@ fun HomeIndexScreen(
                             }
                         )
                     }
+
+                    item {
+                        Button(
+                            modifier = Modifier
+                                .padding(0.dp)
+                                .fillMaxWidth()
+                                .shadow(
+                                    spread = 8.dp,
+                                    alpha = .25f,
+                                    color = TailwindCSSColor.Pink500,
+                                    radius = 8.dp
+                                ),
+                            shape = MaterialTheme.shapes.medium,
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = MaterialTheme.colors.surface,
+                                contentColor = TailwindCSSColor.Pink500
+                            ),
+                            onClick = {
+                                context.openUrl("https://imaginativeshohag.github.io/")
+                            },
+                            contentPadding = PaddingValues(8.dp),
+                            elevation = null
+                        ) {
+                            Column(
+                                Modifier
+                                    .fillMaxWidth()
+                                    .aspectRatio(1f),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                Text(
+                                    text = "Developed By —",
+                                    fontSize = 12.sp,
+                                    color = MaterialTheme.colors.onBackground.copy(.75f)
+                                )
+
+                                Text(
+                                    modifier = Modifier
+                                        .padding(top = 4.dp),
+                                    text = "@ImaginativeShohag",
+                                    color = TailwindCSSColor.Pink500,
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    overflow = TextOverflow.Ellipsis,
+                                    maxLines = 1
+                                )
+                            }
+                        }
+                    }
                 }
 
                 Box(
@@ -323,23 +374,17 @@ fun HomeIndexScreen(
                         .weight(1f),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(
-                        text = "Developed By —",
-                        fontSize = 12.sp,
-                        color = MaterialTheme.colors.onBackground.copy(.75f)
-                    )
-
-                    Text(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(8.dp))
-                            .clickable {
-                                context.openUrl("https://imaginativeshohag.github.io/")
-                            }
-                            .padding(4.dp),
-                        text = "@ImaginativeShohag",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Bold
-                    )
+                    TextButton(
+                        modifier = Modifier.padding(horizontal = 8.dp),
+                        onClick = {
+                            context.openUrl("https://www.buymeacoffee.com/ImShohag")
+                        }
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.bmc_button),
+                            contentDescription = "Buy me a coffee"
+                        )
+                    }
                 }
 
                 Divider(

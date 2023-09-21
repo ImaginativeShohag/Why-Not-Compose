@@ -36,6 +36,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
@@ -209,6 +210,7 @@ fun GeneralTriStateCheckBox(
     }
 }
 
+// TODO: Add `Modifier` param.
 @Composable
 fun GeneralCheckBox(
     text: String,

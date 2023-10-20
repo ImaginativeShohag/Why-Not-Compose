@@ -90,6 +90,8 @@ Feel free to request features or suggestions for improvements.
 - [ ] Create color ready for dark and light mode
 - [ ] AlarmManager example
 - [ ] Update `CheckBox` code (see example from AOSP)
+- [ ] Month-Picker component
+- [ ] Upgrade OneSignal lib
 
 # Note
 

@@ -48,14 +48,14 @@ import org.imaginativeworld.whynotcompose.cms.repositories.UserRepository
 
 @HiltViewModel
 class UserListViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val repository: UserRepository
 ) : ViewModel() {
 
-    private val _eventShowLoading = MutableStateFlow(false)
+    private val eventShowLoading = MutableStateFlow(false)
 
-    private val _eventShowMessage = MutableStateFlow<Event<String>?>(null)
+    private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
 
-    private var _items = MutableStateFlow<Flow<PagingData<User>>>(emptyFlow())
+    private var items = MutableStateFlow<Flow<PagingData<User>>>(emptyFlow())
 
     // ----------------------------------------------------------------
 
@@ -68,9 +68,9 @@ class UserListViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             combine(
-                _eventShowLoading,
-                _eventShowMessage,
-                _items
+                eventShowLoading,
+                eventShowMessage,
+                items
             ) { showLoading, showMessage, items ->
 
                 UserListViewState(
@@ -90,8 +90,8 @@ class UserListViewModel @Inject constructor(
     // ----------------------------------------------------------------
 
     fun loadUsers() {
-        _items.value = Pager(PagingConfig(pageSize = 10)) {
-            UserPagingSource(userRepository)
+        items.value = Pager(PagingConfig(pageSize = 10)) {
+            UserPagingSource(repository)
         }
             .flow
             .cachedIn(viewModelScope)

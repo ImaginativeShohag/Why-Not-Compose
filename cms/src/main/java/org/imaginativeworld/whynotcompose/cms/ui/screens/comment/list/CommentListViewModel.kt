@@ -48,14 +48,14 @@ import org.imaginativeworld.whynotcompose.cms.repositories.CommentRepository
 
 @HiltViewModel
 class CommentListViewModel @Inject constructor(
-    private val CommentRepository: CommentRepository
+    private val repository: CommentRepository
 ) : ViewModel() {
 
-    private val _eventShowLoading = MutableStateFlow(false)
+    private val eventShowLoading = MutableStateFlow(false)
 
-    private val _eventShowMessage = MutableStateFlow<Event<String>?>(null)
+    private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
 
-    private var _items = MutableStateFlow<Flow<PagingData<Comment>>>(emptyFlow())
+    private var items = MutableStateFlow<Flow<PagingData<Comment>>>(emptyFlow())
 
     // ----------------------------------------------------------------
 
@@ -68,9 +68,9 @@ class CommentListViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             combine(
-                _eventShowLoading,
-                _eventShowMessage,
-                _items
+                eventShowLoading,
+                eventShowMessage,
+                items
             ) { showLoading, showMessage, items ->
 
                 CommentListViewState(
@@ -90,8 +90,8 @@ class CommentListViewModel @Inject constructor(
     // ----------------------------------------------------------------
 
     fun loadComments(postId: Int) {
-        _items.value = Pager(PagingConfig(pageSize = 20)) {
-            CommentPagingSource(postId, CommentRepository)
+        items.value = Pager(PagingConfig(pageSize = 20)) {
+            CommentPagingSource(postId, repository)
         }
             .flow
             .cachedIn(viewModelScope)

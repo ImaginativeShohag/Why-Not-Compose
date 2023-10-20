@@ -320,9 +320,10 @@ fun ListItemScreenSkeleton(
                 ListItem(
                     text = { Text("Switch ListItem") },
                     trailing = {
+                        // Note: `onCheckedChange = null` recommended for accessibility with screenreaders.
                         Switch(
                             checked = switched,
-                            onCheckedChange = null // null recommended for accessibility with screenreaders
+                            onCheckedChange = null
                         )
                     },
                     modifier = Modifier.toggleable(
@@ -336,9 +337,10 @@ fun ListItemScreenSkeleton(
                 ListItem(
                     text = { Text("Checkbox ListItem") },
                     trailing = {
+                        // Note: `onCheckedChange = null` recommended for accessibility with screenreaders.
                         Checkbox(
                             checked = checked,
-                            onCheckedChange = null // null recommended for accessibility with screenreaders
+                            onCheckedChange = null
                         )
                     },
                     modifier = Modifier.toggleable(

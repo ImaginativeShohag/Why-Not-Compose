@@ -58,13 +58,14 @@ subprojects {
             targetExclude("$buildDir/**/*.kt")
             targetExclude("bin/**/*.kt")
 
-            ktlint("0.49.1").editorConfigOverride(
-                mapOf(
-                    "ktlint_code_style" to "android",
-                    "max_line_length" to "off",
-                    "standard:comment-wrapping" to "off"
+            ktlint("1.0.1")
+                .editorConfigOverride(
+                    mapOf(
+                        "ktlint_code_style" to "android_studio",
+                        "max_line_length" to "off",
+                        "ktlint_function_naming_ignore_when_annotated_with" to "Composable"
+                    )
                 )
-            )
             licenseHeaderFile(rootProject.file("spotless/copyright.kt"))
         }
 

@@ -39,9 +39,9 @@ fun Context.createImageFile(): File {
     val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(Date())
     val storageDir = cacheDir
     return File.createTempFile(
-        "JPEG_${timeStamp}_", // prefix
-        ".jpg", // suffix
-        storageDir // directory
+        "JPEG_${timeStamp}_",
+        ".jpg",
+        storageDir
     ).apply {
         deleteOnExit()
     }

@@ -45,13 +45,13 @@ import org.imaginativeworld.whynotcompose.cms.repositories.CommentRepository
 class CommentEditViewModel @Inject constructor(
     private val repository: CommentRepository
 ) : ViewModel() {
-    private val _eventShowLoading = MutableStateFlow(false)
+    private val eventShowLoading = MutableStateFlow(false)
 
-    private val _eventShowMessage = MutableStateFlow<Event<String>?>(null)
+    private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
 
-    private val _eventUpdateCommentSuccess = MutableStateFlow<Event<Boolean>?>(null)
+    private val eventUpdateCommentSuccess = MutableStateFlow<Event<Boolean>?>(null)
 
-    private val _comment = MutableStateFlow<Comment?>(null)
+    private val comment = MutableStateFlow<Comment?>(null)
 
     // ----------------------------------------------------------------
 
@@ -64,10 +64,10 @@ class CommentEditViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             combine(
-                _eventShowLoading,
-                _eventShowMessage,
-                _eventUpdateCommentSuccess,
-                _comment
+                eventShowLoading,
+                eventShowMessage,
+                eventUpdateCommentSuccess,
+                comment
             ) { showLoading, showMessage, updateCommentSuccess, comment ->
 
                 CommentEditViewState(
@@ -88,17 +88,17 @@ class CommentEditViewModel @Inject constructor(
     // ----------------------------------------------------------------
 
     fun getDetails(commentId: Int) = viewModelScope.launch {
-        _eventShowLoading.value = true
+        eventShowLoading.value = true
 
         try {
             val comment = repository.getComment(commentId)
 
-            _comment.value = comment
+            this@CommentEditViewModel.comment.value = comment
         } catch (e: ApiException) {
-            _eventShowMessage.value = Event(e.message ?: "Unknown error!")
+            eventShowMessage.value = Event(e.message ?: "Unknown error!")
         }
 
-        _eventShowLoading.value = false
+        eventShowLoading.value = false
     }
 
     // ----------------------------------------------------------------
@@ -109,22 +109,22 @@ class CommentEditViewModel @Inject constructor(
         body: String
     ): Boolean {
         if (name.isBlank()) {
-            _eventShowMessage.value = Event("Please enter name!")
+            eventShowMessage.value = Event("Please enter name!")
             return false
         }
 
         if (email.isBlank()) {
-            _eventShowMessage.value = Event("Please enter email!")
+            eventShowMessage.value = Event("Please enter email!")
             return false
         }
 
         if (!email.isValidEmail()) {
-            _eventShowMessage.value = Event("Please enter a valid email!")
+            eventShowMessage.value = Event("Please enter a valid email!")
             return false
         }
 
         if (body.isBlank()) {
-            _eventShowMessage.value = Event("Please enter body!")
+            eventShowMessage.value = Event("Please enter body!")
             return false
         }
 
@@ -142,7 +142,7 @@ class CommentEditViewModel @Inject constructor(
             return@launch
         }
 
-        _eventShowLoading.value = true
+        eventShowLoading.value = true
 
         try {
             repository.updateComment(
@@ -156,12 +156,12 @@ class CommentEditViewModel @Inject constructor(
                 )
             )
 
-            _eventUpdateCommentSuccess.value = Event(true)
+            eventUpdateCommentSuccess.value = Event(true)
         } catch (e: ApiException) {
-            _eventShowMessage.value = Event(e.message ?: "Unknown error!")
+            eventShowMessage.value = Event(e.message ?: "Unknown error!")
         }
 
-        _eventShowLoading.value = false
+        eventShowLoading.value = false
     }
 }
 

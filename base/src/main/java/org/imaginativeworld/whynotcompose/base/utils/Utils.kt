@@ -101,7 +101,7 @@ object Utils {
         targetIntent?.also {
             val pendingIntent = PendingIntent.getActivity(
                 context,
-                0, // Request code
+                0,
                 targetIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT
             )

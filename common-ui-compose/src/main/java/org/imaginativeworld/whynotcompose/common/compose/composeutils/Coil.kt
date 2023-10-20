@@ -39,13 +39,14 @@ fun rememberImagePainter(
     crossFade: Boolean = true
 ) = rememberAsyncImagePainter(
     ImageRequest.Builder(LocalContext.current)
-        .data(data = data).apply(block = fun ImageRequest.Builder.() {
+        .data(data = data)
+        .apply {
             crossfade(crossFade)
             placeholder?.let {
                 placeholder(placeholder)
                 error(placeholder)
                 fallback(placeholder)
             }
-        })
+        }
         .build()
 )

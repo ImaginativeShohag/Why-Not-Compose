@@ -46,13 +46,13 @@ import org.imaginativeworld.whynotcompose.cms.repositories.TodoRepository
 class TodoDetailsViewModel @Inject constructor(
     private val repository: TodoRepository
 ) : ViewModel() {
-    private val _eventShowLoading = MutableStateFlow(false)
+    private val eventShowLoading = MutableStateFlow(false)
 
-    private val _eventShowMessage = MutableStateFlow<Event<ActionMessage>?>(null)
+    private val eventShowMessage = MutableStateFlow<Event<ActionMessage>?>(null)
 
-    private val _todo = MutableStateFlow<Todo?>(null)
+    private val todo = MutableStateFlow<Todo?>(null)
 
-    private val _eventDeleteSuccess = MutableStateFlow<Event<Boolean>?>(null)
+    private val eventDeleteSuccess = MutableStateFlow<Event<Boolean>?>(null)
 
     // ----------------------------------------------------------------
 
@@ -65,10 +65,10 @@ class TodoDetailsViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             combine(
-                _eventShowLoading,
-                _eventShowMessage,
-                _todo,
-                _eventDeleteSuccess
+                eventShowLoading,
+                eventShowMessage,
+                todo,
+                eventDeleteSuccess
             ) { showLoading, showMessage, todo, deleteSuccess ->
 
                 TodoDetailsViewState(
@@ -91,14 +91,14 @@ class TodoDetailsViewModel @Inject constructor(
     fun getDetails(
         todoId: Int
     ) = viewModelScope.launch {
-        _eventShowLoading.value = true
+        eventShowLoading.value = true
 
         try {
             val todo = repository.getTodo(todoId)
 
-            _todo.value = todo
+            this@TodoDetailsViewModel.todo.value = todo
         } catch (e: ApiException) {
-            _eventShowMessage.value = Event(
+            eventShowMessage.value = Event(
                 ActionMessage(
                     e.message ?: "Unknown error!",
                     action = TodoDetailsViewAction.TODO_LOAD_ERROR
@@ -106,25 +106,25 @@ class TodoDetailsViewModel @Inject constructor(
             )
         }
 
-        _eventShowLoading.value = false
+        eventShowLoading.value = false
     }
 
     fun deleteTodo(todoId: Int) = viewModelScope.launch {
-        _eventShowLoading.value = true
+        eventShowLoading.value = true
 
         try {
             repository.deleteTodo(todoId)
 
-            _eventDeleteSuccess.value = Event(true)
+            eventDeleteSuccess.value = Event(true)
         } catch (e: ApiException) {
-            _eventShowMessage.value = Event(
+            eventShowMessage.value = Event(
                 ActionMessage(
                     e.message ?: "Unknown error!"
                 )
             )
         }
 
-        _eventShowLoading.value = false
+        eventShowLoading.value = false
     }
 }
 

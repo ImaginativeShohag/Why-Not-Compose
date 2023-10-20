@@ -46,13 +46,13 @@ class TodoEditViewModel @Inject constructor(
     private val repository: TodoRepository
 ) : ViewModel() {
 
-    private val _eventShowLoading = MutableStateFlow(false)
+    private val eventShowLoading = MutableStateFlow(false)
 
-    private val _eventShowMessage = MutableStateFlow<Event<String>?>(null)
+    private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
 
-    private val _eventUpdateTodoSuccess = MutableStateFlow<Event<Boolean>?>(null)
+    private val eventUpdateTodoSuccess = MutableStateFlow<Event<Boolean>?>(null)
 
-    private val _todo = MutableStateFlow<Todo?>(null)
+    private val todo = MutableStateFlow<Todo?>(null)
 
     // ----------------------------------------------------------------
 
@@ -65,10 +65,10 @@ class TodoEditViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             combine(
-                _eventShowLoading,
-                _eventShowMessage,
-                _eventUpdateTodoSuccess,
-                _todo
+                eventShowLoading,
+                eventShowMessage,
+                eventUpdateTodoSuccess,
+                todo
             ) { showLoading, showMessage, updateTodoSuccess, todo ->
 
                 TodoEditViewState(
@@ -89,17 +89,17 @@ class TodoEditViewModel @Inject constructor(
     // ----------------------------------------------------------------
 
     fun getDetails(todoId: Int) = viewModelScope.launch {
-        _eventShowLoading.value = true
+        eventShowLoading.value = true
 
         try {
             val todo = repository.getTodo(todoId)
 
-            _todo.value = todo
+            this@TodoEditViewModel.todo.value = todo
         } catch (e: ApiException) {
-            _eventShowMessage.value = Event(e.message ?: "Unknown error!")
+            eventShowMessage.value = Event(e.message ?: "Unknown error!")
         }
 
-        _eventShowLoading.value = false
+        eventShowLoading.value = false
     }
 
     // ----------------------------------------------------------------
@@ -110,17 +110,17 @@ class TodoEditViewModel @Inject constructor(
         status: String
     ): Boolean {
         if (title.isBlank()) {
-            _eventShowMessage.value = Event("Please enter title!")
+            eventShowMessage.value = Event("Please enter title!")
             return false
         }
 
         if (status.isBlank()) {
-            _eventShowMessage.value = Event("Please select status!")
+            eventShowMessage.value = Event("Please select status!")
             return false
         }
 
         if (dueDate == null) {
-            _eventShowMessage.value = Event("Please select due date!")
+            eventShowMessage.value = Event("Please select due date!")
             return false
         }
 
@@ -138,7 +138,7 @@ class TodoEditViewModel @Inject constructor(
             return@launch
         }
 
-        _eventShowLoading.value = true
+        eventShowLoading.value = true
 
         try {
             repository.updateTodo(
@@ -151,12 +151,12 @@ class TodoEditViewModel @Inject constructor(
                 )
             )
 
-            _eventUpdateTodoSuccess.value = Event(true)
+            eventUpdateTodoSuccess.value = Event(true)
         } catch (e: ApiException) {
-            _eventShowMessage.value = Event(e.message ?: "Unknown error!")
+            eventShowMessage.value = Event(e.message ?: "Unknown error!")
         }
 
-        _eventShowLoading.value = false
+        eventShowLoading.value = false
     }
 }
 

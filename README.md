@@ -92,6 +92,8 @@ Feel free to request features or suggestions for improvements.
 - [ ] Update `CheckBox` code (see example from AOSP)
 - [ ] Month-Picker component
 - [ ] Upgrade OneSignal lib
+- [ ] ‼️ Check map example issue: on click freeze
+- [ ] New: File browser using MediaStore
 
 # Note
 

@@ -27,6 +27,7 @@
 package org.imaginativeworld.whynotcompose.base.extensions
 
 import com.squareup.moshi.Moshi
+import java.net.URLDecoder
 import java.net.URLEncoder
 import java.util.Date
 import org.imaginativeworld.whynotcompose.base.network.jsonadapter.DateJsonAdapter
@@ -40,16 +41,40 @@ object MoshiUtil {
     }
 }
 
-inline fun <reified T> String?.getObjFromJson(): T? {
+/**
+ * Note for Navigation Component for Compose:
+ * If the data has special character (eg., + etc.), the url encode-decode will not work properly.
+ * For example, the "+" will be replaced with a space on decode.
+ * Because Navigation Component auto convert "%2B" with "+",
+ * so on decode it replace "+" by space.
+ */
+inline fun <reified T> String?.getObjFromJson(urlDecode: Boolean = true): T? {
     if (this == null) return null
 
     Timber.e("getObjFromJson: $this")
 
     val jsonAdapter = MoshiUtil.getMoshi().adapter(T::class.java).lenient()
 
-    return jsonAdapter.fromJson(this)
+    val result = jsonAdapter.fromJson(
+        if (urlDecode) {
+            this.urlDecode()
+        } else {
+            this
+        }
+    )
+
+    Timber.e("getObjFromJson (after processing): $result")
+
+    return result
 }
 
+/**
+ * Note for Navigation Component for Compose:
+ * If the data has special character (eg., + etc.), the url encode-decode will not work properly.
+ * For example, the "+" will be replaced with a space on decode.
+ * Because Navigation Component auto convert "%2B" with "+",
+ * so on decode it replace "+" by space.
+ */
 inline fun <reified T> T?.getJsonFromObj(urlEncode: Boolean = true): String? {
     if (this == null) return null
 
@@ -58,10 +83,22 @@ inline fun <reified T> T?.getJsonFromObj(urlEncode: Boolean = true): String? {
     val jsonAdapter = MoshiUtil.getMoshi().adapter(T::class.java).lenient()
 
     return jsonAdapter.toJson(this).let { json ->
-        if (urlEncode) json.urlEncode() else json
+        val result = if (urlEncode) {
+            json.urlEncode()
+        } else {
+            json
+        }
+
+        Timber.e("getJsonFromObj (after processing): $result")
+
+        result
     }
 }
 
 fun String.urlEncode(): String {
     return URLEncoder.encode(this, "utf-8")
+}
+
+fun String.urlDecode(): String {
+    return URLDecoder.decode(this, "utf-8")
 }

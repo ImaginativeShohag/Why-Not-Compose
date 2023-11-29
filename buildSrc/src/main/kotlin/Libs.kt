@@ -56,7 +56,7 @@ object Libs {
     }
 
     object Gradle {
-        const val version = "8.1.2"
+        const val version = "8.1.4"
     }
 
     object Yalantis {
@@ -65,7 +65,7 @@ object Libs {
 
     object Airbnb {
         object Lottie {
-            const val compose = "com.airbnb.android:lottie-compose:6.1.0"
+            const val compose = "com.airbnb.android:lottie-compose:6.2.0"
         }
     }
 
@@ -83,7 +83,7 @@ object Libs {
         object Firebase {
             const val crashlyticsGradlePluginVersion = "2.9.9"
 
-            const val bom = "com.google.firebase:firebase-bom:32.5.0"
+            const val bom = "com.google.firebase:firebase-bom:32.6.0"
             const val analytics = "com.google.firebase:firebase-analytics-ktx"
 
             const val crashlyticsGradlePlugin = "com.google.firebase.crashlytics"
@@ -108,7 +108,7 @@ object Libs {
 
             const val core = "com.google.maps.android:maps-ktx:$version"
             const val utils = "com.google.maps.android:maps-utils-ktx:$version"
-            const val compose = "com.google.maps.android:maps-compose:4.1.1"
+            const val compose = "com.google.maps.android:maps-compose:4.3.0"
             const val secretsGradlePlugin =
                 "com.google.android.libraries.mapsplatform.secrets-gradle-plugin"
         }
@@ -148,11 +148,11 @@ object Libs {
 
     object AndroidX {
         const val appcompat = "androidx.appcompat:appcompat:1.6.1"
-        const val coreKtx = "androidx.core:core-ktx:1.10.0"
+        const val coreKtx = "androidx.core:core-ktx:1.12.0"
         const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
         object Activity {
-            const val activityCompose = "androidx.activity:activity-compose:1.8.0"
+            const val activityCompose = "androidx.activity:activity-compose:1.8.1"
         }
 
         object Compose {
@@ -161,7 +161,7 @@ object Libs {
             private const val runtimeTracingVersion = "1.0.0-alpha04"
 
             // TODO: Remove when library gets stable.
-            private const val material3Version = "1.2.0-alpha10"
+            private const val material3Version = "1.2.0-alpha11"
 
             const val bom = "androidx.compose:compose-bom:$bomVersion"
 
@@ -209,7 +209,7 @@ object Libs {
         }
 
         object Hilt {
-            const val navigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0"
+            const val navigationCompose = "androidx.hilt:hilt-navigation-compose:1.1.0"
         }
 
         object Lifecycle {
@@ -224,7 +224,7 @@ object Libs {
         }
 
         object Navigation {
-            private const val version = "2.7.4"
+            private const val version = "2.7.5"
 
             const val fragment = "androidx.navigation:navigation-fragment-ktx:$version"
             const val uiKtx = "androidx.navigation:navigation-ui-ktx:$version"

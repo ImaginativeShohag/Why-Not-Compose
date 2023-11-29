@@ -58,11 +58,8 @@ import timber.log.Timber
 class DataFetchAndPagingViewModel @Inject constructor(
     private val repository: AppRepository
 ) : ViewModel() {
-
     private val eventShowLoading = MutableStateFlow(false)
-
     private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
-
     private var items = MutableStateFlow<Flow<PagingData<GithubRepo>>>(emptyFlow())
 
     // ----------------------------------------------------------------

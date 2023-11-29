@@ -35,8 +35,10 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import org.imaginativeworld.whynotcompose.base.extensions.getJsonFromObj
 import org.imaginativeworld.whynotcompose.base.extensions.getObjFromJson
@@ -607,7 +609,14 @@ private fun NavGraphBuilder.addUiScreens(
             )
         }
 
-        composable(UIsScreen.UiMapViewDetails.route) { backStackEntry ->
+        composable(
+            UIsScreen.UiMapViewDetails.route,
+            arguments = listOf(
+                navArgument(UIsScreen.UiMapViewDetails.PARAM_ITEM) {
+                    type = NavType.StringType
+                }
+            )
+        ) { backStackEntry ->
             backStackEntry.arguments?.let { args ->
                 val item = args.getString(UIsScreen.UiMapViewDetails.PARAM_ITEM)
                     .getObjFromJson<MapPlace>() ?: throw Exception("Item cannot be null!")

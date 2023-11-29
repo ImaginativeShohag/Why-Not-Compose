@@ -64,6 +64,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -86,6 +87,7 @@ import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.MarkerInfoWindow
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
+import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.base.extensions.dpToPx
 import org.imaginativeworld.whynotcompose.common.compose.R as CommonComposeR
 import org.imaginativeworld.whynotcompose.common.compose.composeutils.bitmapDescriptorFromVector
@@ -111,6 +113,8 @@ fun MapScreen(
     val cameraPositionState = rememberCameraPositionState()
 
     val state by viewModel.state.collectAsState()
+
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
         viewModel.loadMapPlaces()
@@ -188,7 +192,9 @@ fun MapScreen(
                             false
                         },
                         onInfoWindowClick = {
-                            gotoDetailsScreen(place)
+                            scope.launch {
+                                gotoDetailsScreen(place)
+                            }
                         },
                         onInfoWindowClose = {
                             viewModel.clearSelectedMapPlace()

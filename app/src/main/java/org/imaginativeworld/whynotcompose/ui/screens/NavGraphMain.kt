@@ -44,6 +44,7 @@ import org.imaginativeworld.whynotcompose.base.extensions.getJsonFromObj
 import org.imaginativeworld.whynotcompose.base.extensions.getObjFromJson
 import org.imaginativeworld.whynotcompose.cms.ui.screens.CMSMainScreen
 import org.imaginativeworld.whynotcompose.exoplayer.ExoPlayerScreen
+import org.imaginativeworld.whynotcompose.models.DemoData
 import org.imaginativeworld.whynotcompose.models.MapPlace
 import org.imaginativeworld.whynotcompose.tictactoe.TicTacToeScreen
 import org.imaginativeworld.whynotcompose.tictactoe.TicTacToeViewModel
@@ -99,6 +100,9 @@ import org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.deeplinks.DeepLinksScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.index.TutorialIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.lottie.LottieScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDataPassHomeScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDataPassOneScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDataPassTwoScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.onesignalandbroadcast.OneSignalAndBroadcastScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.permission.PermissionScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.selectimageandcrop.SelectImageAndCropScreen
@@ -209,6 +213,21 @@ sealed class TutorialsScreen(val route: String) {
     data object TutorialExoPlayer : TutorialsScreen("tutorial/exoplayer")
     data object TutorialCMS : TutorialsScreen("tutorial/cms")
     data object TutorialDeepLink : TutorialsScreen("tutorial/deep-link")
+
+    data object TutorialNavDataPassHome : TutorialsScreen("tutorial/nav-data-pass/home") {
+        const val KEY_RECEIVED_DATA = "received_data"
+    }
+
+    data object TutorialNavDataPassScreen1 :
+        TutorialsScreen("tutorial/nav-data-pass/one/{data}") {
+        const val PARAM_DATA = "data"
+        fun createRoute(item: DemoData) =
+            route.replace("{$PARAM_DATA}", item.getJsonFromObj() ?: "")
+    }
+
+    data object TutorialNavDataPassScreen2 : TutorialsScreen("tutorial/nav-data-pass/two") {
+        const val PARAM_DATA = "data"
+    }
 }
 
 // ================================================================
@@ -881,6 +900,80 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
 
     composable(TutorialsScreen.TutorialDeepLink.route) {
         DeepLinksScreen(
+            goBack = {
+                navController.popBackStack()
+            }
+        )
+    }
+
+    // ================================================================
+
+    composable(TutorialsScreen.TutorialNavDataPassHome.route) { backStateEntry ->
+        val receivedData = backStateEntry.savedStateHandle.get<DemoData>(
+            TutorialsScreen.TutorialNavDataPassHome.KEY_RECEIVED_DATA
+        )
+
+        NavDataPassHomeScreen(
+            receivedData = receivedData,
+            goBack = {
+                navController.popBackStack()
+            },
+            gotoScreenOne = { item ->
+                navController.navigate(TutorialsScreen.TutorialNavDataPassScreen1.createRoute(item))
+            },
+            gotoScreenTwo = { item ->
+                // Equivalent: navController.currentBackStackEntry?.savedStateHandle
+                backStateEntry.savedStateHandle.apply {
+                    set(
+                        TutorialsScreen.TutorialNavDataPassScreen2.PARAM_DATA,
+                        item
+                    )
+                }
+                navController.navigate(TutorialsScreen.TutorialNavDataPassScreen2.route)
+            }
+        )
+    }
+
+    composable(
+        TutorialsScreen.TutorialNavDataPassScreen1.route,
+        arguments = listOf(
+            navArgument(TutorialsScreen.TutorialNavDataPassScreen1.PARAM_DATA) {
+                type = NavType.StringType
+            }
+        )
+    ) { backStackEntry ->
+        backStackEntry.arguments?.let { args ->
+            val data = args.getString(TutorialsScreen.TutorialNavDataPassScreen1.PARAM_DATA)
+                .getObjFromJson<DemoData>() ?: throw Exception("Data cannot be null!")
+
+            NavDataPassOneScreen(
+                data = data,
+                goBack = {
+                    navController.popBackStack()
+                },
+                backWithData = { data ->
+                    navController.previousBackStackEntry
+                        ?.savedStateHandle
+                        ?.set(
+                            TutorialsScreen.TutorialNavDataPassHome.KEY_RECEIVED_DATA,
+                            data
+                        )
+
+                    navController.popBackStack()
+                }
+            )
+        }
+    }
+
+    composable(
+        TutorialsScreen.TutorialNavDataPassScreen2.route
+    ) {
+        val data: DemoData? = navController.previousBackStackEntry?.savedStateHandle?.get<DemoData>(
+            TutorialsScreen.TutorialNavDataPassScreen2.PARAM_DATA
+        )
+
+        NavDataPassTwoScreen(
+            data = data,
             goBack = {
                 navController.popBackStack()
             }

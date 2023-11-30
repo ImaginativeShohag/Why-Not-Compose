@@ -50,7 +50,7 @@ object Libs {
     }
 
     object DiffPlug {
-        const val version = "6.22.0"
+        const val version = "6.23.0"
 
         const val spotless = "com.diffplug.spotless"
     }

@@ -24,9 +24,12 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
+@file:OptIn(ExperimentalStdlibApi::class)
+
 package org.imaginativeworld.whynotcompose.base.extensions
 
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapter
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.util.Date
@@ -53,7 +56,7 @@ inline fun <reified T> String?.getObjFromJson(urlDecode: Boolean = true): T? {
 
     Timber.e("getObjFromJson: $this")
 
-    val jsonAdapter = MoshiUtil.getMoshi().adapter(T::class.java).lenient()
+    val jsonAdapter = MoshiUtil.getMoshi().adapter<T>().lenient()
 
     val result = jsonAdapter.fromJson(
         if (urlDecode) {
@@ -80,7 +83,7 @@ inline fun <reified T> T?.getJsonFromObj(urlEncode: Boolean = true): String? {
 
     Timber.e("getJsonFromObj: $this")
 
-    val jsonAdapter = MoshiUtil.getMoshi().adapter(T::class.java).lenient()
+    val jsonAdapter = MoshiUtil.getMoshi().adapter<T>().lenient()
 
     return jsonAdapter.toJson(this).let { json ->
         val result = if (urlEncode) {

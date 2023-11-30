@@ -29,20 +29,28 @@ package org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Divider
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -66,7 +74,8 @@ fun NavDataPassHomeScreen(
     receivedData: DemoData?,
     goBack: () -> Unit,
     gotoScreenOne: (DemoData) -> Unit,
-    gotoScreenTwo: (DemoData) -> Unit
+    gotoScreenTwo: (DemoData) -> Unit,
+    gotoScreenThree: (id: Int, name: String) -> Unit
 ) {
     NavDataPassHomeScreenSkeleton(
         receivedData = receivedData,
@@ -88,7 +97,8 @@ fun NavDataPassHomeScreen(
                     ranks = listOf("A", "B", "C")
                 )
             )
-        }
+        },
+        gotoScreenThree = gotoScreenThree
     )
 }
 
@@ -125,8 +135,12 @@ fun NavDataPassHomeScreenSkeleton(
     receivedData: DemoData?,
     goBack: () -> Unit = {},
     gotoScreenOne: () -> Unit = {},
-    gotoScreenTwo: () -> Unit = {}
+    gotoScreenTwo: () -> Unit = {},
+    gotoScreenThree: (id: Int, name: String) -> Unit = { _, _ -> }
 ) {
+    var id by remember { mutableStateOf("1") }
+    var name by remember { mutableStateOf("Mahmudul Hasan Shohag") }
+
     Scaffold(
         Modifier
             .navigationBarsPadding()
@@ -171,16 +185,67 @@ fun NavDataPassHomeScreenSkeleton(
 
             AppComponent.BigSpacer()
 
+            Text(
+                "Pass simple data as parameter (Recommended)",
+                fontWeight = FontWeight.Bold
+            )
+
+            OutlinedTextField(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth(),
+                value = id,
+                onValueChange = {
+                    val regex = Regex("[^0-9]")
+                    id = regex.replace(it, "")
+                },
+                label = {
+                    Text("ID Parameter")
+                },
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Number
+                )
+            )
+
+            OutlinedTextField(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth(),
+                value = name,
+                onValueChange = { name = it },
+                label = {
+                    Text("Name Parameter")
+                }
+            )
+
+            AppComponent.MediumSpacer()
+
+            Button(onClick = {
+                gotoScreenThree(id.toInt(), name)
+            }) {
+                Text("Pass Parameters")
+            }
+
+            AppComponent.BigSpacer()
+
+            // ----------------------------------------------------------------
+
+            Divider()
+
+            AppComponent.BigSpacer()
+
             Button(onClick = {
                 gotoScreenOne()
             }) {
-                Text("Pass data as String")
+                Text("Pass complex data as String")
             }
+
+            AppComponent.MediumSpacer()
 
             Button(onClick = {
                 gotoScreenTwo()
             }) {
-                Text("Pass data as Parcelable")
+                Text("Pass complex data as Parcelable")
             }
 
             // ----------------------------------------------------------------

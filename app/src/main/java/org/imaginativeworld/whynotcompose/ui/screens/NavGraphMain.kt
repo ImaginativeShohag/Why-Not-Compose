@@ -102,6 +102,7 @@ import org.imaginativeworld.whynotcompose.ui.screens.tutorial.index.TutorialInde
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.lottie.LottieScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDataPassHomeScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDataPassOneScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDataPassThreeScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDataPassTwoScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.onesignalandbroadcast.OneSignalAndBroadcastScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.permission.PermissionScreen
@@ -227,6 +228,17 @@ sealed class TutorialsScreen(val route: String) {
 
     data object TutorialNavDataPassScreen2 : TutorialsScreen("tutorial/nav-data-pass/two") {
         const val PARAM_DATA = "data"
+    }
+
+    data object TutorialNavDataPassScreen3 :
+        TutorialsScreen("tutorial/nav-data-pass/three/{id}/{name}/details") {
+        const val PARAM_ID = "id"
+        const val PARAM_NAME = "name"
+
+        fun createRoute(id: Int, name: String) =
+            route
+                .replace("{$PARAM_ID}", "$id")
+                .replace("{$PARAM_NAME}", name)
     }
 }
 
@@ -907,6 +919,8 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
     }
 
     // ================================================================
+    // Navigation pass-receive example
+    // ================================================================
 
     composable(TutorialsScreen.TutorialNavDataPassHome.route) { backStateEntry ->
         val receivedData = backStateEntry.savedStateHandle.get<DemoData>(
@@ -930,6 +944,14 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
                     )
                 }
                 navController.navigate(TutorialsScreen.TutorialNavDataPassScreen2.route)
+            },
+            gotoScreenThree = { id, name ->
+                navController.navigate(
+                    TutorialsScreen.TutorialNavDataPassScreen3.createRoute(
+                        id = id,
+                        name = name
+                    )
+                )
             }
         )
     }
@@ -965,15 +987,41 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
         }
     }
 
-    composable(
-        TutorialsScreen.TutorialNavDataPassScreen2.route
-    ) {
+    composable(TutorialsScreen.TutorialNavDataPassScreen2.route) {
         val data: DemoData? = navController.previousBackStackEntry?.savedStateHandle?.get<DemoData>(
             TutorialsScreen.TutorialNavDataPassScreen2.PARAM_DATA
         )
 
         NavDataPassTwoScreen(
             data = data,
+            goBack = {
+                navController.popBackStack()
+            }
+        )
+    }
+
+    composable(
+        TutorialsScreen.TutorialNavDataPassScreen3.route,
+        arguments = listOf(
+            navArgument(TutorialsScreen.TutorialNavDataPassScreen3.PARAM_ID) {
+                type = NavType.IntType
+            },
+            navArgument(TutorialsScreen.TutorialNavDataPassScreen3.PARAM_NAME) {
+                type = NavType.StringType
+            }
+        )
+    ) { backStackEntry ->
+        var id = 0
+        var name = ""
+
+        backStackEntry.arguments?.apply {
+            id = getInt(TutorialsScreen.TutorialNavDataPassScreen3.PARAM_ID)
+            name = getString(TutorialsScreen.TutorialNavDataPassScreen3.PARAM_NAME, "")
+        }
+
+        NavDataPassThreeScreen(
+            id = id,
+            name = name,
             goBack = {
                 navController.popBackStack()
             }

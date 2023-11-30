@@ -36,15 +36,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
 import androidx.compose.material.Divider
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,59 +50,48 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
-import org.imaginativeworld.whynotcompose.models.DemoData
 
 @Composable
-fun NavDataPassOneScreen(
-    data: DemoData,
-    goBack: () -> Unit,
-    backWithData: (DemoData) -> Unit
+fun NavDataPassThreeScreen(
+    id: Int,
+    name: String,
+    goBack: () -> Unit
 ) {
-    NavDataPassOneScreenSkeleton(
-        goBack = goBack,
-        data = data,
-        backWithData = { data ->
-            backWithData(data)
-        }
+    NavDataPassThreeScreenSkeleton(
+        id = id,
+        name = name,
+        goBack = goBack
     )
 }
 
 @Preview
 @Composable
-fun NavDataPassOneScreenSkeletonPreview() {
+fun NavDataPassThreeScreenSkeletonPreview() {
     AppTheme {
-        NavDataPassOneScreenSkeleton(
-            data = DemoData(
-                id = 1,
-                name = "John Doe",
-                ranks = listOf("A", "B", "C")
-            )
+        NavDataPassThreeScreenSkeleton(
+            id = 1,
+            name = "Mahmudul Hasan Shohag"
         )
     }
 }
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun NavDataPassOneScreenSkeletonPreviewDark() {
+fun NavDataPassThreeScreenSkeletonPreviewDark() {
     AppTheme {
-        NavDataPassOneScreenSkeleton(
-            data = DemoData(
-                id = 1,
-                name = "John Doe",
-                ranks = listOf("A", "B", "C")
-            )
+        NavDataPassThreeScreenSkeleton(
+            id = 1,
+            name = "Mahmudul Hasan Shohag"
         )
     }
 }
 
 @Composable
-fun NavDataPassOneScreenSkeleton(
-    data: DemoData,
-    goBack: () -> Unit = {},
-    backWithData: (DemoData) -> Unit = {}
+fun NavDataPassThreeScreenSkeleton(
+    id: Int,
+    name: String,
+    goBack: () -> Unit = {}
 ) {
-    var text by remember { mutableStateOf("Mahmudul Hasan") }
-
     Scaffold(
         Modifier
             .navigationBarsPadding()
@@ -121,7 +106,7 @@ fun NavDataPassOneScreenSkeleton(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AppComponent.Header(
-                "Data passed as String",
+                "Data passed as Parameter",
                 goBack = goBack
             )
 
@@ -137,42 +122,21 @@ fun NavDataPassOneScreenSkeleton(
                 fontWeight = FontWeight.Bold
             )
 
+            AppComponent.MediumSpacer()
+
             Text(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                text = "$data",
-                textAlign = TextAlign.Center
-            )
-
-            AppComponent.BigSpacer()
-
-            // ----------------------------------------------------------------
-
-            Divider()
-
-            AppComponent.BigSpacer()
-
-            OutlinedTextField(
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .fillMaxWidth(),
-                value = text,
-                onValueChange = { text = it },
-                label = {
-                    Text("Return Name")
-                }
+                text = "ID: $id"
             )
 
-            Button(onClick = {
-                backWithData(
-                    DemoData(
-                        id = 9,
-                        name = text,
-                        ranks = listOf("A+", "B+", "C+")
-                    )
-                )
-            }) {
-                Text("Return data")
-            }
+            Text(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth(),
+                text = "Name: $name"
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

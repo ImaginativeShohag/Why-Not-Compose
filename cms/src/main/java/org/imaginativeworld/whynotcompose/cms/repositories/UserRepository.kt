@@ -32,6 +32,8 @@ import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.imaginativeworld.whynotcompose.base.network.SafeApiRequest
+import org.imaginativeworld.whynotcompose.cms.datasource.cache.StorageCacheDataSource
+import org.imaginativeworld.whynotcompose.cms.datasource.cache.StorageCacheKey
 import org.imaginativeworld.whynotcompose.cms.db.CMSDatabase
 import org.imaginativeworld.whynotcompose.cms.models.user.User
 import org.imaginativeworld.whynotcompose.cms.models.user.UserEntity
@@ -40,18 +42,21 @@ import org.imaginativeworld.whynotcompose.cms.network.api.UserApiInterface
 class UserRepository @Inject constructor(
     @ApplicationContext private val context: Context,
     private val api: UserApiInterface,
-    private val db: CMSDatabase
+    private val db: CMSDatabase,
+    private val cache: StorageCacheDataSource
 ) {
     suspend fun getUsers(page: Long) = withContext(Dispatchers.IO) {
-        SafeApiRequest.apiRequest(context) {
-            api.getUsers(page)
-        }
+        cache.get(StorageCacheKey.UserList(page = page))
+            ?: SafeApiRequest.apiRequest(context) {
+                api.getUsers(page)
+            }
     }
 
     suspend fun getUser(userId: Int) = withContext(Dispatchers.IO) {
-        SafeApiRequest.apiRequest(context) {
-            api.getUser(userId)
-        }
+        cache.get(StorageCacheKey.UserDetails(userId = userId))
+            ?: SafeApiRequest.apiRequest(context) {
+                api.getUser(userId)
+            }
     }
 
     suspend fun deleteUser(postId: Int) = withContext(Dispatchers.IO) {
@@ -66,14 +71,10 @@ class UserRepository @Inject constructor(
         }
     }
 
-    suspend fun signIn(user: User) = withContext(Dispatchers.IO) {
+    suspend fun createUser(user: User) = withContext(Dispatchers.IO) {
         SafeApiRequest.apiRequest(context) {
             api.createUser(user)
         }
-    }
-
-    suspend fun signOut() = withContext(Dispatchers.IO) {
-        db.todoDao().removeAll()
     }
 
     // ----------------------------------------------------------------

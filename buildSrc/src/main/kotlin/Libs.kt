@@ -43,20 +43,20 @@ object Libs {
     }
 
     object Coil {
-        private const val version = "2.4.0"
+        private const val version = "2.5.0"
 
         const val compose = "io.coil-kt:coil-compose:$version"
         const val svg = "io.coil-kt:coil-svg:$version"
     }
 
     object DiffPlug {
-        const val version = "6.22.0"
+        const val version = "6.23.2"
 
         const val spotless = "com.diffplug.spotless"
     }
 
     object Gradle {
-        const val version = "8.1.2"
+        const val version = "8.2.0"
     }
 
     object Yalantis {
@@ -65,7 +65,7 @@ object Libs {
 
     object Airbnb {
         object Lottie {
-            const val compose = "com.airbnb.android:lottie-compose:6.1.0"
+            const val compose = "com.airbnb.android:lottie-compose:6.2.0"
         }
     }
 
@@ -75,7 +75,7 @@ object Libs {
         const val exoplayer = "com.google.android.exoplayer:exoplayer:2.19.1"
 
         object DevTools {
-            const val kspVersion = "1.9.10-1.0.13"
+            const val kspVersion = "1.9.20-1.0.14"
 
             const val ksp = "com.google.devtools.ksp"
         }
@@ -83,14 +83,14 @@ object Libs {
         object Firebase {
             const val crashlyticsGradlePluginVersion = "2.9.9"
 
-            const val bom = "com.google.firebase:firebase-bom:32.4.0"
+            const val bom = "com.google.firebase:firebase-bom:32.6.0"
             const val analytics = "com.google.firebase:firebase-analytics-ktx"
 
             const val crashlyticsGradlePlugin = "com.google.firebase.crashlytics"
         }
 
         object Hilt {
-            const val version = "2.48.1"
+            const val version = "2.49"
 
             const val core = "com.google.dagger:hilt-android:$version"
             const val compiler = "com.google.dagger:hilt-compiler:$version"
@@ -103,12 +103,12 @@ object Libs {
         }
 
         object Maps {
-            private const val version = "4.0.0"
+            private const val version = "5.0.0"
             const val secretsGradlePluginVersion = "2.0.1"
 
             const val core = "com.google.maps.android:maps-ktx:$version"
             const val utils = "com.google.maps.android:maps-utils-ktx:$version"
-            const val compose = "com.google.maps.android:maps-compose:3.1.1"
+            const val compose = "com.google.maps.android:maps-compose:4.3.0"
             const val secretsGradlePlugin =
                 "com.google.android.libraries.mapsplatform.secrets-gradle-plugin"
         }
@@ -131,7 +131,7 @@ object Libs {
     }
 
     object Kotlin {
-        const val version = "1.9.10"
+        const val version = "1.9.20"
 
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$version"
 
@@ -148,17 +148,20 @@ object Libs {
 
     object AndroidX {
         const val appcompat = "androidx.appcompat:appcompat:1.6.1"
-        const val coreKtx = "androidx.core:core-ktx:1.10.0"
+        const val coreKtx = "androidx.core:core-ktx:1.12.0"
         const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
         object Activity {
-            const val activityCompose = "androidx.activity:activity-compose:1.8.0"
+            const val activityCompose = "androidx.activity:activity-compose:1.8.1"
         }
 
         object Compose {
             private const val bomVersion = "2023.10.01"
-            const val compilerVersion = "1.5.3"
+            const val compilerVersion = "1.5.5"
             private const val runtimeTracingVersion = "1.0.0-alpha04"
+
+            // TODO: Remove when library gets stable.
+            private const val material3Version = "1.2.0-alpha12"
 
             const val bom = "androidx.compose:compose-bom:$bomVersion"
 
@@ -172,9 +175,9 @@ object Libs {
             const val materialIconsExtended =
                 "androidx.compose.material:material-icons-extended"
 
-            const val material3 = "androidx.compose.material3:material3:1.2.0-alpha10"
+            const val material3 = "androidx.compose.material3:material3:$material3Version"
             const val material3WindowSizeClass =
-                "androidx.compose.material3:material3-window-size-class:1.2.0-alpha10"
+                "androidx.compose.material3:material3-window-size-class:$material3Version"
 
             const val runtime = "androidx.compose.runtime:runtime"
             const val runtimeLivedata = "androidx.compose.runtime:runtime-livedata"
@@ -188,7 +191,7 @@ object Libs {
             const val toolingPreview = "androidx.compose.ui:ui-tooling-preview"
 
             const val viewBinding = "androidx.compose.ui:ui-viewbinding"
-            const val animation = "androidx.compose.animation:animation:1.5.0-beta02"
+            const val animation = "androidx.compose.animation:animation"
 
             const val test = "androidx.compose.ui:ui-test"
             const val uiTest = "androidx.compose.ui:ui-test-junit4"
@@ -206,7 +209,7 @@ object Libs {
         }
 
         object Hilt {
-            const val navigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0"
+            const val navigationCompose = "androidx.hilt:hilt-navigation-compose:1.1.0"
         }
 
         object Lifecycle {
@@ -221,7 +224,7 @@ object Libs {
         }
 
         object Navigation {
-            private const val version = "2.7.4"
+            private const val version = "2.7.5"
 
             const val fragment = "androidx.navigation:navigation-fragment-ktx:$version"
             const val uiKtx = "androidx.navigation:navigation-ui-ktx:$version"
@@ -229,15 +232,14 @@ object Libs {
         }
 
         object Paging {
-            private const val version = "3.1.1"
-            private const val composeVersion = "3.2.1"
+            private const val version = "3.2.1"
 
-            const val runtime = "androidx.paging:paging-runtime-ktx:$version"
-            const val compose = "androidx.paging:paging-compose:$composeVersion"
+            const val runtime = "androidx.paging:paging-runtime:$version"
+            const val compose = "androidx.paging:paging-compose:$version"
         }
 
         object Room {
-            private const val version = "2.6.0"
+            private const val version = "2.6.1"
 
             const val runtime = "androidx.room:room-runtime:$version"
             const val compiler = "androidx.room:room-compiler:$version"

@@ -133,7 +133,7 @@ class UserAddViewModel @Inject constructor(
                 status
             )
 
-            val newUser = repository.signIn(
+            val newUser = repository.createUser(
                 user
             )
 

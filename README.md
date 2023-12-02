@@ -66,6 +66,7 @@ Feel free to request features or suggestions for improvements.
 - OneSignal and Broadcast (Intermediate)
 - ExoPlayer (Advanced)
 - CMS (Advanced)
+  - Memory and storage caching
 - [Deep Link](https://developer.android.com/training/app-links) (Intermediate)
 
 |    ![Counter](images/counter.gif)    | ![Animated Visibility](images/animated-visibility.gif) | ![Lottie](images/lottie.gif) |
@@ -92,6 +93,9 @@ Feel free to request features or suggestions for improvements.
 - [ ] Update `CheckBox` code (see example from AOSP)
 - [ ] Month-Picker component
 - [ ] Upgrade OneSignal lib
+- [x] Check map example issue: on click freeze
+- [ ] New: File browser using MediaStore
+- [ ] Get sidebar from Emudi app (https://www.youtube.com/watch?v=HNSKJIQtb4c)
 
 # Note
 

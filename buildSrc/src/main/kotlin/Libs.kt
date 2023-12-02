@@ -50,13 +50,13 @@ object Libs {
     }
 
     object DiffPlug {
-        const val version = "6.23.0"
+        const val version = "6.23.2"
 
         const val spotless = "com.diffplug.spotless"
     }
 
     object Gradle {
-        const val version = "8.1.4"
+        const val version = "8.2.0"
     }
 
     object Yalantis {
@@ -90,7 +90,7 @@ object Libs {
         }
 
         object Hilt {
-            const val version = "2.48.1"
+            const val version = "2.49"
 
             const val core = "com.google.dagger:hilt-android:$version"
             const val compiler = "com.google.dagger:hilt-compiler:$version"
@@ -157,11 +157,11 @@ object Libs {
 
         object Compose {
             private const val bomVersion = "2023.10.01"
-            const val compilerVersion = "1.5.4"
+            const val compilerVersion = "1.5.5"
             private const val runtimeTracingVersion = "1.0.0-alpha04"
 
             // TODO: Remove when library gets stable.
-            private const val material3Version = "1.2.0-alpha11"
+            private const val material3Version = "1.2.0-alpha12"
 
             const val bom = "androidx.compose:compose-bom:$bomVersion"
 
@@ -239,7 +239,7 @@ object Libs {
         }
 
         object Room {
-            private const val version = "2.6.0"
+            private const val version = "2.6.1"
 
             const val runtime = "androidx.room:room-runtime:$version"
             const val compiler = "androidx.room:room-compiler:$version"

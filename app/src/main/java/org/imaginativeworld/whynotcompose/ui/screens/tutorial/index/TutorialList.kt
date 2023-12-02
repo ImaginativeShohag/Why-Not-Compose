@@ -34,17 +34,17 @@ sealed class TutorialLevel(
     val name: String,
     val color: Color
 ) {
-    object Beginner : TutorialLevel(
+    data object Beginner : TutorialLevel(
         name = "Beginner",
         color = TailwindCSSColor.Green500
     )
 
-    object Intermediate : TutorialLevel(
+    data object Intermediate : TutorialLevel(
         name = "Intermediate",
         color = TailwindCSSColor.Yellow500
     )
 
-    object Advanced : TutorialLevel(
+    data object Advanced : TutorialLevel(
         name = "Advanced",
         color = TailwindCSSColor.Red500
     )
@@ -134,6 +134,12 @@ data class Tutorial(
                 name = "Deep Link",
                 description = "Example of Deep Link.",
                 route = TutorialsScreen.TutorialDeepLink,
+                level = TutorialLevel.Intermediate
+            ),
+            Tutorial(
+                name = "Navigation Data Pass",
+                description = "Example of data passing in `Navigation Component`.",
+                route = TutorialsScreen.TutorialNavDataPassHome,
                 level = TutorialLevel.Intermediate
             )
         )

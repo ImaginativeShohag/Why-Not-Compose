@@ -24,9 +24,18 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.cms.datasource.cache
+package org.imaginativeworld.whynotcompose.models
 
-sealed class StorageCacheKey(val name: String) {
-    data class UserList(val page: Long) : StorageCacheKey("user-list-$page")
-    data class UserDetails(val userId: Int) : StorageCacheKey("user-$userId")
-}
+import android.os.Parcelable
+import androidx.annotation.Keep
+import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
+
+@Keep
+@JsonClass(generateAdapter = true)
+@Parcelize
+data class DemoData(
+    val id: Int,
+    val name: String,
+    val ranks: List<String>
+) : Parcelable

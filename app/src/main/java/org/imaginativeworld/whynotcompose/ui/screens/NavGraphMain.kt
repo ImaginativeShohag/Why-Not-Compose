@@ -44,6 +44,7 @@ import org.imaginativeworld.whynotcompose.base.extensions.getJsonFromObj
 import org.imaginativeworld.whynotcompose.base.extensions.getObjFromJson
 import org.imaginativeworld.whynotcompose.cms.ui.screens.CMSMainScreen
 import org.imaginativeworld.whynotcompose.exoplayer.ExoPlayerScreen
+import org.imaginativeworld.whynotcompose.models.DemoData
 import org.imaginativeworld.whynotcompose.models.MapPlace
 import org.imaginativeworld.whynotcompose.tictactoe.TicTacToeScreen
 import org.imaginativeworld.whynotcompose.tictactoe.TicTacToeViewModel
@@ -99,6 +100,10 @@ import org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.deeplinks.DeepLinksScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.index.TutorialIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.lottie.LottieScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDataPassHomeScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDataPassOneScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDataPassThreeScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDataPassTwoScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.onesignalandbroadcast.OneSignalAndBroadcastScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.permission.PermissionScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.selectimageandcrop.SelectImageAndCropScreen
@@ -114,101 +119,127 @@ import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.WebViewTarget
 import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.WebViewViewModel
 
 sealed class Screen(val route: String) {
-    object Home : Screen("home")
-    object Animations : Screen("animation")
-    object Compositions : Screen("composition")
-    object UIs : Screen("ui")
-    object Tutorials : Screen("tutorial")
+    data object Home : Screen("home")
+    data object Animations : Screen("animation")
+    data object Compositions : Screen("composition")
+    data object UIs : Screen("ui")
+    data object Tutorials : Screen("tutorial")
 }
 
 sealed class HomeScreen(val route: String) {
-    object Splash : HomeScreen("splash")
-    object HomeIndex : HomeScreen("home/index")
+    data object Splash : HomeScreen("splash")
+    data object HomeIndex : HomeScreen("home/index")
 }
 
 sealed class AnimationsScreen(val route: String) {
-    object AnimationIndex : AnimationsScreen("animation/index")
-    object AnimationComposeOne : AnimationsScreen("animation/composeone")
-    object AnimationEmudi : AnimationsScreen("animation/emudi")
-    object AnimationRunningCar : AnimationsScreen("animation/runningcar")
-    object AnimationTheStory : AnimationsScreen("animation/thestory")
+    data object AnimationIndex : AnimationsScreen("animation/index")
+    data object AnimationComposeOne : AnimationsScreen("animation/composeone")
+    data object AnimationEmudi : AnimationsScreen("animation/emudi")
+    data object AnimationRunningCar : AnimationsScreen("animation/runningcar")
+    data object AnimationTheStory : AnimationsScreen("animation/thestory")
 }
 
 sealed class CompositionsScreen(val route: String) {
-    object CompositionIndex : CompositionsScreen("composition/index")
+    data object CompositionIndex : CompositionsScreen("composition/index")
 
-    object CompositionAppBar : CompositionsScreen("composition/appbar")
-    object CompositionButton : CompositionsScreen("composition/button")
-    object CompositionCard : CompositionsScreen("composition/card")
-    object CompositionCheckBox : CompositionsScreen("composition/checkbox")
-    object CompositionDialog : CompositionsScreen("composition/dialog")
-    object CompositionDropDownMenu : CompositionsScreen("composition/dropdownmenu")
+    data object CompositionAppBar : CompositionsScreen("composition/appbar")
+    data object CompositionButton : CompositionsScreen("composition/button")
+    data object CompositionCard : CompositionsScreen("composition/card")
+    data object CompositionCheckBox : CompositionsScreen("composition/checkbox")
+    data object CompositionDialog : CompositionsScreen("composition/dialog")
+    data object CompositionDropDownMenu : CompositionsScreen("composition/dropdownmenu")
 
-    object CompositionListIndex : CompositionsScreen("composition/list")
-    object CompositionListColumn : CompositionsScreen("composition/list/column")
-    object CompositionListRow : CompositionsScreen("composition/list/row")
+    data object CompositionListIndex : CompositionsScreen("composition/list")
+    data object CompositionListColumn : CompositionsScreen("composition/list/column")
+    data object CompositionListRow : CompositionsScreen("composition/list/row")
 
-    object CompositionListLazyColumnIndex : CompositionsScreen("composition/list/lazycolumn")
-    object CompositionListLazyColumnOne : CompositionsScreen("composition/list/lazycolumn/1")
-    object CompositionListLazyColumnTwo : CompositionsScreen("composition/list/lazycolumn/2")
+    data object CompositionListLazyColumnIndex : CompositionsScreen("composition/list/lazycolumn")
+    data object CompositionListLazyColumnOne : CompositionsScreen("composition/list/lazycolumn/1")
+    data object CompositionListLazyColumnTwo : CompositionsScreen("composition/list/lazycolumn/2")
 
-    object CompositionListLazyRow : CompositionsScreen("composition/list/lazyrow")
-    object CompositionListGridVertical : CompositionsScreen("composition/list/grid/vertical")
+    data object CompositionListLazyRow : CompositionsScreen("composition/list/lazyrow")
+    data object CompositionListGridVertical : CompositionsScreen("composition/list/grid/vertical")
 
-    object CompositionListItem : CompositionsScreen("composition/listitem")
+    data object CompositionListItem : CompositionsScreen("composition/listitem")
 
-    object CompositionLoadingIndicator : CompositionsScreen("composition/loadingindicator")
-    object CompositionRadioButton : CompositionsScreen("composition/radiobutton")
+    data object CompositionLoadingIndicator : CompositionsScreen("composition/loadingindicator")
+    data object CompositionRadioButton : CompositionsScreen("composition/radiobutton")
 
-    object CompositionScaffoldIndex : CompositionsScreen("composition/scaffold")
-    object CompositionScaffoldOne : CompositionsScreen("composition/scaffold/1")
-    object CompositionScaffoldTwo : CompositionsScreen("composition/scaffold/2")
-    object CompositionScaffoldThree : CompositionsScreen("composition/scaffold/3")
-    object CompositionScaffoldFour : CompositionsScreen("composition/scaffold/4")
-    object CompositionScaffoldFive : CompositionsScreen("composition/scaffold/5")
+    data object CompositionScaffoldIndex : CompositionsScreen("composition/scaffold")
+    data object CompositionScaffoldOne : CompositionsScreen("composition/scaffold/1")
+    data object CompositionScaffoldTwo : CompositionsScreen("composition/scaffold/2")
+    data object CompositionScaffoldThree : CompositionsScreen("composition/scaffold/3")
+    data object CompositionScaffoldFour : CompositionsScreen("composition/scaffold/4")
+    data object CompositionScaffoldFive : CompositionsScreen("composition/scaffold/5")
 
-    object CompositionSnackbar : CompositionsScreen("composition/snackbar")
-    object CompositionSwitch : CompositionsScreen("composition/switch")
-    object CompositionTextField : CompositionsScreen("composition/textfield")
-    object CompositionSwipeToDismiss : CompositionsScreen("composition/swipetodismiss")
-    object CompositionSwipeRefresh : CompositionsScreen("composition/swiperefresh")
-    object CompositionBadge : CompositionsScreen("composition/badge")
-    object CompositionFloatingActionButton : CompositionsScreen("composition/fab")
-    object CompositionSlider : CompositionsScreen("composition/slider")
-    object CompositionText : CompositionsScreen("composition/text")
-    object CompositionBottomNavigation : CompositionsScreen("composition/bottomnavigation")
+    data object CompositionSnackbar : CompositionsScreen("composition/snackbar")
+    data object CompositionSwitch : CompositionsScreen("composition/switch")
+    data object CompositionTextField : CompositionsScreen("composition/textfield")
+    data object CompositionSwipeToDismiss : CompositionsScreen("composition/swipetodismiss")
+    data object CompositionSwipeRefresh : CompositionsScreen("composition/swiperefresh")
+    data object CompositionBadge : CompositionsScreen("composition/badge")
+    data object CompositionFloatingActionButton : CompositionsScreen("composition/fab")
+    data object CompositionSlider : CompositionsScreen("composition/slider")
+    data object CompositionText : CompositionsScreen("composition/text")
+    data object CompositionBottomNavigation : CompositionsScreen("composition/bottomnavigation")
 }
 
 sealed class UIsScreen(val route: String) {
-    object UiIndex : UIsScreen("ui/index")
+    data object UiIndex : UIsScreen("ui/index")
 
-    object UiWebView : UIsScreen("ui/webview")
-    object UiMapView : UIsScreen("ui/mapview")
-    object UiMapViewDetails : UIsScreen("ui/mapview/details?item={item}") {
+    data object UiWebView : UIsScreen("ui/webview")
+    data object UiMapView : UIsScreen("ui/mapview")
+    data object UiMapViewDetails : UIsScreen("ui/mapview/details?item={item}") {
         const val PARAM_ITEM = "item"
         fun createRoute(item: MapPlace) =
             route.replace("{$PARAM_ITEM}", item.getJsonFromObj() ?: "")
     }
 
-    object UiOtpCodeVerify : UIsScreen("ui/otpcodeverify")
+    data object UiOtpCodeVerify : UIsScreen("ui/otpcodeverify")
 }
 
 sealed class TutorialsScreen(val route: String) {
-    object TutorialIndex : TutorialsScreen("tutorial/index")
+    data object TutorialIndex : TutorialsScreen("tutorial/index")
 
-    object TutorialCounter : TutorialsScreen("tutorial/counter")
-    object TutorialCounterWithViewModel : TutorialsScreen("tutorial/counter-with-view-model")
-    object TutorialAnimatedVisibility : TutorialsScreen("tutorial/animated-visibility")
-    object TutorialLottie : TutorialsScreen("tutorial/lottie")
-    object TutorialSelectImageAndCrop : TutorialsScreen("tutorial/select-image-and-crop")
-    object TutorialCaptureImageAndCrop : TutorialsScreen("tutorial/capture-image-and-crop")
-    object TutorialPermission : TutorialsScreen("tutorial/permission")
-    object TutorialDataFetchAndPaging : TutorialsScreen("tutorial/data-fetch-and-paging")
-    object TutorialTicTacToe : TutorialsScreen("tutorial/tic-tac-toe")
-    object TutorialOneSignalAndBroadcast : TutorialsScreen("tutorial/onesignal-and-broadcast")
-    object TutorialExoPlayer : TutorialsScreen("tutorial/exoplayer")
-    object TutorialCMS : TutorialsScreen("tutorial/cms")
-    object TutorialDeepLink : TutorialsScreen("tutorial/deep-link")
+    data object TutorialCounter : TutorialsScreen("tutorial/counter")
+    data object TutorialCounterWithViewModel : TutorialsScreen("tutorial/counter-with-view-model")
+    data object TutorialAnimatedVisibility : TutorialsScreen("tutorial/animated-visibility")
+    data object TutorialLottie : TutorialsScreen("tutorial/lottie")
+    data object TutorialSelectImageAndCrop : TutorialsScreen("tutorial/select-image-and-crop")
+    data object TutorialCaptureImageAndCrop : TutorialsScreen("tutorial/capture-image-and-crop")
+    data object TutorialPermission : TutorialsScreen("tutorial/permission")
+    data object TutorialDataFetchAndPaging : TutorialsScreen("tutorial/data-fetch-and-paging")
+    data object TutorialTicTacToe : TutorialsScreen("tutorial/tic-tac-toe")
+    data object TutorialOneSignalAndBroadcast : TutorialsScreen("tutorial/onesignal-and-broadcast")
+    data object TutorialExoPlayer : TutorialsScreen("tutorial/exoplayer")
+    data object TutorialCMS : TutorialsScreen("tutorial/cms")
+    data object TutorialDeepLink : TutorialsScreen("tutorial/deep-link")
+
+    data object TutorialNavDataPassHome : TutorialsScreen("tutorial/nav-data-pass/home") {
+        const val KEY_RECEIVED_DATA = "received_data"
+    }
+
+    data object TutorialNavDataPassScreen1 :
+        TutorialsScreen("tutorial/nav-data-pass/one/{data}") {
+        const val PARAM_DATA = "data"
+        fun createRoute(item: DemoData) =
+            route.replace("{$PARAM_DATA}", item.getJsonFromObj() ?: "")
+    }
+
+    data object TutorialNavDataPassScreen2 : TutorialsScreen("tutorial/nav-data-pass/two") {
+        const val PARAM_DATA = "data"
+    }
+
+    data object TutorialNavDataPassScreen3 :
+        TutorialsScreen("tutorial/nav-data-pass/three/{id}/{name}/details") {
+        const val PARAM_ID = "id"
+        const val PARAM_NAME = "name"
+
+        fun createRoute(id: Int, name: String) =
+            route
+                .replace("{$PARAM_ID}", "$id")
+                .replace("{$PARAM_NAME}", name)
+    }
 }
 
 // ================================================================
@@ -881,6 +912,116 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
 
     composable(TutorialsScreen.TutorialDeepLink.route) {
         DeepLinksScreen(
+            goBack = {
+                navController.popBackStack()
+            }
+        )
+    }
+
+    // ================================================================
+    // Navigation pass-receive example
+    // ================================================================
+
+    composable(TutorialsScreen.TutorialNavDataPassHome.route) { backStateEntry ->
+        val receivedData = backStateEntry.savedStateHandle.get<DemoData>(
+            TutorialsScreen.TutorialNavDataPassHome.KEY_RECEIVED_DATA
+        )
+
+        NavDataPassHomeScreen(
+            receivedData = receivedData,
+            goBack = {
+                navController.popBackStack()
+            },
+            gotoScreenOne = { item ->
+                navController.navigate(TutorialsScreen.TutorialNavDataPassScreen1.createRoute(item))
+            },
+            gotoScreenTwo = { item ->
+                // Equivalent: navController.currentBackStackEntry?.savedStateHandle
+                backStateEntry.savedStateHandle.apply {
+                    set(
+                        TutorialsScreen.TutorialNavDataPassScreen2.PARAM_DATA,
+                        item
+                    )
+                }
+                navController.navigate(TutorialsScreen.TutorialNavDataPassScreen2.route)
+            },
+            gotoScreenThree = { id, name ->
+                navController.navigate(
+                    TutorialsScreen.TutorialNavDataPassScreen3.createRoute(
+                        id = id,
+                        name = name
+                    )
+                )
+            }
+        )
+    }
+
+    composable(
+        TutorialsScreen.TutorialNavDataPassScreen1.route,
+        arguments = listOf(
+            navArgument(TutorialsScreen.TutorialNavDataPassScreen1.PARAM_DATA) {
+                type = NavType.StringType
+            }
+        )
+    ) { backStackEntry ->
+        backStackEntry.arguments?.let { args ->
+            val data = args.getString(TutorialsScreen.TutorialNavDataPassScreen1.PARAM_DATA)
+                .getObjFromJson<DemoData>() ?: throw Exception("Data cannot be null!")
+
+            NavDataPassOneScreen(
+                data = data,
+                goBack = {
+                    navController.popBackStack()
+                },
+                backWithData = { data ->
+                    navController.previousBackStackEntry
+                        ?.savedStateHandle
+                        ?.set(
+                            TutorialsScreen.TutorialNavDataPassHome.KEY_RECEIVED_DATA,
+                            data
+                        )
+
+                    navController.popBackStack()
+                }
+            )
+        }
+    }
+
+    composable(TutorialsScreen.TutorialNavDataPassScreen2.route) {
+        val data: DemoData? = navController.previousBackStackEntry?.savedStateHandle?.get<DemoData>(
+            TutorialsScreen.TutorialNavDataPassScreen2.PARAM_DATA
+        )
+
+        NavDataPassTwoScreen(
+            data = data,
+            goBack = {
+                navController.popBackStack()
+            }
+        )
+    }
+
+    composable(
+        TutorialsScreen.TutorialNavDataPassScreen3.route,
+        arguments = listOf(
+            navArgument(TutorialsScreen.TutorialNavDataPassScreen3.PARAM_ID) {
+                type = NavType.IntType
+            },
+            navArgument(TutorialsScreen.TutorialNavDataPassScreen3.PARAM_NAME) {
+                type = NavType.StringType
+            }
+        )
+    ) { backStackEntry ->
+        var id = 0
+        var name = ""
+
+        backStackEntry.arguments?.apply {
+            id = getInt(TutorialsScreen.TutorialNavDataPassScreen3.PARAM_ID)
+            name = getString(TutorialsScreen.TutorialNavDataPassScreen3.PARAM_NAME, "")
+        }
+
+        NavDataPassThreeScreen(
+            id = id,
+            name = name,
             goBack = {
                 navController.popBackStack()
             }

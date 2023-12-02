@@ -209,6 +209,7 @@ fun GeneralTriStateCheckBox(
     }
 }
 
+// TODO: Add `Modifier` param.
 @Composable
 fun GeneralCheckBox(
     text: String,

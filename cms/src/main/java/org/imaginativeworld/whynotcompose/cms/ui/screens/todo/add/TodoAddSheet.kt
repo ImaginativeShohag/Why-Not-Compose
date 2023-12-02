@@ -350,7 +350,8 @@ fun TodoAddSheetSkeleton(
                 }
             }
         )
-        val confirmEnabled = remember {
+
+        val datePickerConfirmButtonEnabled = remember {
             derivedStateOf { datePickerState.selectedDateMillis != null }
         }
 
@@ -367,7 +368,7 @@ fun TodoAddSheetSkeleton(
                             dueDate = Date(it)
                         }
                     },
-                    enabled = confirmEnabled.value
+                    enabled = datePickerConfirmButtonEnabled.value
                 ) {
                     Text("OK")
                 }

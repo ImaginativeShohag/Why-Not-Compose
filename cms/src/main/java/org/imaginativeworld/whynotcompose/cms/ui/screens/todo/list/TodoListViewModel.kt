@@ -48,14 +48,14 @@ import org.imaginativeworld.whynotcompose.cms.repositories.TodoRepository
 
 @HiltViewModel
 class TodoListViewModel @Inject constructor(
-    private val todoRepository: TodoRepository
+    private val repository: TodoRepository
 ) : ViewModel() {
 
-    private val _eventShowLoading = MutableStateFlow(false)
+    private val eventShowLoading = MutableStateFlow(false)
 
-    private val _eventShowMessage = MutableStateFlow<Event<String>?>(null)
+    private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
 
-    private var _items = MutableStateFlow<Flow<PagingData<Todo>>>(emptyFlow())
+    private var items = MutableStateFlow<Flow<PagingData<Todo>>>(emptyFlow())
 
     // ----------------------------------------------------------------
 
@@ -68,9 +68,9 @@ class TodoListViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             combine(
-                _eventShowLoading,
-                _eventShowMessage,
-                _items
+                eventShowLoading,
+                eventShowMessage,
+                items
             ) { showLoading, showMessage, items ->
 
                 TodoListViewState(
@@ -90,8 +90,8 @@ class TodoListViewModel @Inject constructor(
     // ----------------------------------------------------------------
 
     fun loadTodos(userId: Int) {
-        _items.value = Pager(PagingConfig(pageSize = 20)) {
-            TodoPagingSource(userId, todoRepository)
+        items.value = Pager(PagingConfig(pageSize = 20)) {
+            TodoPagingSource(userId, repository)
         }
             .flow
             .cachedIn(viewModelScope)

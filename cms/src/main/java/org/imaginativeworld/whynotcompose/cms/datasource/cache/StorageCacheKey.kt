@@ -24,25 +24,9 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.base.extensions
+package org.imaginativeworld.whynotcompose.cms.datasource.cache
 
-import android.content.Context
-import java.io.File
-import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-
-@Throws(IOException::class)
-fun Context.createImageFile(): File {
-    // Create an image file name
-    val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(Date())
-    val storageDir = cacheDir
-    return File.createTempFile(
-        "JPEG_${timeStamp}_",
-        ".jpg",
-        storageDir
-    ).apply {
-        deleteOnExit()
-    }
+sealed class StorageCacheKey(val name: String) {
+    data class UserList(val page: Long) : StorageCacheKey("user-list-$page")
+    data class UserDetails(val userId: Int) : StorageCacheKey("user-$userId")
 }

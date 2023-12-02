@@ -44,13 +44,13 @@ import org.imaginativeworld.whynotcompose.cms.repositories.PostRepository
 class PostEditViewModel @Inject constructor(
     private val repository: PostRepository
 ) : ViewModel() {
-    private val _eventShowLoading = MutableStateFlow(false)
+    private val eventShowLoading = MutableStateFlow(false)
 
-    private val _eventShowMessage = MutableStateFlow<Event<String>?>(null)
+    private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
 
-    private val _eventUpdatePostSuccess = MutableStateFlow<Event<Boolean>?>(null)
+    private val eventUpdatePostSuccess = MutableStateFlow<Event<Boolean>?>(null)
 
-    private val _post = MutableStateFlow<Post?>(null)
+    private val post = MutableStateFlow<Post?>(null)
 
     // ----------------------------------------------------------------
 
@@ -63,10 +63,10 @@ class PostEditViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             combine(
-                _eventShowLoading,
-                _eventShowMessage,
-                _eventUpdatePostSuccess,
-                _post
+                eventShowLoading,
+                eventShowMessage,
+                eventUpdatePostSuccess,
+                post
             ) { showLoading, showMessage, updatePostSuccess, post ->
 
                 PostEditViewState(
@@ -87,17 +87,17 @@ class PostEditViewModel @Inject constructor(
     // ----------------------------------------------------------------
 
     fun getDetails(postId: Int) = viewModelScope.launch {
-        _eventShowLoading.value = true
+        eventShowLoading.value = true
 
         try {
             val post = repository.getPost(postId)
 
-            _post.value = post
+            this@PostEditViewModel.post.value = post
         } catch (e: ApiException) {
-            _eventShowMessage.value = Event(e.message ?: "Unknown error!")
+            eventShowMessage.value = Event(e.message ?: "Unknown error!")
         }
 
-        _eventShowLoading.value = false
+        eventShowLoading.value = false
     }
 
     // ----------------------------------------------------------------
@@ -107,12 +107,12 @@ class PostEditViewModel @Inject constructor(
         body: String
     ): Boolean {
         if (title.isBlank()) {
-            _eventShowMessage.value = Event("Please enter title!")
+            eventShowMessage.value = Event("Please enter title!")
             return false
         }
 
         if (body.isBlank()) {
-            _eventShowMessage.value = Event("Please enter body!")
+            eventShowMessage.value = Event("Please enter body!")
             return false
         }
 
@@ -129,25 +129,28 @@ class PostEditViewModel @Inject constructor(
             return@launch
         }
 
-        _eventShowLoading.value = true
+        eventShowLoading.value = true
 
         try {
-            repository.updatePost(
-                postId,
-                Post(
-                    id = 0, // This will be ignored in the server.
-                    userId = userId,
-                    title = title,
-                    body = body
-                )
+            // Note: The value of `id` will be ignored in the server.
+            val post = Post(
+                id = 0,
+                userId = userId,
+                title = title,
+                body = body
             )
 
-            _eventUpdatePostSuccess.value = Event(true)
+            repository.updatePost(
+                postId,
+                post
+            )
+
+            eventUpdatePostSuccess.value = Event(true)
         } catch (e: ApiException) {
-            _eventShowMessage.value = Event(e.message ?: "Unknown error!")
+            eventShowMessage.value = Event(e.message ?: "Unknown error!")
         }
 
-        _eventShowLoading.value = false
+        eventShowLoading.value = false
     }
 }
 

@@ -54,16 +54,17 @@ object LiteMarkdown {
 
         for (letter in text) {
             if (letter == '`') {
-                // End of a code section.
                 if (isCode) {
+                    // End of a code section.
+
                     isCode = false
 
                     if (currentPart.isNotEmpty()) {
                         tokens.add(Pair(currentPart, true))
                     }
-                }
-                // Start of a code section.
-                else {
+                } else {
+                    // Start of a code section.
+
                     isCode = true
 
                     if (currentPart.isNotEmpty()) {
@@ -80,12 +81,11 @@ object LiteMarkdown {
         }
 
         if (currentPart != "") {
-            // Inside a code section.
             if (isCode) {
+                // Inside a code section.
                 tokens.add(Pair(currentPart, true))
-            }
-            // Not a code section.
-            else {
+            } else {
+                // Not a code section.
                 tokens.add(Pair(currentPart, false))
             }
         }

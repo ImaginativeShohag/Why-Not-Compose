@@ -24,25 +24,18 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.base.extensions
+package org.imaginativeworld.whynotcompose.models
 
-import android.content.Context
-import java.io.File
-import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import android.os.Parcelable
+import androidx.annotation.Keep
+import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
-@Throws(IOException::class)
-fun Context.createImageFile(): File {
-    // Create an image file name
-    val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(Date())
-    val storageDir = cacheDir
-    return File.createTempFile(
-        "JPEG_${timeStamp}_",
-        ".jpg",
-        storageDir
-    ).apply {
-        deleteOnExit()
-    }
-}
+@Keep
+@JsonClass(generateAdapter = true)
+@Parcelize
+data class DemoData(
+    val id: Int,
+    val name: String,
+    val ranks: List<String>
+) : Parcelable

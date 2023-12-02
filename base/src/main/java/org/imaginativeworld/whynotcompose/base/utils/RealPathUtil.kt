@@ -44,28 +44,38 @@ import android.provider.MediaStore
 object RealPathUtil {
 
     fun getRealPath(context: Context, uri: Uri): String? {
+        // ----------------------------------------------------------------
         // DocumentProvider
+        // ----------------------------------------------------------------
         if (DocumentsContract.isDocumentUri(context, uri)) {
+            // ----------------------------------------------------------------
             // ExternalStorageProvider
+            // ----------------------------------------------------------------
             if (isExternalStorageDocument(uri)) {
                 val docId = DocumentsContract.getDocumentId(uri)
                 val split = docId.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                 val type = split[0]
 
+                // ----------------------------------------------------------------
                 // This is for checking Main Memory
+                // ----------------------------------------------------------------
                 return if ("primary".equals(type, ignoreCase = true)) {
                     if (split.size > 1) {
                         Environment.getExternalStorageDirectory().toString() + "/" + split[1]
                     } else {
                         Environment.getExternalStorageDirectory().toString() + "/"
                     }
-                    // This is for checking SD Card
                 } else {
+                    // ----------------------------------------------------------------
+                    // This is for checking SD Card
+                    // ----------------------------------------------------------------
                     "storage" + "/" + docId.replace(":", "/")
                 }
-            }
-            // DownloadsProvider
-            else if (isDownloadsDocument(uri)) {
+            } else if (isDownloadsDocument(uri)) {
+                // ----------------------------------------------------------------
+                // DownloadsProvider
+                // ----------------------------------------------------------------
+
                 val fileName = getFilePath(context, uri)
                 if (fileName != null) {
                     return Environment.getExternalStorageDirectory()
@@ -78,9 +88,11 @@ object RealPathUtil {
                     java.lang.Long.valueOf(id)
                 )
                 return getDataColumn(context, contentUri, null, null)
-            }
-            // MediaProvider
-            else if (isMediaDocument(uri)) {
+            } else if (isMediaDocument(uri)) {
+                // ----------------------------------------------------------------
+                // MediaProvider
+                // ----------------------------------------------------------------
+
                 val docId = DocumentsContract.getDocumentId(uri)
                 val split = docId.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                 val type = split[0]
@@ -105,9 +117,11 @@ object RealPathUtil {
 
                 return getDataColumn(context, contentUri, selection, selectionArgs)
             }
-        }
-        // MediaStore (and general)
-        else if ("content".equals(uri.scheme, ignoreCase = true)) {
+        } else if ("content".equals(uri.scheme, ignoreCase = true)) {
+            // ----------------------------------------------------------------
+            // MediaStore (and general)
+            // ----------------------------------------------------------------
+
             // Return the remote address
             return if (isGooglePhotosUri(uri)) {
                 uri.lastPathSegment
@@ -119,9 +133,10 @@ object RealPathUtil {
                     null
                 )
             }
-        }
-        // File
-        else if ("file".equals(uri.scheme, ignoreCase = true)) {
+        } else if ("file".equals(uri.scheme, ignoreCase = true)) {
+            // ----------------------------------------------------------------
+            // File
+            // ----------------------------------------------------------------
             return uri.path
         }
 

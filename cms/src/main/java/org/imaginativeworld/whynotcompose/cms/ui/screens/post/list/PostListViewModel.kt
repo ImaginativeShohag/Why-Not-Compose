@@ -51,11 +51,11 @@ class PostListViewModel @Inject constructor(
     private val postRepository: PostRepository
 ) : ViewModel() {
 
-    private val _eventShowLoading = MutableStateFlow(false)
+    private val eventShowLoading = MutableStateFlow(false)
 
-    private val _eventShowMessage = MutableStateFlow<Event<String>?>(null)
+    private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
 
-    private var _items = MutableStateFlow<Flow<PagingData<Post>>>(emptyFlow())
+    private var items = MutableStateFlow<Flow<PagingData<Post>>>(emptyFlow())
 
     // ----------------------------------------------------------------
 
@@ -68,9 +68,9 @@ class PostListViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             combine(
-                _eventShowLoading,
-                _eventShowMessage,
-                _items
+                eventShowLoading,
+                eventShowMessage,
+                items
             ) { showLoading, showMessage, items ->
 
                 PostListViewState(
@@ -90,7 +90,7 @@ class PostListViewModel @Inject constructor(
     // ----------------------------------------------------------------
 
     fun loadPosts(userId: Int) {
-        _items.value = Pager(PagingConfig(pageSize = 20)) {
+        items.value = Pager(PagingConfig(pageSize = 20)) {
             PostPagingSource(userId, postRepository)
         }
             .flow

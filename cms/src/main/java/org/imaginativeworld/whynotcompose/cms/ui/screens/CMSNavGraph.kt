@@ -58,54 +58,54 @@ import org.imaginativeworld.whynotcompose.cms.ui.screens.user.list.UserListScree
 import org.imaginativeworld.whynotcompose.cms.ui.screens.user.list.UserListViewModel
 
 sealed class Screen(val route: String) {
-    object Splash : Screen("splash")
-    object User : Screen("user")
-    object Todo : Screen("todo")
-    object Post : Screen("post")
-    object Comment : Screen("comment")
+    data object Splash : Screen("splash")
+    data object User : Screen("user")
+    data object Todo : Screen("todo")
+    data object Post : Screen("post")
+    data object Comment : Screen("comment")
 }
 
 sealed class SplashScreen(val route: String) {
-    object Splash : SplashScreen("splash/index")
+    data object Splash : SplashScreen("splash/index")
 }
 
 sealed class UserScreen(val route: String) {
-    object UserList : UserScreen("users")
-    object UserDetails : UserScreen("users/{userId}") {
+    data object UserList : UserScreen("users")
+    data object UserDetails : UserScreen("users/{userId}") {
         const val USER_ID = "userId"
     }
 }
 
 sealed class TodoScreen(val route: String) {
-    object TodoList : TodoScreen("users/{userId}/todos") {
+    data object TodoList : TodoScreen("users/{userId}/todos") {
         const val USER_ID = "userId"
     }
 
-    object TodoDetails : TodoScreen("users/{userId}/todos/{todoId}") {
+    data object TodoDetails : TodoScreen("users/{userId}/todos/{todoId}") {
         const val USER_ID = "userId"
         const val TODO_ID = "todoId"
     }
 }
 
 sealed class PostScreen(val route: String) {
-    object PostList : PostScreen("users/{userId}/posts") {
+    data object PostList : PostScreen("users/{userId}/posts") {
         const val USER_ID = "userId"
     }
 
-    object PostDetails : PostScreen("users/{userId}/posts/{postId}") {
+    data object PostDetails : PostScreen("users/{userId}/posts/{postId}") {
         const val USER_ID = "userId"
         const val POST_ID = "postId"
     }
 }
 
 sealed class CommentScreen(val route: String) {
-    object CommentList : CommentScreen("posts/{postId}/comments") {
+    data object CommentList : CommentScreen("posts/{postId}/comments") {
         const val POST_ID = "postId"
     }
 
-    object CommentDetails : CommentScreen("posts/{postId}/comments/{commentId}") {
+    data object CommentDetails : CommentScreen("posts/{postId}/comments/{commentId}") {
         const val POST_ID = "postId"
-        const val COMMNET_ID = "commentId"
+        const val COMMENT_ID = "commentId"
     }
 }
 
@@ -436,7 +436,7 @@ private fun NavGraphBuilder.addCommentScreens(
                                 "$postId"
                             )
                             .replaceFirst(
-                                "{${CommentScreen.CommentDetails.COMMNET_ID}}",
+                                "{${CommentScreen.CommentDetails.COMMENT_ID}}",
                                 "$commentId"
                             )
                     )
@@ -448,13 +448,13 @@ private fun NavGraphBuilder.addCommentScreens(
             CommentScreen.CommentDetails.route,
             arguments = listOf(
                 navArgument(CommentScreen.CommentDetails.POST_ID) { type = NavType.IntType },
-                navArgument(CommentScreen.CommentDetails.COMMNET_ID) { type = NavType.IntType }
+                navArgument(CommentScreen.CommentDetails.COMMENT_ID) { type = NavType.IntType }
             )
         ) { backStackEntry ->
             val viewModel: CommentDetailsViewModel = hiltViewModel()
             val isDarkMode by UIThemeController.isDarkMode.collectAsState()
             val postId = backStackEntry.arguments?.getInt(CommentScreen.CommentDetails.POST_ID) ?: 0
-            val commentId = backStackEntry.arguments?.getInt(CommentScreen.CommentDetails.COMMNET_ID) ?: 0
+            val commentId = backStackEntry.arguments?.getInt(CommentScreen.CommentDetails.COMMENT_ID) ?: 0
 
             CommentDetailsScreen(
                 viewModel = viewModel,

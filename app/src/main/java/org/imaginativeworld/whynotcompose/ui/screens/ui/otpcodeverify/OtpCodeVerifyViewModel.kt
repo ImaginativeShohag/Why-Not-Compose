@@ -45,11 +45,11 @@ private const val RESEND_COUNTER_INTERVAL_SEC = 30
 
 class OtpCodeVerifyViewModel @Inject constructor() : ViewModel() {
 
-    private val _eventShowLoading = MutableStateFlow(false)
+    private val eventShowLoading = MutableStateFlow(false)
 
-    private val _eventShowMessage = MutableStateFlow<Event<String>?>(null)
+    private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
 
-    private val _eventSuccess = MutableStateFlow(false)
+    private val eventSuccess = MutableStateFlow(false)
 
     // ----------------------------------------------------------------
 
@@ -62,9 +62,9 @@ class OtpCodeVerifyViewModel @Inject constructor() : ViewModel() {
     init {
         viewModelScope.launch {
             combine(
-                _eventShowLoading,
-                _eventShowMessage,
-                _eventSuccess
+                eventShowLoading,
+                eventShowMessage,
+                eventSuccess
             ) { showLoading, showMessage, success ->
 
                 OtpCodeVerifyViewState(
@@ -88,7 +88,7 @@ class OtpCodeVerifyViewModel @Inject constructor() : ViewModel() {
         phone: String,
         code: String
     ) = viewModelScope.launch {
-        _eventShowLoading.value = true
+        eventShowLoading.value = true
 
         // Simulating network delay
         delay(2000)
@@ -96,12 +96,12 @@ class OtpCodeVerifyViewModel @Inject constructor() : ViewModel() {
         val random = Random.nextInt(10)
 
         if (random < 3) {
-            _eventShowMessage.value = Event("Cannot send OTP. Please try again.")
+            eventShowMessage.value = Event("Cannot send OTP. Please try again.")
         } else {
-            _eventSuccess.value = true
+            eventSuccess.value = true
         }
 
-        _eventShowLoading.value = false
+        eventShowLoading.value = false
     }
 
     // ----------------------------------------------------------------
@@ -110,7 +110,7 @@ class OtpCodeVerifyViewModel @Inject constructor() : ViewModel() {
     fun sendOtp(
         phone: String
     ) = viewModelScope.launch {
-        _eventShowLoading.value = true
+        eventShowLoading.value = true
 
         // Simulating network delay
         delay(2000)
@@ -118,14 +118,14 @@ class OtpCodeVerifyViewModel @Inject constructor() : ViewModel() {
         val random = Random.nextInt(10)
 
         if (random < 3) {
-            _eventShowMessage.value = Event("Cannot send OTP to $phone. Please try again.")
+            eventShowMessage.value = Event("Cannot send OTP to $phone. Please try again.")
         } else {
-            _eventShowMessage.value = Event("OTP successfully resent to $phone.")
+            eventShowMessage.value = Event("OTP successfully resent to $phone.")
 
             restartCounter()
         }
 
-        _eventShowLoading.value = false
+        eventShowLoading.value = false
     }
 
     // ----------------------------------------------------------------
@@ -164,13 +164,13 @@ class OtpCodeVerifyViewModel @Inject constructor() : ViewModel() {
 
     fun isValidInputs(code: String): Boolean {
         if (code.isBlank()) {
-            _eventShowMessage.value = Event("Please enter the OTP first!")
+            eventShowMessage.value = Event("Please enter the OTP first!")
 
             return false
         }
 
         if (code.length < 6) {
-            _eventShowMessage.value = Event("Please enter the whole OTP!")
+            eventShowMessage.value = Event("Please enter the whole OTP!")
 
             return false
         }

@@ -60,19 +60,19 @@ class WebViewViewModel @Inject constructor() : ViewModel() {
 
     // ----------------------------------------------------------------
 
-    private var _swipeRefreshLayout: WeakReference<SwipeRefreshLayout>? = null
+    private var swipeRefreshLayout: WeakReference<SwipeRefreshLayout>? = null
 
-    private var _webView: WeakReference<WebView>? = null
+    private var webView: WeakReference<WebView>? = null
 
     // ----------------------------------------------------------------
 
     fun initSwipeRefresh(swipeRefreshLayout: SwipeRefreshLayout) {
         Timber.e("initSwipeRefresh")
 
-        this._swipeRefreshLayout = WeakReference(swipeRefreshLayout)
+        this.swipeRefreshLayout = WeakReference(swipeRefreshLayout)
 
         swipeRefreshLayout.setOnRefreshListener {
-            _webView?.get()?.reload()
+            webView?.get()?.reload()
         }
     }
 
@@ -86,7 +86,7 @@ class WebViewViewModel @Inject constructor() : ViewModel() {
             WebView.setWebContentsDebuggingEnabled(true)
         }
 
-        this._webView = WeakReference(webView)
+        this.webView = WeakReference(webView)
 
         webView.apply {
             val webSettings = this.settings
@@ -121,7 +121,7 @@ class WebViewViewModel @Inject constructor() : ViewModel() {
                         loadingProgress = null
                     )
 
-                    _swipeRefreshLayout?.get()?.isRefreshing = false
+                    swipeRefreshLayout?.get()?.isRefreshing = false
 
                     super.onPageFinished(view, url)
                 }
@@ -194,7 +194,7 @@ class WebViewViewModel @Inject constructor() : ViewModel() {
     }
 
     fun webViewCanGoBack(): Boolean {
-        _webView?.get()?.let {
+        webView?.get()?.let {
             Timber.e("webViewCanGoBack")
 
             return it.canGoBack()
@@ -205,11 +205,11 @@ class WebViewViewModel @Inject constructor() : ViewModel() {
     fun webViewGoBack() {
         Timber.e("webViewGoBack")
 
-        _webView?.get()?.goBack()
+        webView?.get()?.goBack()
     }
 
     fun webViewReload() {
-        _webView?.get()?.reload()
+        webView?.get()?.reload()
     }
 }
 

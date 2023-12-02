@@ -123,6 +123,7 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.R
+import org.imaginativeworld.whynotcompose.base.extensions.isValidEmail
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.common.compose.theme.errorInputBackground
@@ -1043,7 +1044,7 @@ fun TextFieldWithErrorState() {
     var isError by rememberSaveable { mutableStateOf(false) }
 
     fun validate(text: String) {
-        isError = text.count() < 5
+        isError = !text.isValidEmail()
     }
 
     TextField(
@@ -1053,7 +1054,7 @@ fun TextFieldWithErrorState() {
             isError = false
         },
         singleLine = true,
-        label = { Text(if (isError) "Email*" else "Email") },
+        label = { Text(if (isError) "Email* (With Validation)" else "Email (With Validation)") },
         isError = isError,
         keyboardActions = KeyboardActions { validate(text) },
         modifier = Modifier

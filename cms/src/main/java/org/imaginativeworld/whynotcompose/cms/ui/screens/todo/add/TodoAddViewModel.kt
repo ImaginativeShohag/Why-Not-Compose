@@ -45,11 +45,11 @@ import org.imaginativeworld.whynotcompose.cms.repositories.TodoRepository
 class TodoAddViewModel @Inject constructor(
     private val repository: TodoRepository
 ) : ViewModel() {
-    private val _eventShowLoading = MutableStateFlow(false)
+    private val eventShowLoading = MutableStateFlow(false)
 
-    private val _eventShowMessage = MutableStateFlow<Event<String>?>(null)
+    private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
 
-    private val _eventAddTodoSuccess = MutableStateFlow<Event<Boolean>?>(null)
+    private val eventAddTodoSuccess = MutableStateFlow<Event<Boolean>?>(null)
 
     // ----------------------------------------------------------------
 
@@ -62,9 +62,9 @@ class TodoAddViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             combine(
-                _eventShowLoading,
-                _eventShowMessage,
-                _eventAddTodoSuccess
+                eventShowLoading,
+                eventShowMessage,
+                eventAddTodoSuccess
             ) { showLoading, showMessage, addTodoSuccess ->
 
                 TodoAddViewState(
@@ -89,17 +89,17 @@ class TodoAddViewModel @Inject constructor(
         status: String
     ): Boolean {
         if (title.isBlank()) {
-            _eventShowMessage.value = Event("Please enter title!")
+            eventShowMessage.value = Event("Please enter title!")
             return false
         }
 
         if (status.isBlank()) {
-            _eventShowMessage.value = Event("Please select status!")
+            eventShowMessage.value = Event("Please select status!")
             return false
         }
 
         if (dueDate == null) {
-            _eventShowMessage.value = Event("Please select due date!")
+            eventShowMessage.value = Event("Please select due date!")
             return false
         }
 
@@ -116,7 +116,7 @@ class TodoAddViewModel @Inject constructor(
             return@launch
         }
 
-        _eventShowLoading.value = true
+        eventShowLoading.value = true
 
         try {
             repository.addTodo(
@@ -124,16 +124,17 @@ class TodoAddViewModel @Inject constructor(
                 Todo(
                     title = title,
                     dueOn = dueDate,
-                    status = status.lowercase()
+                    status = status.lowercase(),
+                    userId = userId
                 )
             )
 
-            _eventAddTodoSuccess.value = Event(true)
+            eventAddTodoSuccess.value = Event(true)
         } catch (e: ApiException) {
-            _eventShowMessage.value = Event(e.message ?: "Unknown error!")
+            eventShowMessage.value = Event(e.message ?: "Unknown error!")
         }
 
-        _eventShowLoading.value = false
+        eventShowLoading.value = false
     }
 }
 

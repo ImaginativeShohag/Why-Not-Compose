@@ -56,7 +56,7 @@ fun SplashScreen(
 
 @Preview
 @Composable
-fun TemplateChildScreenSkeletonPreview() {
+fun SplashScreenSkeletonPreview() {
     CMSAppTheme {
         SplashScreenSkeleton()
     }

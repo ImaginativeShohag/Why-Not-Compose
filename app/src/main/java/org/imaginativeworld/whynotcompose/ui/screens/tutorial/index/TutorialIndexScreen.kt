@@ -143,7 +143,6 @@ fun TutorialIndexSkeleton(
                         )
 
                         if (item.description != null) {
-                            // val description = remember { getSections(item.description) }
                             Text(
                                 modifier = Modifier.padding(
                                     top = 4.dp

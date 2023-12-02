@@ -52,17 +52,17 @@ import timber.log.Timber
 @HiltViewModel
 class MapViewModel @Inject constructor() : ViewModel() {
 
-    private val _eventShowLoading = MutableStateFlow(false)
+    private val eventShowLoading = MutableStateFlow(false)
 
-    private val _eventShowEmpty = MutableStateFlow(false)
+    private val eventShowEmpty = MutableStateFlow(false)
 
-    private val _eventShowMessage = MutableStateFlow<Event<String>?>(null)
+    private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
 
-    private val _eventCurrentLocationName = MutableStateFlow("Loading...")
+    private val eventCurrentLocationName = MutableStateFlow("Loading...")
 
-    private val _places = MutableStateFlow<List<MapPlace>>(emptyList())
+    private val places = MutableStateFlow<List<MapPlace>>(emptyList())
 
-    private val _selectedPlace = MutableStateFlow<MapPlace?>(null)
+    private val selectedPlace = MutableStateFlow<MapPlace?>(null)
 
     // ----------------------------------------------------------------
 
@@ -75,12 +75,12 @@ class MapViewModel @Inject constructor() : ViewModel() {
     init {
         viewModelScope.launch {
             combine(
-                _eventShowLoading,
-                _eventShowEmpty,
-                _eventShowMessage,
-                _eventCurrentLocationName,
-                _places,
-                _selectedPlace
+                eventShowLoading,
+                eventShowEmpty,
+                eventShowMessage,
+                eventCurrentLocationName,
+                places,
+                selectedPlace
             ) { showLoading, showEmpty, showMessage, currentLocationName, places, selectedPlace ->
                 MapViewState(
                     loading = showLoading,
@@ -111,7 +111,7 @@ class MapViewModel @Inject constructor() : ViewModel() {
         if (previousResult.isNotEmpty()) return
 
         viewModelScope.launch {
-            _eventShowLoading.value = true
+            eventShowLoading.value = true
 
             // Simulating API delay
             delay(2000)
@@ -120,16 +120,16 @@ class MapViewModel @Inject constructor() : ViewModel() {
 
             previousResult = places
 
-            _places.value = places
+            this@MapViewModel.places.value = places
 
-            _eventShowEmpty.value = places.isEmpty()
+            eventShowEmpty.value = places.isEmpty()
 
-            _eventShowLoading.value = false
+            eventShowLoading.value = false
         }
     }
 
     fun isFirstTime(): Boolean {
-        return if (_places.value.isNotEmpty() && isFirstTime) {
+        return if (places.value.isNotEmpty() && isFirstTime) {
             isFirstTime = false
             return true
         } else {
@@ -157,7 +157,7 @@ class MapViewModel @Inject constructor() : ViewModel() {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 geocoder.getFromLocation(location.latitude, location.longitude, 1) { addresses ->
-                    _eventCurrentLocationName.value =
+                    eventCurrentLocationName.value =
                         addresses.firstOrNull()?.getAddressLine(0) ?: "Unknown"
                 }
             } else {
@@ -169,7 +169,7 @@ class MapViewModel @Inject constructor() : ViewModel() {
 
                 val address = addresses?.get(0)?.getAddressLine(0)
 
-                _eventCurrentLocationName.value = address ?: "Unknown"
+                eventCurrentLocationName.value = address ?: "Unknown"
             }
         } catch (e: Exception) {
             Timber.e(e)
@@ -180,11 +180,11 @@ class MapViewModel @Inject constructor() : ViewModel() {
     // ----------------------------------------------------------------
 
     fun setSelectedMapPlace(mapPlace: MapPlace?) {
-        _selectedPlace.value = mapPlace
+        selectedPlace.value = mapPlace
     }
 
     fun clearSelectedMapPlace() {
-        _selectedPlace.value = null
+        selectedPlace.value = null
     }
 
     // ----------------------------------------------------------------

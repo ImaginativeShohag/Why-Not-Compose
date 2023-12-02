@@ -26,10 +26,10 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.selectimageandcrop
 
-import android.Manifest
 import android.content.res.Configuration
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -65,7 +65,14 @@ import org.imaginativeworld.whynotcompose.common.compose.R as CommonR
 import org.imaginativeworld.whynotcompose.common.compose.composeutils.rememberImagePainter
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
-import org.imaginativeworld.whynotcompose.utils.SquireCropImage
+import org.imaginativeworld.whynotcompose.utils.CropImage
+
+/**
+ * Resources:
+ * - https://developer.android.com/training/data-storage/shared/documents-files
+ * - https://developer.android.com/guide/topics/providers/document-provider#client
+ * - https://developer.android.com/training/data-storage/shared/photopicker
+ */
 
 @Composable
 fun SelectImageAndCropScreen(
@@ -78,7 +85,7 @@ fun SelectImageAndCropScreen(
 
     var imageUri by remember { mutableStateOf<Uri?>(null) }
 
-    val uCropLauncher = rememberLauncherForActivityResult(SquireCropImage()) { uri ->
+    val uCropLauncher = rememberLauncherForActivityResult(CropImage()) { uri ->
         imageUri = uri
 
         uri?.apply {
@@ -89,7 +96,7 @@ fun SelectImageAndCropScreen(
         }
     }
 
-    val imageSelectorLauncher =
+    val imageSelectorLauncher1 =
         rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             if (uri != null) {
                 uCropLauncher.launch(
@@ -105,13 +112,35 @@ fun SelectImageAndCropScreen(
             }
         }
 
-    val requestStoragePermission =
-        rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { permissionGranted ->
-
-            if (permissionGranted) {
-                imageSelectorLauncher.launch("image/*")
+    val imageSelectorLauncher2 =
+        rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+            if (uri != null) {
+                uCropLauncher.launch(
+                    Pair(
+                        first = uri,
+                        second = Uri.fromFile(
+                            File(context.cacheDir, "temp_image_file_${Date().time}")
+                        )
+                    )
+                )
             } else {
-                context.toast("Please allow storage permission for select image.")
+                context.toast("No image selected!")
+            }
+        }
+
+    val imageSelectorLauncher3 =
+        rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            if (uri != null) {
+                uCropLauncher.launch(
+                    Pair(
+                        first = uri,
+                        second = Uri.fromFile(
+                            File(context.cacheDir, "temp_image_file_${Date().time}")
+                        )
+                    )
+                )
+            } else {
+                context.toast("No image selected!")
             }
         }
 
@@ -120,8 +149,16 @@ fun SelectImageAndCropScreen(
     SelectImageAndCropScreenSkeleton(
         goBack = goBack,
         imagePath = imageUri,
-        onChooseImageClicked = {
-            requestStoragePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        onChooseImage1Clicked = {
+            imageSelectorLauncher1.launch("image/*")
+        },
+        onChooseImage2Clicked = {
+            imageSelectorLauncher2.launch(arrayOf("image/*"))
+        },
+        onChooseImage3Clicked = {
+            imageSelectorLauncher3.launch(
+                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+            )
         }
     )
 }
@@ -146,7 +183,9 @@ fun SelectImageAndCropScreenSkeletonPreviewDark() {
 fun SelectImageAndCropScreenSkeleton(
     goBack: () -> Unit = {},
     imagePath: Uri? = null,
-    onChooseImageClicked: () -> Unit = {}
+    onChooseImage1Clicked: () -> Unit = {},
+    onChooseImage2Clicked: () -> Unit = {},
+    onChooseImage3Clicked: () -> Unit = {}
 ) {
     Scaffold(
         Modifier
@@ -191,10 +230,32 @@ fun SelectImageAndCropScreenSkeleton(
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 32.dp),
                 onClick = {
-                    onChooseImageClicked()
+                    onChooseImage1Clicked()
                 }
             ) {
-                Text("Choose Image")
+                Text("Choose Image (GetContent())")
+            }
+
+            Button(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = 8.dp),
+                onClick = {
+                    onChooseImage2Clicked()
+                }
+            ) {
+                Text("Choose Image (OpenDocument())")
+            }
+
+            Button(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = 8.dp),
+                onClick = {
+                    onChooseImage3Clicked()
+                }
+            ) {
+                Text("Choose Image (PickVisualMedia())")
             }
 
             // ----------------------------------------------------------------

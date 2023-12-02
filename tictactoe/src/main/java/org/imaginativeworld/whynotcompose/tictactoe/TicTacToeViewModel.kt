@@ -48,15 +48,15 @@ class TicTacToeViewModel @Inject constructor(
 
     // ----------------------------------------------------------------
 
-    private val _eventShowLoading = MutableStateFlow(false)
-    private val _eventShowMessage = MutableStateFlow<Event<String>?>(null)
-    private val _eventShowToast = MutableStateFlow<Event<String>?>(null)
-    private val _eventPaused = MutableStateFlow(false)
-    private val _userWinCount = MutableStateFlow(0)
-    private val _aiWinCount = MutableStateFlow(0)
-    private val _currentPlayingMoves = MutableStateFlow("")
-    private val _totalNeurons = MutableStateFlow(0)
-    private val _winPosition = MutableStateFlow<WinPosition?>(null)
+    private val eventShowLoading = MutableStateFlow(false)
+    private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
+    private val eventShowToast = MutableStateFlow<Event<String>?>(null)
+    private val eventPaused = MutableStateFlow(false)
+    private val userWinCount = MutableStateFlow(0)
+    private val aiWinCount = MutableStateFlow(0)
+    private val currentPlayingMoves = MutableStateFlow("")
+    private val totalNeurons = MutableStateFlow(0)
+    private val winPosition = MutableStateFlow<WinPosition?>(null)
 
     // ----------------------------------------------------------------
 
@@ -69,15 +69,15 @@ class TicTacToeViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             combine(
-                _eventShowLoading,
-                _eventShowMessage,
-                _eventShowToast,
-                _eventPaused,
-                _userWinCount,
-                _aiWinCount,
-                _currentPlayingMoves,
-                _totalNeurons,
-                _winPosition
+                eventShowLoading,
+                eventShowMessage,
+                eventShowToast,
+                eventPaused,
+                userWinCount,
+                aiWinCount,
+                currentPlayingMoves,
+                totalNeurons,
+                winPosition
             ) { showLoading, showMessage, showToast,
                 paused, userWinCount, aiWinCount,
                 currentPlayingMoves, totalNeurons, winPosition ->
@@ -102,7 +102,7 @@ class TicTacToeViewModel @Inject constructor(
 
         winPlayingMoves.addAll(sharedPref.getData())
 
-        _totalNeurons.value = winPlayingMoves.size
+        totalNeurons.value = winPlayingMoves.size
     }
 
     fun act(position: Int) = viewModelScope.launch {
@@ -111,17 +111,17 @@ class TicTacToeViewModel @Inject constructor(
         // ----------------------------------------------------------------
 
         // Step 1: Apply user move
-        _currentPlayingMoves.value += "$position${Piece.X.value}"
+        currentPlayingMoves.value += "$position${Piece.X.value}"
 
         // Wait for the animation to finish
         delay(300)
 
         // Step 2: Check winning positions for User
-        TicTacToeEngine.isWin(_currentPlayingMoves.value)?.let { winPosition ->
+        TicTacToeEngine.isWin(currentPlayingMoves.value)?.let { winPosition ->
 
             // Save the win moves (We will call them Neuron ;) )
-            winPlayingMoves.add(_currentPlayingMoves.value)
-            _totalNeurons.value = winPlayingMoves.size
+            winPlayingMoves.add(currentPlayingMoves.value)
+            totalNeurons.value = winPlayingMoves.size
 
             notifyWon(winPosition)
 
@@ -129,9 +129,9 @@ class TicTacToeViewModel @Inject constructor(
         }
 
         // Step 3: Is it a draw?
-        if (_currentPlayingMoves.value.length >= 18) {
-            _eventPaused.value = true
-            _eventShowMessage.value = Event("It is a draw!")
+        if (currentPlayingMoves.value.length >= 18) {
+            eventPaused.value = true
+            eventShowMessage.value = Event("It is a draw!")
 
             return@launch
         }
@@ -142,20 +142,20 @@ class TicTacToeViewModel @Inject constructor(
 
         // Step 4: Check database if current flow match any win move
         val matchedNeuron =
-            winPlayingMoves.find { item -> item.startsWith(_currentPlayingMoves.value) }
+            winPlayingMoves.find { item -> item.startsWith(currentPlayingMoves.value) }
 
         // - If found: send next move
         if (matchedNeuron != null &&
             // Last 2 moves remaining
-            _currentPlayingMoves.value.length + 4 == matchedNeuron.length
+            currentPlayingMoves.value.length + 4 == matchedNeuron.length
         ) {
-            _currentPlayingMoves.value +=
-                matchedNeuron[_currentPlayingMoves.value.length + 2].toString() + Piece.O.value
+            currentPlayingMoves.value +=
+                matchedNeuron[currentPlayingMoves.value.length + 2].toString() + Piece.O.value
 
-            _eventShowToast.value = Event("Neuron used.")
+            eventShowToast.value = Event("Neuron used.")
 
             // Check if AI win?
-            TicTacToeEngine.isWin(_currentPlayingMoves.value)?.let { winPosition ->
+            TicTacToeEngine.isWin(currentPlayingMoves.value)?.let { winPosition ->
                 notifyWon(winPosition)
             }
 
@@ -165,14 +165,14 @@ class TicTacToeViewModel @Inject constructor(
         // - Else: send random move
         while (true) {
             val randInt = Random.nextInt(1, 10)
-            if (!_currentPlayingMoves.value.contains(randInt.toString())) {
-                _currentPlayingMoves.value += "$randInt${Piece.O.value}"
+            if (!currentPlayingMoves.value.contains(randInt.toString())) {
+                currentPlayingMoves.value += "$randInt${Piece.O.value}"
                 break
             }
         }
 
         // Step 5: Check if AI win?
-        TicTacToeEngine.isWin(_currentPlayingMoves.value)?.let { winPosition ->
+        TicTacToeEngine.isWin(currentPlayingMoves.value)?.let { winPosition ->
             notifyWon(winPosition)
         }
     }
@@ -180,22 +180,22 @@ class TicTacToeViewModel @Inject constructor(
     // ----------------------------------------------------------------
 
     private fun notifyWon(winPosition: WinPosition) {
-        _eventPaused.value = true
+        eventPaused.value = true
 
         val winPiece = TicTacToeEngine.whoWin(
-            _currentPlayingMoves.value,
+            currentPlayingMoves.value,
             winPosition
         )
 
         if (winPiece == Piece.X) {
-            _eventShowMessage.value = Event("You won!")
-            _userWinCount.value++
+            eventShowMessage.value = Event("You won!")
+            userWinCount.value++
         } else {
-            _eventShowMessage.value = Event("AI won!")
-            _aiWinCount.value++
+            eventShowMessage.value = Event("AI won!")
+            aiWinCount.value++
         }
 
-        _winPosition.value = winPosition
+        this.winPosition.value = winPosition
     }
 
     // ----------------------------------------------------------------
@@ -203,12 +203,12 @@ class TicTacToeViewModel @Inject constructor(
     fun restart() = viewModelScope.launch {
         sharedPref.setData(winPlayingMoves)
 
-        _currentPlayingMoves.value = ""
-        _winPosition.value = null
+        currentPlayingMoves.value = ""
+        winPosition.value = null
 
         delay(300)
 
-        _eventPaused.value = false
+        eventPaused.value = false
     }
 }
 

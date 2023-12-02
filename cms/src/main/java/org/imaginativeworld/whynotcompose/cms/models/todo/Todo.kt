@@ -47,7 +47,7 @@ data class Todo(
     @Json(name = "status")
     val status: String,
     @Json(name = "user_id")
-    val userId: Int = 1 // This is used for demo only.
+    val userId: Int
 ) {
     fun getDueDate(): String {
         return dueOn?.getHumanReadableDate() ?: "No"

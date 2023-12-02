@@ -45,7 +45,7 @@ object MapPlaceRepo {
         MapPlace(
             name = "Dhaka Division",
             location = LatLng(23.7807777, 90.3492858),
-            description = "Igitur ne dolorem quidem. Nam illud vehementer repugnat, eundem beatum esse et multis malis oppressum. Piso, familiaris noster, et alia multa et hoc loco Stoicos irridebat: Quid enim? Nos quidem Virtutes sic natae sumus, ut tibi serviremus, aliud negotii nihil habemus. An hoc usque quaque, aliter in vita? Sed finge non solum callidum eum, qui aliquid improbe faciat, verum etiam praepotentem, ut M. Itaque nostrum est-quod nostrum dico, artis est-ad ea principia, quae accepimus. Qui igitur convenit ab alia voluptate dicere naturam proficisci, in alia summum bonum ponere?"
+            description = "Igitur ne dolorem + qui+dem. N&am il=lud vehementer repugnat, eundem beatum esse et multis malis oppressum. Piso, familiaris noster, et alia multa et hoc loco Stoicos irridebat: Quid enim? Nos quidem Virtutes sic natae sumus, ut tibi serviremus, aliud negotii nihil habemus. An hoc usque quaque, aliter in vita? Sed finge non solum callidum eum, qui aliquid improbe faciat, verum etiam praepotentem, ut M. Itaque nostrum est-quod nostrum dico, artis est-ad ea principia, quae accepimus. Qui igitur convenit ab alia voluptate dicere naturam proficisci, in alia summum bonum ponere?"
         ),
         MapPlace(
             name = "Khulna Division",

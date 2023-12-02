@@ -44,11 +44,11 @@ import org.imaginativeworld.whynotcompose.cms.repositories.PostRepository
 class PostAddViewModel @Inject constructor(
     private val repository: PostRepository
 ) : ViewModel() {
-    private val _eventShowLoading = MutableStateFlow(false)
+    private val eventShowLoading = MutableStateFlow(false)
 
-    private val _eventShowMessage = MutableStateFlow<Event<String>?>(null)
+    private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
 
-    private val _eventAddPostSuccess = MutableStateFlow<Event<Boolean>?>(null)
+    private val eventAddPostSuccess = MutableStateFlow<Event<Boolean>?>(null)
 
     // ----------------------------------------------------------------
 
@@ -61,9 +61,9 @@ class PostAddViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             combine(
-                _eventShowLoading,
-                _eventShowMessage,
-                _eventAddPostSuccess
+                eventShowLoading,
+                eventShowMessage,
+                eventAddPostSuccess
             ) { showLoading, showMessage, addPostSuccess ->
 
                 PostAddViewState(
@@ -87,12 +87,12 @@ class PostAddViewModel @Inject constructor(
         body: String
     ): Boolean {
         if (title.isBlank()) {
-            _eventShowMessage.value = Event("Please enter title!")
+            eventShowMessage.value = Event("Please enter title!")
             return false
         }
 
         if (body.isBlank()) {
-            _eventShowMessage.value = Event("Please enter body!")
+            eventShowMessage.value = Event("Please enter body!")
             return false
         }
 
@@ -108,25 +108,28 @@ class PostAddViewModel @Inject constructor(
             return@launch
         }
 
-        _eventShowLoading.value = true
+        eventShowLoading.value = true
 
         try {
-            repository.addPost(
-                userId,
-                Post(
-                    id = 0, // It will be ignored in the server.
-                    title = title,
-                    body = body,
-                    userId = userId
-                )
+            // Note: The value of `id` will be ignored in the server.
+            val post = Post(
+                id = 0,
+                title = title,
+                body = body,
+                userId = userId
             )
 
-            _eventAddPostSuccess.value = Event(true)
+            repository.addPost(
+                userId,
+                post
+            )
+
+            eventAddPostSuccess.value = Event(true)
         } catch (e: ApiException) {
-            _eventShowMessage.value = Event(e.message ?: "Unknown error!")
+            eventShowMessage.value = Event(e.message ?: "Unknown error!")
         }
 
-        _eventShowLoading.value = false
+        eventShowLoading.value = false
     }
 }
 

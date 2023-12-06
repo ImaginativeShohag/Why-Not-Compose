@@ -106,6 +106,8 @@ import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDat
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDataPassTwoScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.onesignalandbroadcast.OneSignalAndBroadcastScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.permission.PermissionScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.reactivemodel.ReactiveModelScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.reactivemodel.ReactiveModelViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.selectimageandcrop.SelectImageAndCropScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.selectimageandcrop.SelectImageAndCropViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.ui.index.UiIndexScreen
@@ -240,6 +242,8 @@ sealed class TutorialsScreen(val route: String) {
                 .replace("{$PARAM_ID}", "$id")
                 .replace("{$PARAM_NAME}", name)
     }
+
+    data object TutorialReactiveModel : TutorialsScreen("tutorial/reactive-model")
 }
 
 // ================================================================
@@ -1022,6 +1026,21 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
         NavDataPassThreeScreen(
             id = id,
             name = name,
+            goBack = {
+                navController.popBackStack()
+            }
+        )
+    }
+
+    // ================================================================
+    // Reactive model
+    // ================================================================
+
+    composable(TutorialsScreen.TutorialReactiveModel.route) {
+        val viewModel: ReactiveModelViewModel = hiltViewModel()
+
+        ReactiveModelScreen(
+            viewModel = viewModel,
             goBack = {
                 navController.popBackStack()
             }

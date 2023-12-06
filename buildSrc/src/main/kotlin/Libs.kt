@@ -188,7 +188,7 @@ object Libs {
             const val uiUtil = "androidx.compose.ui:ui-util"
 
             const val tooling = "androidx.compose.ui:ui-tooling"
-            const val toolingPreview = "androidx.compose.ui:ui-tooling-preview"
+            const val toolingPreview = "androidx.compose.ui:ui-tooling-preview:1.6.0-beta01"
 
             const val viewBinding = "androidx.compose.ui:ui-viewbinding"
             const val animation = "androidx.compose.animation:animation"

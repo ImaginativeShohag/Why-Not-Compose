@@ -28,7 +28,6 @@ package org.imaginativeworld.whynotcompose.ui.screens.home.index
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -89,7 +88,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
@@ -473,17 +472,9 @@ fun ModuleButton(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
 fun HomeIndexScreenPreview() {
-    AppTheme {
-        HomeIndexScreen()
-    }
-}
-
-@Preview(uiMode = UI_MODE_NIGHT_YES)
-@Composable
-fun HomeIndexScreenPreviewDark() {
     AppTheme {
         HomeIndexScreen()
     }

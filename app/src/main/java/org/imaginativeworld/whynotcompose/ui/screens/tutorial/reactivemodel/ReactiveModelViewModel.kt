@@ -40,7 +40,7 @@ class ReactiveModelViewModel : ViewModel() {
         get() = _products
 
     init {
-        _products.value = ProductReactiveModel.dummayItems
+        _products.value = ProductReactiveModel.dummyItems
     }
 
     fun incrementQuantity(product: ProductReactiveModel) {
@@ -84,7 +84,7 @@ data class ProductReactiveModel internal constructor(
     }
 
     companion object {
-        val dummayItems = listOf(
+        val dummyItems = listOf(
             ProductReactiveModel(
                 name = "Apple",
                 price = 5.0,

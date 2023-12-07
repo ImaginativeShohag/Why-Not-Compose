@@ -82,7 +82,7 @@ fun ReactiveModelScreen(
 fun CounterWithVMScreenSkeletonPreview() {
     val products by remember {
         mutableStateOf(
-            ProductReactiveModel.dummayItems
+            ProductReactiveModel.dummyItems
         )
     }
 

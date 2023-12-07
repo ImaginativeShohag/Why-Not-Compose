@@ -28,6 +28,7 @@ package org.imaginativeworld.whynotcompose.ui.screens.tutorial.reactivemodel
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -62,6 +63,10 @@ import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
+/**
+ * Resource: https://developer.android.com/codelabs/jetpack-compose-state#11
+ */
+
 @Composable
 fun ReactiveModelScreen(
     viewModel: ReactiveModelViewModel,
@@ -82,7 +87,7 @@ fun ReactiveModelScreen(
 fun CounterWithVMScreenSkeletonPreview() {
     val products by remember {
         mutableStateOf(
-            ProductReactiveModel.dummyItems
+            ProductReactiveModelMock.items
         )
     }
 
@@ -130,7 +135,10 @@ fun CounterWithVMScreenSkeleton(
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp)
             ) {
-                LazyColumn(Modifier.fillMaxSize()) {
+                LazyColumn(
+                    Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(vertical = 4.dp)
+                ) {
                     items(products) { product ->
                         ProductItemView(
                             modifier = Modifier.padding(vertical = 8.dp),
@@ -158,7 +166,7 @@ private fun ProductItemView(
     increase: () -> Unit,
     decrease: () -> Unit
 ) {
-    Card(modifier) {
+    Card(modifier, elevation = 4.dp) {
         Column(Modifier.padding(8.dp)) {
             Text(
                 name,

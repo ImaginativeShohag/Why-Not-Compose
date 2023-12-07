@@ -32,19 +32,21 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import timber.log.Timber
 
 class ReactiveModelViewModel : ViewModel() {
     private val _products = MutableStateFlow<List<ProductReactiveModel>>(emptyList())
-    val products: StateFlow<List<ProductReactiveModel>>
-        get() = _products
+    val products = _products.asStateFlow()
 
     init {
-        _products.value = ProductReactiveModel.dummyItems
+        _products.value = ProductReactiveModelMock.items
     }
 
     fun incrementQuantity(product: ProductReactiveModel) {
         product.increaseQuantity()
+
+        Timber.e("product: $product")
     }
 
     fun decreaseQuantity(product: ProductReactiveModel) {
@@ -54,19 +56,12 @@ class ReactiveModelViewModel : ViewModel() {
 
 // Region: Models
 
-data class ProductReactiveModel internal constructor(
+class ProductReactiveModel internal constructor(
     val name: String,
-    val price: Double
+    val price: Double,
+    quantity: Int // Initial quantity
 ) {
-    constructor(
-        name: String,
-        price: Double,
-        quantity: Int
-    ) : this(name, price) {
-        this.quantity = quantity
-    }
-
-    var quantity by mutableIntStateOf(0)
+    var quantity by mutableIntStateOf(quantity)
         private set
 
     val totalPrice by derivedStateOf {
@@ -83,73 +78,80 @@ data class ProductReactiveModel internal constructor(
         }
     }
 
-    companion object {
-        val dummyItems = listOf(
-            ProductReactiveModel(
-                name = "Apple",
-                price = 5.0,
-                quantity = 0
-            ),
-            ProductReactiveModel(
-                name = "Orange",
-                price = 100.0,
-                quantity = 4
-            ),
-            ProductReactiveModel(
-                name = "Banana",
-                price = 10.0,
-                quantity = 50
-            ),
-            ProductReactiveModel(
-                name = "Grapes",
-                price = 8.5,
-                quantity = 20
-            ),
-            ProductReactiveModel(
-                name = "Strawberry",
-                price = 15.0,
-                quantity = 12
-            ),
-            ProductReactiveModel(
-                name = "Watermelon",
-                price = 25.0,
-                quantity = 2
-            ),
-            ProductReactiveModel(
-                name = "Pineapple",
-                price = 12.0,
-                quantity = 8
-            ),
-            ProductReactiveModel(
-                name = "Mango",
-                price = 18.0,
-                quantity = 6
-            ),
-            ProductReactiveModel(
-                name = "Cherry",
-                price = 7.0,
-                quantity = 15
-            ),
-            ProductReactiveModel(
-                name = "Blueberry",
-                price = 20.0,
-                quantity = 10
-            ),
-            ProductReactiveModel(
-                name = "Peach",
-                price = 14.0,
-                quantity = 18
-            ),
-            ProductReactiveModel(
-                name = "Kiwi",
-                price = 9.0,
-                quantity = 25
-            ),
-            ProductReactiveModel(
-                name = "Pear",
-                price = 11.0,
-                quantity = 30
-            )
-        )
+    // Use Android Studio menu "Code -> Generate -> toString()" to auto generate `toString()`.
+    override fun toString(): String {
+        return "ProductReactiveModel(name='$name', price=$price, quantity=$quantity, totalPrice=$totalPrice)"
     }
+}
+
+// Region: Mocks
+
+object ProductReactiveModelMock {
+    val items = listOf(
+        ProductReactiveModel(
+            name = "Apple",
+            price = 5.0,
+            quantity = 0
+        ),
+        ProductReactiveModel(
+            name = "Orange",
+            price = 100.0,
+            quantity = 4
+        ),
+        ProductReactiveModel(
+            name = "Banana",
+            price = 10.0,
+            quantity = 50
+        ),
+        ProductReactiveModel(
+            name = "Grapes",
+            price = 8.5,
+            quantity = 20
+        ),
+        ProductReactiveModel(
+            name = "Strawberry",
+            price = 15.0,
+            quantity = 12
+        ),
+        ProductReactiveModel(
+            name = "Watermelon",
+            price = 25.0,
+            quantity = 2
+        ),
+        ProductReactiveModel(
+            name = "Pineapple",
+            price = 12.0,
+            quantity = 8
+        ),
+        ProductReactiveModel(
+            name = "Mango",
+            price = 18.0,
+            quantity = 6
+        ),
+        ProductReactiveModel(
+            name = "Cherry",
+            price = 7.0,
+            quantity = 15
+        ),
+        ProductReactiveModel(
+            name = "Blueberry",
+            price = 20.0,
+            quantity = 10
+        ),
+        ProductReactiveModel(
+            name = "Peach",
+            price = 14.0,
+            quantity = 18
+        ),
+        ProductReactiveModel(
+            name = "Kiwi",
+            price = 9.0,
+            quantity = 25
+        ),
+        ProductReactiveModel(
+            name = "Pear",
+            price = 11.0,
+            quantity = 30
+        )
+    )
 }

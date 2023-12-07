@@ -141,6 +141,12 @@ data class Tutorial(
                 description = "Example of data passing in `Navigation Component`.",
                 route = TutorialsScreen.TutorialNavDataPassHome,
                 level = TutorialLevel.Intermediate
+            ),
+            Tutorial(
+                name = "Reactive Model",
+                description = "Example of reactive model in `MVVM`.",
+                route = TutorialsScreen.TutorialReactiveModel,
+                level = TutorialLevel.Beginner
             )
         )
     }

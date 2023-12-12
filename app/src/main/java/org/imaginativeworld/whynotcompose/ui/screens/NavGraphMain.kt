@@ -43,6 +43,8 @@ import androidx.navigation.navigation
 import org.imaginativeworld.whynotcompose.base.extensions.getJsonFromObj
 import org.imaginativeworld.whynotcompose.base.extensions.getObjFromJson
 import org.imaginativeworld.whynotcompose.cms.ui.screens.CMSMainScreen
+import org.imaginativeworld.whynotcompose.datasource.cache.MemoryCache
+import org.imaginativeworld.whynotcompose.datasource.cache.MemoryCacheKey
 import org.imaginativeworld.whynotcompose.exoplayer.ExoPlayerScreen
 import org.imaginativeworld.whynotcompose.models.DemoData
 import org.imaginativeworld.whynotcompose.models.MapPlace
@@ -100,6 +102,8 @@ import org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.deeplinks.DeepLinksScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.index.TutorialIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.lottie.LottieScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDataPassFourScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDataPassFourViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDataPassHomeScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDataPassOneScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDataPassThreeScreen
@@ -242,6 +246,9 @@ sealed class TutorialsScreen(val route: String) {
                 .replace("{$PARAM_ID}", "$id")
                 .replace("{$PARAM_NAME}", name)
     }
+
+    data object TutorialNavDataPassScreen4 :
+        TutorialsScreen("tutorial/nav-data-pass/four/details")
 
     data object TutorialReactiveModel : TutorialsScreen("tutorial/reactive-model")
 }
@@ -956,6 +963,16 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
                         name = name
                     )
                 )
+            },
+            gotoScreenFour = { id, name ->
+                MemoryCache.set(
+                    MemoryCacheKey.DataOne,
+                    DemoData(id, name, listOf("A", "B", "C"))
+                )
+
+                navController.navigate(
+                    TutorialsScreen.TutorialNavDataPassScreen4.route
+                )
             }
         )
     }
@@ -1026,6 +1043,19 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
         NavDataPassThreeScreen(
             id = id,
             name = name,
+            goBack = {
+                navController.popBackStack()
+            }
+        )
+    }
+
+    composable(
+        TutorialsScreen.TutorialNavDataPassScreen4.route
+    ) {
+        val viewModel: NavDataPassFourViewModel = hiltViewModel()
+
+        NavDataPassFourScreen(
+            viewModel = viewModel,
             goBack = {
                 navController.popBackStack()
             }

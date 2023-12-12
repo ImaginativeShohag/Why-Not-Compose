@@ -75,7 +75,8 @@ fun NavDataPassHomeScreen(
     goBack: () -> Unit,
     gotoScreenOne: (DemoData) -> Unit,
     gotoScreenTwo: (DemoData) -> Unit,
-    gotoScreenThree: (id: Int, name: String) -> Unit
+    gotoScreenThree: (id: Int, name: String) -> Unit,
+    gotoScreenFour: (id: Int, name: String) -> Unit
 ) {
     NavDataPassHomeScreenSkeleton(
         receivedData = receivedData,
@@ -98,7 +99,8 @@ fun NavDataPassHomeScreen(
                 )
             )
         },
-        gotoScreenThree = gotoScreenThree
+        gotoScreenThree = gotoScreenThree,
+        gotoScreenFour = gotoScreenFour
     )
 }
 
@@ -136,7 +138,8 @@ fun NavDataPassHomeScreenSkeleton(
     goBack: () -> Unit = {},
     gotoScreenOne: () -> Unit = {},
     gotoScreenTwo: () -> Unit = {},
-    gotoScreenThree: (id: Int, name: String) -> Unit = { _, _ -> }
+    gotoScreenThree: (id: Int, name: String) -> Unit = { _, _ -> },
+    gotoScreenFour: (id: Int, name: String) -> Unit = { _, _ -> }
 ) {
     var id by remember { mutableStateOf("1") }
     var name by remember { mutableStateOf("Mahmudul Hasan Shohag") }
@@ -224,6 +227,14 @@ fun NavDataPassHomeScreenSkeleton(
                 gotoScreenThree(id.toInt(), name)
             }) {
                 Text("Pass Parameters")
+            }
+
+            AppComponent.MediumSpacer()
+
+            Button(onClick = {
+                gotoScreenFour(id.toInt(), name)
+            }) {
+                Text("Pass by Hoisting")
             }
 
             AppComponent.BigSpacer()

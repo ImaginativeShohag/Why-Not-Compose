@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -40,49 +39,39 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
 fun NavDataPassFourScreen(
-    viewModel: NavDataPassFourViewModel,
+    id: Int,
+    name: String,
+    ranks: List<String>,
     goBack: () -> Unit
 ) {
-    val data = viewModel.data.collectAsState()
-
     NavDataPassFourScreenSkeleton(
-        id = data.value?.id ?: 0,
-        name = data.value?.name ?: "",
+        id = id,
+        name = name,
+        ranks = ranks,
         goBack = goBack
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
 fun NavDataPassFourScreenSkeletonPreview() {
     AppTheme {
         NavDataPassFourScreenSkeleton(
             id = 1,
-            name = "Mahmudul Hasan Shohag"
-        )
-    }
-}
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun NavDataPassFourScreenSkeletonPreviewDark() {
-    AppTheme {
-        NavDataPassFourScreenSkeleton(
-            id = 1,
-            name = "Mahmudul Hasan Shohag"
+            name = "Mahmudul Hasan Shohag",
+            ranks = listOf("A", "B", "C")
         )
     }
 }
@@ -91,6 +80,7 @@ fun NavDataPassFourScreenSkeletonPreviewDark() {
 fun NavDataPassFourScreenSkeleton(
     id: Int,
     name: String,
+    ranks: List<String>,
     goBack: () -> Unit = {}
 ) {
     Scaffold(
@@ -137,6 +127,13 @@ fun NavDataPassFourScreenSkeleton(
                     .padding(horizontal = 16.dp)
                     .fillMaxWidth(),
                 text = "Name: $name"
+            )
+
+            Text(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth(),
+                text = "Ranks: ${ranks.joinToString()}"
             )
 
             // ----------------------------------------------------------------

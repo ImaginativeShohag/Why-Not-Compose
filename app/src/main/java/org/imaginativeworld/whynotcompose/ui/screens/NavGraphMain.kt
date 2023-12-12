@@ -40,11 +40,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import org.imaginativeworld.whynotcompose.base.extensions.arg
 import org.imaginativeworld.whynotcompose.base.extensions.getJsonFromObj
 import org.imaginativeworld.whynotcompose.base.extensions.getObjFromJson
+import org.imaginativeworld.whynotcompose.base.extensions.navigate
 import org.imaginativeworld.whynotcompose.cms.ui.screens.CMSMainScreen
-import org.imaginativeworld.whynotcompose.datasource.cache.MemoryCache
-import org.imaginativeworld.whynotcompose.datasource.cache.MemoryCacheKey
 import org.imaginativeworld.whynotcompose.exoplayer.ExoPlayerScreen
 import org.imaginativeworld.whynotcompose.models.DemoData
 import org.imaginativeworld.whynotcompose.models.MapPlace
@@ -248,7 +248,11 @@ sealed class TutorialsScreen(val route: String) {
     }
 
     data object TutorialNavDataPassScreen4 :
-        TutorialsScreen("tutorial/nav-data-pass/four/details")
+        TutorialsScreen("tutorial/nav-data-pass/four/details") {
+        const val PARAM_ID = "id"
+        const val PARAM_NAME = "name"
+        const val PARAM_RANKS = "ranks"
+    }
 
     data object TutorialReactiveModel : TutorialsScreen("tutorial/reactive-model")
 }
@@ -965,13 +969,17 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
                 )
             },
             gotoScreenFour = { id, name ->
-                MemoryCache.set(
-                    MemoryCacheKey.DataOne,
-                    DemoData(id, name, listOf("A", "B", "C"))
-                )
-
                 navController.navigate(
-                    TutorialsScreen.TutorialNavDataPassScreen4.route
+                    TutorialsScreen.TutorialNavDataPassScreen4.route,
+                    args = mapOf(
+                        TutorialsScreen.TutorialNavDataPassScreen4.PARAM_ID to id,
+                        TutorialsScreen.TutorialNavDataPassScreen4.PARAM_NAME to name,
+                        TutorialsScreen.TutorialNavDataPassScreen4.PARAM_RANKS to listOf(
+                            "A",
+                            "B",
+                            "C"
+                        )
+                    )
                 )
             }
         )
@@ -1051,11 +1059,24 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
 
     composable(
         TutorialsScreen.TutorialNavDataPassScreen4.route
-    ) {
+    ) { backStackEntry ->
         val viewModel: NavDataPassFourViewModel = hiltViewModel()
+
+        val id: Int = backStackEntry.arg(
+            TutorialsScreen.TutorialNavDataPassScreen4.PARAM_ID
+        ) ?: throw Exception("Id cannot be null!")
+        val name: String = backStackEntry.arg(
+            TutorialsScreen.TutorialNavDataPassScreen4.PARAM_NAME
+        ) ?: throw Exception("Id cannot be null!")
+        val ranks: List<String> = backStackEntry.arg(
+            TutorialsScreen.TutorialNavDataPassScreen4.PARAM_RANKS
+        ) ?: throw Exception("Id cannot be null!")
 
         NavDataPassFourScreen(
             viewModel = viewModel,
+            id = id,
+            name = name,
+            ranks = ranks,
             goBack = {
                 navController.popBackStack()
             }

@@ -1,8 +1,11 @@
-package org.imaginativeworld.whynotcompose.datasource.cache
+package org.imaginativeworld.whynotcompose.base.datasource.cache
 
 import org.imaginativeworld.whynotcompose.base.extensions.getJsonFromObj
 import org.imaginativeworld.whynotcompose.base.extensions.getObjFromJson
 
+/**
+ * Memory cache.
+ */
 object MemoryCache {
     var cache = mutableMapOf<String, String>()
         private set

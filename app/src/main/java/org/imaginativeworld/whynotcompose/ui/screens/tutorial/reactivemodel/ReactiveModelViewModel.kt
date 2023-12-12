@@ -59,13 +59,13 @@ class ReactiveModelViewModel : ViewModel() {
 class ProductReactiveModel internal constructor(
     val name: String,
     val price: Double,
-    quantity: Int // Initial quantity
+    initialQuantity: Int
 ) {
-    var quantity by mutableIntStateOf(quantity)
+    var quantity by mutableIntStateOf(initialQuantity)
         private set
 
     val totalPrice by derivedStateOf {
-        quantity * price
+        initialQuantity * price
     }
 
     fun increaseQuantity() {
@@ -91,67 +91,67 @@ object ProductReactiveModelMock {
         ProductReactiveModel(
             name = "Apple",
             price = 5.0,
-            quantity = 0
+            initialQuantity = 0
         ),
         ProductReactiveModel(
             name = "Orange",
             price = 100.0,
-            quantity = 4
+            initialQuantity = 4
         ),
         ProductReactiveModel(
             name = "Banana",
             price = 10.0,
-            quantity = 50
+            initialQuantity = 50
         ),
         ProductReactiveModel(
             name = "Grapes",
             price = 8.5,
-            quantity = 20
+            initialQuantity = 20
         ),
         ProductReactiveModel(
             name = "Strawberry",
             price = 15.0,
-            quantity = 12
+            initialQuantity = 12
         ),
         ProductReactiveModel(
             name = "Watermelon",
             price = 25.0,
-            quantity = 2
+            initialQuantity = 2
         ),
         ProductReactiveModel(
             name = "Pineapple",
             price = 12.0,
-            quantity = 8
+            initialQuantity = 8
         ),
         ProductReactiveModel(
             name = "Mango",
             price = 18.0,
-            quantity = 6
+            initialQuantity = 6
         ),
         ProductReactiveModel(
             name = "Cherry",
             price = 7.0,
-            quantity = 15
+            initialQuantity = 15
         ),
         ProductReactiveModel(
             name = "Blueberry",
             price = 20.0,
-            quantity = 10
+            initialQuantity = 10
         ),
         ProductReactiveModel(
             name = "Peach",
             price = 14.0,
-            quantity = 18
+            initialQuantity = 18
         ),
         ProductReactiveModel(
             name = "Kiwi",
             price = 9.0,
-            quantity = 25
+            initialQuantity = 25
         ),
         ProductReactiveModel(
             name = "Pear",
             price = 11.0,
-            quantity = 30
+            initialQuantity = 30
         )
     )
 }

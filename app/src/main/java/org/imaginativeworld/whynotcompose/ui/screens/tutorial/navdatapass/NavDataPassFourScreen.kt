@@ -97,7 +97,7 @@ fun NavDataPassFourScreenSkeleton(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AppComponent.Header(
-                "Data passed by Hoisting",
+                "Data passed by Memory Cache",
                 goBack = goBack
             )
 

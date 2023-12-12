@@ -234,7 +234,7 @@ fun NavDataPassHomeScreenSkeleton(
             Button(onClick = {
                 gotoScreenFour(id.toInt(), name)
             }) {
-                Text("Pass by Hoisting")
+                Text("Pass by Memory Cache")
             }
 
             AppComponent.BigSpacer()

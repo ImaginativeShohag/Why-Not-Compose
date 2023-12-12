@@ -103,7 +103,6 @@ import org.imaginativeworld.whynotcompose.ui.screens.tutorial.deeplinks.DeepLink
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.index.TutorialIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.lottie.LottieScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDataPassFourScreen
-import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDataPassFourViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDataPassHomeScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDataPassOneScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDataPassThreeScreen
@@ -221,6 +220,10 @@ sealed class TutorialsScreen(val route: String) {
     data object TutorialCMS : TutorialsScreen("tutorial/cms")
     data object TutorialDeepLink : TutorialsScreen("tutorial/deep-link")
 
+    // ================================================================
+    // Navigation pass-receive example
+    // ================================================================
+
     data object TutorialNavDataPassHome : TutorialsScreen("tutorial/nav-data-pass/home") {
         const val KEY_RECEIVED_DATA = "received_data"
     }
@@ -253,6 +256,10 @@ sealed class TutorialsScreen(val route: String) {
         const val PARAM_NAME = "name"
         const val PARAM_RANKS = "ranks"
     }
+
+    // ================================================================
+    // Reactive model
+    // ================================================================
 
     data object TutorialReactiveModel : TutorialsScreen("tutorial/reactive-model")
 }
@@ -1060,20 +1067,17 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
     composable(
         TutorialsScreen.TutorialNavDataPassScreen4.route
     ) { backStackEntry ->
-        val viewModel: NavDataPassFourViewModel = hiltViewModel()
-
         val id: Int = backStackEntry.arg(
             TutorialsScreen.TutorialNavDataPassScreen4.PARAM_ID
         ) ?: throw Exception("Id cannot be null!")
         val name: String = backStackEntry.arg(
             TutorialsScreen.TutorialNavDataPassScreen4.PARAM_NAME
-        ) ?: throw Exception("Id cannot be null!")
+        ) ?: throw Exception("Name cannot be null!")
         val ranks: List<String> = backStackEntry.arg(
             TutorialsScreen.TutorialNavDataPassScreen4.PARAM_RANKS
-        ) ?: throw Exception("Id cannot be null!")
+        ) ?: throw Exception("Ranks cannot be null!")
 
         NavDataPassFourScreen(
-            viewModel = viewModel,
             id = id,
             name = name,
             ranks = ranks,

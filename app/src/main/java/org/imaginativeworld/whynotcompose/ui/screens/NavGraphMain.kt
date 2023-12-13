@@ -30,6 +30,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -945,12 +946,12 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
     // ================================================================
 
     composable(TutorialsScreen.TutorialNavDataPassHome.route) { backStateEntry ->
-        val receivedData = backStateEntry.savedStateHandle.get<DemoData>(
-            TutorialsScreen.TutorialNavDataPassHome.KEY_RECEIVED_DATA
-        )
+        val receivedData = backStateEntry.savedStateHandle
+            .getLiveData<DemoData>(TutorialsScreen.TutorialNavDataPassHome.KEY_RECEIVED_DATA)
+            .observeAsState()
 
         NavDataPassHomeScreen(
-            receivedData = receivedData,
+            receivedData = receivedData.value,
             goBack = {
                 navController.popBackStack()
             },

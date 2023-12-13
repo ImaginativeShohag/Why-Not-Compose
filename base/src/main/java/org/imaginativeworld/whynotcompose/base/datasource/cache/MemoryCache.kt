@@ -26,29 +26,22 @@
 
 package org.imaginativeworld.whynotcompose.base.datasource.cache
 
-import org.imaginativeworld.whynotcompose.base.extensions.getJsonFromObj
-import org.imaginativeworld.whynotcompose.base.extensions.getObjFromJson
-
 /**
  * Memory cache.
  */
 object MemoryCache {
-    var cache = mutableMapOf<String, String>()
+    var cache = mutableMapOf<String, Any>()
         private set
 
     inline fun <reified T> get(forKey: MemoryCacheKey): T? {
-        val data = cache[forKey.name] ?: return null
-
-        return data.getObjFromJson<T>(false)
+        return cache[forKey.name] as? T
     }
 
     inline fun <reified T> set(forKey: MemoryCacheKey, value: T?) {
         if (value == null) {
             cache.remove(forKey.name)
         } else {
-            value.getJsonFromObj<T>(false)?.let { jsonizedValue ->
-                cache[forKey.name] = jsonizedValue
-            }
+            cache[forKey.name] = value
         }
     }
 

@@ -33,6 +33,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
 import org.imaginativeworld.whynotcompose.base.datasource.cache.MemoryCache
 import org.imaginativeworld.whynotcompose.base.datasource.cache.MemoryCacheKeyForNavController
+import timber.log.Timber
 
 /**
  * Navigate with [args] to a route in the current NavGraph. If an invalid route is given, an
@@ -53,6 +54,7 @@ fun NavHostController.navigate(
     navigatorExtras: Navigator.Extras? = null
 ) {
     for (arg in args) {
+        Timber.e("arg: $arg")
         val compositeKey = route + arg.key
         MemoryCache.set(
             MemoryCacheKeyForNavController.Args(compositeKey),

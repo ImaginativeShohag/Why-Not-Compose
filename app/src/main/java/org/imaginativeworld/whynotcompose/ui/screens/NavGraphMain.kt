@@ -946,6 +946,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
     // ================================================================
 
     composable(TutorialsScreen.TutorialNavDataPassHome.route) { backStateEntry ->
+        // Observe for receive data using `savedStateHandle`.
         val receivedData = backStateEntry.savedStateHandle
             .getLiveData<DemoData>(TutorialsScreen.TutorialNavDataPassHome.KEY_RECEIVED_DATA)
             .observeAsState()
@@ -959,6 +960,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
                 navController.navigate(TutorialsScreen.TutorialNavDataPassScreen1.createRoute(item))
             },
             gotoScreenTwo = { item ->
+                // Navigate with passing data using `savedStateHandle`.
                 // Equivalent: navController.currentBackStackEntry?.savedStateHandle
                 backStateEntry.savedStateHandle.apply {
                     set(
@@ -969,6 +971,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
                 navController.navigate(TutorialsScreen.TutorialNavDataPassScreen2.route)
             },
             gotoScreenThree = { id, name ->
+                // Navigate with passing data using default `arguments` system in `NavController`. (Recommended)
                 navController.navigate(
                     TutorialsScreen.TutorialNavDataPassScreen3.createRoute(
                         id = id,
@@ -977,6 +980,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
                 )
             },
             gotoScreenFour = { id, name ->
+                // Navigate with passing data using custom Memory Cache.
                 navController.navigate(
                     TutorialsScreen.TutorialNavDataPassScreen4.route,
                     args = mapOf(
@@ -1002,15 +1006,17 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
         )
     ) { backStackEntry ->
         backStackEntry.arguments?.let { args ->
-            val data = args.getString(TutorialsScreen.TutorialNavDataPassScreen1.PARAM_DATA)
+            // Receive parameters using default `NavController` route system.
+            val receivedData = args.getString(TutorialsScreen.TutorialNavDataPassScreen1.PARAM_DATA)
                 .getObjFromJson<DemoData>() ?: throw Exception("Data cannot be null!")
 
             NavDataPassOneScreen(
-                data = data,
+                data = receivedData,
                 goBack = {
                     navController.popBackStack()
                 },
                 backWithData = { data ->
+                    // Send-back data
                     navController.previousBackStackEntry
                         ?.savedStateHandle
                         ?.set(
@@ -1051,6 +1057,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
         var id = 0
         var name = ""
 
+        // Receive data using default `arguments` system in `NavController`. (Recommended)
         backStackEntry.arguments?.apply {
             id = getInt(TutorialsScreen.TutorialNavDataPassScreen3.PARAM_ID)
             name = getString(TutorialsScreen.TutorialNavDataPassScreen3.PARAM_NAME, "")
@@ -1068,6 +1075,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
     composable(
         TutorialsScreen.TutorialNavDataPassScreen4.route
     ) { backStackEntry ->
+        // Receive data using custom Memory Cache.
         val id: Int = backStackEntry.arg(
             TutorialsScreen.TutorialNavDataPassScreen4.PARAM_ID
         ) ?: throw Exception("Id cannot be null!")

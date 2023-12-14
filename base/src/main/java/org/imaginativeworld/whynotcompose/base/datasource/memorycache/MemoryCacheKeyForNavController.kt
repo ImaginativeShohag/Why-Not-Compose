@@ -24,28 +24,11 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.base.datasource.cache
+package org.imaginativeworld.whynotcompose.base.datasource.memorycache
 
 /**
- * Memory cache.
+ * Memory cache key for nav controller data passing.
  */
-object MemoryCache {
-    var cache = mutableMapOf<String, Any>()
-        private set
-
-    inline fun <reified T> get(forKey: MemoryCacheKey): T? {
-        return cache[forKey.name] as? T
-    }
-
-    inline fun <reified T> set(forKey: MemoryCacheKey, value: T?) {
-        if (value == null) {
-            cache.remove(forKey.name)
-        } else {
-            cache[forKey.name] = value
-        }
-    }
-
-    fun reset() {
-        cache.clear()
-    }
+object MemoryCacheKeyForNavController {
+    data class Args(val key: String) : MemoryCacheKey("nav-controller-arg-$key")
 }

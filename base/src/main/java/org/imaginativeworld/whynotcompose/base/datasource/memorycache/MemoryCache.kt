@@ -24,11 +24,32 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.base.datasource.cache
+package org.imaginativeworld.whynotcompose.base.datasource.memorycache
+
+import androidx.annotation.NonNull
 
 /**
- * Memory cache key to use in the [MemoryCache].
- *
- * @property name name of the key.
+ * Memory cache.
  */
-abstract class MemoryCacheKey(val name: String)
+object MemoryCache {
+    var cache = mutableMapOf<String, Any>()
+        private set
+
+    inline fun <reified T> get(forKey: MemoryCacheKey): T? {
+        return cache[forKey.name] as? T
+    }
+
+    inline fun <reified T> set(forKey: MemoryCacheKey, @NonNull value: T) {
+        if (value != null) {
+            cache[forKey.name] = value
+        }
+    }
+
+    fun remove(key: MemoryCacheKey) {
+        cache.remove(key.name)
+    }
+
+    fun reset() {
+        cache.clear()
+    }
+}

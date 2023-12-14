@@ -27,12 +27,14 @@
 package org.imaginativeworld.whynotcompose.base.extensions
 
 import androidx.annotation.MainThread
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
-import org.imaginativeworld.whynotcompose.base.datasource.cache.MemoryCache
-import org.imaginativeworld.whynotcompose.base.datasource.cache.MemoryCacheKeyForNavController
+import org.imaginativeworld.whynotcompose.base.datasource.memorycache.MemoryCache
+import org.imaginativeworld.whynotcompose.base.datasource.memorycache.MemoryCacheKeyForNavController
 import timber.log.Timber
 
 /**
@@ -75,7 +77,11 @@ fun NavHostController.navigate(
  * @param key the key of the argument
  * @return the value based on the [key]. If no data found, returns `null`.
  */
-inline fun <reified T> NavBackStackEntry.arg(key: String): T? {
+@Composable
+inline fun <reified T> NavBackStackEntry.arg(key: String): T? = remember {
     val compositeKey = this.destination.route + key
-    return MemoryCache.get(MemoryCacheKeyForNavController.Args(compositeKey))
+    val value: T? = MemoryCache.get(MemoryCacheKeyForNavController.Args(compositeKey))
+    MemoryCache.remove(MemoryCacheKeyForNavController.Args(compositeKey))
+    Timber.e("key:value = $key:$value")
+    return@remember value
 }

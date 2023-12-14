@@ -24,11 +24,11 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.base.datasource.cache
+package org.imaginativeworld.whynotcompose.base.datasource.memorycache
 
 /**
- * Memory cache key for nav controller data passing.
+ * Memory cache key to use in the [MemoryCache].
+ *
+ * @property name name of the key.
  */
-object MemoryCacheKeyForNavController {
-    data class Args(val key: String) : MemoryCacheKey("nav-controller-arg-$key")
-}
+abstract class MemoryCacheKey(val name: String)

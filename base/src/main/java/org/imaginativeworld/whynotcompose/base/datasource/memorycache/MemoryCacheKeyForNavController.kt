@@ -30,5 +30,6 @@ package org.imaginativeworld.whynotcompose.base.datasource.memorycache
  * Memory cache key for nav controller data passing.
  */
 object MemoryCacheKeyForNavController {
-    data class Args(val key: String) : MemoryCacheKey("nav-controller-arg-$key")
+    data class Argument(val key: String) : MemoryCacheKey("nav-controller-arg-$key")
+    data class Result(val key: String) : MemoryCacheKey("nav-controller-result-$key")
 }

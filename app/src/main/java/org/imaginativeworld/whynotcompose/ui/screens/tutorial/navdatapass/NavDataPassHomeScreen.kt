@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -52,7 +51,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
@@ -71,7 +70,8 @@ import org.imaginativeworld.whynotcompose.models.DemoData
 
 @Composable
 fun NavDataPassHomeScreen(
-    receivedData: DemoData?,
+    receivedDataBySavedState: DemoData?,
+    receivedDataByMemoryCache: DemoData?,
     goBack: () -> Unit,
     gotoScreenOne: (DemoData) -> Unit,
     gotoScreenTwo: (DemoData) -> Unit,
@@ -79,7 +79,8 @@ fun NavDataPassHomeScreen(
     gotoScreenFour: (id: Int, name: String) -> Unit
 ) {
     NavDataPassHomeScreenSkeleton(
-        receivedData = receivedData,
+        receivedDataBySavedState = receivedDataBySavedState,
+        receivedDataByMemoryCache = receivedDataByMemoryCache,
         goBack = goBack,
         gotoScreenOne = {
             gotoScreenOne(
@@ -104,26 +105,17 @@ fun NavDataPassHomeScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
 fun NavDataPassHomeScreenSkeletonPreview() {
     AppTheme {
         NavDataPassHomeScreenSkeleton(
-            receivedData = DemoData(
+            receivedDataBySavedState = DemoData(
                 id = 1,
                 name = "John Doe",
                 ranks = listOf("A", "B", "C")
-            )
-        )
-    }
-}
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun NavDataPassHomeScreenSkeletonPreviewDark() {
-    AppTheme {
-        NavDataPassHomeScreenSkeleton(
-            receivedData = DemoData(
+            ),
+            receivedDataByMemoryCache = DemoData(
                 id = 1,
                 name = "John Doe",
                 ranks = listOf("A", "B", "C")
@@ -134,7 +126,8 @@ fun NavDataPassHomeScreenSkeletonPreviewDark() {
 
 @Composable
 fun NavDataPassHomeScreenSkeleton(
-    receivedData: DemoData?,
+    receivedDataBySavedState: DemoData?,
+    receivedDataByMemoryCache: DemoData?,
     goBack: () -> Unit = {},
     gotoScreenOne: () -> Unit = {},
     gotoScreenTwo: () -> Unit = {},
@@ -153,8 +146,7 @@ fun NavDataPassHomeScreenSkeleton(
         Column(
             Modifier
                 .padding(innerPadding)
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
+                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AppComponent.Header(
@@ -162,107 +154,127 @@ fun NavDataPassHomeScreenSkeleton(
                 goBack = goBack
             )
 
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
             Divider()
 
-            AppComponent.BigSpacer()
-
-            Text(
-                "Received Data",
-                fontWeight = FontWeight.Bold
-            )
-
-            Text(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                text = "$receivedData",
-                textAlign = TextAlign.Center
-            )
-
-            AppComponent.BigSpacer()
-
+            // ----------------------------------------------------------------
             // ----------------------------------------------------------------
 
-            Divider()
+            Column(
+                Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AppComponent.BigSpacer()
 
-            AppComponent.BigSpacer()
-
-            Text(
-                "Pass simple data as parameter (Recommended)",
-                fontWeight = FontWeight.Bold
-            )
-
-            OutlinedTextField(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .fillMaxWidth(),
-                value = id,
-                onValueChange = {
-                    val regex = Regex("[^0-9]")
-                    id = regex.replace(it, "")
-                },
-                label = {
-                    Text("ID Parameter")
-                },
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    keyboardType = KeyboardType.Number
+                Text(
+                    "Received Data (By SavedState)",
+                    fontWeight = FontWeight.Bold
                 )
-            )
 
-            OutlinedTextField(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .fillMaxWidth(),
-                value = name,
-                onValueChange = { name = it },
-                label = {
-                    Text("Name Parameter")
+                Text(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    text = "$receivedDataBySavedState",
+                    textAlign = TextAlign.Center
+                )
+
+                AppComponent.MediumSpacer()
+
+                Text(
+                    "Received Data (By Memory Cache)",
+                    fontWeight = FontWeight.Bold
+                )
+
+                Text(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    text = "$receivedDataByMemoryCache",
+                    textAlign = TextAlign.Center
+                )
+
+                AppComponent.BigSpacer()
+
+                // ----------------------------------------------------------------
+
+                Divider()
+
+                AppComponent.BigSpacer()
+
+                Text(
+                    "Pass simple data as parameter (Recommended)",
+                    fontWeight = FontWeight.Bold
+                )
+
+                OutlinedTextField(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .fillMaxWidth(),
+                    value = id,
+                    onValueChange = {
+                        val regex = Regex("[^0-9]")
+                        id = regex.replace(it, "")
+                    },
+                    label = {
+                        Text("ID Parameter")
+                    },
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Number
+                    )
+                )
+
+                OutlinedTextField(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .fillMaxWidth(),
+                    value = name,
+                    onValueChange = { name = it },
+                    label = {
+                        Text("Name Parameter")
+                    }
+                )
+
+                AppComponent.MediumSpacer()
+
+                Button(onClick = {
+                    gotoScreenThree(id.toInt(), name)
+                }) {
+                    Text("Pass Parameters")
                 }
-            )
 
-            AppComponent.MediumSpacer()
+                AppComponent.MediumSpacer()
 
-            Button(onClick = {
-                gotoScreenThree(id.toInt(), name)
-            }) {
-                Text("Pass Parameters")
+                Button(onClick = {
+                    gotoScreenFour(id.toInt(), name)
+                }) {
+                    Text("Pass by Memory Cache")
+                }
+
+                AppComponent.BigSpacer()
+
+                // ----------------------------------------------------------------
+
+                Divider()
+
+                AppComponent.BigSpacer()
+
+                Button(onClick = {
+                    gotoScreenOne()
+                }) {
+                    Text("Pass complex data as String")
+                }
+
+                AppComponent.MediumSpacer()
+
+                Button(onClick = {
+                    gotoScreenTwo()
+                }) {
+                    Text("Pass complex data as Parcelable")
+                }
+
+                // ----------------------------------------------------------------
+                // ----------------------------------------------------------------
+
+                AppComponent.BigSpacer()
             }
-
-            AppComponent.MediumSpacer()
-
-            Button(onClick = {
-                gotoScreenFour(id.toInt(), name)
-            }) {
-                Text("Pass by Memory Cache")
-            }
-
-            AppComponent.BigSpacer()
-
-            // ----------------------------------------------------------------
-
-            Divider()
-
-            AppComponent.BigSpacer()
-
-            Button(onClick = {
-                gotoScreenOne()
-            }) {
-                Text("Pass complex data as String")
-            }
-
-            AppComponent.MediumSpacer()
-
-            Button(onClick = {
-                gotoScreenTwo()
-            }) {
-                Text("Pass complex data as Parcelable")
-            }
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            AppComponent.BigSpacer()
         }
     }
 }

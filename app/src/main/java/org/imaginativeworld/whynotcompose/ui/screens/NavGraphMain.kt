@@ -26,13 +26,19 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -265,6 +271,9 @@ sealed class TutorialsScreen(val route: String) {
             route
                 .replace("{$PARAM_ID}", "$id")
     }
+
+    data object TutorialNavDataPassScreen5 :
+        TutorialsScreen("tutorial/nav-data-pass/five/details")
 
     // ================================================================
     // Reactive model
@@ -1102,12 +1111,12 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
             ?: throw Exception("Id cannot be null!")
 
         // Receive data using custom Memory Cache.
-        val name: String = navArg(
+        val name = navArg<String>(
             TutorialsScreen.TutorialNavDataPassScreen4.ARG_NAME
-        ) ?: throw Exception("Name cannot be null!")
-        val ranks: List<String> = navArg(
+        ).value ?: throw Exception("Name cannot be null!")
+        val ranks = navArg<List<String>>(
             TutorialsScreen.TutorialNavDataPassScreen4.ARG_RANKS
-        ) ?: throw Exception("Ranks cannot be null!")
+        ).value ?: throw Exception("Ranks cannot be null!")
 
         NavDataPassFourScreen(
             id = id,
@@ -1121,8 +1130,31 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
                 navController.popBackStackWithResult(
                     TutorialsScreen.TutorialNavDataPassScreen4.RESULT_DATA to data
                 )
+            },
+            goAnotherScreen = {
+                navController.navigate(
+                    TutorialsScreen.TutorialNavDataPassScreen5.route
+                )
             }
         )
+    }
+
+    composable(TutorialsScreen.TutorialNavDataPassScreen5.route) {
+        Column(
+            Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text("Hello World!")
+
+            Spacer(Modifier.height(16.dp))
+
+            Button(onClick = {
+                navController.popBackStack()
+            }) {
+                Text("Go Back")
+            }
+        }
     }
 
     // ================================================================

@@ -60,14 +60,16 @@ fun NavDataPassFourScreen(
     name: String,
     ranks: List<String>,
     goBack: () -> Unit,
-    backWithData: (DemoData) -> Unit
+    backWithData: (DemoData) -> Unit,
+    goAnotherScreen: () -> Unit
 ) {
     NavDataPassFourScreenSkeleton(
         id = id,
         name = name,
         ranks = ranks,
         goBack = goBack,
-        backWithData = backWithData
+        backWithData = backWithData,
+        goAnotherScreen = goAnotherScreen
     )
 }
 
@@ -89,7 +91,8 @@ fun NavDataPassFourScreenSkeleton(
     name: String,
     ranks: List<String>,
     goBack: () -> Unit = {},
-    backWithData: (DemoData) -> Unit = {}
+    backWithData: (DemoData) -> Unit = {},
+    goAnotherScreen: () -> Unit = {}
 ) {
     var text by remember { mutableStateOf("Mahmudul Hasan") }
 
@@ -175,6 +178,20 @@ fun NavDataPassFourScreenSkeleton(
                 )
             }) {
                 Text("Return data (By Memory Cache)")
+            }
+
+            AppComponent.BigSpacer()
+
+            // ----------------------------------------------------------------
+
+            Divider()
+
+            AppComponent.BigSpacer()
+
+            Button(onClick = {
+                goAnotherScreen()
+            }) {
+                Text("Go Another Screen")
             }
 
             // ----------------------------------------------------------------

@@ -28,12 +28,14 @@ package org.imaginativeworld.whynotcompose.base.extensions
 
 import androidx.annotation.MainThread
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
 import org.imaginativeworld.whynotcompose.base.datasource.memorycache.MemoryCache
 import org.imaginativeworld.whynotcompose.base.datasource.memorycache.MemoryCacheKeyForNavController
+import org.imaginativeworld.whynotcompose.base.utils.NullableSaverWrapper
+import org.imaginativeworld.whynotcompose.base.utils.nullableSaver
 import timber.log.Timber
 
 /**
@@ -76,10 +78,11 @@ fun NavHostController.navigate(
  * @return the value based on the [key]. If no argument found, returns `null`.
  */
 @Composable
-inline fun <reified T> navArg(key: String): T? = remember {
-    val cacheKey = MemoryCacheKeyForNavController.Argument(key)
-    val value: T? = MemoryCache.get(cacheKey)
-    MemoryCache.remove(cacheKey)
-    Timber.v("key:value = $key:$value")
-    return@remember value
-}
+inline fun <reified T> navArg(key: String): NullableSaverWrapper<T> =
+    rememberSaveable(saver = nullableSaver()) {
+        val cacheKey = MemoryCacheKeyForNavController.Argument(key)
+        val value: T? = MemoryCache.get(cacheKey)
+        MemoryCache.remove(cacheKey)
+        Timber.v("key:value = $key:$value")
+        return@rememberSaveable NullableSaverWrapper(value)
+    }

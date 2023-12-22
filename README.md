@@ -68,6 +68,8 @@ Feel free to request features or suggestions for improvements.
 - CMS (Advanced)
   - Memory and storage caching
 - [Deep Link](https://developer.android.com/training/app-links) (Intermediate)
+- Navigation Data Pass (Intermediate)
+- Reactive Model (Beginner)
 
 |    ![Counter](images/counter.gif)    | ![Animated Visibility](images/animated-visibility.gif) | ![Lottie](images/lottie.gif) |
 |:------------------------------------:|:------------------------------------------------------:|:----------------------------:|

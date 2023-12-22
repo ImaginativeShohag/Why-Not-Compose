@@ -42,6 +42,16 @@ fun <T> nullableSaver() = Saver<NullableSaverWrapper<T>, Any>(
     }
 )
 
+// If our data is not valid for `Bundle` then we can use this instead:
+//
+// inline fun <reified T> nullableSaver() = Saver<NullableSaverWrapper<T>, Any>(
+//     save = { state -> state.value.getJsonFromObj(false) ?: "null" },
+//     restore = { value ->
+//         val stringValue = value as? String
+//         NullableSaverWrapper((if (stringValue == "null") null else stringValue.getObjFromJson<T>(false)) as T)
+//     }
+// )
+
 /**
  * This class is used to wrap nullable value to save using [rememberSaveable].
  *

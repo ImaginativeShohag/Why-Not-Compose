@@ -24,6 +24,8 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
+@file:Suppress("ktlint:standard:property-naming")
+
 object BuildConfigConst {
     const val compileSdk = 34
     const val minSdk = 21

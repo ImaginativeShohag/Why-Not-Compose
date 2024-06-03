@@ -33,11 +33,10 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
-import androidx.navigation.navigation
+import androidx.navigation.toRoute
+import kotlinx.serialization.Serializable
 import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
 import org.imaginativeworld.whynotcompose.cms.ui.screens.comment.details.CommentDetailsScreen
 import org.imaginativeworld.whynotcompose.cms.ui.screens.comment.details.CommentDetailsViewModel
@@ -57,56 +56,58 @@ import org.imaginativeworld.whynotcompose.cms.ui.screens.user.details.UserDetail
 import org.imaginativeworld.whynotcompose.cms.ui.screens.user.list.UserListScreen
 import org.imaginativeworld.whynotcompose.cms.ui.screens.user.list.UserListViewModel
 
-sealed class Screen(val route: String) {
-    data object Splash : Screen("splash")
-    data object User : Screen("user")
-    data object Todo : Screen("todo")
-    data object Post : Screen("post")
-    data object Comment : Screen("comment")
+sealed class SplashScreen {
+    @Serializable
+    object Splash
 }
 
-sealed class SplashScreen(val route: String) {
-    data object Splash : SplashScreen("splash/index")
+sealed class UserScreen {
+    @Serializable
+    object UserList
+
+    @Serializable
+    data class UserDetails(
+        val userId: Int
+    )
 }
 
-sealed class UserScreen(val route: String) {
-    data object UserList : UserScreen("users")
-    data object UserDetails : UserScreen("users/{userId}") {
-        const val USER_ID = "userId"
-    }
+sealed class TodoScreen {
+    @Serializable
+    data class TodoList(
+        val userId: Int
+    )
+
+    @Serializable
+    data class TodoDetails(
+        val userId: Int,
+        val todoId: Int
+    )
 }
 
-sealed class TodoScreen(val route: String) {
-    data object TodoList : TodoScreen("users/{userId}/todos") {
-        const val USER_ID = "userId"
-    }
+sealed class PostScreen {
+    @Serializable
+    data class PostList(
+        val userId: Int
+    )
 
-    data object TodoDetails : TodoScreen("users/{userId}/todos/{todoId}") {
-        const val USER_ID = "userId"
-        const val TODO_ID = "todoId"
-    }
+    @Serializable
+    data class PostDetails(
+        val userId: Int,
+        val postId: Int
+    )
 }
 
-sealed class PostScreen(val route: String) {
-    data object PostList : PostScreen("users/{userId}/posts") {
-        const val USER_ID = "userId"
-    }
+sealed class CommentScreen {
+    @Serializable
+    data class CommentList(
+        val postId: Int
+    )
 
-    data object PostDetails : PostScreen("users/{userId}/posts/{postId}") {
-        const val USER_ID = "userId"
-        const val POST_ID = "postId"
-    }
-}
-
-sealed class CommentScreen(val route: String) {
-    data object CommentList : CommentScreen("posts/{postId}/comments") {
-        const val POST_ID = "postId"
-    }
-
-    data object CommentDetails : CommentScreen("posts/{postId}/comments/{commentId}") {
-        const val POST_ID = "postId"
-        const val COMMENT_ID = "commentId"
-    }
+    @Serializable
+    data class CommentDetails(
+        val postId: Int,
+        val commentId: Int
+    )
 }
 
 // ================================================================
@@ -123,9 +124,19 @@ fun CMSNavHost(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = Screen.Splash.route
+        startDestination = SplashScreen.Splash
     ) {
-        addSplashScreens(navController = navController)
+        composable<SplashScreen.Splash> {
+            SplashScreen(
+                gotoHomeIndex = {
+                    navController.navigate(UserScreen.UserList) {
+                        popUpTo(SplashScreen.Splash) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
+        }
 
         addUserScreens(
             navController = navController,
@@ -139,181 +150,128 @@ fun CMSNavHost(
 // Top Level Screens
 // ================================================================
 
-private fun NavGraphBuilder.addSplashScreens(
-    navController: NavHostController
-) {
-    navigation(
-        route = Screen.Splash.route,
-        startDestination = SplashScreen.Splash.route
-    ) {
-        composable(SplashScreen.Splash.route) {
-            SplashScreen(
-                gotoHomeIndex = {
-                    navController.navigate(Screen.User.route) {
-                        popUpTo(SplashScreen.Splash.route) {
-                            inclusive = true
-                        }
-                    }
-                }
-            )
-        }
-    }
-}
-
 private fun NavGraphBuilder.addUserScreens(
     navController: NavHostController,
     turnOnDarkMode: (Boolean) -> Unit,
     goBack: () -> Unit
 ) {
-    navigation(
-        route = Screen.User.route,
-        startDestination = UserScreen.UserList.route
-    ) {
-        addPostScreens(
-            navController = navController,
-            turnOnDarkMode = turnOnDarkMode
+    composable<UserScreen.UserList> {
+        val viewModel: UserListViewModel = hiltViewModel()
+        val isDarkMode by UIThemeController.isDarkMode.collectAsState()
+
+        UserListScreen(
+            viewModel = viewModel,
+            goBack = {
+                // We are using the parent `NavController` to go back from this `NavHost`.
+                goBack()
+            },
+            toggleUIMode = {
+                turnOnDarkMode(!isDarkMode)
+            },
+            goToUserDetails = { userId ->
+                navController.navigate(
+                    UserScreen.UserDetails(
+                        userId = userId
+                    )
+                )
+            }
         )
-        addTodoScreens(
-            navController = navController,
-            turnOnDarkMode = turnOnDarkMode
-        )
-
-        composable(UserScreen.UserList.route) {
-            val viewModel: UserListViewModel = hiltViewModel()
-
-            val isDarkMode by UIThemeController.isDarkMode.collectAsState()
-
-            UserListScreen(
-                viewModel = viewModel,
-                goBack = {
-                    // We are using the parent `NavController` to go back from this `NavHost`.
-                    goBack()
-                },
-                toggleUIMode = {
-                    turnOnDarkMode(!isDarkMode)
-                },
-                goToUserDetails = { userId ->
-                    navController.navigate(
-                        UserScreen.UserDetails.route.replaceFirst(
-                            "{${UserScreen.UserDetails.USER_ID}}",
-                            "$userId"
-                        )
-                    )
-                }
-            )
-        }
-
-        composable(
-            UserScreen.UserDetails.route,
-            arguments = listOf(
-                navArgument(UserScreen.UserDetails.USER_ID) {
-                    type = NavType.IntType
-                }
-            )
-        ) { backStackEntry ->
-            val viewModel: UserDetailsViewModel = hiltViewModel()
-            val isDarkMode by UIThemeController.isDarkMode.collectAsState()
-            val userId = backStackEntry.arguments?.getInt(UserScreen.UserDetails.USER_ID) ?: 0
-
-            UserDetailsScreen(
-                viewModel = viewModel,
-                userId = userId,
-                goBack = {
-                    navController.popBackStack()
-                },
-                toggleUIMode = {
-                    turnOnDarkMode(!isDarkMode)
-                },
-                onTodosClicked = {
-                    navController.navigate(
-                        TodoScreen.TodoList.route
-                            .replaceFirst(
-                                "{${TodoScreen.TodoList.USER_ID}}",
-                                "$userId"
-                            )
-                    )
-                },
-                onPostsClicked = {
-                    navController.navigate(
-                        PostScreen.PostList.route
-                            .replaceFirst(
-                                "{${PostScreen.PostList.USER_ID}}",
-                                "$userId"
-                            )
-                    )
-                }
-            )
-        }
     }
+
+    composable<UserScreen.UserDetails> { backStackEntry ->
+        val viewModel: UserDetailsViewModel = hiltViewModel()
+        val isDarkMode by UIThemeController.isDarkMode.collectAsState()
+
+        val userDetails: UserScreen.UserDetails = backStackEntry.toRoute()
+        val userId = userDetails.userId
+
+        UserDetailsScreen(
+            viewModel = viewModel,
+            userId = userId,
+            goBack = {
+                navController.popBackStack()
+            },
+            toggleUIMode = {
+                turnOnDarkMode(!isDarkMode)
+            },
+            onTodosClicked = {
+                navController.navigate(
+                    TodoScreen.TodoList(
+                        userId = userId
+                    )
+                )
+            },
+            onPostsClicked = {
+                navController.navigate(
+                    PostScreen.PostList(
+                        userId = userId
+                    )
+                )
+            }
+        )
+    }
+
+    addPostScreens(
+        navController = navController,
+        turnOnDarkMode = turnOnDarkMode
+    )
+
+    addTodoScreens(
+        navController = navController,
+        turnOnDarkMode = turnOnDarkMode
+    )
 }
 
 private fun NavGraphBuilder.addTodoScreens(
     navController: NavHostController,
     turnOnDarkMode: (Boolean) -> Unit
 ) {
-    navigation(
-        route = Screen.Todo.route,
-        startDestination = TodoScreen.TodoList.route
-    ) {
-        composable(
-            TodoScreen.TodoList.route,
-            arguments = listOf(
-                navArgument(TodoScreen.TodoList.USER_ID) { type = NavType.IntType }
-            )
-        ) { backStackEntry ->
-            val viewModel: TodoListViewModel = hiltViewModel()
-            val isDarkMode by UIThemeController.isDarkMode.collectAsState()
-            val userId = backStackEntry.arguments?.getInt(TodoScreen.TodoList.USER_ID) ?: 0
+    composable<TodoScreen.TodoList> { backStackEntry ->
+        val viewModel: TodoListViewModel = hiltViewModel()
+        val isDarkMode by UIThemeController.isDarkMode.collectAsState()
 
-            TodoListScreen(
-                viewModel = viewModel,
-                userId = userId,
-                goBack = {
-                    navController.popBackStack()
-                },
-                toggleUIMode = {
-                    turnOnDarkMode(!isDarkMode)
-                },
-                goToTodoDetails = { todoId ->
-                    navController.navigate(
-                        TodoScreen.TodoDetails.route
-                            .replaceFirst(
-                                "{${TodoScreen.TodoDetails.USER_ID}}",
-                                "$userId"
-                            )
-                            .replaceFirst(
-                                "{${TodoScreen.TodoDetails.TODO_ID}}",
-                                "$todoId"
-                            )
+        val userDetails: TodoScreen.TodoList = backStackEntry.toRoute()
+        val userId = userDetails.userId
+
+        TodoListScreen(
+            viewModel = viewModel,
+            userId = userId,
+            goBack = {
+                navController.popBackStack()
+            },
+            toggleUIMode = {
+                turnOnDarkMode(!isDarkMode)
+            },
+            goToTodoDetails = { todoId ->
+                navController.navigate(
+                    TodoScreen.TodoDetails(
+                        userId = userId,
+                        todoId = todoId
                     )
-                }
-            )
-        }
+                )
+            }
+        )
+    }
 
-        composable(
-            TodoScreen.TodoDetails.route,
-            arguments = listOf(
-                navArgument(TodoScreen.TodoDetails.USER_ID) { type = NavType.IntType },
-                navArgument(TodoScreen.TodoDetails.TODO_ID) { type = NavType.IntType }
-            )
-        ) { backStackEntry ->
-            val viewModel: TodoDetailsViewModel = hiltViewModel()
-            val isDarkMode by UIThemeController.isDarkMode.collectAsState()
-            val userId = backStackEntry.arguments?.getInt(TodoScreen.TodoDetails.USER_ID) ?: 0
-            val todoId = backStackEntry.arguments?.getInt(TodoScreen.TodoDetails.TODO_ID) ?: 0
+    composable<TodoScreen.TodoDetails> { backStackEntry ->
+        val viewModel: TodoDetailsViewModel = hiltViewModel()
+        val isDarkMode by UIThemeController.isDarkMode.collectAsState()
 
-            TodoDetailsScreen(
-                viewModel = viewModel,
-                userId = userId,
-                todoId = todoId,
-                goBack = {
-                    navController.popBackStack()
-                },
-                toggleUIMode = {
-                    turnOnDarkMode(!isDarkMode)
-                }
-            )
-        }
+        val todoDetails: TodoScreen.TodoDetails = backStackEntry.toRoute()
+        val userId = todoDetails.userId
+        val todoId = todoDetails.todoId
+
+        TodoDetailsScreen(
+            viewModel = viewModel,
+            userId = userId,
+            todoId = todoId,
+            goBack = {
+                navController.popBackStack()
+            },
+            toggleUIMode = {
+                turnOnDarkMode(!isDarkMode)
+            }
+        )
     }
 }
 
@@ -321,152 +279,116 @@ private fun NavGraphBuilder.addPostScreens(
     navController: NavHostController,
     turnOnDarkMode: (Boolean) -> Unit
 ) {
-    navigation(
-        route = Screen.Post.route,
-        startDestination = PostScreen.PostList.route
-    ) {
-        addCommentScreens(
-            navController = navController,
-            turnOnDarkMode = turnOnDarkMode
+    composable<PostScreen.PostList> { backStackEntry ->
+        val viewModel: PostListViewModel = hiltViewModel()
+        val isDarkMode by UIThemeController.isDarkMode.collectAsState()
+
+        val postList: PostScreen.PostList = backStackEntry.toRoute()
+        val userId = postList.userId
+
+        PostListScreen(
+            viewModel = viewModel,
+            userId = userId,
+            goBack = {
+                navController.popBackStack()
+            },
+            toggleUIMode = {
+                turnOnDarkMode(!isDarkMode)
+            },
+            goToPostDetails = { postId ->
+                navController.navigate(
+                    PostScreen.PostDetails(
+                        userId = userId,
+                        postId = postId
+                    )
+                )
+            }
         )
-
-        composable(
-            PostScreen.PostList.route,
-            arguments = listOf(
-                navArgument(PostScreen.PostList.USER_ID) { type = NavType.IntType }
-            )
-        ) { backStackEntry ->
-            val viewModel: PostListViewModel = hiltViewModel()
-            val isDarkMode by UIThemeController.isDarkMode.collectAsState()
-            val userId = backStackEntry.arguments?.getInt(PostScreen.PostList.USER_ID) ?: 0
-
-            PostListScreen(
-                viewModel = viewModel,
-                userId = userId,
-                goBack = {
-                    navController.popBackStack()
-                },
-                toggleUIMode = {
-                    turnOnDarkMode(!isDarkMode)
-                },
-                goToPostDetails = { postId ->
-                    navController.navigate(
-                        PostScreen.PostDetails.route
-                            .replaceFirst(
-                                "{${PostScreen.PostDetails.USER_ID}}",
-                                "$userId"
-                            )
-                            .replaceFirst(
-                                "{${PostScreen.PostDetails.POST_ID}}",
-                                "$postId"
-                            )
-                    )
-                }
-            )
-        }
-
-        composable(
-            PostScreen.PostDetails.route,
-            arguments = listOf(
-                navArgument(PostScreen.PostDetails.USER_ID) { type = NavType.IntType },
-                navArgument(PostScreen.PostDetails.POST_ID) { type = NavType.IntType }
-            )
-        ) { backStackEntry ->
-            val viewModel: PostDetailsViewModel = hiltViewModel()
-            val isDarkMode by UIThemeController.isDarkMode.collectAsState()
-            val userId = backStackEntry.arguments?.getInt(PostScreen.PostDetails.USER_ID) ?: 0
-            val postId = backStackEntry.arguments?.getInt(PostScreen.PostDetails.POST_ID) ?: 0
-
-            PostDetailsScreen(
-                viewModel = viewModel,
-                userId = userId,
-                postId = postId,
-                goBack = {
-                    navController.popBackStack()
-                },
-                toggleUIMode = {
-                    turnOnDarkMode(!isDarkMode)
-                },
-                onCommentsClicked = {
-                    navController.navigate(
-                        CommentScreen.CommentList.route
-                            .replaceFirst(
-                                "{${CommentScreen.CommentList.POST_ID}}",
-                                "$postId"
-                            )
-                    )
-                }
-            )
-        }
     }
+
+    composable<PostScreen.PostDetails> { backStackEntry ->
+        val viewModel: PostDetailsViewModel = hiltViewModel()
+        val isDarkMode by UIThemeController.isDarkMode.collectAsState()
+
+        val postDetails: PostScreen.PostDetails = backStackEntry.toRoute()
+        val userId = postDetails.userId
+        val postId = postDetails.postId
+
+        PostDetailsScreen(
+            viewModel = viewModel,
+            userId = userId,
+            postId = postId,
+            goBack = {
+                navController.popBackStack()
+            },
+            toggleUIMode = {
+                turnOnDarkMode(!isDarkMode)
+            },
+            onCommentsClicked = {
+                navController.navigate(
+                    CommentScreen.CommentList(
+                        postId = postId
+                    )
+                )
+            }
+        )
+    }
+
+    addCommentScreens(
+        navController = navController,
+        turnOnDarkMode = turnOnDarkMode
+    )
 }
 
 private fun NavGraphBuilder.addCommentScreens(
     navController: NavHostController,
     turnOnDarkMode: (Boolean) -> Unit
 ) {
-    navigation(
-        route = Screen.Comment.route,
-        startDestination = CommentScreen.CommentList.route
-    ) {
-        composable(
-            CommentScreen.CommentList.route,
-            arguments = listOf(
-                navArgument(CommentScreen.CommentList.POST_ID) { type = NavType.IntType }
-            )
-        ) { backStackEntry ->
-            val viewModel: CommentListViewModel = hiltViewModel()
-            val isDarkMode by UIThemeController.isDarkMode.collectAsState()
-            val postId = backStackEntry.arguments?.getInt(CommentScreen.CommentList.POST_ID) ?: 0
+    composable<CommentScreen.CommentList> { backStackEntry ->
+        val viewModel: CommentListViewModel = hiltViewModel()
+        val isDarkMode by UIThemeController.isDarkMode.collectAsState()
 
-            CommentListScreen(
-                viewModel = viewModel,
-                postId = postId,
-                goBack = {
-                    navController.popBackStack()
-                },
-                toggleUIMode = {
-                    turnOnDarkMode(!isDarkMode)
-                },
-                goToCommentDetails = { commentId ->
-                    navController.navigate(
-                        CommentScreen.CommentDetails.route
-                            .replaceFirst(
-                                "{${CommentScreen.CommentDetails.POST_ID}}",
-                                "$postId"
-                            )
-                            .replaceFirst(
-                                "{${CommentScreen.CommentDetails.COMMENT_ID}}",
-                                "$commentId"
-                            )
+        val commentList: CommentScreen.CommentList = backStackEntry.toRoute()
+        val postId = commentList.postId
+
+        CommentListScreen(
+            viewModel = viewModel,
+            postId = postId,
+            goBack = {
+                navController.popBackStack()
+            },
+            toggleUIMode = {
+                turnOnDarkMode(!isDarkMode)
+            },
+            goToCommentDetails = { commentId ->
+                navController.navigate(
+                    CommentScreen.CommentDetails(
+                        postId = postId,
+                        commentId = commentId
                     )
-                }
-            )
-        }
+                )
+            }
+        )
+    }
 
-        composable(
-            CommentScreen.CommentDetails.route,
-            arguments = listOf(
-                navArgument(CommentScreen.CommentDetails.POST_ID) { type = NavType.IntType },
-                navArgument(CommentScreen.CommentDetails.COMMENT_ID) { type = NavType.IntType }
-            )
-        ) { backStackEntry ->
-            val viewModel: CommentDetailsViewModel = hiltViewModel()
-            val isDarkMode by UIThemeController.isDarkMode.collectAsState()
-            val postId = backStackEntry.arguments?.getInt(CommentScreen.CommentDetails.POST_ID) ?: 0
-            val commentId = backStackEntry.arguments?.getInt(CommentScreen.CommentDetails.COMMENT_ID) ?: 0
+    composable<CommentScreen.CommentDetails> { backStackEntry ->
+        val viewModel: CommentDetailsViewModel = hiltViewModel()
+        val isDarkMode by UIThemeController.isDarkMode.collectAsState()
 
-            CommentDetailsScreen(
-                viewModel = viewModel,
-                postId = postId,
-                commentId = commentId,
-                goBack = {
-                    navController.popBackStack()
-                },
-                toggleUIMode = {
-                    turnOnDarkMode(!isDarkMode)
-                }
-            )
-        }
+        val commentDetails: CommentScreen.CommentDetails = backStackEntry.toRoute()
+        val postId = commentDetails.postId
+        val commentId = commentDetails.commentId
+
+        CommentDetailsScreen(
+            viewModel = viewModel,
+            postId = postId,
+            commentId = commentId,
+            goBack = {
+                navController.popBackStack()
+            },
+            toggleUIMode = {
+                turnOnDarkMode(!isDarkMode)
+            }
+        )
     }
 }

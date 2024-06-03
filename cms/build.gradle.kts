@@ -28,6 +28,7 @@ plugins {
     id(Libs.Android.library)
     kotlin("android")
     kotlin("kapt")
+    kotlin("plugin.serialization")
     id(Libs.Kotlin.composeCompilerGradlePlugin)
     id(Libs.Google.DevTools.ksp)
 }
@@ -163,4 +164,7 @@ dependencies {
     // Coil
     implementation(Libs.Coil.compose)
     implementation(Libs.Coil.svg)
+
+    // Serialization
+    implementation(Libs.Kotlin.serialization)
 }

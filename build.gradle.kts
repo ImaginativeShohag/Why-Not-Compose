@@ -41,6 +41,7 @@ plugins {
     id(Libs.Android.application) version Libs.Gradle.version apply false
     id(Libs.Android.library) version Libs.Gradle.version apply false
     kotlin("android") version Libs.Kotlin.version apply false
+    kotlin("plugin.serialization") version Libs.Kotlin.version apply false
     id(Libs.Kotlin.composeCompilerGradlePlugin) version Libs.Kotlin.version apply false
     id(Libs.Google.DevTools.ksp) version Libs.Google.DevTools.kspVersion apply false
     id(Libs.Google.Firebase.crashlyticsGradlePlugin) version Libs.Google.Firebase.crashlyticsGradlePluginVersion apply false

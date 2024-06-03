@@ -136,6 +136,7 @@ object Libs {
         const val version = "2.0.0"
 
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$version"
+        const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3"
 
         const val composeCompilerGradlePlugin = "org.jetbrains.kotlin.plugin.compose"
         const val percelizeGradlePlugin = "kotlin-parcelize"
@@ -224,7 +225,7 @@ object Libs {
         }
 
         object Navigation {
-            private const val version = "2.7.7"
+            private const val version = "2.8.0-beta02"
 
             const val fragment = "androidx.navigation:navigation-fragment-ktx:$version"
             const val uiKtx = "androidx.navigation:navigation-ui-ktx:$version"

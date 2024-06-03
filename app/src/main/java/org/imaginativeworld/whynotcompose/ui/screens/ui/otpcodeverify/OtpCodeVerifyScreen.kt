@@ -61,7 +61,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -446,7 +446,7 @@ fun VirtualNumberKeyboard(
                                 )
                             }
                         },
-                        indication = rememberRipple(color = MaterialTheme.colors.primary),
+                        indication = ripple(color = MaterialTheme.colors.primary),
                         interactionSource = remember { MutableInteractionSource() }
                     ),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -473,7 +473,7 @@ fun VirtualNumberKeyboard(
                                 verify(codeState.value)
                             }
                         },
-                        indication = rememberRipple(color = MaterialTheme.colors.primary),
+                        indication = ripple(color = MaterialTheme.colors.primary),
                         interactionSource = remember { MutableInteractionSource() }
                     ),
                 horizontalAlignment = Alignment.CenterHorizontally,

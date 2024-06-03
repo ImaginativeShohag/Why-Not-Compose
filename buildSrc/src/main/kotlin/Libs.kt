@@ -152,7 +152,7 @@ object Libs {
     object AndroidX {
         const val appcompat = "androidx.appcompat:appcompat:1.7.0"
         const val coreKtx = "androidx.core:core-ktx:1.13.1"
-        const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.2.0"
+        const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
         object Activity {
             const val activityCompose = "androidx.activity:activity-compose:1.9.0"

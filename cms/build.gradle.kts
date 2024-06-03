@@ -28,6 +28,7 @@ plugins {
     id(Libs.Android.library)
     kotlin("android")
     kotlin("kapt")
+    id(Libs.Kotlin.composeCompilerGradlePlugin)
     id(Libs.Google.DevTools.ksp)
 }
 
@@ -74,8 +75,8 @@ android {
         compose = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = Libs.AndroidX.Compose.compilerVersion
+    composeCompiler {
+        enableStrongSkippingMode = true
     }
 }
 
@@ -93,7 +94,6 @@ dependencies {
     // ----------------------------------------------------------------
     implementation(platform(Libs.AndroidX.Compose.bom))
 
-    implementation(Libs.AndroidX.Compose.compiler)
     implementation(Libs.AndroidX.Compose.ui)
     implementation(Libs.AndroidX.Compose.uiUtil)
     // Tooling support (Previews, etc.)

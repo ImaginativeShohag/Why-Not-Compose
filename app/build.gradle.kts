@@ -28,6 +28,7 @@ plugins {
     id(Libs.Android.application)
     kotlin("android")
     kotlin("kapt")
+    id(Libs.Kotlin.composeCompilerGradlePlugin)
     id(Libs.Google.DevTools.ksp)
     id(Libs.Kotlin.percelizeGradlePlugin)
     id(Libs.Google.Hilt.gradlePlugin)
@@ -110,8 +111,8 @@ android {
         shaders = false
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = Libs.AndroidX.Compose.compilerVersion
+    composeCompiler {
+        enableStrongSkippingMode = true
     }
 
     signingConfigs {
@@ -151,7 +152,6 @@ dependencies {
     // ----------------------------------------------------------------
     implementation(platform(Libs.AndroidX.Compose.bom))
 
-    implementation(Libs.AndroidX.Compose.compiler)
     implementation(Libs.AndroidX.Compose.ui)
     implementation(Libs.AndroidX.Compose.uiUtil)
     // Tooling support (Previews, etc.)

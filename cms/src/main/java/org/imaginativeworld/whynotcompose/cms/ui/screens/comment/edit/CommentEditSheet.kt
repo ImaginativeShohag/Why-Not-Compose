@@ -44,6 +44,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -199,6 +200,7 @@ fun CommentEditSheetSkeleton(
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
+        containerColor = BottomSheetDefaults.ContainerColor,
         contentWindowInsets = WindowInsets(0.dp, 0.dp, 0.dp, 0.dp)
     ) { innerPadding ->
         AnimatedVisibility(

@@ -40,6 +40,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -177,6 +178,7 @@ fun PostAddSheetSkeleton(
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
+        containerColor = BottomSheetDefaults.ContainerColor,
         contentWindowInsets = WindowInsets(0.dp, 0.dp, 0.dp, 0.dp)
     ) { innerPadding ->
         Column(

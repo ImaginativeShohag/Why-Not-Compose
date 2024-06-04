@@ -46,6 +46,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DropdownMenuItem
@@ -224,6 +225,7 @@ fun TodoEditSheetSkeleton(
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
+        containerColor = BottomSheetDefaults.ContainerColor,
         contentWindowInsets = WindowInsets(0.dp, 0.dp, 0.dp, 0.dp)
     ) { innerPadding ->
         AnimatedVisibility(

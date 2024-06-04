@@ -164,7 +164,7 @@ object Libs {
             private const val runtimeTracingVersion = "1.0.0-beta01"
 
             // TODO: Remove when library gets stable.
-            private const val material3Version = "1.3.0-beta02"
+            private const val material3Version = "1.2.1"
 
             const val bom = "androidx.compose:compose-bom:$bomVersion"
 

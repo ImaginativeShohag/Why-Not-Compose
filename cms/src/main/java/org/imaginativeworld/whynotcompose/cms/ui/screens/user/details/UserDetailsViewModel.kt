@@ -47,11 +47,8 @@ class UserDetailsViewModel @Inject constructor(
     private val repository: UserRepository
 ) : ViewModel() {
     private val eventShowLoading = MutableStateFlow(false)
-
     private val eventShowMessage = MutableStateFlow<Event<ActionMessage>?>(null)
-
     private val user = MutableStateFlow<User?>(null)
-
     private val eventDeleteSuccess = MutableStateFlow<Event<Boolean>?>(null)
 
     // ----------------------------------------------------------------

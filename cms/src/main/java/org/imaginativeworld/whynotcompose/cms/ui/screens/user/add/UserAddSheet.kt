@@ -46,6 +46,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.ModalBottomSheetDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SheetValue
@@ -90,8 +91,11 @@ fun UserAddSheet(
     val scope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
-        confirmValueChange = { sheetState ->
-            return@rememberModalBottomSheetState sheetState != SheetValue.Hidden
+        // Note: Remove the `remember` later. Issue: https://issuetracker.google.com/issues/340582180
+        confirmValueChange = remember {
+            { sheetState ->
+                sheetState != SheetValue.Hidden
+            }
         }
     )
 
@@ -100,10 +104,7 @@ fun UserAddSheet(
     val goBack: () -> Unit = {
         scope.launch {
             bottomSheetState.hide()
-        }.invokeOnCompletion {
-            if (!bottomSheetState.isVisible) {
-                showSheet.value = false
-            }
+            showSheet.value = false
         }
     }
 
@@ -120,7 +121,10 @@ fun UserAddSheet(
 
     ModalBottomSheet(
         onDismissRequest = { showSheet.value = false },
-        sheetState = bottomSheetState
+        sheetState = bottomSheetState,
+        properties = ModalBottomSheetDefaults.properties(
+            shouldDismissOnBackPress = false
+        )
     ) {
         UserAddSheetSkeleton(
             showLoading = state.loading,

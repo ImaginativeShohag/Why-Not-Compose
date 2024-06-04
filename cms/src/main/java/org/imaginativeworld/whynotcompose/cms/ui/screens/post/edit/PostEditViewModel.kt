@@ -45,11 +45,8 @@ class PostEditViewModel @Inject constructor(
     private val repository: PostRepository
 ) : ViewModel() {
     private val eventShowLoading = MutableStateFlow(false)
-
     private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
-
     private val eventUpdatePostSuccess = MutableStateFlow<Event<Boolean>?>(null)
-
     private val post = MutableStateFlow<Post?>(null)
 
     // ----------------------------------------------------------------

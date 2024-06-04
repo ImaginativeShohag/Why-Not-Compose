@@ -49,9 +49,6 @@ android {
 
         freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.RequiresOptIn"
 
-        // Enable experimental coroutines APIs, including Flow
-        freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.Experimental"
-
         // Enable experimental compose APIs
         freeCompilerArgs =
             freeCompilerArgs + "-opt-in=androidx.compose.material.ExperimentalMaterialApi"

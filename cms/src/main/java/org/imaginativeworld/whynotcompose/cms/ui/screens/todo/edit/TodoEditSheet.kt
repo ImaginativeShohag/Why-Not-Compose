@@ -109,8 +109,11 @@ fun TodoEditSheet(
     val scope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
-        confirmValueChange = { sheetState ->
-            return@rememberModalBottomSheetState sheetState != SheetValue.Hidden
+        // Note: Remove the `remember` later. Issue: https://issuetracker.google.com/issues/340582180
+        confirmValueChange = remember {
+            { sheetState ->
+                sheetState != SheetValue.Hidden
+            }
         }
     )
 
@@ -119,10 +122,7 @@ fun TodoEditSheet(
     val goBack: () -> Unit = {
         scope.launch {
             bottomSheetState.hide()
-        }.invokeOnCompletion {
-            if (!bottomSheetState.isVisible) {
-                showSheet.value = false
-            }
+            showSheet.value = false
         }
     }
 

@@ -43,6 +43,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -90,8 +91,11 @@ fun PostEditSheet(
     val scope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
-        confirmValueChange = { sheetState ->
-            return@rememberModalBottomSheetState sheetState != SheetValue.Hidden
+        // Note: Remove the `remember` later. Issue: https://issuetracker.google.com/issues/340582180
+        confirmValueChange = remember {
+            { sheetState ->
+                sheetState != SheetValue.Hidden
+            }
         }
     )
 
@@ -100,10 +104,7 @@ fun PostEditSheet(
     val goBack: () -> Unit = {
         scope.launch {
             bottomSheetState.hide()
-        }.invokeOnCompletion {
-            if (!bottomSheetState.isVisible) {
-                showSheet.value = false
-            }
+            showSheet.value = false
         }
     }
 
@@ -194,6 +195,7 @@ fun PostEditSheetSkeleton(
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
+        containerColor = BottomSheetDefaults.ContainerColor,
         contentWindowInsets = WindowInsets(0.dp, 0.dp, 0.dp, 0.dp)
     ) { innerPadding ->
         AnimatedVisibility(

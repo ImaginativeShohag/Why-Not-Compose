@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Md. Mahmudul Hasan Shohag
+ * Copyright 2023 Md. Mahmudul Hasan Shohag
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,10 +24,32 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-@file:Suppress("ktlint:standard:property-naming")
+package org.imaginativeworld.whynotcompose.base.datasource.memorycache
 
-object BuildConfigConst {
-    const val compileSdk = 34
-    const val minSdk = 21
-    const val targetSdk = 34
+import androidx.annotation.NonNull
+
+/**
+ * Memory cache.
+ */
+object MemoryCache {
+    var cache = mutableMapOf<String, Any>()
+        private set
+
+    inline fun <reified T> get(forKey: MemoryCacheKey): T? {
+        return cache[forKey.name] as? T
+    }
+
+    inline fun <reified T> set(forKey: MemoryCacheKey, @NonNull value: T) {
+        if (value != null) {
+            cache[forKey.name] = value
+        }
+    }
+
+    fun remove(key: MemoryCacheKey) {
+        cache.remove(key.name)
+    }
+
+    fun reset() {
+        cache.clear()
+    }
 }

@@ -47,11 +47,8 @@ class TodoDetailsViewModel @Inject constructor(
     private val repository: TodoRepository
 ) : ViewModel() {
     private val eventShowLoading = MutableStateFlow(false)
-
     private val eventShowMessage = MutableStateFlow<Event<ActionMessage>?>(null)
-
     private val todo = MutableStateFlow<Todo?>(null)
-
     private val eventDeleteSuccess = MutableStateFlow<Event<Boolean>?>(null)
 
     // ----------------------------------------------------------------

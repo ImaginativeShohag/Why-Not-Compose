@@ -50,11 +50,8 @@ import org.imaginativeworld.whynotcompose.cms.repositories.UserRepository
 class UserListViewModel @Inject constructor(
     private val repository: UserRepository
 ) : ViewModel() {
-
     private val eventShowLoading = MutableStateFlow(false)
-
     private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
-
     private var items = MutableStateFlow<Flow<PagingData<User>>>(emptyFlow())
 
     // ----------------------------------------------------------------

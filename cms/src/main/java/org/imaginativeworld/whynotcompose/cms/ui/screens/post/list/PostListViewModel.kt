@@ -50,11 +50,8 @@ import org.imaginativeworld.whynotcompose.cms.repositories.PostRepository
 class PostListViewModel @Inject constructor(
     private val postRepository: PostRepository
 ) : ViewModel() {
-
     private val eventShowLoading = MutableStateFlow(false)
-
     private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
-
     private var items = MutableStateFlow<Flow<PagingData<Post>>>(emptyFlow())
 
     // ----------------------------------------------------------------

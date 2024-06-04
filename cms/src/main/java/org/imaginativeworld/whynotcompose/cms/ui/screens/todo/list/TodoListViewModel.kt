@@ -50,11 +50,8 @@ import org.imaginativeworld.whynotcompose.cms.repositories.TodoRepository
 class TodoListViewModel @Inject constructor(
     private val repository: TodoRepository
 ) : ViewModel() {
-
     private val eventShowLoading = MutableStateFlow(false)
-
     private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
-
     private var items = MutableStateFlow<Flow<PagingData<Todo>>>(emptyFlow())
 
     // ----------------------------------------------------------------

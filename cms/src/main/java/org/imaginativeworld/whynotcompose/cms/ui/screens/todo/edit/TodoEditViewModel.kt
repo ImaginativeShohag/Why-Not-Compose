@@ -45,13 +45,9 @@ import org.imaginativeworld.whynotcompose.cms.repositories.TodoRepository
 class TodoEditViewModel @Inject constructor(
     private val repository: TodoRepository
 ) : ViewModel() {
-
     private val eventShowLoading = MutableStateFlow(false)
-
     private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
-
     private val eventUpdateTodoSuccess = MutableStateFlow<Event<Boolean>?>(null)
-
     private val todo = MutableStateFlow<Todo?>(null)
 
     // ----------------------------------------------------------------

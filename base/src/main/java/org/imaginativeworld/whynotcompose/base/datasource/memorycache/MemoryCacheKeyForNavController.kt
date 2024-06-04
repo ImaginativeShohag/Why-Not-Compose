@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Md. Mahmudul Hasan Shohag
+ * Copyright 2023 Md. Mahmudul Hasan Shohag
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,10 +24,12 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-@file:Suppress("ktlint:standard:property-naming")
+package org.imaginativeworld.whynotcompose.base.datasource.memorycache
 
-object BuildConfigConst {
-    const val compileSdk = 34
-    const val minSdk = 21
-    const val targetSdk = 34
+/**
+ * Memory cache key for nav controller data passing.
+ */
+object MemoryCacheKeyForNavController {
+    data class Argument(val key: String) : MemoryCacheKey("nav-controller-arg-$key")
+    data class Result(val key: String) : MemoryCacheKey("nav-controller-result-$key")
 }

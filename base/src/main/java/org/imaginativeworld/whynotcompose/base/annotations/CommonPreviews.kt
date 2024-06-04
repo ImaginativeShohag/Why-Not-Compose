@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Md. Mahmudul Hasan Shohag
+ * Copyright 2023 Md. Mahmudul Hasan Shohag
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,10 +24,15 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-@file:Suppress("ktlint:standard:property-naming")
+package org.imaginativeworld.whynotcompose.base.annotations
 
-object BuildConfigConst {
-    const val compileSdk = 34
-    const val minSdk = 21
-    const val targetSdk = 34
-}
+import androidx.compose.ui.tooling.preview.PreviewDynamicColors
+import androidx.compose.ui.tooling.preview.PreviewFontScale
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
+
+@PreviewScreenSizes
+@PreviewFontScale
+@PreviewLightDark
+@PreviewDynamicColors
+annotation class CommonPreviews

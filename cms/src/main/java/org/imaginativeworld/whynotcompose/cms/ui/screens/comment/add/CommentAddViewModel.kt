@@ -46,9 +46,7 @@ class CommentAddViewModel @Inject constructor(
     private val repository: CommentRepository
 ) : ViewModel() {
     private val eventShowLoading = MutableStateFlow(false)
-
     private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
-
     private val eventAddCommentSuccess = MutableStateFlow<Event<Boolean>?>(null)
 
     // ----------------------------------------------------------------

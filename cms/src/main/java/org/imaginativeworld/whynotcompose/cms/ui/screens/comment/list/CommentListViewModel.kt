@@ -50,11 +50,8 @@ import org.imaginativeworld.whynotcompose.cms.repositories.CommentRepository
 class CommentListViewModel @Inject constructor(
     private val repository: CommentRepository
 ) : ViewModel() {
-
     private val eventShowLoading = MutableStateFlow(false)
-
     private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
-
     private var items = MutableStateFlow<Flow<PagingData<Comment>>>(emptyFlow())
 
     // ----------------------------------------------------------------

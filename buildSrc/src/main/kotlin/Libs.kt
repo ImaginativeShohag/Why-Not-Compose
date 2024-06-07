@@ -24,6 +24,8 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
+@file:Suppress("ktlint:standard:property-naming")
+
 object Libs {
     const val jdkDesugar = "com.android.tools:desugar_jdk_libs:1.1.5"
 

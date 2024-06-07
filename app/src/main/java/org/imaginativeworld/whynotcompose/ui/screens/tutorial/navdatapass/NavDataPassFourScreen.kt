@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -49,61 +48,51 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.models.DemoData
 
 @Composable
-fun NavDataPassOneScreen(
-    data: DemoData,
+fun NavDataPassFourScreen(
+    id: Int,
+    name: String,
+    ranks: List<String>,
     goBack: () -> Unit,
-    backWithData: (DemoData) -> Unit
+    backWithData: (DemoData) -> Unit,
+    goAnotherScreen: () -> Unit
 ) {
-    NavDataPassOneScreenSkeleton(
+    NavDataPassFourScreenSkeleton(
+        id = id,
+        name = name,
+        ranks = ranks,
         goBack = goBack,
-        data = data,
-        backWithData = { data ->
-            backWithData(data)
-        }
+        backWithData = backWithData,
+        goAnotherScreen = goAnotherScreen
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun NavDataPassOneScreenSkeletonPreview() {
+fun NavDataPassFourScreenSkeletonPreview() {
     AppTheme {
-        NavDataPassOneScreenSkeleton(
-            data = DemoData(
-                id = 1,
-                name = "John Doe",
-                ranks = listOf("A", "B", "C")
-            )
-        )
-    }
-}
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun NavDataPassOneScreenSkeletonPreviewDark() {
-    AppTheme {
-        NavDataPassOneScreenSkeleton(
-            data = DemoData(
-                id = 1,
-                name = "John Doe",
-                ranks = listOf("A", "B", "C")
-            )
+        NavDataPassFourScreenSkeleton(
+            id = 1,
+            name = "Mahmudul Hasan Shohag",
+            ranks = listOf("A", "B", "C")
         )
     }
 }
 
 @Composable
-fun NavDataPassOneScreenSkeleton(
-    data: DemoData,
+fun NavDataPassFourScreenSkeleton(
+    id: Int,
+    name: String,
+    ranks: List<String>,
     goBack: () -> Unit = {},
-    backWithData: (DemoData) -> Unit = {}
+    backWithData: (DemoData) -> Unit = {},
+    goAnotherScreen: () -> Unit = {}
 ) {
     var text by remember { mutableStateOf("Mahmudul Hasan") }
 
@@ -121,7 +110,7 @@ fun NavDataPassOneScreenSkeleton(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AppComponent.Header(
-                "Data passed as String",
+                "Data passed by Memory Cache",
                 goBack = goBack
             )
 
@@ -137,10 +126,27 @@ fun NavDataPassOneScreenSkeleton(
                 fontWeight = FontWeight.Bold
             )
 
+            AppComponent.MediumSpacer()
+
             Text(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                text = "$data",
-                textAlign = TextAlign.Center
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth(),
+                text = "ID: $id"
+            )
+
+            Text(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth(),
+                text = "Name: $name"
+            )
+
+            Text(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth(),
+                text = "Ranks: ${ranks.joinToString()}"
             )
 
             AppComponent.BigSpacer()
@@ -171,7 +177,21 @@ fun NavDataPassOneScreenSkeleton(
                     )
                 )
             }) {
-                Text("Return data (By Saved State)")
+                Text("Return data (By Memory Cache)")
+            }
+
+            AppComponent.BigSpacer()
+
+            // ----------------------------------------------------------------
+
+            Divider()
+
+            AppComponent.BigSpacer()
+
+            Button(onClick = {
+                goAnotherScreen()
+            }) {
+                Text("Go Another Screen")
             }
 
             // ----------------------------------------------------------------

@@ -37,6 +37,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
+import org.imaginativeworld.whynotcompose.base.models.UIThemeMode
+import org.imaginativeworld.whynotcompose.base.models.nextMode
 import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
 import org.imaginativeworld.whynotcompose.cms.ui.screens.comment.details.CommentDetailsScreen
 import org.imaginativeworld.whynotcompose.cms.ui.screens.comment.details.CommentDetailsViewModel
@@ -118,7 +120,7 @@ sealed class CommentScreen {
 fun CMSNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    turnOnDarkMode: (Boolean) -> Unit,
+    updateUiThemeMode: (UIThemeMode) -> Unit,
     goBack: () -> Unit
 ) {
     NavHost(
@@ -140,7 +142,7 @@ fun CMSNavHost(
 
         addUserScreens(
             navController = navController,
-            turnOnDarkMode = turnOnDarkMode,
+            updateUiThemeMode = updateUiThemeMode,
             goBack = goBack
         )
     }
@@ -152,12 +154,12 @@ fun CMSNavHost(
 
 private fun NavGraphBuilder.addUserScreens(
     navController: NavHostController,
-    turnOnDarkMode: (Boolean) -> Unit,
+    updateUiThemeMode: (UIThemeMode) -> Unit,
     goBack: () -> Unit
 ) {
     composable<UserScreen.UserList> {
         val viewModel: UserListViewModel = hiltViewModel()
-        val isDarkMode by UIThemeController.isDarkMode.collectAsState()
+        val isDarkMode by UIThemeController.uiThemeMode.collectAsState()
 
         UserListScreen(
             viewModel = viewModel,
@@ -166,7 +168,7 @@ private fun NavGraphBuilder.addUserScreens(
                 goBack()
             },
             toggleUIMode = {
-                turnOnDarkMode(!isDarkMode)
+                updateUiThemeMode(isDarkMode.nextMode())
             },
             goToUserDetails = { userId ->
                 navController.navigate(
@@ -180,7 +182,7 @@ private fun NavGraphBuilder.addUserScreens(
 
     composable<UserScreen.UserDetails> { backStackEntry ->
         val viewModel: UserDetailsViewModel = hiltViewModel()
-        val isDarkMode by UIThemeController.isDarkMode.collectAsState()
+        val isDarkMode by UIThemeController.uiThemeMode.collectAsState()
 
         val userDetails: UserScreen.UserDetails = backStackEntry.toRoute()
         val userId = userDetails.userId
@@ -192,7 +194,7 @@ private fun NavGraphBuilder.addUserScreens(
                 navController.popBackStack()
             },
             toggleUIMode = {
-                turnOnDarkMode(!isDarkMode)
+                updateUiThemeMode(isDarkMode.nextMode())
             },
             onTodosClicked = {
                 navController.navigate(
@@ -213,22 +215,22 @@ private fun NavGraphBuilder.addUserScreens(
 
     addPostScreens(
         navController = navController,
-        turnOnDarkMode = turnOnDarkMode
+        updateUiThemeMode = updateUiThemeMode
     )
 
     addTodoScreens(
         navController = navController,
-        turnOnDarkMode = turnOnDarkMode
+        updateUiThemeMode = updateUiThemeMode
     )
 }
 
 private fun NavGraphBuilder.addTodoScreens(
     navController: NavHostController,
-    turnOnDarkMode: (Boolean) -> Unit
+    updateUiThemeMode: (UIThemeMode) -> Unit
 ) {
     composable<TodoScreen.TodoList> { backStackEntry ->
         val viewModel: TodoListViewModel = hiltViewModel()
-        val isDarkMode by UIThemeController.isDarkMode.collectAsState()
+        val isDarkMode by UIThemeController.uiThemeMode.collectAsState()
 
         val userDetails: TodoScreen.TodoList = backStackEntry.toRoute()
         val userId = userDetails.userId
@@ -240,7 +242,7 @@ private fun NavGraphBuilder.addTodoScreens(
                 navController.popBackStack()
             },
             toggleUIMode = {
-                turnOnDarkMode(!isDarkMode)
+                updateUiThemeMode(isDarkMode.nextMode())
             },
             goToTodoDetails = { todoId ->
                 navController.navigate(
@@ -255,7 +257,7 @@ private fun NavGraphBuilder.addTodoScreens(
 
     composable<TodoScreen.TodoDetails> { backStackEntry ->
         val viewModel: TodoDetailsViewModel = hiltViewModel()
-        val isDarkMode by UIThemeController.isDarkMode.collectAsState()
+        val isDarkMode by UIThemeController.uiThemeMode.collectAsState()
 
         val todoDetails: TodoScreen.TodoDetails = backStackEntry.toRoute()
         val userId = todoDetails.userId
@@ -269,7 +271,7 @@ private fun NavGraphBuilder.addTodoScreens(
                 navController.popBackStack()
             },
             toggleUIMode = {
-                turnOnDarkMode(!isDarkMode)
+                updateUiThemeMode(isDarkMode.nextMode())
             }
         )
     }
@@ -277,11 +279,11 @@ private fun NavGraphBuilder.addTodoScreens(
 
 private fun NavGraphBuilder.addPostScreens(
     navController: NavHostController,
-    turnOnDarkMode: (Boolean) -> Unit
+    updateUiThemeMode: (UIThemeMode) -> Unit
 ) {
     composable<PostScreen.PostList> { backStackEntry ->
         val viewModel: PostListViewModel = hiltViewModel()
-        val isDarkMode by UIThemeController.isDarkMode.collectAsState()
+        val isDarkMode by UIThemeController.uiThemeMode.collectAsState()
 
         val postList: PostScreen.PostList = backStackEntry.toRoute()
         val userId = postList.userId
@@ -293,7 +295,7 @@ private fun NavGraphBuilder.addPostScreens(
                 navController.popBackStack()
             },
             toggleUIMode = {
-                turnOnDarkMode(!isDarkMode)
+                updateUiThemeMode(isDarkMode.nextMode())
             },
             goToPostDetails = { postId ->
                 navController.navigate(
@@ -308,7 +310,7 @@ private fun NavGraphBuilder.addPostScreens(
 
     composable<PostScreen.PostDetails> { backStackEntry ->
         val viewModel: PostDetailsViewModel = hiltViewModel()
-        val isDarkMode by UIThemeController.isDarkMode.collectAsState()
+        val isDarkMode by UIThemeController.uiThemeMode.collectAsState()
 
         val postDetails: PostScreen.PostDetails = backStackEntry.toRoute()
         val userId = postDetails.userId
@@ -322,7 +324,7 @@ private fun NavGraphBuilder.addPostScreens(
                 navController.popBackStack()
             },
             toggleUIMode = {
-                turnOnDarkMode(!isDarkMode)
+                updateUiThemeMode(isDarkMode.nextMode())
             },
             onCommentsClicked = {
                 navController.navigate(
@@ -336,17 +338,17 @@ private fun NavGraphBuilder.addPostScreens(
 
     addCommentScreens(
         navController = navController,
-        turnOnDarkMode = turnOnDarkMode
+        updateUiThemeMode = updateUiThemeMode
     )
 }
 
 private fun NavGraphBuilder.addCommentScreens(
     navController: NavHostController,
-    turnOnDarkMode: (Boolean) -> Unit
+    updateUiThemeMode: (UIThemeMode) -> Unit
 ) {
     composable<CommentScreen.CommentList> { backStackEntry ->
         val viewModel: CommentListViewModel = hiltViewModel()
-        val isDarkMode by UIThemeController.isDarkMode.collectAsState()
+        val isDarkMode by UIThemeController.uiThemeMode.collectAsState()
 
         val commentList: CommentScreen.CommentList = backStackEntry.toRoute()
         val postId = commentList.postId
@@ -358,7 +360,7 @@ private fun NavGraphBuilder.addCommentScreens(
                 navController.popBackStack()
             },
             toggleUIMode = {
-                turnOnDarkMode(!isDarkMode)
+                updateUiThemeMode(isDarkMode.nextMode())
             },
             goToCommentDetails = { commentId ->
                 navController.navigate(
@@ -373,7 +375,7 @@ private fun NavGraphBuilder.addCommentScreens(
 
     composable<CommentScreen.CommentDetails> { backStackEntry ->
         val viewModel: CommentDetailsViewModel = hiltViewModel()
-        val isDarkMode by UIThemeController.isDarkMode.collectAsState()
+        val uiThemeMode by UIThemeController.uiThemeMode.collectAsState()
 
         val commentDetails: CommentScreen.CommentDetails = backStackEntry.toRoute()
         val postId = commentDetails.postId
@@ -387,7 +389,7 @@ private fun NavGraphBuilder.addCommentScreens(
                 navController.popBackStack()
             },
             toggleUIMode = {
-                turnOnDarkMode(!isDarkMode)
+                updateUiThemeMode(uiThemeMode.nextMode())
             }
         )
     }

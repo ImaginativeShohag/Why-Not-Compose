@@ -53,6 +53,7 @@ import org.imaginativeworld.whynotcompose.base.extensions.navArg
 import org.imaginativeworld.whynotcompose.base.extensions.navResult
 import org.imaginativeworld.whynotcompose.base.extensions.navigate
 import org.imaginativeworld.whynotcompose.base.extensions.popBackStackWithResult
+import org.imaginativeworld.whynotcompose.base.models.UIThemeMode
 import org.imaginativeworld.whynotcompose.cms.ui.screens.CMSMainScreen
 import org.imaginativeworld.whynotcompose.exoplayer.ExoPlayerScreen
 import org.imaginativeworld.whynotcompose.models.DemoData
@@ -290,7 +291,7 @@ sealed class TutorialsScreen(val route: String) {
 fun NavHostMain(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    turnOnDarkMode: (Boolean) -> Unit
+    updateUiThemeMode: (UIThemeMode) -> Unit
 ) {
     NavHost(
         modifier = modifier,
@@ -299,7 +300,7 @@ fun NavHostMain(
     ) {
         addHomeScreens(
             navController = navController,
-            turnOnDarkMode = turnOnDarkMode
+            updateUiThemeMode = updateUiThemeMode
         )
         addAnimationScreens(
             navController = navController
@@ -312,7 +313,7 @@ fun NavHostMain(
         )
         addTutorialScreens(
             navController = navController,
-            turnOnDarkMode = turnOnDarkMode
+            updateUiThemeMode = updateUiThemeMode
         )
     }
 }
@@ -323,7 +324,7 @@ fun NavHostMain(
 
 private fun NavGraphBuilder.addHomeScreens(
     navController: NavHostController,
-    turnOnDarkMode: (Boolean) -> Unit
+    updateUiThemeMode: (UIThemeMode) -> Unit
 ) {
     navigation(
         route = Screen.Home.route,
@@ -334,7 +335,7 @@ private fun NavGraphBuilder.addHomeScreens(
         )
         addHomeIndexScreen(
             navController = navController,
-            turnOnDarkMode = turnOnDarkMode
+            updateUiThemeMode = updateUiThemeMode
         )
     }
 }
@@ -717,7 +718,7 @@ private fun NavGraphBuilder.addUiScreens(
 
 private fun NavGraphBuilder.addTutorialScreens(
     navController: NavHostController,
-    turnOnDarkMode: (Boolean) -> Unit
+    updateUiThemeMode: (UIThemeMode) -> Unit
 ) {
     navigation(
         route = Screen.Tutorials.route,
@@ -725,7 +726,7 @@ private fun NavGraphBuilder.addTutorialScreens(
     ) {
         addTutorialIndexScreen(
             navController = navController,
-            turnOnDarkMode = turnOnDarkMode
+            updateUiThemeMode = updateUiThemeMode
         )
 
         // Below compositions will be just few lines.
@@ -758,14 +759,14 @@ private fun NavGraphBuilder.addHomeSplashScreen(
 
 private fun NavGraphBuilder.addHomeIndexScreen(
     navController: NavHostController,
-    turnOnDarkMode: (Boolean) -> Unit
+    updateUiThemeMode: (UIThemeMode) -> Unit
 ) {
     composable(HomeScreen.HomeIndex.route) {
         HomeIndexScreen(
             navigate = { screen ->
                 navController.navigate(screen.route)
             },
-            turnOnDarkMode = turnOnDarkMode
+            updateUiThemeMode = updateUiThemeMode
         )
     }
 }
@@ -825,7 +826,7 @@ private fun NavGraphBuilder.addUiIndexScreen(
 
 private fun NavGraphBuilder.addTutorialIndexScreen(
     navController: NavHostController,
-    turnOnDarkMode: (Boolean) -> Unit
+    updateUiThemeMode: (UIThemeMode) -> Unit
 ) {
     composable(TutorialsScreen.TutorialIndex.route) {
         TutorialIndexScreen(
@@ -943,7 +944,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
 
     composable(TutorialsScreen.TutorialCMS.route) {
         CMSMainScreen(
-            turnOnDarkMode = turnOnDarkMode,
+            updateUiThemeMode = updateUiThemeMode,
             goBack = {
                 navController.popBackStack()
             }

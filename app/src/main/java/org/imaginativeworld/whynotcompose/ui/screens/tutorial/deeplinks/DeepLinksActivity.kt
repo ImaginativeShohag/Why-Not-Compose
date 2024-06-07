@@ -28,11 +28,14 @@ package org.imaginativeworld.whynotcompose.ui.screens.tutorial.deeplinks
 
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -45,8 +48,11 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
@@ -55,9 +61,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.imaginativeworld.whynotcompose.base.models.UIThemeMode
 import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
+import org.imaginativeworld.whynotcompose.ui.screens.darkScrim
+import org.imaginativeworld.whynotcompose.ui.screens.lightScrim
 
 /***
  * Try Deep-Links:
@@ -113,7 +122,36 @@ class DeepLinksActivity : ComponentActivity() {
         val appLinkData: Uri? = appLinkIntent.data
 
         setContent {
-            val isDarkMode by UIThemeController.isDarkMode.collectAsState()
+            val uiThemeMode by UIThemeController.uiThemeMode.collectAsState()
+
+            val isSystemInDarkTheme = isSystemInDarkTheme()
+
+            val isDarkMode by remember(isSystemInDarkTheme) {
+                derivedStateOf {
+                    when (uiThemeMode) {
+                        UIThemeMode.AUTO -> isSystemInDarkTheme
+                        UIThemeMode.LIGHT -> false
+                        UIThemeMode.DARK -> true
+                    }
+                }
+            }
+            // Update the edge to edge configuration to match the theme
+            // This is the same parameters as the default enableEdgeToEdge call, but we manually
+            // resolve whether or not to show dark theme using uiState, since it can be different
+            // than the configuration's dark theme value based on the user preference.
+            DisposableEffect(isDarkMode) {
+                enableEdgeToEdge(
+                    statusBarStyle = SystemBarStyle.auto(
+                        Color.TRANSPARENT,
+                        Color.TRANSPARENT
+                    ) { isDarkMode },
+                    navigationBarStyle = SystemBarStyle.auto(
+                        lightScrim,
+                        darkScrim
+                    ) { isDarkMode }
+                )
+                onDispose {}
+            }
 
             AppTheme(
                 darkTheme = isDarkMode

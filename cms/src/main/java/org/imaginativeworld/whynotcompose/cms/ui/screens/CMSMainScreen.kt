@@ -27,28 +27,43 @@
 package org.imaginativeworld.whynotcompose.cms.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
+import org.imaginativeworld.whynotcompose.base.models.UIThemeMode
 import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
 import org.imaginativeworld.whynotcompose.cms.theme.CMSAppTheme
 
 @Composable
 fun CMSMainScreen(
-    turnOnDarkMode: (Boolean) -> Unit,
+    updateUiThemeMode: (UIThemeMode) -> Unit,
     goBack: () -> Unit
 ) {
-    val isDarkMode by UIThemeController.isDarkMode.collectAsState()
+    val uiThemeMode by UIThemeController.uiThemeMode.collectAsState()
+    val isSystemInDarkTheme = isSystemInDarkTheme()
+
+    val isDarkMode by remember(isSystemInDarkTheme) {
+        derivedStateOf {
+            when (uiThemeMode) {
+                UIThemeMode.AUTO -> isSystemInDarkTheme
+                UIThemeMode.LIGHT -> false
+                UIThemeMode.DARK -> true
+            }
+        }
+    }
 
     CMSAppTheme(
         darkTheme = isDarkMode
     ) {
         CMSMainScreenSkeleton(
-            turnOnDarkMode = turnOnDarkMode,
+            updateUiThemeMode = updateUiThemeMode,
             goBack = goBack
         )
     }
@@ -64,7 +79,7 @@ fun CMSMainScreenSkeletonPreview() {
 
 @Composable
 fun CMSMainScreenSkeleton(
-    turnOnDarkMode: (Boolean) -> Unit = {},
+    updateUiThemeMode: (UIThemeMode) -> Unit = {},
     goBack: () -> Unit = {}
 ) {
     val navController = rememberNavController()
@@ -72,7 +87,7 @@ fun CMSMainScreenSkeleton(
     CMSNavHost(
         modifier = Modifier.background(MaterialTheme.colorScheme.background),
         navController = navController,
-        turnOnDarkMode = turnOnDarkMode,
+        updateUiThemeMode = updateUiThemeMode,
         goBack = goBack
     )
 }

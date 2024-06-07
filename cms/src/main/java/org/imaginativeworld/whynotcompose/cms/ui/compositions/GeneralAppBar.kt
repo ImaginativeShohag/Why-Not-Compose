@@ -30,6 +30,7 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.BrightnessAuto
 import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.DarkMode
 import androidx.compose.material.icons.rounded.LightMode
@@ -44,6 +45,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import org.imaginativeworld.whynotcompose.base.models.UIThemeMode
 import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
 import org.imaginativeworld.whynotcompose.cms.theme.CMSAppTheme
 
@@ -54,7 +56,7 @@ fun GeneralAppBar(
     goBack: () -> Unit = {},
     toggleUIMode: () -> Unit = {}
 ) {
-    val isDarkMode by UIThemeController.isDarkMode.collectAsState()
+    val uiThemeMode by UIThemeController.uiThemeMode.collectAsState()
 
     CenterAlignedTopAppBar(
         title = {
@@ -95,7 +97,11 @@ fun GeneralAppBar(
                 toggleUIMode()
             }) {
                 Icon(
-                    imageVector = if (isDarkMode) Icons.Rounded.DarkMode else Icons.Rounded.LightMode,
+                    imageVector = when(uiThemeMode) {
+                        UIThemeMode.AUTO -> Icons.Rounded.BrightnessAuto
+                        UIThemeMode.LIGHT -> Icons.Rounded.LightMode
+                        UIThemeMode.DARK -> Icons.Rounded.DarkMode
+                    },
                     contentDescription = "Toggle UI mode"
                 )
             }

@@ -32,6 +32,9 @@ import com.squareup.moshi.Moshi
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
+import org.imaginativeworld.whynotcompose.base.extensions.get
+import org.imaginativeworld.whynotcompose.base.extensions.set
+import org.imaginativeworld.whynotcompose.base.models.UIThemeMode
 import org.imaginativeworld.whynotcompose.base.models.User
 import timber.log.Timber
 
@@ -43,7 +46,7 @@ class SharedPref @Inject constructor(
     companion object {
         private const val PREF_TOKEN = "token"
         private const val PREF_USER = "user"
-        private const val PREF_DARK_MODE = "dark_mode"
+        private const val PREF_UI_THEME_MODE = "ui_theme_mode"
     }
 
     private val context: Context = context.applicationContext
@@ -72,16 +75,11 @@ class SharedPref @Inject constructor(
     // ----------------------------------------------------------------
 
     fun setToken(token: String) {
-        getSharedPerf()
-            .edit()
-            .apply {
-                putString(PREF_TOKEN, token)
-                apply()
-            }
+        getSharedPerf().set(PREF_TOKEN, token)
     }
 
-    fun getToken(): String? {
-        return getSharedPerf().getString(PREF_TOKEN, null)
+    fun getToken(): String {
+        return getSharedPerf().get(PREF_TOKEN, default = "") ?: ""
     }
 
     // ----------------------------------------------------------------
@@ -131,16 +129,12 @@ class SharedPref @Inject constructor(
 
     // ----------------------------------------------------------------
 
-    fun setDarkMode(isDark: Boolean) {
-        getSharedPerf()
-            .edit()
-            .apply {
-                putBoolean(PREF_DARK_MODE, isDark)
-                apply()
-            }
+    fun setDarkMode(status: UIThemeMode) {
+        getSharedPerf().set(PREF_UI_THEME_MODE, status.value)
     }
 
-    fun getDarkMode(): Boolean {
-        return getSharedPerf().getBoolean(PREF_DARK_MODE, false)
+    fun getUIThemeMode(): UIThemeMode {
+        val value = getSharedPerf().get(PREF_UI_THEME_MODE, 0)
+        return UIThemeMode.fromValue(value) ?: UIThemeMode.AUTO
     }
 }

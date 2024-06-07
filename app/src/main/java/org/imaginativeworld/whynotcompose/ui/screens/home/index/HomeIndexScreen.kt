@@ -72,6 +72,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -99,6 +100,10 @@ import org.imaginativeworld.whynotcompose.base.R as BaseR
 import org.imaginativeworld.whynotcompose.base.extensions.openUrl
 import org.imaginativeworld.whynotcompose.base.extensions.shadow
 import org.imaginativeworld.whynotcompose.base.extensions.toast
+import org.imaginativeworld.whynotcompose.base.models.UIThemeMode
+import org.imaginativeworld.whynotcompose.base.models.humanReadable
+import org.imaginativeworld.whynotcompose.base.models.nextMode
+import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
 import org.imaginativeworld.whynotcompose.ui.screens.MainActivity
@@ -135,12 +140,12 @@ private val menuItems = listOf(
 @Composable
 fun HomeIndexScreen(
     navigate: (Screen) -> Unit = {},
-    turnOnDarkMode: (Boolean) -> Unit = {}
+    updateUiThemeMode: (UIThemeMode) -> Unit = {}
 ) {
     val context = LocalContext.current
 
-    val isDark = !MaterialTheme.colors.isLight
-    val (darkModeState, onDarkModeStateChange) = remember { mutableStateOf(isDark) }
+    val uiThemeMode by UIThemeController.uiThemeMode.collectAsState()
+    val (darkModeState, onDarkModeStateChange) = remember { mutableStateOf(uiThemeMode) }
     var showNotificationPermissionRationale by remember { mutableStateOf(false) }
 
     val requestNotificationPermission =
@@ -273,16 +278,16 @@ fun HomeIndexScreen(
 
                     item {
                         ModuleButton(
-                            name = if (isDark) "Dark Mode" else "Light Mode",
-                            icon = if (isDark) {
-                                R.drawable.ic_moon_stars
-                            } else {
-                                R.drawable.ic_brightness_high
+                            name = uiThemeMode.humanReadable(),
+                            icon = when (uiThemeMode) {
+                                UIThemeMode.AUTO -> R.drawable.ic_night_sight_auto
+                                UIThemeMode.LIGHT -> R.drawable.ic_brightness_high
+                                UIThemeMode.DARK -> R.drawable.ic_moon_stars
                             },
                             color = TailwindCSSColor.Green500,
                             onClick = {
-                                onDarkModeStateChange(!darkModeState)
-                                turnOnDarkMode(!darkModeState)
+                                onDarkModeStateChange(darkModeState.nextMode())
+                                updateUiThemeMode(darkModeState.nextMode())
                             }
                         )
                     }

@@ -27,17 +27,17 @@
 package org.imaginativeworld.whynotcompose.base.utils
 
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import org.imaginativeworld.whynotcompose.base.models.UIThemeMode
 
 /**
  * This singleton is for updating and observing dark mode UI.
  */
 object UIThemeController {
-    private val _isDarkMode = MutableStateFlow(false)
-    val isDarkMode: StateFlow<Boolean>
-        get() = _isDarkMode
+    private val _uiThemeMode = MutableStateFlow(UIThemeMode.AUTO)
+    val uiThemeMode = _uiThemeMode.asStateFlow()
 
-    fun updateUITheme(isDarkMode: Boolean) {
-        _isDarkMode.value = isDarkMode
+    fun updateUITheme(themeMode: UIThemeMode) {
+        _uiThemeMode.value = themeMode
     }
 }

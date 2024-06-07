@@ -44,6 +44,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
@@ -95,8 +96,11 @@ fun UserEditSheet(
     val scope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
-        confirmValueChange = { sheetState ->
-            return@rememberModalBottomSheetState sheetState != SheetValue.Hidden
+        // Note: Remove the `remember` later. Issue: https://issuetracker.google.com/issues/340582180
+        confirmValueChange = remember {
+            { sheetState ->
+                sheetState != SheetValue.Hidden
+            }
         }
     )
 
@@ -105,10 +109,7 @@ fun UserEditSheet(
     val goBack: () -> Unit = {
         scope.launch {
             bottomSheetState.hide()
-        }.invokeOnCompletion {
-            if (!bottomSheetState.isVisible) {
-                showSheet.value = false
-            }
+            showSheet.value = false
         }
     }
 
@@ -218,6 +219,7 @@ fun UserEditSheetSkeleton(
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
+        containerColor = BottomSheetDefaults.ContainerColor,
         contentWindowInsets = WindowInsets(0.dp, 0.dp, 0.dp, 0.dp)
     ) { innerPadding ->
         AnimatedVisibility(

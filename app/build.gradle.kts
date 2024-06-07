@@ -28,6 +28,7 @@ plugins {
     id(Libs.Android.application)
     kotlin("android")
     kotlin("kapt")
+    id(Libs.Kotlin.composeCompilerGradlePlugin)
     id(Libs.Google.DevTools.ksp)
     id(Libs.Kotlin.percelizeGradlePlugin)
     id(Libs.Google.Hilt.gradlePlugin)
@@ -45,7 +46,7 @@ android {
         minSdk = BuildConfigConst.minSdk
         targetSdk = BuildConfigConst.targetSdk
         versionCode = (findProperty("android.injected.version.code") as? String)?.toIntOrNull() ?: 1
-        versionName = "5.0.1.${getCurrentDateAsYYMMDD()}" // Major.Minor.Patch.YYMMDD
+        versionName = "6.0.0.${getCurrentDateAsYYMMDD()}" // Major.Minor.Patch.YYMMDD
         vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -98,6 +99,7 @@ android {
     }
 
     buildFeatures {
+        buildConfig = true
         compose = true
 
         // Disable unused AGP features
@@ -109,8 +111,8 @@ android {
         shaders = false
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = Libs.AndroidX.Compose.compilerVersion
+    composeCompiler {
+        enableStrongSkippingMode = true
     }
 
     signingConfigs {
@@ -150,7 +152,6 @@ dependencies {
     // ----------------------------------------------------------------
     implementation(platform(Libs.AndroidX.Compose.bom))
 
-    implementation(Libs.AndroidX.Compose.compiler)
     implementation(Libs.AndroidX.Compose.ui)
     implementation(Libs.AndroidX.Compose.uiUtil)
     // Tooling support (Previews, etc.)

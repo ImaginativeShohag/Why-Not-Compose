@@ -45,11 +45,9 @@ import org.imaginativeworld.whynotcompose.cms.repositories.CommentRepository
 class CommentAddViewModel @Inject constructor(
     private val repository: CommentRepository
 ) : ViewModel() {
-    private val _eventShowLoading = MutableStateFlow(false)
-
-    private val _eventShowMessage = MutableStateFlow<Event<String>?>(null)
-
-    private val _eventAddCommentSuccess = MutableStateFlow<Event<Boolean>?>(null)
+    private val eventShowLoading = MutableStateFlow(false)
+    private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
+    private val eventAddCommentSuccess = MutableStateFlow<Event<Boolean>?>(null)
 
     // ----------------------------------------------------------------
 
@@ -62,9 +60,9 @@ class CommentAddViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             combine(
-                _eventShowLoading,
-                _eventShowMessage,
-                _eventAddCommentSuccess
+                eventShowLoading,
+                eventShowMessage,
+                eventAddCommentSuccess
             ) { showLoading, showMessage, addCommentSuccess ->
 
                 CommentAddViewState(
@@ -89,22 +87,22 @@ class CommentAddViewModel @Inject constructor(
         body: String
     ): Boolean {
         if (name.isBlank()) {
-            _eventShowMessage.value = Event("Please enter name!")
+            eventShowMessage.value = Event("Please enter name!")
             return false
         }
 
         if (email.isBlank()) {
-            _eventShowMessage.value = Event("Please enter email!")
+            eventShowMessage.value = Event("Please enter email!")
             return false
         }
 
         if (!email.isValidEmail()) {
-            _eventShowMessage.value = Event("Please enter a valid email!")
+            eventShowMessage.value = Event("Please enter a valid email!")
             return false
         }
 
         if (body.isBlank()) {
-            _eventShowMessage.value = Event("Please enter body!")
+            eventShowMessage.value = Event("Please enter body!")
             return false
         }
 
@@ -121,26 +119,29 @@ class CommentAddViewModel @Inject constructor(
             return@launch
         }
 
-        _eventShowLoading.value = true
+        eventShowLoading.value = true
 
         try {
-            repository.addComment(
-                postId,
-                Comment(
-                    id = 0, // It will be ignored in the server.
-                    name = name,
-                    email = email,
-                    body = body,
-                    postId = postId
-                )
+            // Note: The value of `id` will be ignored in the server.
+            val comment = Comment(
+                id = 0,
+                name = name,
+                email = email,
+                body = body,
+                postId = postId
             )
 
-            _eventAddCommentSuccess.value = Event(true)
+            repository.addComment(
+                postId,
+                comment
+            )
+
+            eventAddCommentSuccess.value = Event(true)
         } catch (e: ApiException) {
-            _eventShowMessage.value = Event(e.message ?: "Unknown error!")
+            eventShowMessage.value = Event(e.message ?: "Unknown error!")
         }
 
-        _eventShowLoading.value = false
+        eventShowLoading.value = false
     }
 }
 

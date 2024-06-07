@@ -46,13 +46,10 @@ import org.imaginativeworld.whynotcompose.cms.repositories.UserRepository
 class UserDetailsViewModel @Inject constructor(
     private val repository: UserRepository
 ) : ViewModel() {
-    private val _eventShowLoading = MutableStateFlow(false)
-
-    private val _eventShowMessage = MutableStateFlow<Event<ActionMessage>?>(null)
-
-    private val _user = MutableStateFlow<User?>(null)
-
-    private val _eventDeleteSuccess = MutableStateFlow<Event<Boolean>?>(null)
+    private val eventShowLoading = MutableStateFlow(false)
+    private val eventShowMessage = MutableStateFlow<Event<ActionMessage>?>(null)
+    private val user = MutableStateFlow<User?>(null)
+    private val eventDeleteSuccess = MutableStateFlow<Event<Boolean>?>(null)
 
     // ----------------------------------------------------------------
 
@@ -65,10 +62,10 @@ class UserDetailsViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             combine(
-                _eventShowLoading,
-                _eventShowMessage,
-                _user,
-                _eventDeleteSuccess
+                eventShowLoading,
+                eventShowMessage,
+                user,
+                eventDeleteSuccess
             ) { showLoading, showMessage, user, deleteSuccess ->
 
                 UserDetailsViewState(
@@ -91,14 +88,14 @@ class UserDetailsViewModel @Inject constructor(
     fun getDetails(
         userId: Int
     ) = viewModelScope.launch {
-        _eventShowLoading.value = true
+        eventShowLoading.value = true
 
         try {
             val user = repository.getUser(userId)
 
-            _user.value = user
+            this@UserDetailsViewModel.user.value = user
         } catch (e: ApiException) {
-            _eventShowMessage.value = Event(
+            eventShowMessage.value = Event(
                 ActionMessage(
                     e.message ?: "Unknown error!",
                     action = UserDetailsViewAction.USER_LOAD_ERROR
@@ -106,23 +103,23 @@ class UserDetailsViewModel @Inject constructor(
             )
         }
 
-        _eventShowLoading.value = false
+        eventShowLoading.value = false
     }
 
     fun deleteUser(userId: Int) = viewModelScope.launch {
-        _eventShowLoading.value = true
+        eventShowLoading.value = true
 
         try {
             repository.deleteUser(userId)
 
-            _eventDeleteSuccess.value = Event(true)
+            eventDeleteSuccess.value = Event(true)
         } catch (e: ApiException) {
-            _eventShowMessage.value = Event(
+            eventShowMessage.value = Event(
                 ActionMessage(e.message ?: "Unknown error!")
             )
         }
 
-        _eventShowLoading.value = false
+        eventShowLoading.value = false
     }
 }
 

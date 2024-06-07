@@ -155,9 +155,10 @@ fun <T> GeneralRadioButton(
             .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
+        // Note: `onClick = null` recommended for accessibility with screenreaders.
         RadioButton(
             selected = (value == selectedOption),
-            onClick = null // null recommended for accessibility with screenreaders
+            onClick = null
         )
         Text(
             text = text,

@@ -32,14 +32,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
+import org.imaginativeworld.whynotcompose.base.models.UIThemeMode
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
 fun MainScreen(
-    turnOnDarkMode: (Boolean) -> Unit
+    updateUiThemeMode: (UIThemeMode) -> Unit
 ) {
     MainScreenSkeleton(
-        turnOnDarkMode = turnOnDarkMode
+        updateUiThemeMode = updateUiThemeMode
     )
 }
 
@@ -48,20 +49,20 @@ fun MainScreen(
 fun MainScreenSkeletonPreview() {
     AppTheme {
         MainScreenSkeleton(
-            turnOnDarkMode = {}
+            updateUiThemeMode = {}
         )
     }
 }
 
 @Composable
 fun MainScreenSkeleton(
-    turnOnDarkMode: (Boolean) -> Unit
+    updateUiThemeMode: (UIThemeMode) -> Unit
 ) {
     val navController = rememberNavController()
 
     NavHostMain(
         Modifier.background(MaterialTheme.colors.background),
         navController = navController,
-        turnOnDarkMode = turnOnDarkMode
+        updateUiThemeMode = updateUiThemeMode
     )
 }

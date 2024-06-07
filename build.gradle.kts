@@ -24,6 +24,7 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
@@ -40,6 +41,8 @@ plugins {
     id(Libs.Android.application) version Libs.Gradle.version apply false
     id(Libs.Android.library) version Libs.Gradle.version apply false
     kotlin("android") version Libs.Kotlin.version apply false
+    kotlin("plugin.serialization") version Libs.Kotlin.version apply false
+    id(Libs.Kotlin.composeCompilerGradlePlugin) version Libs.Kotlin.version apply false
     id(Libs.Google.DevTools.ksp) version Libs.Google.DevTools.kspVersion apply false
     id(Libs.Google.Firebase.crashlyticsGradlePlugin) version Libs.Google.Firebase.crashlyticsGradlePluginVersion apply false
     id(Libs.Google.Services.gradlePlugin) version Libs.Google.Services.version apply false
@@ -55,16 +58,10 @@ subprojects {
     spotless {
         kotlin {
             target("**/*.kt")
-            targetExclude("$buildDir/**/*.kt")
+            targetExclude("${layout.buildDirectory}/**/*.kt")
             targetExclude("bin/**/*.kt")
 
-            ktlint("0.49.1").editorConfigOverride(
-                mapOf(
-                    "ktlint_code_style" to "android",
-                    "max_line_length" to "off",
-                    "standard:comment-wrapping" to "off"
-                )
-            )
+            ktlint()
             licenseHeaderFile(rootProject.file("spotless/copyright.kt"))
         }
 
@@ -86,8 +83,8 @@ subprojects {
 
 allprojects {
     tasks.withType<KotlinCompile>().configureEach {
-        kotlinOptions {
-            jvmTarget = "17"
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_17
         }
     }
 }

@@ -349,7 +349,8 @@ fun EmudiScreenSkeleton(
                 )
             )
 
-            Box( // Yellow
+            // Yellow
+            Box(
                 Modifier
                     .padding(end = 151.dp, bottom = 54.dp)
                     .size(11.5.dp)
@@ -362,7 +363,8 @@ fun EmudiScreenSkeleton(
                     .background(Color(0xffFFED72), CircleShape)
             )
 
-            Box( // Grey
+            // Grey
+            Box(
                 Modifier
                     .padding(end = 136.dp, bottom = 68.dp)
                     .size(5.dp)
@@ -375,7 +377,8 @@ fun EmudiScreenSkeleton(
                     .background(Color(0xff93A9D7), CircleShape)
             )
 
-            Box( // Red
+            // Red
+            Box(
                 Modifier
                     .padding(end = 118.dp, bottom = 56.dp)
                     .size(12.5.dp)
@@ -388,7 +391,8 @@ fun EmudiScreenSkeleton(
                     .background(Color(0xffFF3017), CircleShape)
             )
 
-            Box( // Green
+            // Green
+            Box(
                 Modifier
                     .padding(end = 132.dp, bottom = 25.dp)
                     .size(18.dp)

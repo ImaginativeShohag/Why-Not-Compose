@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Md. Mahmudul Hasan Shohag
+ * Copyright 2023 Md. Mahmudul Hasan Shohag
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.template
+package org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
@@ -37,39 +37,62 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
+import org.imaginativeworld.whynotcompose.models.DemoData
 
 @Composable
-fun TemplateChildScreen(
+fun NavDataPassTwoScreen(
+    data: DemoData?,
     goBack: () -> Unit
 ) {
-    TemplateChildScreenSkeleton(
+    NavDataPassTwoScreenSkeleton(
+        data = data,
         goBack = goBack
     )
 }
 
 @Preview
 @Composable
-fun TemplateChildScreenSkeletonPreview() {
+fun NavDataPassTwoScreenSkeletonPreview() {
     AppTheme {
-        TemplateChildScreenSkeleton()
+        NavDataPassTwoScreenSkeleton(
+            data = DemoData(
+                id = 1,
+                name = "John Doe",
+                ranks = listOf("A", "B", "C")
+            )
+        )
     }
 }
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun TemplateChildScreenSkeletonPreviewDark() {
+fun NavDataPassTwoScreenSkeletonPreviewDark() {
     AppTheme {
-        TemplateChildScreenSkeleton()
+        NavDataPassTwoScreenSkeleton(
+            data = DemoData(
+                id = 1,
+                name = "John Doe",
+                ranks = listOf("A", "B", "C")
+            )
+        )
     }
 }
 
 @Composable
-fun TemplateChildScreenSkeleton(
+fun NavDataPassTwoScreenSkeleton(
+    data: DemoData?,
     goBack: () -> Unit = {}
 ) {
     Scaffold(
@@ -82,10 +105,11 @@ fun TemplateChildScreenSkeleton(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AppComponent.Header(
-                "Title",
+                "Data passed as Parcelable",
                 goBack = goBack
             )
 
@@ -94,18 +118,18 @@ fun TemplateChildScreenSkeleton(
 
             Divider()
 
-            AppComponent.SubHeader("Sub Title")
+            AppComponent.BigSpacer()
 
-            // ----------------------------------------------------------------
+            Text(
+                "Received Data",
+                fontWeight = FontWeight.Bold
+            )
 
-            // Content here...
-            // Use `padding(start = 16.dp, end = 16.dp)` for the elements.
-
-            // ----------------------------------------------------------------
-
-            AppComponent.MediumSpacer()
-
-            // Content here...
+            Text(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                text = "$data",
+                textAlign = TextAlign.Center
+            )
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------

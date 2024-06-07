@@ -29,12 +29,18 @@ package org.imaginativeworld.whynotcompose.cms.ui.compositions
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -69,7 +75,12 @@ fun GeneralSheetAppBar(
             }
 
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-        }
+        },
+        windowInsets = WindowInsets.systemBars
+            .only(WindowInsetsSides.Horizontal),
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = BottomSheetDefaults.ContainerColor
+        )
     )
 }
 

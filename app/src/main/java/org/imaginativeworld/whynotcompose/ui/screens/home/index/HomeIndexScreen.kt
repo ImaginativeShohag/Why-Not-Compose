@@ -28,13 +28,13 @@ package org.imaginativeworld.whynotcompose.ui.screens.home.index
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -69,8 +69,10 @@ import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -87,7 +89,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
@@ -98,6 +100,10 @@ import org.imaginativeworld.whynotcompose.base.R as BaseR
 import org.imaginativeworld.whynotcompose.base.extensions.openUrl
 import org.imaginativeworld.whynotcompose.base.extensions.shadow
 import org.imaginativeworld.whynotcompose.base.extensions.toast
+import org.imaginativeworld.whynotcompose.base.models.UIThemeMode
+import org.imaginativeworld.whynotcompose.base.models.humanReadable
+import org.imaginativeworld.whynotcompose.base.models.nextMode
+import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
 import org.imaginativeworld.whynotcompose.ui.screens.MainActivity
@@ -134,12 +140,12 @@ private val menuItems = listOf(
 @Composable
 fun HomeIndexScreen(
     navigate: (Screen) -> Unit = {},
-    turnOnDarkMode: (Boolean) -> Unit = {}
+    updateUiThemeMode: (UIThemeMode) -> Unit = {}
 ) {
     val context = LocalContext.current
 
-    val isDark = !MaterialTheme.colors.isLight
-    val (darkModeState, onDarkModeStateChange) = remember { mutableStateOf(isDark) }
+    val uiThemeMode by UIThemeController.uiThemeMode.collectAsState()
+    val (darkModeState, onDarkModeStateChange) = remember { mutableStateOf(uiThemeMode) }
     var showNotificationPermissionRationale by remember { mutableStateOf(false) }
 
     val requestNotificationPermission =
@@ -272,16 +278,16 @@ fun HomeIndexScreen(
 
                     item {
                         ModuleButton(
-                            name = if (isDark) "Dark Mode" else "Light Mode",
-                            icon = if (isDark) {
-                                R.drawable.ic_moon_stars
-                            } else {
-                                R.drawable.ic_brightness_high
+                            name = uiThemeMode.humanReadable(),
+                            icon = when (uiThemeMode) {
+                                UIThemeMode.AUTO -> R.drawable.ic_night_sight_auto
+                                UIThemeMode.LIGHT -> R.drawable.ic_brightness_high
+                                UIThemeMode.DARK -> R.drawable.ic_moon_stars
                             },
                             color = TailwindCSSColor.Green500,
                             onClick = {
-                                onDarkModeStateChange(!darkModeState)
-                                turnOnDarkMode(!darkModeState)
+                                onDarkModeStateChange(darkModeState.nextMode())
+                                updateUiThemeMode(darkModeState.nextMode())
                             }
                         )
                     }
@@ -295,6 +301,55 @@ fun HomeIndexScreen(
                                 navigate(menu.route)
                             }
                         )
+                    }
+
+                    item {
+                        Button(
+                            modifier = Modifier
+                                .padding(0.dp)
+                                .fillMaxWidth()
+                                .shadow(
+                                    spread = 8.dp,
+                                    alpha = .25f,
+                                    color = TailwindCSSColor.Pink500,
+                                    radius = 8.dp
+                                ),
+                            shape = MaterialTheme.shapes.medium,
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = MaterialTheme.colors.surface,
+                                contentColor = TailwindCSSColor.Pink500
+                            ),
+                            onClick = {
+                                context.openUrl("https://imaginativeshohag.github.io/")
+                            },
+                            contentPadding = PaddingValues(8.dp),
+                            elevation = null
+                        ) {
+                            Column(
+                                Modifier
+                                    .fillMaxWidth()
+                                    .aspectRatio(1f),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                Text(
+                                    text = "Developed By —",
+                                    fontSize = 12.sp,
+                                    color = MaterialTheme.colors.onBackground.copy(.75f)
+                                )
+
+                                Text(
+                                    modifier = Modifier
+                                        .padding(top = 4.dp),
+                                    text = "@ImaginativeShohag",
+                                    color = TailwindCSSColor.Pink500,
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    overflow = TextOverflow.Ellipsis,
+                                    maxLines = 1
+                                )
+                            }
+                        }
                     }
                 }
 
@@ -323,23 +378,17 @@ fun HomeIndexScreen(
                         .weight(1f),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(
-                        text = "Developed By —",
-                        fontSize = 12.sp,
-                        color = MaterialTheme.colors.onBackground.copy(.75f)
-                    )
-
-                    Text(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(8.dp))
-                            .clickable {
-                                context.openUrl("https://imaginativeshohag.github.io/")
-                            }
-                            .padding(4.dp),
-                        text = "@ImaginativeShohag",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Bold
-                    )
+                    TextButton(
+                        modifier = Modifier.padding(horizontal = 8.dp),
+                        onClick = {
+                            context.openUrl("https://www.buymeacoffee.com/ImShohag")
+                        }
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.bmc_button),
+                            contentDescription = "Buy me a coffee"
+                        )
+                    }
                 }
 
                 Divider(
@@ -428,17 +477,9 @@ fun ModuleButton(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
 fun HomeIndexScreenPreview() {
-    AppTheme {
-        HomeIndexScreen()
-    }
-}
-
-@Preview(uiMode = UI_MODE_NIGHT_YES)
-@Composable
-fun HomeIndexScreenPreviewDark() {
     AppTheme {
         HomeIndexScreen()
     }

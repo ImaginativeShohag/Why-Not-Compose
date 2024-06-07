@@ -43,6 +43,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.CalendarMonth
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DropdownMenuItem
@@ -102,8 +103,11 @@ fun TodoAddSheet(
     val scope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
-        confirmValueChange = { sheetState ->
-            return@rememberModalBottomSheetState sheetState != SheetValue.Hidden
+        // Note: Remove the `remember` later. Issue: https://issuetracker.google.com/issues/340582180
+        confirmValueChange = remember {
+            { sheetState ->
+                sheetState != SheetValue.Hidden
+            }
         }
     )
 
@@ -112,10 +116,7 @@ fun TodoAddSheet(
     val goBack: () -> Unit = {
         scope.launch {
             bottomSheetState.hide()
-        }.invokeOnCompletion {
-            if (!bottomSheetState.isVisible) {
-                showSheet.value = false
-            }
+            showSheet.value = false
         }
     }
 
@@ -203,6 +204,7 @@ fun TodoAddSheetSkeleton(
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
+        containerColor = BottomSheetDefaults.ContainerColor,
         contentWindowInsets = WindowInsets(0.dp, 0.dp, 0.dp, 0.dp)
     ) { innerPadding ->
         Column(
@@ -350,7 +352,8 @@ fun TodoAddSheetSkeleton(
                 }
             }
         )
-        val confirmEnabled = remember {
+
+        val datePickerConfirmButtonEnabled = remember {
             derivedStateOf { datePickerState.selectedDateMillis != null }
         }
 
@@ -367,7 +370,7 @@ fun TodoAddSheetSkeleton(
                             dueDate = Date(it)
                         }
                     },
-                    enabled = confirmEnabled.value
+                    enabled = datePickerConfirmButtonEnabled.value
                 ) {
                     Text("OK")
                 }

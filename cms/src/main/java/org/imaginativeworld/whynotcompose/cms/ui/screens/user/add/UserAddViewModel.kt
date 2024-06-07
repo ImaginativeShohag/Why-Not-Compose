@@ -45,11 +45,9 @@ import org.imaginativeworld.whynotcompose.cms.repositories.UserRepository
 class UserAddViewModel @Inject constructor(
     private val repository: UserRepository
 ) : ViewModel() {
-    private val _eventShowLoading = MutableStateFlow(false)
-
-    private val _eventShowMessage = MutableStateFlow<Event<String>?>(null)
-
-    private val _eventAddUserSuccess = MutableStateFlow<Event<Boolean>?>(null)
+    private val eventShowLoading = MutableStateFlow(false)
+    private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
+    private val eventAddUserSuccess = MutableStateFlow<Event<Boolean>?>(null)
 
     // ----------------------------------------------------------------
 
@@ -62,9 +60,9 @@ class UserAddViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             combine(
-                _eventShowLoading,
-                _eventShowMessage,
-                _eventAddUserSuccess
+                eventShowLoading,
+                eventShowMessage,
+                eventAddUserSuccess
             ) { showLoading, showMessage, addUserSuccess ->
 
                 UserAddViewState(
@@ -89,22 +87,22 @@ class UserAddViewModel @Inject constructor(
         gender: String
     ): Boolean {
         if (name.isBlank()) {
-            _eventShowMessage.value = Event("Please enter your name!")
+            eventShowMessage.value = Event("Please enter your name!")
             return false
         }
 
         if (email.isBlank()) {
-            _eventShowMessage.value = Event("Please enter your email!")
+            eventShowMessage.value = Event("Please enter your email!")
             return false
         }
 
         if (!email.isValidEmail()) {
-            _eventShowMessage.value = Event("Please enter a valid email!")
+            eventShowMessage.value = Event("Please enter a valid email!")
             return false
         }
 
         if (gender.isBlank()) {
-            _eventShowMessage.value = Event("Please select your gender!")
+            eventShowMessage.value = Event("Please select your gender!")
             return false
         }
 
@@ -121,29 +119,32 @@ class UserAddViewModel @Inject constructor(
             return@launch
         }
 
-        _eventShowLoading.value = true
+        eventShowLoading.value = true
 
         try {
-            val newUser = repository.signIn(
-                User(
-                    0, // It will be ignored in the server.
-                    name,
-                    email,
-                    gender,
-                    status
-                )
+            // Note: The value of `id` will be ignored in the server.
+            val user = User(
+                0,
+                name,
+                email,
+                gender,
+                status
+            )
+
+            val newUser = repository.createUser(
+                user
             )
 
             if (newUser != null) {
-                _eventAddUserSuccess.value = Event(true)
+                eventAddUserSuccess.value = Event(true)
             } else {
-                _eventShowMessage.value = Event("Failed to add user!")
+                eventShowMessage.value = Event("Failed to add user!")
             }
         } catch (e: ApiException) {
-            _eventShowMessage.value = Event(e.message ?: "Unknown error!")
+            eventShowMessage.value = Event(e.message ?: "Unknown error!")
         }
 
-        _eventShowLoading.value = false
+        eventShowLoading.value = false
     }
 }
 

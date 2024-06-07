@@ -1,8 +1,9 @@
-.idea
+.idea/*
 .gradle
 /local.properties
 .DS_Store
 /captures
+.kotlin
 
 # Source: https://github.com/github/gitignore/blob/master/Android.gitignore
 
@@ -23,7 +24,7 @@ bin/
 gen/
 out/
 #  Uncomment the following line in case you need and you don't have the release build type files in your app
-# release/
+release/
 
 # Gradle files
 .gradle/
@@ -60,8 +61,8 @@ captures/
 
 # Keystore files
 # Uncomment the following lines if you do not want to check your keystore files in.
-#*.jks
-#*.keystore
+# *.jks
+# *.keystore
 
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
@@ -97,3 +98,6 @@ lint/tmp/
 
 # Android Profiling
 *.hprof
+
+# IntelliJ project icon
+!.idea/icon.svg

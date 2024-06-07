@@ -45,13 +45,10 @@ import org.imaginativeworld.whynotcompose.cms.repositories.UserRepository
 class UserEditViewModel @Inject constructor(
     private val repository: UserRepository
 ) : ViewModel() {
-    private val _eventShowLoading = MutableStateFlow(false)
-
-    private val _eventShowMessage = MutableStateFlow<Event<String>?>(null)
-
-    private val _eventUpdateUserSuccess = MutableStateFlow<Event<Boolean>?>(null)
-
-    private val _user = MutableStateFlow<User?>(null)
+    private val eventShowLoading = MutableStateFlow(false)
+    private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
+    private val eventUpdateUserSuccess = MutableStateFlow<Event<Boolean>?>(null)
+    private val user = MutableStateFlow<User?>(null)
 
     // ----------------------------------------------------------------
 
@@ -64,10 +61,10 @@ class UserEditViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             combine(
-                _eventShowLoading,
-                _eventShowMessage,
-                _eventUpdateUserSuccess,
-                _user
+                eventShowLoading,
+                eventShowMessage,
+                eventUpdateUserSuccess,
+                user
             ) { showLoading, showMessage, updateUserSuccess, user ->
 
                 UserEditViewState(
@@ -91,20 +88,20 @@ class UserEditViewModel @Inject constructor(
         userId: Int
     ) = viewModelScope.launch {
         // Reset
-        _user.value = null
+        user.value = null
 
         // Call API
-        _eventShowLoading.value = true
+        eventShowLoading.value = true
 
         try {
             val user = repository.getUser(userId)
 
-            _user.value = user
+            this@UserEditViewModel.user.value = user
         } catch (e: ApiException) {
-            _eventShowMessage.value = Event(e.message ?: "Unknown error!")
+            eventShowMessage.value = Event(e.message ?: "Unknown error!")
         }
 
-        _eventShowLoading.value = false
+        eventShowLoading.value = false
     }
 
     // ----------------------------------------------------------------
@@ -116,27 +113,27 @@ class UserEditViewModel @Inject constructor(
         status: String
     ): Boolean {
         if (name.isBlank()) {
-            _eventShowMessage.value = Event("Please enter your name!")
+            eventShowMessage.value = Event("Please enter your name!")
             return false
         }
 
         if (email.isBlank()) {
-            _eventShowMessage.value = Event("Please enter your email!")
+            eventShowMessage.value = Event("Please enter your email!")
             return false
         }
 
         if (!email.isValidEmail()) {
-            _eventShowMessage.value = Event("Please enter a valid email!")
+            eventShowMessage.value = Event("Please enter a valid email!")
             return false
         }
 
         if (gender.isBlank()) {
-            _eventShowMessage.value = Event("Please select your gender!")
+            eventShowMessage.value = Event("Please select your gender!")
             return false
         }
 
         if (status.isBlank()) {
-            _eventShowMessage.value = Event("Please select user status!")
+            eventShowMessage.value = Event("Please select user status!")
             return false
         }
 
@@ -154,7 +151,7 @@ class UserEditViewModel @Inject constructor(
             return@launch
         }
 
-        _eventShowLoading.value = true
+        eventShowLoading.value = true
 
         try {
             repository.updateUser(
@@ -168,12 +165,12 @@ class UserEditViewModel @Inject constructor(
                 )
             )
 
-            _eventUpdateUserSuccess.value = Event(true)
+            eventUpdateUserSuccess.value = Event(true)
         } catch (e: ApiException) {
-            _eventShowMessage.value = Event(e.message ?: "Unknown error!")
+            eventShowMessage.value = Event(e.message ?: "Unknown error!")
         }
 
-        _eventShowLoading.value = false
+        eventShowLoading.value = false
     }
 }
 

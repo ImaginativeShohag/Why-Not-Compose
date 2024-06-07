@@ -46,13 +46,10 @@ import org.imaginativeworld.whynotcompose.cms.repositories.CommentRepository
 class CommentDetailsViewModel @Inject constructor(
     private val repository: CommentRepository
 ) : ViewModel() {
-    private val _eventShowLoading = MutableStateFlow(false)
-
-    private val _eventShowMessage = MutableStateFlow<Event<ActionMessage>?>(null)
-
-    private val _comment = MutableStateFlow<Comment?>(null)
-
-    private val _eventDeleteSuccess = MutableStateFlow<Event<Boolean>?>(null)
+    private val eventShowLoading = MutableStateFlow(false)
+    private val eventShowMessage = MutableStateFlow<Event<ActionMessage>?>(null)
+    private val comment = MutableStateFlow<Comment?>(null)
+    private val eventDeleteSuccess = MutableStateFlow<Event<Boolean>?>(null)
 
     // ----------------------------------------------------------------
 
@@ -65,10 +62,10 @@ class CommentDetailsViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             combine(
-                _eventShowLoading,
-                _eventShowMessage,
-                _comment,
-                _eventDeleteSuccess
+                eventShowLoading,
+                eventShowMessage,
+                comment,
+                eventDeleteSuccess
             ) { showLoading, showMessage, comment, deleteSuccess ->
 
                 CommentDetailsViewState(
@@ -91,14 +88,14 @@ class CommentDetailsViewModel @Inject constructor(
     fun getDetails(
         commentId: Int
     ) = viewModelScope.launch {
-        _eventShowLoading.value = true
+        eventShowLoading.value = true
 
         try {
             val comment = repository.getComment(commentId)
 
-            _comment.value = (comment)
+            this@CommentDetailsViewModel.comment.value = (comment)
         } catch (e: ApiException) {
-            _eventShowMessage.value = Event(
+            eventShowMessage.value = Event(
                 ActionMessage(
                     e.message ?: "Unknown error!",
                     action = CommentDetailsViewAction.COMMENT_LOAD_ERROR
@@ -106,23 +103,23 @@ class CommentDetailsViewModel @Inject constructor(
             )
         }
 
-        _eventShowLoading.value = false
+        eventShowLoading.value = false
     }
 
     fun deleteComment(commentId: Int) = viewModelScope.launch {
-        _eventShowLoading.value = true
+        eventShowLoading.value = true
 
         try {
             repository.deleteComment(commentId)
 
-            _eventDeleteSuccess.value = Event(true)
+            eventDeleteSuccess.value = Event(true)
         } catch (e: ApiException) {
-            _eventShowMessage.value = Event(
+            eventShowMessage.value = Event(
                 ActionMessage(e.message ?: "Unknown error!")
             )
         }
 
-        _eventShowLoading.value = false
+        eventShowLoading.value = false
     }
 }
 

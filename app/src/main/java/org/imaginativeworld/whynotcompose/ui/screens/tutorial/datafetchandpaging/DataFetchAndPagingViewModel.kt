@@ -58,12 +58,9 @@ import timber.log.Timber
 class DataFetchAndPagingViewModel @Inject constructor(
     private val repository: AppRepository
 ) : ViewModel() {
-
-    private val _eventShowLoading = MutableStateFlow(false)
-
-    private val _eventShowMessage = MutableStateFlow<Event<String>?>(null)
-
-    private var _items = MutableStateFlow<Flow<PagingData<GithubRepo>>>(emptyFlow())
+    private val eventShowLoading = MutableStateFlow(false)
+    private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
+    private var items = MutableStateFlow<Flow<PagingData<GithubRepo>>>(emptyFlow())
 
     // ----------------------------------------------------------------
 
@@ -76,9 +73,9 @@ class DataFetchAndPagingViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             combine(
-                _eventShowLoading,
-                _eventShowMessage,
-                _items
+                eventShowLoading,
+                eventShowMessage,
+                items
             ) { showLoading, showMessage, items ->
 
                 ListViewState(
@@ -149,7 +146,7 @@ class DataFetchAndPagingViewModel @Inject constructor(
         // --------------------------------
 
         if (query.isNullOrBlank()) {
-            _items.value = flowOf(
+            items.value = flowOf(
                 PagingData.empty(
                     sourceLoadStates = LoadStates(
                         refresh = LoadState.NotLoading(true),
@@ -172,7 +169,7 @@ class DataFetchAndPagingViewModel @Inject constructor(
         )
 
         if (prevSearchResult != null && isSame) {
-            _items.value = prevSearchResult ?: emptyFlow()
+            items.value = prevSearchResult ?: emptyFlow()
 
             return
         }
@@ -207,7 +204,7 @@ class DataFetchAndPagingViewModel @Inject constructor(
                 .flow
                 .cachedIn(viewModelScope)
 
-            _items.value = prevSearchResult ?: emptyFlow()
+            items.value = prevSearchResult ?: emptyFlow()
         }
     }
 }

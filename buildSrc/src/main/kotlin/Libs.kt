@@ -58,7 +58,7 @@ object Libs {
     }
 
     object Gradle {
-        const val version = "8.4.1"
+        const val version = "8.5.0"
     }
 
     object Yalantis {

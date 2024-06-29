@@ -26,6 +26,7 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens
 
+import android.app.Activity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,11 +39,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
+import androidx.navigation.activity
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
@@ -58,6 +61,7 @@ import org.imaginativeworld.whynotcompose.cms.ui.screens.CMSMainScreen
 import org.imaginativeworld.whynotcompose.exoplayer.ExoPlayerScreen
 import org.imaginativeworld.whynotcompose.models.DemoData
 import org.imaginativeworld.whynotcompose.models.MapPlace
+import org.imaginativeworld.whynotcompose.popbackstack.PopBackStackActivity
 import org.imaginativeworld.whynotcompose.tictactoe.TicTacToeScreen
 import org.imaginativeworld.whynotcompose.tictactoe.TicTacToeViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.animation.composeone.ComposeOneScreen
@@ -281,6 +285,10 @@ sealed class TutorialsScreen(val route: String) {
     // ================================================================
 
     data object TutorialReactiveModel : TutorialsScreen("tutorial/reactive-model")
+
+    // ================================================================
+
+    data object TutorialPopBackStack : TutorialsScreen("tutorial/pop-back-stack")
 }
 
 // ================================================================
@@ -829,12 +837,20 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
     updateUiThemeMode: (UIThemeMode) -> Unit
 ) {
     composable(TutorialsScreen.TutorialIndex.route) {
+        val context = LocalContext.current
+
         TutorialIndexScreen(
             goBack = {
                 navController.popBackStack()
             },
             navigate = { screen ->
-                navController.navigate(screen.route)
+                if (screen.route == TutorialsScreen.TutorialPopBackStack.route) {
+                    navController.navigate(screen.route)
+
+                    (context as Activity).finish()
+                } else {
+                    navController.navigate(screen.route)
+                }
             }
         )
     }
@@ -1171,6 +1187,12 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
                 navController.popBackStack()
             }
         )
+    }
+
+    // ================================================================
+
+    activity(TutorialsScreen.TutorialPopBackStack.route) {
+        activityClass = PopBackStackActivity::class
     }
 }
 

@@ -110,68 +110,82 @@ fun TutorialIndexSkeleton(
                         Divider(Modifier.padding(16.dp, 0.dp))
                     }
 
-                    Column(
-                        Modifier
-                            .clickable {
-                                navigate(item.route)
-                            }
-                            .padding(
-                                start = 16.dp,
-                                top = 8.dp,
-                                end = 16.dp,
-                                bottom = 8.dp
-                            )
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            text = buildAnnotatedString {
-                                append(item.name)
-                                append(" ")
-
-                                withStyle(
-                                    SpanStyle(
-                                        color = item.level.color,
-                                        fontWeight = FontWeight.Bold,
-                                        fontSize = 12.sp
-                                    )
-                                ) {
-                                    append(item.level.name.uppercase())
-                                }
-                            }
-                        )
-
-                        if (item.description != null) {
-                            Text(
-                                modifier = Modifier.padding(
-                                    top = 4.dp
-                                ),
-                                text = buildAnnotatedString {
-                                    for (section in LiteMarkdown.getSections(item.description)) {
-                                        if (section.second) {
-                                            withStyle(
-                                                SpanStyle(
-                                                    fontFamily = FontFamily.Monospace,
-                                                    fontSize = 11.sp,
-                                                    background = MaterialTheme.colors.onBackground.copy(
-                                                        .05f
-                                                    )
-                                                )
-                                            ) {
-                                                append(section.first)
-                                            }
-                                        } else {
-                                            append(section.first)
-                                        }
-                                    }
-                                },
-                                fontSize = 12.sp
-                            )
+                    MenuItem(
+                        item = item,
+                        onClick = {
+                            navigate(item.route)
                         }
-                    }
+                    )
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun MenuItem(
+    item: Tutorial,
+    onClick: ()->Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier
+            .clickable {
+                onClick()
+            }
+            .padding(
+                start = 16.dp,
+                top = 8.dp,
+                end = 16.dp,
+                bottom = 8.dp
+            )
+            .fillMaxWidth()
+    ) {
+        Text(
+            modifier = Modifier
+                .fillMaxWidth(),
+            text = buildAnnotatedString {
+                append(item.name)
+                append(" ")
+
+                withStyle(
+                    SpanStyle(
+                        color = item.level.color,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 12.sp
+                    )
+                ) {
+                    append(item.level.name.uppercase())
+                }
+            }
+        )
+
+        if (item.description != null) {
+            Text(
+                modifier = Modifier.padding(
+                    top = 4.dp
+                ),
+                text = buildAnnotatedString {
+                    for (section in LiteMarkdown.getSections(item.description)) {
+                        if (section.second) {
+                            withStyle(
+                                SpanStyle(
+                                    fontFamily = FontFamily.Monospace,
+                                    fontSize = 11.sp,
+                                    background = MaterialTheme.colors.onBackground.copy(
+                                        .05f
+                                    )
+                                )
+                            ) {
+                                append(section.first)
+                            }
+                        } else {
+                            append(section.first)
+                        }
+                    }
+                },
+                fontSize = 12.sp
+            )
         }
     }
 }

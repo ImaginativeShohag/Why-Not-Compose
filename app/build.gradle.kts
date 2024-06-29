@@ -131,6 +131,7 @@ dependencies {
     implementation(project(":tictactoe"))
     implementation(project(":exoplayer"))
     implementation(project(":cms"))
+    implementation(project(":popbackstack"))
 
     implementation(Libs.Kotlin.stdlib)
     implementation(Libs.AndroidX.coreKtx)

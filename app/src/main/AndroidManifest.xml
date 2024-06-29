@@ -67,6 +67,11 @@
         </activity>
 
         <activity
+            android:name=".popbackstack.PopBackStackActivity"
+            android:exported="true"
+            android:theme="@style/Theme.WhyNotCompose" />
+
+        <activity
             android:name=".ui.screens.tutorial.deeplinks.DeepLinksActivity"
             android:exported="true"
             android:theme="@style/Theme.WhyNotCompose">

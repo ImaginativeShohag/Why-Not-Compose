@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
@@ -35,9 +34,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Divider
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -45,7 +44,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
@@ -62,9 +61,9 @@ fun NavDataPassTwoScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun NavDataPassTwoScreenSkeletonPreview() {
+private fun NavDataPassTwoScreenSkeletonPreviewDark() {
     AppTheme {
         NavDataPassTwoScreenSkeleton(
             data = DemoData(
@@ -76,20 +75,7 @@ fun NavDataPassTwoScreenSkeletonPreview() {
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun NavDataPassTwoScreenSkeletonPreviewDark() {
-    AppTheme {
-        NavDataPassTwoScreenSkeleton(
-            data = DemoData(
-                id = 1,
-                name = "John Doe",
-                ranks = listOf("A", "B", "C")
-            )
-        )
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun NavDataPassTwoScreenSkeleton(
     data: DemoData?,
@@ -116,7 +102,7 @@ fun NavDataPassTwoScreenSkeleton(
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
 
-            Divider()
+            HorizontalDivider()
 
             AppComponent.BigSpacer()
 

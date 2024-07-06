@@ -61,7 +61,12 @@ subprojects {
             targetExclude("${layout.buildDirectory}/**/*.kt")
             targetExclude("bin/**/*.kt")
 
-            ktlint()
+            ktlint("1.3.0")
+                .customRuleSets(
+                    listOf(
+                        "io.nlopez.compose.rules:ktlint:0.4.4"
+                    )
+                )
             licenseHeaderFile(rootProject.file("spotless/copyright.kt"))
         }
 

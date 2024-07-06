@@ -51,14 +51,15 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.Card
-import androidx.compose.material.Colors
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.SnackbarResult
-import androidx.compose.material.Text
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -78,6 +79,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.LoadState
@@ -91,6 +93,8 @@ import kotlinx.coroutines.isActive
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.base.models.Event
 import org.imaginativeworld.whynotcompose.base.models.github.GithubRepo
+import org.imaginativeworld.whynotcompose.base.models.isLight
+import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.compositions.LoadingContainer
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
@@ -101,8 +105,11 @@ import org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging.elements.LoadingGithubRepoItem
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging.elements.SearchTextInputField
 
-val Colors.searchErrorInputBackground: Color
-    @Composable get() = if (isLight) TailwindCSSColor.Red500 else TailwindCSSColor.Red900
+private val searchErrorInputBackground: Color
+    @Composable get() {
+        val uiThemeMode by UIThemeController.uiThemeMode.collectAsState()
+        return if (uiThemeMode.isLight()) TailwindCSSColor.Red500 else TailwindCSSColor.Red900
+    }
 
 @Composable
 fun DataFetchAndPagingScreen(
@@ -138,30 +145,7 @@ fun DataFetchAndPagingScreen(
     )
 }
 
-@Preview
-@Composable
-fun DataFetchAndPagingScreenSkeletonPreview() {
-    AppTheme {
-        DataFetchAndPagingScreenSkeleton(
-            repos = flowOf(
-                PagingData.from(
-                    listOf(
-                        MockData.dummyGithubRepo,
-                        MockData.dummyGithubRepo,
-                        MockData.dummyGithubRepo,
-                        MockData.dummyGithubRepo,
-                        MockData.dummyGithubRepo,
-                        MockData.dummyGithubRepo,
-                        MockData.dummyGithubRepo
-                    )
-                )
-            ).collectAsLazyPagingItems(),
-            searchTFV = remember { mutableStateOf(TextFieldValue("Lorem")) }
-        )
-    }
-}
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@PreviewLightDark
 @Composable
 fun DataFetchAndPagingScreenSkeletonPreviewDark() {
     AppTheme {
@@ -195,16 +179,15 @@ fun DataFetchAndPagingScreenSkeleton(
     setOpenSearch: (Boolean) -> Unit = {},
     retryDataLoad: () -> Unit = {}
 ) {
-    val scaffoldState = rememberScaffoldState()
-
+    val snackbarHostState = remember { SnackbarHostState() }
     val focusRequester = remember { FocusRequester() }
 
     val lazyListState = rememberLazyListState()
 
-    LaunchedEffect(showMessage) {
+    LaunchedEffect(showMessage, retryDataLoad) {
         showMessage?.let { message ->
             message.getValueOnce()?.let { value ->
-                val result = scaffoldState.snackbarHostState.showSnackbar(value)
+                val result = snackbarHostState.showSnackbar(value)
 
                 if (result == SnackbarResult.ActionPerformed) {
                     retryDataLoad()
@@ -213,7 +196,7 @@ fun DataFetchAndPagingScreenSkeleton(
         }
     }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(setOpenSearch) {
         delay(300)
 
         if (openSearch && isActive) {
@@ -228,7 +211,7 @@ fun DataFetchAndPagingScreenSkeleton(
             .navigationBarsPadding()
             .imePadding()
             .statusBarsPadding(),
-        scaffoldState = scaffoldState
+        snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { innerPadding ->
         Column(
             Modifier
@@ -347,8 +330,8 @@ fun DataFetchAndPagingScreenSkeleton(
                                     item {
                                         // Note: this should be full screen using fillParentMaxSize()
                                         ErrorItem(
-                                            errorMessage = "Error! " + (repos.loadState.refresh as LoadState.Error).error.message,
-                                            onRetryClicked = {
+                                            message = "Error! " + (repos.loadState.refresh as LoadState.Error).error.message,
+                                            onRetryClick = {
                                                 retry()
                                             }
                                         )
@@ -358,8 +341,8 @@ fun DataFetchAndPagingScreenSkeleton(
                                 loadState.append is LoadState.Error -> {
                                     item {
                                         ErrorItem(
-                                            errorMessage = "Error! " + (repos.loadState.append as LoadState.Error).error.message,
-                                            onRetryClicked = {
+                                            message = "Error! " + (repos.loadState.append as LoadState.Error).error.message,
+                                            onRetryClick = {
                                                 retry()
                                             }
                                         )
@@ -382,15 +365,15 @@ fun DataFetchAndPagingScreenSkeleton(
                             shape = RoundedCornerShape(24.dp, 24.dp, 24.dp, 24.dp)
                         )
                         .background(
-                            MaterialTheme.colors.surface,
+                            MaterialTheme.colorScheme.surface,
                             RoundedCornerShape(24.dp, 24.dp, 24.dp, 24.dp)
                         )
                 ) {
                     val searchBackgroundColor by animateColorAsState(
                         targetValue = if (searchTFV.value.text.isBlank()) {
-                            MaterialTheme.colors.searchErrorInputBackground
+                            searchErrorInputBackground
                         } else {
-                            MaterialTheme.colors.background
+                            MaterialTheme.colorScheme.background
                         }
                     )
 
@@ -403,7 +386,7 @@ fun DataFetchAndPagingScreenSkeleton(
                             )
                             .border(
                                 width = 1.dp,
-                                color = MaterialTheme.colors.onSurface.copy(alpha = 0.05f),
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f),
                                 shape = RoundedCornerShape(20.dp)
                             )
                     ) {
@@ -442,7 +425,7 @@ fun DataFetchAndPagingScreenSkeleton(
                                     painter = painterResource(id = R.drawable.ic_close),
                                     contentDescription = "Clear",
                                     colorFilter = ColorFilter.tint(
-                                        MaterialTheme.colors.onBackground
+                                        MaterialTheme.colorScheme.onBackground
                                     )
                                 )
                             }
@@ -459,7 +442,7 @@ fun DataFetchAndPagingScreenSkeleton(
                                     painter = painterResource(id = R.drawable.ic_search),
                                     contentDescription = "Search",
                                     colorFilter = ColorFilter.tint(
-                                        MaterialTheme.colors.onBackground
+                                        MaterialTheme.colorScheme.onBackground
                                     )
                                 )
                             }
@@ -475,7 +458,7 @@ fun DataFetchAndPagingScreenSkeleton(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
 fun ErrorItemPreview() {
     AppTheme {
@@ -486,29 +469,23 @@ fun ErrorItemPreview() {
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun ErrorItemPreviewDark() {
-    AppTheme {
-        ErrorItem(
-            "Something went wrong!"
-        ) {
-        }
-    }
-}
-
 @Composable
 fun ErrorItem(
-    errorMessage: String,
-    onRetryClicked: () -> Unit
+    message: String,
+    modifier : Modifier = Modifier,
+    onRetryClick: () -> Unit
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(16.dp, 8.dp),
         shape = RoundedCornerShape(8.dp),
-        elevation = 2.dp,
-        backgroundColor = MaterialTheme.colors.error
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.errorContainer
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 2.dp
+        )
     ) {
         Column(
             Modifier.fillMaxWidth()
@@ -517,9 +494,9 @@ fun ErrorItem(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 8.dp, top = 8.dp, end = 8.dp),
-                text = errorMessage,
+                text = message,
                 fontSize = 16.sp,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onErrorContainer,
                 textAlign = TextAlign.Center
             )
 
@@ -528,7 +505,7 @@ fun ErrorItem(
                     .align(Alignment.CenterHorizontally)
                     .padding(8.dp),
                 onClick = {
-                    onRetryClicked()
+                    onRetryClick()
                 }
             ) {
                 Text("Retry")

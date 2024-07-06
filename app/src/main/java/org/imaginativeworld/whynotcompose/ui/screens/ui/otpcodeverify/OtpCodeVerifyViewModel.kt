@@ -35,6 +35,7 @@ import kotlin.random.Random
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
@@ -44,18 +45,14 @@ import org.imaginativeworld.whynotcompose.base.models.Event
 private const val RESEND_COUNTER_INTERVAL_SEC = 30
 
 class OtpCodeVerifyViewModel @Inject constructor() : ViewModel() {
-
     private val eventShowLoading = MutableStateFlow(false)
-
     private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
-
     private val eventSuccess = MutableStateFlow(false)
 
     // ----------------------------------------------------------------
 
     private val _state = MutableStateFlow(OtpCodeVerifyViewState())
-    val state: StateFlow<OtpCodeVerifyViewState>
-        get() = _state
+    val state = _state.asStateFlow()
 
     // ----------------------------------------------------------------
 

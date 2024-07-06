@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2023 Imaginative World. All rights reserved.
+-->
+
+<resources>
+    <color name="ios_system_red">#FF3B30</color>
+    <color name="ios_system_orange">#FF9500</color>
+    <color name="ios_system_yellow">#FFCC00</color>
+    <color name="ios_system_green">#34C759</color>
+    <color name="ios_system_mint">#00C7BE</color>
+    <color name="ios_system_teal">#30B0C7</color>
+    <color name="ios_system_cyan">#32ADE6</color>
+    <color name="ios_system_blue">#007AFF</color>
+    <color name="ios_system_indigo">#5856D6</color>
+    <color name="ios_system_purple">#AF52DE</color>
+    <color name="ios_system_pink">#FF2D55</color>
+    <color name="ios_system_brown">#A2845E</color>
+    <color name="ios_system_gray">#8E8E93</color>
+    <color name="ios_system_gray2">#AEAEB2</color>
+    <color name="ios_system_gray3">#C7C7CC</color>
+    <color name="ios_system_gray4">#D1D1D6</color>
+    <color name="ios_system_gray5">#E5E5EA</color>
+    <color name="ios_system_gray6">#F2F2F7</color>
+
+    <color name="ucrop_background">#f3f4f6</color>
+    <color name="ucrop_on_background">#111827</color>
+</resources>

@@ -29,7 +29,7 @@ package org.imaginativeworld.whynotcompose.repositories
 import org.imaginativeworld.whynotcompose.base.models.User
 import org.imaginativeworld.whynotcompose.base.models.github.GithubRepo
 import org.imaginativeworld.whynotcompose.base.models.github.Owner
-import org.imaginativeworld.whynotcompose.models.ListItem
+import org.imaginativeworld.whynotcompose.models.ListItemModel
 
 object MockData {
     val dummyUser = User(
@@ -38,20 +38,20 @@ object MockData {
     )
 
     val dummyListItem = listOf(
-        ListItem(id = 1, name = "Cupcake"),
-        ListItem(id = 2, name = "Donut"),
-        ListItem(id = 3, name = "Eclair"),
-        ListItem(id = 4, name = "Froyo"),
-        ListItem(id = 5, name = "Gingerbread"),
-        ListItem(id = 6, name = "Honeycomb"),
-        ListItem(id = 7, name = "Ice cream sandwich"),
-        ListItem(id = 8, name = "Jelly bean"),
-        ListItem(id = 9, name = "KitKat"),
-        ListItem(id = 10, name = "Lollipop"),
-        ListItem(id = 11, name = "Marshmallow"),
-        ListItem(id = 12, name = "Nougat"),
-        ListItem(id = 13, name = "Oreo"),
-        ListItem(id = 14, name = "Pie")
+        ListItemModel(id = 1, name = "Cupcake"),
+        ListItemModel(id = 2, name = "Donut"),
+        ListItemModel(id = 3, name = "Eclair"),
+        ListItemModel(id = 4, name = "Froyo"),
+        ListItemModel(id = 5, name = "Gingerbread"),
+        ListItemModel(id = 6, name = "Honeycomb"),
+        ListItemModel(id = 7, name = "Ice cream sandwich"),
+        ListItemModel(id = 8, name = "Jelly bean"),
+        ListItemModel(id = 9, name = "KitKat"),
+        ListItemModel(id = 10, name = "Lollipop"),
+        ListItemModel(id = 11, name = "Marshmallow"),
+        ListItemModel(id = 12, name = "Nougat"),
+        ListItemModel(id = 13, name = "Oreo"),
+        ListItemModel(id = 14, name = "Pie")
     )
 
     val dummyGithubRepo = GithubRepo(

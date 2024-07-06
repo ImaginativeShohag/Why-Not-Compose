@@ -42,10 +42,10 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.Divider
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -147,15 +147,15 @@ fun SelectImageAndCropScreen(
     // ----------------------------------------------------------------
 
     SelectImageAndCropScreenSkeleton(
-        goBack = goBack,
         imagePath = imageUri,
-        onChooseImage1Clicked = {
+        goBack = goBack,
+        onChooseImage1Click = {
             imageSelectorLauncher1.launch("image/*")
         },
-        onChooseImage2Clicked = {
+        onChooseImage2Click = {
             imageSelectorLauncher2.launch(arrayOf("image/*"))
         },
-        onChooseImage3Clicked = {
+        onChooseImage3Click = {
             imageSelectorLauncher3.launch(
                 PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
             )
@@ -165,7 +165,7 @@ fun SelectImageAndCropScreen(
 
 @Preview
 @Composable
-fun SelectImageAndCropScreenSkeletonPreview() {
+private fun SelectImageAndCropScreenSkeletonPreview() {
     AppTheme {
         SelectImageAndCropScreenSkeleton()
     }
@@ -173,19 +173,20 @@ fun SelectImageAndCropScreenSkeletonPreview() {
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun SelectImageAndCropScreenSkeletonPreviewDark() {
+private fun SelectImageAndCropScreenSkeletonPreviewDark() {
     AppTheme {
         SelectImageAndCropScreenSkeleton()
     }
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun SelectImageAndCropScreenSkeleton(
-    goBack: () -> Unit = {},
     imagePath: Uri? = null,
-    onChooseImage1Clicked: () -> Unit = {},
-    onChooseImage2Clicked: () -> Unit = {},
-    onChooseImage3Clicked: () -> Unit = {}
+    goBack: () -> Unit = {},
+    onChooseImage1Click: () -> Unit = {},
+    onChooseImage2Click: () -> Unit = {},
+    onChooseImage3Click: () -> Unit = {}
 ) {
     Scaffold(
         Modifier
@@ -207,7 +208,7 @@ fun SelectImageAndCropScreenSkeleton(
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
 
-            Divider()
+            HorizontalDivider()
 
             // ----------------------------------------------------------------
 
@@ -230,7 +231,7 @@ fun SelectImageAndCropScreenSkeleton(
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 32.dp),
                 onClick = {
-                    onChooseImage1Clicked()
+                    onChooseImage1Click()
                 }
             ) {
                 Text("Choose Image (GetContent())")
@@ -241,7 +242,7 @@ fun SelectImageAndCropScreenSkeleton(
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 8.dp),
                 onClick = {
-                    onChooseImage2Clicked()
+                    onChooseImage2Click()
                 }
             ) {
                 Text("Choose Image (OpenDocument())")
@@ -252,7 +253,7 @@ fun SelectImageAndCropScreenSkeleton(
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 8.dp),
                 onClick = {
-                    onChooseImage3Clicked()
+                    onChooseImage3Click()
                 }
             ) {
                 Text("Choose Image (PickVisualMedia())")

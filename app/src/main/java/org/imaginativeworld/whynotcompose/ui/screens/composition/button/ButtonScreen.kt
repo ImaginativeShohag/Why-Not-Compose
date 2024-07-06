@@ -43,19 +43,19 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.IconToggleButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconToggleButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -78,13 +78,14 @@ import androidx.compose.ui.unit.sp
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppleSystemColor
 
 @Composable
 fun defaultButtonBackgroundBrush(
     alpha: Float = 1f
 ) = Brush.verticalGradient(
-    0.0f to MaterialTheme.colors.primary.copy(alpha),
-    1.0f to MaterialTheme.colors.primaryVariant.copy(alpha)
+    0.0f to AppleSystemColor.Purple.copy(alpha),
+    1.0f to AppleSystemColor.Pink.copy(alpha)
 )
 
 @Composable
@@ -98,12 +99,13 @@ fun ButtonScreen(
 
 @Preview
 @Composable
-fun ButtonScreenSkeletonPreview() {
+private fun ButtonScreenSkeletonPreview() {
     AppTheme {
         ButtonScreenSkeleton()
     }
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun ButtonScreenSkeleton(
     goBack: () -> Unit = {}
@@ -112,7 +114,13 @@ fun ButtonScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "Button",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
@@ -121,16 +129,6 @@ fun ButtonScreenSkeleton(
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            AppComponent.Header(
-                "Button",
-                goBack = goBack
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            Divider()
-
             Column(
                 Modifier.padding(start = 16.dp, end = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -214,7 +212,7 @@ fun ButtonScreenSkeleton(
                 AppComponent.MediumSpacer()
             }
 
-            Divider()
+            HorizontalDivider()
 
             Column(
                 Modifier.padding(start = 16.dp, end = 16.dp),
@@ -268,7 +266,7 @@ fun ButtonScreenSkeleton(
                 AppComponent.MediumSpacer()
             }
 
-            Divider()
+            HorizontalDivider()
 
             Column(
                 Modifier.padding(start = 16.dp, end = 16.dp),
@@ -326,7 +324,7 @@ fun ButtonScreenSkeleton(
                 AppComponent.MediumSpacer()
             }
 
-            Divider()
+            HorizontalDivider()
 
             Column(
                 Modifier.padding(start = 16.dp, end = 16.dp),
@@ -380,7 +378,7 @@ fun ButtonScreenSkeleton(
                 AppComponent.MediumSpacer()
             }
 
-            Divider()
+            HorizontalDivider()
 
             Column(
                 Modifier.padding(start = 16.dp, end = 16.dp),
@@ -438,7 +436,7 @@ fun ButtonScreenSkeleton(
                 AppComponent.MediumSpacer()
             }
 
-            Divider()
+            HorizontalDivider()
 
             Column(
                 Modifier.padding(start = 16.dp, end = 16.dp),
@@ -492,7 +490,7 @@ fun ButtonScreenSkeleton(
                 AppComponent.MediumSpacer()
             }
 
-            Divider()
+            HorizontalDivider()
 
             Column(
                 Modifier.padding(start = 16.dp, end = 16.dp),
@@ -550,7 +548,7 @@ fun ButtonScreenSkeleton(
                 AppComponent.MediumSpacer()
             }
 
-            Divider()
+            HorizontalDivider()
 
             Column(
                 Modifier.padding(start = 16.dp, end = 16.dp),
@@ -604,7 +602,7 @@ fun ButtonScreenSkeleton(
                 AppComponent.MediumSpacer()
             }
 
-            Divider()
+            HorizontalDivider()
 
             Column(
                 Modifier.padding(start = 16.dp, end = 16.dp),
@@ -662,7 +660,7 @@ fun ButtonScreenSkeleton(
                 AppComponent.MediumSpacer()
             }
 
-            Divider()
+            HorizontalDivider()
 
             Column(
                 Modifier.padding(start = 16.dp, end = 16.dp),
@@ -720,7 +718,7 @@ fun SolidButton(
     @DrawableRes endIcon: Int? = null,
     height: Dp = ButtonDefaults.MinHeight,
     fontSize: TextUnit = 16.sp,
-    backgroundColor: Color = MaterialTheme.colors.primary,
+    backgroundColor: Color = MaterialTheme.colorScheme.primary,
     shape: Shape = MaterialTheme.shapes.medium,
     onClick: () -> Unit
 ) {
@@ -730,7 +728,7 @@ fun SolidButton(
         modifier = modifier.height(height),
         shape = shape,
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = backgroundColor
+            containerColor = backgroundColor
         ),
         onClick = {
             currentFocus.clearFocus()
@@ -750,7 +748,6 @@ fun SolidButton(
 
         Text(
             text,
-            style = MaterialTheme.typography.button,
             color = Color.White,
             fontSize = fontSize
         )
@@ -776,7 +773,7 @@ fun SolidWideButton(
     height: Dp = ButtonDefaults.MinHeight,
     fontSize: TextUnit = 16.sp,
     horizontalPadding: Dp = ButtonDefaults.IconSpacing,
-    backgroundColor: Color = MaterialTheme.colors.primary,
+    backgroundColor: Color = MaterialTheme.colorScheme.primary,
     shape: Shape = MaterialTheme.shapes.medium,
     onClick: () -> Unit
 ) {
@@ -787,7 +784,7 @@ fun SolidWideButton(
             .height(height),
         shape = shape,
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = backgroundColor,
+            containerColor = backgroundColor,
             contentColor = Color.White
         ),
         onClick = {
@@ -814,7 +811,6 @@ fun SolidWideButton(
                 .weight(1f),
             text = text,
             fontSize = fontSize,
-            style = MaterialTheme.typography.button,
             textAlign = TextAlign.Center,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
@@ -876,7 +872,6 @@ fun GradientButton(
 
         Text(
             text,
-            style = MaterialTheme.typography.button,
             color = Color.White,
             fontSize = fontSize
         )
@@ -948,7 +943,6 @@ fun GradientWideButton(
                 .weight(1f),
             text = text,
             fontSize = fontSize,
-            style = MaterialTheme.typography.button,
             textAlign = TextAlign.Center,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
@@ -994,7 +988,7 @@ fun BorderedButton(
         ),
         shape = shape,
         colors = ButtonDefaults.outlinedButtonColors(
-            backgroundColor = Color.Transparent
+            containerColor = Color.Transparent
         ),
         onClick = {
             currentFocus.clearFocus()
@@ -1007,14 +1001,13 @@ fun BorderedButton(
                 painterResource(id = startIcon),
                 contentDescription = text,
                 modifier = Modifier.size(ButtonDefaults.IconSize),
-                tint = MaterialTheme.colors.primary
+                tint = MaterialTheme.colorScheme.primary
             )
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
         }
 
         Text(
             text,
-            style = MaterialTheme.typography.button,
             fontSize = fontSize
         )
 
@@ -1024,7 +1017,7 @@ fun BorderedButton(
                 painterResource(id = endIcon),
                 contentDescription = text,
                 modifier = Modifier.size(ButtonDefaults.IconSize),
-                tint = MaterialTheme.colors.primary
+                tint = MaterialTheme.colorScheme.primary
             )
         }
     }
@@ -1054,7 +1047,7 @@ fun BorderedWideButton(
         ),
         shape = shape,
         colors = ButtonDefaults.outlinedButtonColors(
-            backgroundColor = Color.Transparent
+            containerColor = Color.Transparent
         ),
         onClick = {
             currentFocus.clearFocus()
@@ -1067,7 +1060,7 @@ fun BorderedWideButton(
                 modifier = Modifier.size(ButtonDefaults.IconSize),
                 painter = painterResource(id = startIcon),
                 contentDescription = text,
-                tint = MaterialTheme.colors.primary
+                tint = MaterialTheme.colorScheme.primary
             )
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
         }
@@ -1081,7 +1074,6 @@ fun BorderedWideButton(
                 .weight(1f),
             text = text,
             fontSize = fontSize,
-            style = MaterialTheme.typography.button,
             textAlign = TextAlign.Center,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
@@ -1093,7 +1085,7 @@ fun BorderedWideButton(
                 modifier = Modifier.size(ButtonDefaults.IconSize),
                 painter = painterResource(id = endIcon),
                 contentDescription = text,
-                tint = MaterialTheme.colors.primary
+                tint = MaterialTheme.colorScheme.primary
             )
         }
     }
@@ -1138,7 +1130,6 @@ fun BorderlessButton(
 
         Text(
             text,
-            style = MaterialTheme.typography.button,
             fontSize = fontSize
         )
 
@@ -1199,7 +1190,6 @@ fun BorderlessWideButton(
                 .weight(1f),
             text = text,
             fontSize = fontSize,
-            style = MaterialTheme.typography.button,
             textAlign = TextAlign.Center,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
@@ -1226,7 +1216,7 @@ fun SolidIconButton(
     modifier: Modifier = Modifier,
     @DrawableRes icon: Int,
     contentDescription: String?,
-    backgroundColor: Color = MaterialTheme.colors.primary,
+    backgroundColor: Color = MaterialTheme.colorScheme.primary,
     size: Dp = ButtonDefaults.MinHeight,
     shape: Shape = MaterialTheme.shapes.medium,
     onClick: () -> Unit
@@ -1239,7 +1229,7 @@ fun SolidIconButton(
         shape = shape,
         colors = ButtonDefaults.textButtonColors(
             contentColor = Color.White,
-            backgroundColor = backgroundColor
+            containerColor = backgroundColor
         ),
         contentPadding = PaddingValues(0.dp),
         onClick = {

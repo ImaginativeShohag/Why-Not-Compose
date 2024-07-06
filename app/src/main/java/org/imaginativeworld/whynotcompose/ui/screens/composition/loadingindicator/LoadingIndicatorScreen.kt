@@ -39,6 +39,8 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -61,16 +63,17 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Divider
-import androidx.compose.material.LinearProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.ProgressIndicatorDefaults
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.ProgressIndicatorDefaults
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -85,6 +88,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -101,24 +105,15 @@ fun LoadingIndicatorScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun LoadingIndicatorScreenSkeletonPreview() {
+private fun LoadingIndicatorScreenSkeletonPreview() {
     AppTheme {
         LoadingIndicatorScreenSkeleton()
     }
 }
 
-@Preview
-@Composable
-fun LoadingIndicatorScreenSkeletonPreviewDark() {
-    AppTheme(
-        darkTheme = true
-    ) {
-        LoadingIndicatorScreenSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun LoadingIndicatorScreenSkeleton(
     goBack: () -> Unit = {}
@@ -129,7 +124,13 @@ fun LoadingIndicatorScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "Loading Indicator",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
@@ -137,16 +138,6 @@ fun LoadingIndicatorScreenSkeleton(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            AppComponent.Header(
-                "Loading Indicator",
-                goBack = goBack
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            Divider()
-
             Column(
                 Modifier.padding(start = 16.dp, end = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -176,7 +167,9 @@ fun LoadingIndicatorScreenSkeleton(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    LinearProgressIndicator(progress = animatedProgress1)
+                    LinearProgressIndicator(
+                        progress = { animatedProgress1 }
+                    )
 
                     Spacer(Modifier.requiredHeight(32.dp))
 
@@ -195,7 +188,7 @@ fun LoadingIndicatorScreenSkeleton(
                 AppComponent.MediumSpacer()
             }
 
-            Divider()
+            HorizontalDivider()
 
             Column(
                 Modifier.padding(start = 16.dp, end = 16.dp),
@@ -240,7 +233,7 @@ fun LoadingIndicatorScreenSkeleton(
                 AppComponent.MediumSpacer()
             }
 
-            Divider()
+            HorizontalDivider()
 
             Column(
                 Modifier.padding(start = 16.dp, end = 16.dp),
@@ -271,7 +264,9 @@ fun LoadingIndicatorScreenSkeleton(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    CircularProgressIndicator(progress = animatedProgress2)
+                    CircularProgressIndicator(
+                        progress = { animatedProgress2 },
+                    )
 
                     Spacer(Modifier.requiredHeight(32.dp))
 
@@ -290,7 +285,7 @@ fun LoadingIndicatorScreenSkeleton(
                 AppComponent.MediumSpacer()
             }
 
-            Divider()
+            HorizontalDivider()
 
             Column(
                 Modifier.padding(start = 16.dp, end = 16.dp),
@@ -315,7 +310,7 @@ fun LoadingIndicatorScreenSkeleton(
                 AppComponent.MediumSpacer()
             }
 
-            Divider()
+            HorizontalDivider()
 
             Column(
                 Modifier.padding(start = 16.dp, end = 16.dp),
@@ -359,7 +354,7 @@ fun LoadingIndicatorScreenSkeleton(
 
 @Preview
 @Composable
-fun FullscreenLoadingIndicatorPreview() {
+private fun FullscreenLoadingIndicatorPreview() {
     AppTheme {
         FullscreenLoadingIndicator(
             show = true
@@ -369,7 +364,7 @@ fun FullscreenLoadingIndicatorPreview() {
 
 @Preview
 @Composable
-fun FullscreenLoadingIndicatorPreviewDark() {
+private fun FullscreenLoadingIndicatorPreviewDark() {
     AppTheme(
         darkTheme = true
     ) {
@@ -381,15 +376,24 @@ fun FullscreenLoadingIndicatorPreviewDark() {
 
 @Composable
 fun FullscreenLoadingIndicator(
+    modifier: Modifier = Modifier,
     show: Boolean = true
 ) {
     AnimatedVisibility(
+        modifier = modifier,
         visible = show,
         enter = fadeIn(),
         exit = fadeOut()
     ) {
         Box(
             Modifier
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null
+                ) {
+                    // This will block all touch events.
+                    // So, no click will work through the loading.
+                }
                 .fillMaxSize()
                 .background(Color.Black.copy(alpha = .6f))
         ) {
@@ -398,7 +402,9 @@ fun FullscreenLoadingIndicator(
                     .size(200.dp, 180.dp)
                     .align(Alignment.Center),
                 shape = RoundedCornerShape(8.dp),
-                elevation = 8.dp
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 8.dp
+                )
             ) {
                 Column(
                     Modifier.fillMaxSize(),
@@ -427,10 +433,8 @@ private fun RoundedLinearProgressIndicator(
     progress: Float,
     modifier: Modifier = Modifier,
     height: Dp = 8.dp,
-    color: Color = MaterialTheme.colors.primary,
-    backgroundColor: Color = color.copy(
-        alpha = ProgressIndicatorDefaults.IndicatorBackgroundOpacity
-    )
+    color: Color = ProgressIndicatorDefaults.linearColor,
+    backgroundColor: Color = ProgressIndicatorDefaults.linearTrackColor
 ) {
     val infiniteTransition = rememberInfiniteTransition()
     val animatedColor by infiniteTransition.animateColor(
@@ -478,10 +482,8 @@ private fun RoundedLinearProgressIndicator(
 private fun RoundedLinearProgressIndicator(
     modifier: Modifier = Modifier,
     height: Dp = 8.dp,
-    color: Color = MaterialTheme.colors.primary,
-    backgroundColor: Color = color.copy(
-        alpha = ProgressIndicatorDefaults.IndicatorBackgroundOpacity
-    )
+    color: Color = ProgressIndicatorDefaults.linearColor,
+    backgroundColor: Color = ProgressIndicatorDefaults.linearTrackColor
 ) {
     val infiniteTransition = rememberInfiniteTransition()
     val animatedColor by infiniteTransition.animateColor(
@@ -532,19 +534,20 @@ private fun RoundedLinearProgressIndicator(
 
 @Composable
 private fun CapsuleLoadingIndicator(
-    modifier: Modifier = Modifier,
-    show: Boolean
+    show: Boolean,
+    modifier: Modifier = Modifier
 ) {
     AnimatedVisibility(
+        modifier = modifier,
         visible = show,
         enter = fadeIn(),
         exit = fadeOut()
     ) {
         Row(
-            modifier
+            Modifier
                 .shadow(2.dp, CircleShape)
                 .clip(CircleShape)
-                .background(MaterialTheme.colors.surface)
+                .background(MaterialTheme.colorScheme.surfaceVariant)
                 .padding(0.dp, 4.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -558,7 +561,7 @@ private fun CapsuleLoadingIndicator(
                 modifier = Modifier.padding(end = 12.dp),
                 text = "Loading...",
                 fontSize = 14.sp,
-                color = MaterialTheme.colors.onSurface.copy(alpha = .75f)
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }

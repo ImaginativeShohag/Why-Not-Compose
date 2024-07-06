@@ -41,10 +41,10 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.Divider
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -113,7 +113,7 @@ fun CaptureImageAndCropScreen(
     CaptureImageAndCropScreenSkeleton(
         goBack = goBack,
         imagePath = imageUri,
-        onChooseImageClicked = {
+        onChooseImageClick = {
             val newPhotoUri = context.createImageFile().getUriForFile(context)
 
             imageUri = newPhotoUri
@@ -125,7 +125,7 @@ fun CaptureImageAndCropScreen(
 
 @Preview
 @Composable
-fun CaptureImageAndCropScreenSkeletonPreview() {
+private fun CaptureImageAndCropScreenSkeletonPreview() {
     AppTheme {
         CaptureImageAndCropScreenSkeleton()
     }
@@ -133,17 +133,18 @@ fun CaptureImageAndCropScreenSkeletonPreview() {
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun CaptureImageAndCropScreenSkeletonPreviewDark() {
+private fun CaptureImageAndCropScreenSkeletonPreviewDark() {
     AppTheme {
         CaptureImageAndCropScreenSkeleton()
     }
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun CaptureImageAndCropScreenSkeleton(
     goBack: () -> Unit = {},
     imagePath: Uri? = null,
-    onChooseImageClicked: () -> Unit = {}
+    onChooseImageClick: () -> Unit = {}
 ) {
     Scaffold(
         Modifier
@@ -165,7 +166,7 @@ fun CaptureImageAndCropScreenSkeleton(
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
 
-            Divider()
+            HorizontalDivider()
 
             // ----------------------------------------------------------------
 
@@ -188,7 +189,7 @@ fun CaptureImageAndCropScreenSkeleton(
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 32.dp),
                 onClick = {
-                    onChooseImageClicked()
+                    onChooseImageClick()
                 }
             ) {
                 Text("Capture Image")

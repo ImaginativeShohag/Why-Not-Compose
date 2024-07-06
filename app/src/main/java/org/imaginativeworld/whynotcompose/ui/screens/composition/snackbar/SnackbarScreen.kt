@@ -35,19 +35,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Snackbar
-import androidx.compose.material.SnackbarData
-import androidx.compose.material.SnackbarDefaults
-import androidx.compose.material.SnackbarHost
-import androidx.compose.material.SnackbarHostState
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarData
+import androidx.compose.material3.SnackbarDefaults
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -60,7 +59,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.base.models.Event
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
@@ -78,28 +77,34 @@ fun SnackbarScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun SnackbarScreenSkeletonPreview() {
+private fun SnackbarScreenSkeletonPreview() {
     AppTheme {
         SnackbarScreenSkeleton()
     }
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun SnackbarScreenSkeleton(
     goBack: () -> Unit = {},
     navigate: (String) -> Unit = {}
 ) {
-    val scaffoldState = rememberScaffoldState()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
         Modifier
             .navigationBarsPadding()
             .imePadding()
             .statusBarsPadding(),
-        scaffoldState = scaffoldState,
-        snackbarHost = { CustomSnackbarHost(state = it) }
+        topBar = {
+            AppComponent.Header(
+                "Snackbar",
+                goBack = goBack
+            )
+        },
+        snackbarHost = { CustomSnackbarHost(state = snackbarHostState) }
     ) { innerPadding ->
         Column(
             Modifier
@@ -107,16 +112,6 @@ fun SnackbarScreenSkeleton(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            AppComponent.Header(
-                "Snackbar",
-                goBack = goBack
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            Divider()
-
             Column(
                 Modifier.padding(start = 16.dp, end = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -157,7 +152,7 @@ fun SnackbarScreenSkeleton(
                 AppComponent.MediumSpacer()
             }
 
-            Divider()
+            HorizontalDivider()
 
             Column(
                 Modifier.padding(start = 16.dp, end = 16.dp),
@@ -171,7 +166,7 @@ fun SnackbarScreenSkeleton(
 
                 LaunchedEffect(showMessage) {
                     showMessage?.let { message ->
-                        scaffoldState.snackbarHostState.showSnackbar(message.value)
+                        snackbarHostState.showSnackbar(message.value)
                     }
                 }
 
@@ -206,12 +201,11 @@ fun CustomSnackbar(
     modifier: Modifier = Modifier,
     actionOnNewLine: Boolean = false,
     shape: Shape = MaterialTheme.shapes.small,
-    backgroundColor: Color = SnackbarDefaults.backgroundColor,
-    contentColor: Color = MaterialTheme.colors.surface,
-    actionColor: Color = SnackbarDefaults.primaryActionColor,
-    elevation: Dp = 6.dp
+    backgroundColor: Color = SnackbarDefaults.color,
+    contentColor: Color = MaterialTheme.colorScheme.surface,
+    actionColor: Color = SnackbarDefaults.actionColor
 ) {
-    val actionLabel = snackbarData.actionLabel
+    val actionLabel = snackbarData.visuals.actionLabel
     val actionComposable: (@Composable () -> Unit)? = if (actionLabel != null) {
         @Composable {
             TextButton(
@@ -228,7 +222,7 @@ fun CustomSnackbar(
         content = {
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = snackbarData.message,
+                text = snackbarData.visuals.message,
                 textAlign = TextAlign.Center,
                 color = contentColor
             )
@@ -236,8 +230,7 @@ fun CustomSnackbar(
         action = actionComposable,
         actionOnNewLine = actionOnNewLine,
         shape = shape,
-        backgroundColor = backgroundColor,
-        contentColor = contentColor,
-        elevation = elevation
+        containerColor = backgroundColor,
+        contentColor = contentColor
     )
 }

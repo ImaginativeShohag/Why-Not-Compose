@@ -38,16 +38,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
@@ -61,24 +61,15 @@ fun ListRowScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun ListRowScreenSkeletonPreview() {
+private fun ListRowScreenSkeletonPreview() {
     AppTheme {
         ListRowScreenSkeleton()
     }
 }
 
-@Preview
-@Composable
-fun ListRowScreenSkeletonPreviewDark() {
-    AppTheme(
-        darkTheme = true
-    ) {
-        ListRowScreenSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun ListRowScreenSkeleton(
     goBack: () -> Unit = {}
@@ -87,23 +78,19 @@ fun ListRowScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "List with Row",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            AppComponent.Header(
-                "List with Row",
-                goBack = goBack
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            Divider()
-
             val scrollState = rememberScrollState()
 
             Row(
@@ -121,7 +108,7 @@ fun ListRowScreenSkeleton(
                             .clickable {
                                 // do things here.
                             }
-                            .background(MaterialTheme.colors.surface)
+                            .background(MaterialTheme.colorScheme.surface)
                             .padding(32.dp, 32.dp),
                         text = "$i\nNumber\nItem",
                         textAlign = TextAlign.Center

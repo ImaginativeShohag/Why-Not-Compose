@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.ui.otpcodeverify
 
-import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.fadeIn
@@ -53,18 +52,21 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
-import androidx.compose.material.rememberScaffoldState
-import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DividerDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -79,7 +81,7 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.substring
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LiveData
@@ -107,9 +109,9 @@ fun OtpCodeVerifyScreen(
         phoneNumber = phoneNumber,
         message = state.message,
         loading = state.loading,
+        counterValue = viewModel.resetCounterValue,
         verify = viewModel::verifyOtp,
         isValidInputs = viewModel::isValidInputs,
-        counterValue = viewModel.resetCounterValue,
         resendCode = {
             viewModel.sendOtp(phoneNumber)
         }
@@ -130,23 +132,14 @@ fun OtpCodeVerifyScreen(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun OtpCodeVerifyScreenSkeletonPreview() {
+private fun OtpCodeVerifyScreenSkeletonPreviewDark() {
     AppTheme {
         OtpCodeVerifyScreenSkeleton(
             phoneNumber = "+8801234567891",
-            counterValue = MutableLiveData()
-        )
-    }
-}
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun OtpCodeVerifyScreenSkeletonPreviewDark() {
-    AppTheme {
-        OtpCodeVerifyScreenSkeleton(
-            phoneNumber = "+8801234567891",
+            message = null,
+            loading = false,
             counterValue = MutableLiveData()
         )
     }
@@ -155,14 +148,14 @@ fun OtpCodeVerifyScreenSkeletonPreviewDark() {
 @Composable
 private fun OtpCodeVerifyScreenSkeleton(
     phoneNumber: String,
-    message: Event<String>? = null,
-    loading: Boolean = false,
+    message: Event<String>?,
+    loading: Boolean,
+    counterValue: LiveData<String>,
     verify: (phoneNumber: String, code: String) -> Unit = { _, _ -> },
     isValidInputs: (code: String) -> Boolean = { false },
-    counterValue: LiveData<String>,
     resendCode: () -> Unit = {}
 ) {
-    val scaffoldState = rememberScaffoldState()
+    val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
     val codeState = remember { mutableStateOf("") }
@@ -174,16 +167,14 @@ private fun OtpCodeVerifyScreenSkeleton(
     LaunchedEffect(message) {
         message?.value?.let { message ->
             scope.launch {
-                scaffoldState.snackbarHostState.showSnackbar(message)
+                snackbarHostState.showSnackbar(message)
             }
         }
     }
 
     Scaffold(
-        scaffoldState = scaffoldState,
-        snackbarHost = { CustomSnackbarHost(it) },
+        snackbarHost = { CustomSnackbarHost(snackbarHostState) },
         modifier = Modifier
-            .background(MaterialTheme.colors.surface)
             .navigationBarsPadding()
     ) { innerPadding ->
         Column(
@@ -210,7 +201,7 @@ private fun OtpCodeVerifyScreenSkeleton(
                     text = "Verify Mobile Number",
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp),
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.h1
+                    style = MaterialTheme.typography.titleLarge
                 )
 
                 Text(
@@ -219,7 +210,7 @@ private fun OtpCodeVerifyScreenSkeleton(
                     textAlign = TextAlign.Center,
                     fontSize = 15.sp,
                     lineHeight = 23.sp,
-                    color = Color(0xFF677987)
+                    color = MaterialTheme.colorScheme.onBackground.copy(0.8f)
                 )
 
                 Text(
@@ -227,7 +218,7 @@ private fun OtpCodeVerifyScreenSkeleton(
                     modifier = Modifier.padding(16.dp, 4.dp, 16.dp, 0.dp),
                     textAlign = TextAlign.Center,
                     fontSize = 16.sp,
-                    color = Color(0xFF677987)
+                    color = MaterialTheme.colorScheme.onBackground.copy(0.8f)
                 )
 
                 Row(
@@ -299,7 +290,7 @@ private fun OtpCodeVerifyScreenSkeleton(
                     textAlign = TextAlign.Center,
                     fontSize = 14.sp,
                     lineHeight = 16.sp,
-                    color = Color(0xFF677987)
+                    color = MaterialTheme.colorScheme.onBackground.copy(0.8f)
                 )
 
                 TextButton(
@@ -319,10 +310,23 @@ private fun OtpCodeVerifyScreenSkeleton(
                 exit = slideOutVertically(targetOffsetY = { fullHeight -> fullHeight }) + fadeOut()
             ) {
                 VirtualNumberKeyboard(
-                    codeState = codeState,
-                    isValidInputs = isValidInputs,
-                    verify = { code ->
-                        verify(phoneNumber, code)
+                    code = codeState.value,
+                    onNumberClick = { number ->
+                        if (codeState.value.length < 6) codeState.value += number
+                    },
+                    onDeleteClick = {
+                        if (codeState.value.isNotEmpty()) {
+                            codeState.value = codeState.value.substring(
+                                TextRange(
+                                    0,
+                                    codeState.value.length - 1
+                                )
+                            )
+                        }
+                    },
+                    isValidInputs = { isValidInputs(codeState.value) },
+                    verify = {
+                        verify(phoneNumber, codeState.value)
                     }
                 )
             }
@@ -334,24 +338,14 @@ private fun OtpCodeVerifyScreenSkeleton(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun VirtualNumberKeyboardPreview() {
+private fun VirtualNumberKeyboardPreview() {
     AppTheme {
         VirtualNumberKeyboard(
-            codeState = remember { mutableStateOf("") },
-            isValidInputs = { true },
-            verify = {}
-        )
-    }
-}
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun VirtualNumberKeyboardPreviewDark() {
-    AppTheme {
-        VirtualNumberKeyboard(
-            codeState = remember { mutableStateOf("") },
+            code = "",
+            onNumberClick = {},
+            onDeleteClick = {},
             isValidInputs = { true },
             verify = {}
         )
@@ -360,73 +354,55 @@ fun VirtualNumberKeyboardPreviewDark() {
 
 @Composable
 fun VirtualNumberKeyboard(
-    modifier: Modifier = Modifier,
-    codeState: MutableState<String>,
-    isValidInputs: (code: String) -> Boolean,
-    verify: (code: String) -> Unit
+    code: String,
+    onNumberClick: (String) -> Unit,
+    onDeleteClick: () -> Unit,
+    isValidInputs: () -> Boolean,
+    verify: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Column(
         modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colors.surface)
-            .background(MaterialTheme.colors.onSurface.copy(.1f))
+            .background(MaterialTheme.colorScheme.surface)
+            .background(MaterialTheme.colorScheme.surfaceVariant.copy(0.2f))
     ) {
+        HorizontalDivider(
+            color = DividerDefaults.color.copy(0.6f)
+        )
+
         Row(
             Modifier.fillMaxWidth()
         ) {
-            KeyboardKey(
-                modifier = Modifier.weight(1f),
-                text = "1",
-                onClick = { if (codeState.value.length < 6) codeState.value += "1" }
-            )
-            KeyboardKey(
-                modifier = Modifier.weight(1f),
-                text = "2",
-                onClick = { if (codeState.value.length < 6) codeState.value += "2" }
-            )
-            KeyboardKey(
-                modifier = Modifier.weight(1f),
-                text = "3",
-                onClick = { if (codeState.value.length < 6) codeState.value += "3" }
-            )
+            for (i in 1..3) {
+                KeyboardKey(
+                    modifier = Modifier.weight(1f),
+                    text = "$i",
+                    onClick = { onNumberClick("$i") }
+                )
+            }
         }
         Row(
             Modifier.fillMaxWidth()
         ) {
-            KeyboardKey(
-                modifier = Modifier.weight(1f),
-                text = "4",
-                onClick = { if (codeState.value.length < 6) codeState.value += "4" }
-            )
-            KeyboardKey(
-                modifier = Modifier.weight(1f),
-                text = "5",
-                onClick = { if (codeState.value.length < 6) codeState.value += "5" }
-            )
-            KeyboardKey(
-                modifier = Modifier.weight(1f),
-                text = "6",
-                onClick = { if (codeState.value.length < 6) codeState.value += "6" }
-            )
+            for (i in 4..6) {
+                KeyboardKey(
+                    modifier = Modifier.weight(1f),
+                    text = "$i",
+                    onClick = { onNumberClick("$i") }
+                )
+            }
         }
         Row(
             Modifier.fillMaxWidth()
         ) {
-            KeyboardKey(
-                modifier = Modifier.weight(1f),
-                text = "7",
-                onClick = { if (codeState.value.length < 6) codeState.value += "7" }
-            )
-            KeyboardKey(
-                modifier = Modifier.weight(1f),
-                text = "8",
-                onClick = { if (codeState.value.length < 6) codeState.value += "8" }
-            )
-            KeyboardKey(
-                modifier = Modifier.weight(1f),
-                text = "9",
-                onClick = { if (codeState.value.length < 6) codeState.value += "9" }
-            )
+            for (i in 7..9) {
+                KeyboardKey(
+                    modifier = Modifier.weight(1f),
+                    text = "$i",
+                    onClick = { onNumberClick("$i") }
+                )
+            }
         }
         Row(
             Modifier.fillMaxWidth()
@@ -436,17 +412,8 @@ fun VirtualNumberKeyboard(
                     .height(54.dp)
                     .weight(1f)
                     .clickable(
-                        onClick = {
-                            if (codeState.value.isNotEmpty()) {
-                                codeState.value = codeState.value.substring(
-                                    TextRange(
-                                        0,
-                                        codeState.value.length - 1
-                                    )
-                                )
-                            }
-                        },
-                        indication = rememberRipple(color = MaterialTheme.colors.primary),
+                        onClick = onDeleteClick,
+                        indication = ripple(color = MaterialTheme.colorScheme.primary),
                         interactionSource = remember { MutableInteractionSource() }
                     ),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -461,7 +428,7 @@ fun VirtualNumberKeyboard(
             KeyboardKey(
                 modifier = Modifier.weight(1f),
                 text = "0",
-                onClick = { if (codeState.value.length < 6) codeState.value += "0" }
+                onClick = { onNumberClick("0") }
             )
             Column(
                 modifier = Modifier
@@ -469,17 +436,20 @@ fun VirtualNumberKeyboard(
                     .weight(1f)
                     .clickable(
                         onClick = {
-                            if (isValidInputs(codeState.value)) {
-                                verify(codeState.value)
+                            if (isValidInputs()) {
+                                verify()
                             }
                         },
-                        indication = rememberRipple(color = MaterialTheme.colors.primary),
+                        indication = ripple(color = MaterialTheme.colorScheme.primary),
                         interactionSource = remember { MutableInteractionSource() }
                     ),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Crossfade(codeState.value.length >= 6) { isCompleted ->
+                Crossfade(
+                    code.length >= 6,
+                    label = "Enter key"
+                ) { isCompleted ->
                     when (isCompleted) {
                         true -> Image(
                             modifier = Modifier.size(38.dp),
@@ -501,9 +471,9 @@ fun VirtualNumberKeyboard(
 
 @Composable
 private fun KeyboardKey(
-    modifier: Modifier,
     text: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     TextButton(
         modifier = modifier.height(54.dp),
@@ -515,7 +485,7 @@ private fun KeyboardKey(
             text = text,
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colors.onSurface.copy(.8f)
+            color = MaterialTheme.colorScheme.onSurface.copy(.8f)
         )
     }
 }
@@ -529,11 +499,11 @@ private fun CodeField(
             .padding(start = 4.dp, end = 4.dp)
             .size(40.dp, 45.dp)
             .background(
-                color = MaterialTheme.colors.onSurface.copy(.05f),
+                color = MaterialTheme.colorScheme.onSurface.copy(.05f),
                 shape = RoundedCornerShape(6.dp)
             )
             .border(
-                BorderStroke(1.dp, MaterialTheme.colors.onSurface.copy(.1f)),
+                BorderStroke(1.dp, MaterialTheme.colorScheme.onSurface.copy(.1f)),
                 RoundedCornerShape(6.dp)
             )
     ) {
@@ -542,7 +512,7 @@ private fun CodeField(
             text = text,
             fontSize = 20.sp,
             fontWeight = FontWeight.Medium,
-            color = MaterialTheme.colors.onSurface
+            color = MaterialTheme.colorScheme.onSurface
         )
         if (text.isEmpty()) {
             Box(
@@ -551,7 +521,7 @@ private fun CodeField(
                     .padding(start = 12.dp, end = 12.dp, bottom = 13.dp)
                     .height(1.dp)
                     .fillMaxWidth()
-                    .background(MaterialTheme.colors.onSurface.copy(.15f))
+                    .background(MaterialTheme.colorScheme.onSurface.copy(.15f))
             )
         }
     }
@@ -568,6 +538,7 @@ private fun LoadingIndicator(
     ) {
         Box(
             Modifier
+                .clickable { /* no-op */ }
                 .fillMaxSize()
                 .background(Color.Black.copy(alpha = .6f))
         ) {
@@ -576,7 +547,9 @@ private fun LoadingIndicator(
                     .size(200.dp, 180.dp)
                     .align(Alignment.Center),
                 shape = RoundedCornerShape(8.dp),
-                elevation = 8.dp
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 8.dp
+                )
             ) {
                 Column(
                     Modifier.fillMaxSize(),

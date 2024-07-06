@@ -39,12 +39,12 @@ data class ScaffoldComposition(
                 route = CompositionsScreen.CompositionScaffoldOne
             ),
             ScaffoldComposition(
-                name = "Scaffold With Bottom Bar And Cutout",
-                route = CompositionsScreen.CompositionScaffoldTwo
-            ),
-            ScaffoldComposition(
                 name = "Scaffold With Simple Snackbar",
                 route = CompositionsScreen.CompositionScaffoldThree
+            ),
+            ScaffoldComposition(
+                name = "Scaffold With Indefinite Snackbar",
+                route = CompositionsScreen.CompositionScaffoldSix
             ),
             ScaffoldComposition(
                 name = "Scaffold With Custom Snackbar",
@@ -53,6 +53,10 @@ data class ScaffoldComposition(
             ScaffoldComposition(
                 name = "Scaffold With Coroutines Snackbar",
                 route = CompositionsScreen.CompositionScaffoldFive
+            ),
+            ScaffoldComposition(
+                name = "Scaffold With Multiline Snackbar",
+                route = CompositionsScreen.CompositionScaffoldTwo
             )
         )
     }

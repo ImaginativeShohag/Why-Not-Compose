@@ -103,7 +103,6 @@ dependencies {
     implementation(Libs.AndroidX.Compose.foundation)
     implementation(Libs.AndroidX.Compose.layout)
     // Material Design
-
     implementation(Libs.AndroidX.Compose.material3)
     implementation(Libs.AndroidX.Compose.material3WindowSizeClass)
     // Material design icons

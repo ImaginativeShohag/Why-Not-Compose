@@ -342,14 +342,10 @@ fun TodoAddSheetSkeleton(
                 val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
 
                 // Blocks previous dates from being selected.
-                override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-                    return utcTimeMillis >= calendar.timeInMillis
-                }
+                override fun isSelectableDate(utcTimeMillis: Long): Boolean = utcTimeMillis >= calendar.timeInMillis
 
                 // Allow selecting dates from current year forward.
-                override fun isSelectableYear(year: Int): Boolean {
-                    return year >= calendar.get(Calendar.YEAR)
-                }
+                override fun isSelectableYear(year: Int): Boolean = year >= calendar.get(Calendar.YEAR)
             }
         )
 

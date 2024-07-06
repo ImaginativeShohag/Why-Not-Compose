@@ -28,21 +28,20 @@ package org.imaginativeworld.whynotcompose.ui.compositions
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Snackbar
-import androidx.compose.material.SnackbarData
-import androidx.compose.material.SnackbarDefaults
-import androidx.compose.material.SnackbarHost
-import androidx.compose.material.SnackbarHostState
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarData
+import androidx.compose.material3.SnackbarDefaults
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -51,7 +50,7 @@ fun CustomSnackbarHost(state: SnackbarHostState) {
         CustomSnackbar(
             modifier = Modifier,
             snackbarData = data,
-            backgroundColor = MaterialTheme.colors.onBackground
+            backgroundColor = MaterialTheme.colorScheme.onBackground
         )
     }
 }
@@ -65,12 +64,11 @@ fun CustomSnackbar(
     modifier: Modifier = Modifier,
     actionOnNewLine: Boolean = false,
     shape: Shape = MaterialTheme.shapes.small,
-    backgroundColor: Color = SnackbarDefaults.backgroundColor,
-    contentColor: Color = MaterialTheme.colors.surface,
-    actionColor: Color = SnackbarDefaults.primaryActionColor,
-    elevation: Dp = 6.dp
+    backgroundColor: Color = SnackbarDefaults.color,
+    contentColor: Color = MaterialTheme.colorScheme.surface,
+    actionColor: Color = SnackbarDefaults.actionColor
 ) {
-    val actionLabel = snackbarData.actionLabel
+    val actionLabel = snackbarData.visuals.actionLabel
     val actionComposable: (@Composable () -> Unit)? = if (actionLabel != null) {
         @Composable {
             TextButton(
@@ -87,15 +85,14 @@ fun CustomSnackbar(
         content = {
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = snackbarData.message,
+                text = snackbarData.visuals.message,
                 textAlign = TextAlign.Center
             )
         },
         action = actionComposable,
         actionOnNewLine = actionOnNewLine,
         shape = shape,
-        backgroundColor = backgroundColor,
-        contentColor = contentColor,
-        elevation = elevation
+        containerColor = backgroundColor,
+        contentColor = contentColor
     )
 }

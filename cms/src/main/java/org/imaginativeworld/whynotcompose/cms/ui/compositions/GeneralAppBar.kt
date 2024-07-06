@@ -29,7 +29,7 @@ package org.imaginativeworld.whynotcompose.cms.ui.compositions
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.BrightnessAuto
 import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.DarkMode
@@ -87,7 +87,7 @@ fun GeneralAppBar(
                 goBack()
             }) {
                 Icon(
-                    imageVector = Icons.Rounded.ArrowBack,
+                    imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
                     contentDescription = "Go back"
                 )
             }
@@ -97,7 +97,7 @@ fun GeneralAppBar(
                 toggleUIMode()
             }) {
                 Icon(
-                    imageVector = when(uiThemeMode) {
+                    imageVector = when (uiThemeMode) {
                         UIThemeMode.AUTO -> Icons.Rounded.BrightnessAuto
                         UIThemeMode.LIGHT -> Icons.Rounded.LightMode
                         UIThemeMode.DARK -> Icons.Rounded.DarkMode

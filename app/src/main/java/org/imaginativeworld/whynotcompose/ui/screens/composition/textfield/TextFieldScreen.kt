@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.composition.textfield
 
-import android.content.res.Configuration
 import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
@@ -37,18 +36,15 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -61,32 +57,27 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
@@ -115,13 +106,11 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.base.extensions.isValidEmail
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
@@ -146,22 +135,15 @@ fun TextFieldScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun TextFieldScreenSkeletonPreview() {
+private fun TextFieldScreenSkeletonPreview() {
     AppTheme {
         TextFieldScreenSkeleton()
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun TextFieldScreenSkeletonPreviewDark() {
-    AppTheme {
-        TextFieldScreenSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun TextFieldScreenSkeleton(
     goBack: () -> Unit = {}
@@ -170,7 +152,13 @@ fun TextFieldScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "Text Field",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
@@ -178,16 +166,6 @@ fun TextFieldScreenSkeleton(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            AppComponent.Header(
-                "Text Field",
-                goBack = goBack
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            Divider()
-
             Column(Modifier.padding(start = 16.dp, end = 16.dp)) {
                 AppComponent.SubHeader("Official Samples")
 
@@ -255,7 +233,7 @@ fun TextFieldScreenSkeleton(
                 AppComponent.MediumSpacer()
             }
 
-            Divider()
+            HorizontalDivider()
 
             Column(Modifier.padding(start = 16.dp, end = 16.dp)) {
                 AppComponent.SubHeader("Cut-Copy-Paste Disabled")
@@ -270,180 +248,13 @@ fun TextFieldScreenSkeleton(
                 AppComponent.MediumSpacer()
             }
 
-            Divider()
+            HorizontalDivider()
 
-            Column(Modifier.padding(start = 16.dp, end = 16.dp)) {
-                AppComponent.SubHeader("Custom Type One")
+            CustomTypeOneExample()
 
-                // ----------------------------------------------------------------
+            HorizontalDivider()
 
-                TextInputFieldOne(
-                    textFieldValue = remember { mutableStateOf(TextFieldValue()) },
-                    placeholder = "I am  a placeholder",
-                    keyboardType = KeyboardType.Text
-                )
-
-                // ----------------------------------------------------------------
-
-                AppComponent.MediumSpacer()
-
-                TextInputFieldOne(
-                    textFieldValue = remember { mutableStateOf(TextFieldValue()) },
-                    placeholder = "I am  a placeholder",
-                    isError = true
-                )
-
-                // ----------------------------------------------------------------
-
-                AppComponent.MediumSpacer()
-
-                TextInputFieldOne(
-                    textFieldValue = remember {
-                        mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet"))
-                    },
-                    placeholder = "I am  a placeholder"
-                )
-
-                // ----------------------------------------------------------------
-
-                AppComponent.MediumSpacer()
-
-                TextInputFieldOne(
-                    textFieldValue = remember {
-                        mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet"))
-                    },
-                    isError = true
-                )
-
-                // ----------------------------------------------------------------
-
-                AppComponent.MediumSpacer()
-
-                TextInputFieldOne(
-                    modifier = Modifier
-                        .height(128.dp),
-                    textFieldValue = remember { mutableStateOf(TextFieldValue()) },
-                    placeholder = "I am a multi-line placeholder.\nHere is another line.",
-                    keyboardType = KeyboardType.Text,
-                    singleLine = false
-                )
-
-                // ----------------------------------------------------------------
-
-                AppComponent.MediumSpacer()
-
-                TextInputFieldOne(
-                    modifier = Modifier
-                        .height(128.dp),
-                    textFieldValue = remember {
-                        mutableStateOf(
-                            TextFieldValue(
-                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                            )
-                        )
-                    },
-                    placeholder = "I am a multi-line placeholder.\nHere is another line.",
-                    keyboardType = KeyboardType.Text,
-                    singleLine = false
-                )
-
-                // ----------------------------------------------------------------
-
-                AppComponent.MediumSpacer()
-
-                PasswordInputFieldOne(
-                    textFieldValue = remember { mutableStateOf(TextFieldValue()) }
-                )
-
-                // ----------------------------------------------------------------
-
-                AppComponent.MediumSpacer()
-
-                PasswordInputFieldOne(
-                    textFieldValue = remember { mutableStateOf(TextFieldValue()) },
-                    isError = true
-                )
-
-                // ----------------------------------------------------------------
-                // ----------------------------------------------------------------
-
-                AppComponent.MediumSpacer()
-            }
-
-            Divider()
-
-            Column(Modifier.padding(start = 16.dp, end = 16.dp)) {
-                AppComponent.SubHeader("Custom Type Two")
-
-                // ----------------------------------------------------------------
-
-                TextInputFieldTwo(
-                    textFieldValue = remember { mutableStateOf(TextFieldValue()) },
-                    placeholder = "I am  a placeholder",
-                    keyboardType = KeyboardType.Text
-                )
-
-                // ----------------------------------------------------------------
-
-                AppComponent.MediumSpacer()
-
-                TextInputFieldTwo(
-                    textFieldValue = remember {
-                        mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet"))
-                    },
-                    placeholder = "I am  a placeholder"
-                )
-
-                // ----------------------------------------------------------------
-
-                AppComponent.MediumSpacer()
-
-                TextInputFieldTwo(
-                    modifier = Modifier
-                        .height(128.dp),
-                    textFieldValue = remember { mutableStateOf(TextFieldValue()) },
-                    placeholder = "I am  a placeholder",
-                    keyboardType = KeyboardType.Text,
-                    singleLine = false
-                )
-
-                // ----------------------------------------------------------------
-
-                AppComponent.MediumSpacer()
-
-                TextInputFieldTwo(
-                    modifier = Modifier
-                        .height(128.dp),
-                    textFieldValue = remember {
-                        mutableStateOf(
-                            TextFieldValue(
-                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                            )
-                        )
-                    },
-                    placeholder = "I am  a placeholder",
-                    keyboardType = KeyboardType.Text,
-                    singleLine = false
-                )
-
-                // ----------------------------------------------------------------
-
-                AppComponent.MediumSpacer()
-
-                PasswordInputFieldTwo(
-                    textFieldValue = remember { mutableStateOf(TextFieldValue()) },
-                    placeholder = "Password"
-                )
-
-                // ----------------------------------------------------------------
-
-                AppComponent.MediumSpacer()
-
-                PasswordInputFieldTwo(
-                    textFieldValue = remember { mutableStateOf(TextFieldValue("123456")) },
-                    placeholder = "Password"
-                )
-            }
+            CustomTypeTwoExample()
 
             // ----------------------------------------------------------------
 
@@ -452,12 +263,237 @@ fun TextFieldScreenSkeleton(
     }
 }
 
-@ExperimentalComposeUiApi
 @Composable
-fun TextInputFieldOne(
+private fun CustomTypeOneExample(modifier: Modifier = Modifier) {
+    Column(modifier.padding(start = 16.dp, end = 16.dp)) {
+        AppComponent.SubHeader("Custom Type One")
+
+        // ----------------------------------------------------------------
+
+        val (text1Value, onText1ValueChange) = remember { mutableStateOf(TextFieldValue()) }
+
+        TextInputFieldOne(
+            value = text1Value,
+            onValueChange = onText1ValueChange,
+            placeholder = "I am  a placeholder",
+            keyboardType = KeyboardType.Text
+        )
+
+        // ----------------------------------------------------------------
+
+        AppComponent.MediumSpacer()
+
+        val (text2Value, onText2ValueChange) = remember { mutableStateOf(TextFieldValue()) }
+
+        TextInputFieldOne(
+            value = text2Value,
+            onValueChange = onText2ValueChange,
+            placeholder = "I am  a placeholder",
+            isError = true
+        )
+
+        // ----------------------------------------------------------------
+
+        AppComponent.MediumSpacer()
+
+        val (text3Value, onText3ValueChange) = remember { mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet")) }
+
+        TextInputFieldOne(
+            value = text3Value,
+            onValueChange = onText3ValueChange,
+            placeholder = "I am  a placeholder"
+        )
+
+        // ----------------------------------------------------------------
+
+        AppComponent.MediumSpacer()
+
+        val (text4Value, onText4ValueChange) = remember { mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet")) }
+
+        TextInputFieldOne(
+            value = text4Value,
+            onValueChange = onText4ValueChange,
+            isError = true
+        )
+
+        // ----------------------------------------------------------------
+
+        AppComponent.MediumSpacer()
+
+        val (text5Value, onText5ValueChange) = remember { mutableStateOf(TextFieldValue()) }
+
+        TextInputFieldOne(
+            value = text5Value,
+            onValueChange = onText5ValueChange,
+            modifier = Modifier
+                .height(128.dp),
+            placeholder = "I am a multi-line placeholder.\nHere is another line.",
+            keyboardType = KeyboardType.Text,
+            singleLine = false
+        )
+
+        // ----------------------------------------------------------------
+
+        AppComponent.MediumSpacer()
+
+        val (text6Value, onText6ValueChange) = remember { mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")) }
+
+        TextInputFieldOne(
+            value = text6Value,
+            onValueChange = onText6ValueChange,
+            modifier = Modifier
+                .height(128.dp),
+            placeholder = "I am a multi-line placeholder.\nHere is another line.",
+            keyboardType = KeyboardType.Text,
+            singleLine = false
+        )
+
+        // ----------------------------------------------------------------
+
+        AppComponent.MediumSpacer()
+
+        val (text7Value, onText7ValueChange) = remember { mutableStateOf(TextFieldValue()) }
+
+        PasswordInputFieldOne(
+            value = text7Value,
+            onValueChange = onText7ValueChange
+        )
+
+        // ----------------------------------------------------------------
+
+        AppComponent.MediumSpacer()
+
+        val (text8Value, onText8ValueChange) = remember { mutableStateOf(TextFieldValue()) }
+
+        PasswordInputFieldOne(
+            value = text8Value,
+            onValueChange = onText8ValueChange,
+            isError = true
+        )
+
+        // ----------------------------------------------------------------
+        // ----------------------------------------------------------------
+
+        AppComponent.MediumSpacer()
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun CustomTypeOneExamplePreview() {
+    AppTheme {
+        Scaffold { innerPadding ->
+            CustomTypeOneExample(Modifier.padding(innerPadding))
+        }
+    }
+}
+
+@Composable
+private fun CustomTypeTwoExample(modifier: Modifier = Modifier) {
+    Column(modifier.padding(start = 16.dp, end = 16.dp)) {
+        AppComponent.SubHeader("Custom Type Two")
+
+        // ----------------------------------------------------------------
+
+        val (text9Value, onText9ValueChange) = remember { mutableStateOf(TextFieldValue()) }
+
+        TextInputFieldTwo(
+            value = text9Value,
+            onValueChange = onText9ValueChange,
+            placeholder = "I am  a placeholder",
+            keyboardType = KeyboardType.Text
+        )
+
+        // ----------------------------------------------------------------
+
+        AppComponent.MediumSpacer()
+
+        val (text10Value, onText10ValueChange) = remember { mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet")) }
+
+        TextInputFieldTwo(
+            value = text10Value,
+            onValueChange = onText10ValueChange,
+            placeholder = "I am  a placeholder"
+        )
+
+        // ----------------------------------------------------------------
+
+        AppComponent.MediumSpacer()
+
+        val (text11Value, onText11ValueChange) = remember { mutableStateOf(TextFieldValue()) }
+
+        TextInputFieldTwo(
+            value = text11Value,
+            onValueChange = onText11ValueChange,
+            placeholder = "I am  a placeholder",
+            modifier = Modifier
+                .height(128.dp),
+            keyboardType = KeyboardType.Text,
+            singleLine = false
+        )
+
+        // ----------------------------------------------------------------
+
+        AppComponent.MediumSpacer()
+
+        val (text12Value, onText12ValueChange) = remember { mutableStateOf(TextFieldValue("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")) }
+
+        TextInputFieldTwo(
+            value = text12Value,
+            onValueChange = onText12ValueChange,
+            placeholder = "I am  a placeholder",
+            modifier = Modifier
+                .height(128.dp),
+            keyboardType = KeyboardType.Text,
+            singleLine = false
+        )
+
+        // ----------------------------------------------------------------
+
+        AppComponent.MediumSpacer()
+
+        val (text13Value, onText13ValueChange) = remember { mutableStateOf(TextFieldValue()) }
+
+        PasswordInputFieldTwo(
+            value = text13Value,
+            onValueChange = onText13ValueChange,
+            placeholder = "Password"
+        )
+
+        // ----------------------------------------------------------------
+
+        AppComponent.MediumSpacer()
+
+        val (text14Value, onText14ValueChange) = remember { mutableStateOf(TextFieldValue("123456")) }
+
+        PasswordInputFieldTwo(
+            value = text14Value,
+            onValueChange = onText14ValueChange,
+            placeholder = "Password"
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun CustomTypeTwoExamplePreview() {
+    AppTheme {
+        Scaffold { innerPadding ->
+            CustomTypeTwoExample(Modifier.padding(innerPadding))
+        }
+    }
+}
+
+// ================================================================
+// Custom InputField
+// ================================================================
+
+@Composable
+private fun TextInputFieldOne(
+    value: TextFieldValue,
+    onValueChange: (TextFieldValue) -> Unit,
     modifier: Modifier = Modifier,
-    textFieldValue: MutableState<TextFieldValue>,
-    background: Color = MaterialTheme.colors.inputBackground,
+    background: Color = MaterialTheme.colorScheme.inputBackground,
     placeholder: String = "",
     keyboardType: KeyboardType = KeyboardType.Text,
     readOnly: Boolean = false,
@@ -466,39 +502,21 @@ fun TextInputFieldOne(
     keyboardActions: KeyboardActions? = null,
     fontSize: TextUnit = 16.sp,
     height: Dp = ELEMENT_HEIGHT,
-    isError: Boolean = false,
-    onValueChange: (TextFieldValue) -> Unit = {}
+    isError: Boolean = false
 ) {
     val focusManager = LocalFocusManager.current
     val bringIntoViewRequester = remember { BringIntoViewRequester() }
     val interactionSource = remember { MutableInteractionSource() }
-    val interactionSourceState = interactionSource.collectIsFocusedAsState()
-    val scope = rememberCoroutineScope()
-    val isImeVisible = WindowInsets.isImeVisible
-
-    // Bring the composable into view (visible to user).
-    LaunchedEffect(isImeVisible, interactionSourceState.value) {
-        if (isImeVisible && interactionSourceState.value) {
-            scope.launch {
-                delay(300)
-                bringIntoViewRequester.bringIntoView()
-            }
-        }
-    }
 
     BasicTextField(
-        value = textFieldValue.value,
+        value = value,
+        onValueChange = onValueChange,
         singleLine = singleLine,
         textStyle = TextStyle(
-            fontFamily = MaterialTheme.typography.body1.fontFamily,
+            fontFamily = MaterialTheme.typography.bodyLarge.fontFamily,
             fontSize = fontSize,
-            color = MaterialTheme.colors.onInputBackground
+            color = MaterialTheme.colorScheme.onInputBackground
         ),
-        onValueChange = {
-            textFieldValue.value = it
-
-            onValueChange(it)
-        },
         keyboardActions = keyboardActions ?: KeyboardActions(
             onDone = { focusManager.clearFocus() },
             onNext = { focusManager.moveFocus(FocusDirection.Down) },
@@ -518,7 +536,7 @@ fun TextInputFieldOne(
                 Modifier
                     .clip(MaterialTheme.shapes.medium)
                     .background(
-                        if (isError) MaterialTheme.colors.errorInputBackground else background
+                        if (isError) MaterialTheme.colorScheme.errorInputBackground else background
                     )
                     .height(height)
                     .padding(horizontal = 12.dp),
@@ -534,10 +552,10 @@ fun TextInputFieldOne(
                 ) {
                     innerTextField()
 
-                    if (textFieldValue.value.text.isEmpty()) {
+                    if (value.text.isEmpty()) {
                         Text(
                             text = placeholder,
-                            color = MaterialTheme.colors.onInputBackground.copy(.35f),
+                            color = MaterialTheme.colorScheme.onInputBackground.copy(.35f),
                             fontSize = fontSize,
                             maxLines = if (singleLine) 1 else Int.MAX_VALUE,
                             overflow = TextOverflow.Ellipsis
@@ -550,38 +568,25 @@ fun TextInputFieldOne(
 }
 
 @Composable
-fun PasswordInputFieldOne(
+private fun PasswordInputFieldOne(
+    value: TextFieldValue,
+    onValueChange: (TextFieldValue) -> Unit,
     modifier: Modifier = Modifier,
-    textFieldValue: MutableState<TextFieldValue>,
     placeholder: String = "●●●●●●",
     readOnly: Boolean = false,
     fontSize: TextUnit = 16.sp,
     imeAction: ImeAction = ImeAction.Done,
     keyboardActions: KeyboardActions? = null,
     height: Dp = ELEMENT_HEIGHT,
-    isError: Boolean = false,
-    onValueChange: (TextFieldValue) -> Unit = {}
+    isError: Boolean = false
 ) {
     val focusManager = LocalFocusManager.current
     var passwordVisibility by remember { mutableStateOf(false) }
     val bringIntoViewRequester = remember { BringIntoViewRequester() }
     val interactionSource = remember { MutableInteractionSource() }
-    val interactionSourceState = interactionSource.collectIsFocusedAsState()
-    val scope = rememberCoroutineScope()
-    val isImeVisible = WindowInsets.isImeVisible
-
-    // Bring the composable into view (visible to user).
-    LaunchedEffect(isImeVisible, interactionSourceState.value) {
-        if (isImeVisible && interactionSourceState.value) {
-            scope.launch {
-                delay(300)
-                bringIntoViewRequester.bringIntoView()
-            }
-        }
-    }
 
     BasicTextField(
-        value = textFieldValue.value,
+        value = value,
         singleLine = true,
         visualTransformation =
         if (passwordVisibility) {
@@ -590,8 +595,6 @@ fun PasswordInputFieldOne(
             PasswordVisualTransformation(mask = '●')
         },
         onValueChange = {
-            textFieldValue.value = it
-
             onValueChange(it)
         },
         keyboardActions = keyboardActions ?: KeyboardActions(
@@ -608,16 +611,16 @@ fun PasswordInputFieldOne(
             .fillMaxWidth(),
         readOnly = readOnly,
         textStyle = TextStyle(
-            fontFamily = MaterialTheme.typography.body1.fontFamily,
+            fontFamily = MaterialTheme.typography.bodyLarge.fontFamily,
             fontSize = fontSize,
-            color = MaterialTheme.colors.onInputBackground
+            color = MaterialTheme.colorScheme.onInputBackground
         ),
         decorationBox = { innerTextField ->
             Row(
                 Modifier
                     .clip(MaterialTheme.shapes.medium)
                     .background(
-                        if (isError) MaterialTheme.colors.errorInputBackground else MaterialTheme.colors.inputBackground
+                        if (isError) MaterialTheme.colorScheme.errorInputBackground else MaterialTheme.colorScheme.inputBackground
                     )
                     .height(height),
                 verticalAlignment = Alignment.CenterVertically
@@ -630,11 +633,11 @@ fun PasswordInputFieldOne(
                 ) {
                     innerTextField()
 
-                    if (textFieldValue.value.text.isEmpty()) {
+                    if (value.text.isEmpty()) {
                         Text(
                             modifier = Modifier.padding(bottom = 2.dp),
                             text = placeholder,
-                            color = MaterialTheme.colors.onInputBackground.copy(.35f),
+                            color = MaterialTheme.colorScheme.onInputBackground.copy(.35f),
                             fontSize = fontSize
                         )
                     }
@@ -677,11 +680,12 @@ fun PasswordInputFieldOne(
 
 @Composable
 fun TextInputFieldTwo(
-    modifier: Modifier = Modifier,
-    textFieldValue: MutableState<TextFieldValue>,
-    background: Color = MaterialTheme.colors.inputBackground,
-    shape: Shape = MaterialTheme.shapes.medium,
+    value: TextFieldValue,
+    onValueChange: (TextFieldValue) -> Unit,
     placeholder: String,
+    modifier: Modifier = Modifier,
+    background: Color = MaterialTheme.colorScheme.inputBackground,
+    shape: Shape = MaterialTheme.shapes.medium,
     keyboardType: KeyboardType = KeyboardType.Text,
     readOnly: Boolean = false,
     singleLine: Boolean = true,
@@ -689,25 +693,11 @@ fun TextInputFieldTwo(
     imeAction: ImeAction = ImeAction.Done,
     keyboardActions: KeyboardActions? = null,
     height: Dp = ELEMENT_HEIGHT,
-    @DrawableRes icon: Int? = null,
-    onValueChange: (TextFieldValue) -> Unit = {}
+    @DrawableRes icon: Int? = null
 ) {
     val focusManager = LocalFocusManager.current
     val bringIntoViewRequester = remember { BringIntoViewRequester() }
     val interactionSource = remember { MutableInteractionSource() }
-    val interactionSourceState = interactionSource.collectIsFocusedAsState()
-    val scope = rememberCoroutineScope()
-    val isImeVisible = WindowInsets.isImeVisible
-
-    // Bring the composable into view (visible to user).
-    LaunchedEffect(isImeVisible, interactionSourceState.value) {
-        if (isImeVisible && interactionSourceState.value) {
-            scope.launch {
-                delay(300)
-                bringIntoViewRequester.bringIntoView()
-            }
-        }
-    }
 
     val focusRequester = FocusRequester()
     val isFocused = remember { mutableStateOf(false) }
@@ -721,18 +711,16 @@ fun TextInputFieldTwo(
             }
             .fillMaxWidth(),
         interactionSource = interactionSource,
-        value = textFieldValue.value,
+        value = value,
         singleLine = singleLine,
         textStyle = TextStyle(
             fontSize = 14.sp,
-            fontFamily = MaterialTheme.typography.body1.fontFamily,
+            fontFamily = MaterialTheme.typography.bodyLarge.fontFamily,
             fontWeight = FontWeight.Medium,
-            color = MaterialTheme.colors.onInputBackground
+            color = MaterialTheme.colorScheme.onInputBackground
         ),
         onValueChange = {
             if (it.text.length <= maxLength) {
-                textFieldValue.value = it
-
                 onValueChange(it)
             }
         },
@@ -763,7 +751,7 @@ fun TextInputFieldTwo(
                                 .padding(15.dp),
                             painter = painterResource(id = icon),
                             contentDescription = null,
-                            colorFilter = ColorFilter.tint(MaterialTheme.colors.onInputBackground)
+                            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onInputBackground)
                         )
                     }
 
@@ -777,10 +765,10 @@ fun TextInputFieldTwo(
                                 end = 15.dp
                             )
                     ) {
-                        val hasText = textFieldValue.value.text.isNotEmpty()
+                        val hasText = value.text.isNotEmpty()
 
                         val animPlaceholder: Dp by animateDpAsState(
-                            if (isFocused.value || hasText) 6.dp else 14.dp
+                            if (isFocused.value || hasText) 2.dp else 12.dp
                         )
                         val animPlaceHolderFontSize: Int by animateIntAsState(
                             if (isFocused.value || hasText) 12 else 14
@@ -792,9 +780,9 @@ fun TextInputFieldTwo(
                                     translationY = animPlaceholder.toPx()
                                 },
                             text = placeholder,
-                            color = MaterialTheme.colors.onInputBackground.copy(alpha = .35f),
+                            color = MaterialTheme.colorScheme.onInputBackground.copy(alpha = .35f),
                             fontSize = animPlaceHolderFontSize.sp,
-                            fontFamily = MaterialTheme.typography.body1.fontFamily,
+                            fontFamily = MaterialTheme.typography.bodyLarge.fontFamily,
                             maxLines = if (singleLine) 1 else Int.MAX_VALUE,
                             overflow = TextOverflow.Ellipsis
                         )
@@ -815,32 +803,19 @@ fun TextInputFieldTwo(
 
 @Composable
 fun PasswordInputFieldTwo(
+    value: TextFieldValue,
+    onValueChange: (TextFieldValue) -> Unit,
     modifier: Modifier = Modifier,
-    textFieldValue: MutableState<TextFieldValue>,
     placeholder: String = "●●●●●●",
     readOnly: Boolean = false,
     imeAction: ImeAction = ImeAction.Done,
     keyboardActions: KeyboardActions? = null,
-    @DrawableRes icon: Int? = null,
-    onValueChange: (TextFieldValue) -> Unit = {}
+    @DrawableRes icon: Int? = null
 ) {
     val focusManager = LocalFocusManager.current
     val passwordVisibility = remember { mutableStateOf(false) }
     val bringIntoViewRequester = remember { BringIntoViewRequester() }
     val interactionSource = remember { MutableInteractionSource() }
-    val interactionSourceState = interactionSource.collectIsFocusedAsState()
-    val scope = rememberCoroutineScope()
-    val isImeVisible = WindowInsets.isImeVisible
-
-    // Bring the composable into view (visible to user).
-    LaunchedEffect(isImeVisible, interactionSourceState.value) {
-        if (isImeVisible && interactionSourceState.value) {
-            scope.launch {
-                delay(300)
-                bringIntoViewRequester.bringIntoView()
-            }
-        }
-    }
 
     val focusRequester = FocusRequester()
     val isFocused = remember { mutableStateOf(false) }
@@ -856,7 +831,7 @@ fun PasswordInputFieldTwo(
             .bringIntoViewRequester(bringIntoViewRequester)
             .fillMaxWidth(),
         interactionSource = interactionSource,
-        value = textFieldValue.value,
+        value = value,
         singleLine = true,
         visualTransformation =
         if (passwordVisibility.value) {
@@ -865,8 +840,6 @@ fun PasswordInputFieldTwo(
             PasswordVisualTransformation(mask = '*')
         },
         onValueChange = {
-            textFieldValue.value = it
-
             onValueChange(it)
         },
         keyboardActions = keyboardActions ?: KeyboardActions(
@@ -880,15 +853,15 @@ fun PasswordInputFieldTwo(
         readOnly = readOnly,
         textStyle = TextStyle(
             fontSize = fontSize,
-            fontFamily = MaterialTheme.typography.body1.fontFamily,
+            fontFamily = MaterialTheme.typography.bodyLarge.fontFamily,
             fontWeight = FontWeight.Medium,
-            color = MaterialTheme.colors.onInputBackground
+            color = MaterialTheme.colorScheme.onInputBackground
         ),
         decorationBox = { innerTextField ->
             Row(
                 Modifier
                     .clip(MaterialTheme.shapes.medium)
-                    .background(MaterialTheme.colors.inputBackground)
+                    .background(MaterialTheme.colorScheme.inputBackground)
                     .height(ELEMENT_HEIGHT)
             ) {
                 icon?.let {
@@ -898,7 +871,7 @@ fun PasswordInputFieldTwo(
                             .padding(15.dp),
                         painter = painterResource(id = icon),
                         contentDescription = null,
-                        colorFilter = ColorFilter.tint(MaterialTheme.colors.onInputBackground)
+                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onInputBackground)
                     )
                 }
 
@@ -912,10 +885,10 @@ fun PasswordInputFieldTwo(
                             end = 15.dp
                         )
                 ) {
-                    val hasText = textFieldValue.value.text.isNotEmpty()
+                    val hasText = value.text.isNotEmpty()
 
                     val animPlaceholder: Dp by animateDpAsState(
-                        if (isFocused.value || hasText) 6.dp else 14.dp
+                        if (isFocused.value || hasText) 2.dp else 12.dp
                     )
                     val animPlaceHolderFontSize: Int by animateIntAsState(
                         if (isFocused.value || hasText) 12 else 14
@@ -927,9 +900,9 @@ fun PasswordInputFieldTwo(
                                 translationY = animPlaceholder.toPx()
                             },
                         text = placeholder,
-                        color = MaterialTheme.colors.onInputBackground.copy(alpha = .35f),
+                        color = MaterialTheme.colorScheme.onInputBackground.copy(alpha = .35f),
                         fontSize = animPlaceHolderFontSize.sp,
-                        fontFamily = MaterialTheme.typography.body1.fontFamily,
+                        fontFamily = MaterialTheme.typography.bodyLarge.fontFamily,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -958,7 +931,6 @@ fun PasswordInputFieldTwo(
                         exit = fadeOut()
                     ) {
                         Icon(
-                            modifier = Modifier.padding(15.dp),
                             painter = painterResource(id = R.drawable.ic_hide),
                             contentDescription = "Show Password"
                         )
@@ -970,7 +942,6 @@ fun PasswordInputFieldTwo(
                         exit = fadeOut()
                     ) {
                         Icon(
-                            modifier = Modifier.padding(15.dp),
                             painter = painterResource(id = R.drawable.ic_show),
                             contentDescription = "Hide Password"
                         )
@@ -985,6 +956,7 @@ fun PasswordInputFieldTwo(
 // Official Samples
 // ================================================================
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun SimpleTextFieldSample() {
     var text by rememberSaveable { mutableStateOf("") }
@@ -998,6 +970,7 @@ fun SimpleTextFieldSample() {
     )
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun SimpleOutlinedTextFieldSample() {
     var text by rememberSaveable { mutableStateOf("") }
@@ -1010,6 +983,7 @@ fun SimpleOutlinedTextFieldSample() {
     )
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun TextFieldWithIcons() {
     var text by rememberSaveable { mutableStateOf("") }
@@ -1024,6 +998,7 @@ fun TextFieldWithIcons() {
     )
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun TextFieldWithPlaceholder() {
     var text by rememberSaveable { mutableStateOf("") }
@@ -1037,6 +1012,7 @@ fun TextFieldWithPlaceholder() {
     )
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun TextFieldWithErrorState() {
     val context = LocalContext.current
@@ -1070,6 +1046,7 @@ fun TextFieldWithErrorState() {
     )
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun TextFieldWithHelperMessage() {
     var text by rememberSaveable { mutableStateOf("") }
@@ -1083,13 +1060,14 @@ fun TextFieldWithHelperMessage() {
         )
         Text(
             text = "Helper message",
-            color = MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.medium),
-            style = MaterialTheme.typography.caption,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = MaterialTheme.typography.bodySmall,
             modifier = Modifier.padding(start = 16.dp)
         )
     }
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun PasswordTextField() {
     var password by rememberSaveable { mutableStateOf("") }
@@ -1114,6 +1092,7 @@ fun PasswordTextField() {
     )
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun TextFieldSample() {
     var text by rememberSaveable(stateSaver = TextFieldValue.Saver) {
@@ -1128,6 +1107,7 @@ fun TextFieldSample() {
     )
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun OutlinedTextFieldSample() {
     var text by rememberSaveable(stateSaver = TextFieldValue.Saver) {
@@ -1142,6 +1122,7 @@ fun OutlinedTextFieldSample() {
     )
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun TextFieldWithHideKeyboardOnImeAction() {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -1182,6 +1163,7 @@ object EmptyTextToolbar : TextToolbar {
     }
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun TextFieldWithCutCopyPasteDisabled() {
     var textValue by remember { mutableStateOf(TextFieldValue()) }

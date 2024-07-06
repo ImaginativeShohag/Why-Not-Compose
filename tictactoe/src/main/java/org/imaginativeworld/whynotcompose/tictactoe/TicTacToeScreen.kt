@@ -52,14 +52,14 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.SnackbarDuration
-import androidx.compose.material.SnackbarHostState
-import androidx.compose.material.SnackbarResult
-import androidx.compose.material.Text
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -124,7 +124,7 @@ fun TicTacToeScreen(
 
 @Preview
 @Composable
-fun TicTacToeScreenSkeletonPreview() {
+private fun TicTacToeScreenSkeletonPreview() {
     AppTheme {
         TicTacToeScreenSkeleton(
             currentPlayingMoves = "1O3O5X7X9O2X4X6X8O"
@@ -134,7 +134,7 @@ fun TicTacToeScreenSkeletonPreview() {
 
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
-fun TicTacToeScreenSkeletonPreviewDark() {
+private fun TicTacToeScreenSkeletonPreviewDark() {
     AppTheme {
         TicTacToeScreenSkeleton(
             currentPlayingMoves = "1O3O5X7X9O2X4X6X8O"
@@ -157,7 +157,6 @@ fun TicTacToeScreenSkeleton(
     onRestartClicked: () -> Unit = {}
 ) {
     val snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
-    val scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState)
 
     LaunchedEffect(message) {
         message?.getValueOnce()?.let { value ->
@@ -178,7 +177,7 @@ fun TicTacToeScreenSkeleton(
             .navigationBarsPadding()
             .imePadding()
             .statusBarsPadding(),
-        scaffoldState = scaffoldState
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) {
         Column(
             Modifier
@@ -194,7 +193,7 @@ fun TicTacToeScreenSkeleton(
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
 
-            Divider()
+            HorizontalDivider()
 
             // ----------------------------------------------------------------
 
@@ -318,12 +317,12 @@ fun TicTacToeScreenSkeleton(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(MaterialTheme.colors.onBackground.copy(.5f)),
+                    .background(MaterialTheme.colorScheme.onBackground.copy(.5f)),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = "Working...",
-                    color = MaterialTheme.colors.background
+                    color = MaterialTheme.colorScheme.background
                 )
             }
         }
@@ -346,17 +345,17 @@ fun RowScope.Block(
 
     val backgroundColor by animateColorAsState(
         targetValue = if (isMarked) {
-            MaterialTheme.colors.error
+            MaterialTheme.colorScheme.error
         } else {
-            MaterialTheme.colors.background
+            MaterialTheme.colorScheme.background
         }
     )
 
     val iconColor by animateColorAsState(
         targetValue = if (isMarked) {
-            MaterialTheme.colors.onError
+            MaterialTheme.colorScheme.onError
         } else {
-            MaterialTheme.colors.onBackground
+            MaterialTheme.colorScheme.onBackground
         }
     )
 
@@ -368,7 +367,7 @@ fun RowScope.Block(
             .aspectRatio(1f)
             .border(
                 width = 1.dp,
-                color = MaterialTheme.colors.onBackground.copy(.15f),
+                color = MaterialTheme.colorScheme.onBackground.copy(.15f),
                 shape = CircleShape
             )
             .background(

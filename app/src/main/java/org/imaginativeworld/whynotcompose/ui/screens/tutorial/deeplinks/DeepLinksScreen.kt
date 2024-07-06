@@ -42,11 +42,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.Divider
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -60,6 +60,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.imaginativeworld.whynotcompose.base.extensions.openUrl
@@ -125,11 +126,11 @@ fun DeepLinksScreen(
     }
 
     DeepLinksScreenSkeleton(
-        goBack = goBack,
         verifiedDomains = verifiedDomains,
         selectedDomains = selectedDomains,
         unapprovedDomains = unapprovedDomains,
-        onUpdateOpenByDefaultClicked = {
+        goBack = goBack,
+        onUpdateOpenByDefaultClick = {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 val intent = Intent(
                     Settings.ACTION_APP_OPEN_BY_DEFAULT_SETTINGS,
@@ -141,9 +142,9 @@ fun DeepLinksScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun DeepLinksScreenSkeletonPreview() {
+private fun DeepLinksScreenSkeletonPreviewDark() {
     AppTheme {
         DeepLinksScreenSkeleton(
             verifiedDomains = "Lorem",
@@ -153,25 +154,14 @@ fun DeepLinksScreenSkeletonPreview() {
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun DeepLinksScreenSkeletonPreviewDark() {
-    AppTheme {
-        DeepLinksScreenSkeleton(
-            verifiedDomains = "Lorem",
-            selectedDomains = "Ipsum",
-            unapprovedDomains = "Dolor"
-        )
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun DeepLinksScreenSkeleton(
-    goBack: () -> Unit = {},
     verifiedDomains: String,
     selectedDomains: String,
     unapprovedDomains: String,
-    onUpdateOpenByDefaultClicked: () -> Unit = {}
+    goBack: () -> Unit = {},
+    onUpdateOpenByDefaultClick: () -> Unit = {}
 ) {
     val context = LocalContext.current
 
@@ -192,7 +182,7 @@ fun DeepLinksScreenSkeleton(
                 goBack = goBack
             )
 
-            Divider()
+            HorizontalDivider()
 
             Column(
                 Modifier
@@ -252,7 +242,7 @@ fun DeepLinksScreenSkeleton(
                     }
                 }
 
-                Divider(Modifier.padding(vertical = 16.dp))
+                HorizontalDivider(Modifier.padding(top = 16.dp))
 
                 Column(
                     Modifier
@@ -308,7 +298,7 @@ fun DeepLinksScreenSkeleton(
                         modifier = Modifier.padding(top = 16.dp),
                         enabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,
                         onClick = {
-                            onUpdateOpenByDefaultClicked()
+                            onUpdateOpenByDefaultClick()
                         }
                     ) {
                         Text(text = "Update 'Open by default' Setting")

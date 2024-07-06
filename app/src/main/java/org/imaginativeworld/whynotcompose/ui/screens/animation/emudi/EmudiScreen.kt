@@ -40,8 +40,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -112,7 +112,7 @@ fun EmudiScreen() {
 
 @Preview
 @Composable
-fun EmudiScreenSkeletonPreview() {
+private fun EmudiScreenSkeletonPreview() {
     AppTheme {
         EmudiScreenSkeleton(
             MutableStateFlow(true),
@@ -126,7 +126,7 @@ fun EmudiScreenSkeletonPreview() {
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun EmudiScreenSkeletonPreviewDark() {
+private fun EmudiScreenSkeletonPreviewDark() {
     AppTheme {
         EmudiScreenSkeleton(
             MutableStateFlow(true),
@@ -138,19 +138,20 @@ fun EmudiScreenSkeletonPreviewDark() {
     }
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun EmudiScreenSkeleton(
-    _animState: StateFlow<Boolean>,
-    _animStateDot1: StateFlow<Boolean>,
-    _animStateDot2: StateFlow<Boolean>,
-    _animStateDot3: StateFlow<Boolean>,
-    _animStateDot4: StateFlow<Boolean>
+    animStateFlow: StateFlow<Boolean>,
+    animStateFlowDot1: StateFlow<Boolean>,
+    animStateFlowDot2: StateFlow<Boolean>,
+    animStateFlowDot3: StateFlow<Boolean>,
+    animStateFlowDot4: StateFlow<Boolean>
 ) {
-    val animState = _animState.collectAsState()
-    val animStateDot1 = _animStateDot1.collectAsState()
-    val animStateDot2 = _animStateDot2.collectAsState()
-    val animStateDot3 = _animStateDot3.collectAsState()
-    val animStateDot4 = _animStateDot4.collectAsState()
+    val animState = animStateFlow.collectAsState()
+    val animStateDot1 = animStateFlowDot1.collectAsState()
+    val animStateDot2 = animStateFlowDot2.collectAsState()
+    val animStateDot3 = animStateFlowDot3.collectAsState()
+    val animStateDot4 = animStateFlowDot4.collectAsState()
 
     val updateTransition = updateTransition(
         targetState = animState.value,
@@ -345,7 +346,7 @@ fun EmudiScreenSkeleton(
                 contentDescription = "Background",
                 contentScale = ContentScale.Crop,
                 colorFilter = ColorFilter.tint(
-                    MaterialTheme.colors.onBackground.copy(alpha = .045f)
+                    MaterialTheme.colorScheme.onBackground.copy(alpha = .045f)
                 )
             )
 

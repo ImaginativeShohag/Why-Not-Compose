@@ -173,7 +173,7 @@ object Libs {
             const val materialIconsExtended =
                 "androidx.compose.material:material-icons-extended"
 
-            const val material3 = "androidx.compose.material3:material3"
+            const val material3 = "androidx.compose.material3:material3:1.3.0-beta04" // Remove when stable
             const val material3WindowSizeClass =
                 "androidx.compose.material3:material3-window-size-class"
 

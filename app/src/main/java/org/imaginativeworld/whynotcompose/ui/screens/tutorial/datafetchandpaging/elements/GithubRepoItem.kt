@@ -29,6 +29,7 @@ package org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpagin
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -39,9 +40,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -68,15 +70,18 @@ fun GithubRepoItem(
     onClick: () -> Unit
 ) {
     Card(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable {
+                onClick()
+            },
         shape = RoundedCornerShape(8.dp),
-        elevation = 2.dp,
-        onClick = {
-            onClick()
-        }
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 2.dp
+        )
     ) {
         Column(
-            modifier
+            Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
@@ -97,7 +102,7 @@ fun GithubRepoItem(
                     modifier = Modifier
                         .size(16.dp)
                         .clip(CircleShape)
-                        .background(MaterialTheme.colors.onSurface.copy(.15f)),
+                        .background(MaterialTheme.colorScheme.onSurface.copy(.15f)),
                     painter = rememberImagePainter(item.owner.avatarUrl),
                     contentDescription = "User image"
                 )
@@ -247,12 +252,14 @@ fun LoadingGithubRepoItemPreviewDark() {
 fun LoadingGithubRepoItem(
     modifier: Modifier = Modifier
 ) {
+    val onBackgroundColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.15f)
+
     Column(
         modifier
             .padding()
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .background(MaterialTheme.colors.surface)
+            .background(MaterialTheme.colorScheme.surfaceVariant)
             .padding(8.dp)
     ) {
         Box(
@@ -262,6 +269,7 @@ fun LoadingGithubRepoItem(
                 .height(16.dp)
                 .placeholder(
                     visible = true,
+                    color = onBackgroundColor,
                     highlight = PlaceholderHighlight.shimmer()
                 )
         )
@@ -278,6 +286,7 @@ fun LoadingGithubRepoItem(
                     .clip(CircleShape)
                     .placeholder(
                         visible = true,
+                        color = onBackgroundColor,
                         highlight = PlaceholderHighlight.shimmer()
                     )
             )
@@ -290,6 +299,7 @@ fun LoadingGithubRepoItem(
                     .height(10.dp)
                     .placeholder(
                         visible = true,
+                        color = onBackgroundColor,
                         highlight = PlaceholderHighlight.shimmer()
                     )
             )
@@ -303,6 +313,7 @@ fun LoadingGithubRepoItem(
                 .height(10.dp)
                 .placeholder(
                     visible = true,
+                    color = onBackgroundColor,
                     highlight = PlaceholderHighlight.shimmer()
                 )
         )
@@ -315,6 +326,7 @@ fun LoadingGithubRepoItem(
                 .height(10.dp)
                 .placeholder(
                     visible = true,
+                    color = onBackgroundColor,
                     highlight = PlaceholderHighlight.shimmer()
                 )
         )
@@ -327,6 +339,7 @@ fun LoadingGithubRepoItem(
                 .height(10.dp)
                 .placeholder(
                     visible = true,
+                    color = onBackgroundColor,
                     highlight = PlaceholderHighlight.shimmer()
                 )
         )
@@ -349,6 +362,7 @@ fun LoadingGithubRepoItem(
                             .height(16.dp)
                             .placeholder(
                                 visible = true,
+                                color = onBackgroundColor,
                                 highlight = PlaceholderHighlight.shimmer()
                             )
                     )

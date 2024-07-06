@@ -44,9 +44,9 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material.Divider
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
@@ -59,6 +59,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.imaginativeworld.whynotcompose.base.models.UIThemeMode
@@ -157,20 +158,20 @@ class DeepLinksActivity : ComponentActivity() {
                 darkTheme = isDarkMode
             ) {
                 DeepLinksReceiverScreen(
+                    action = appLinkAction.toString(),
+                    data = appLinkData.toString(),
                     goBack = {
                         finish()
-                    },
-                    action = appLinkAction.toString(),
-                    data = appLinkData.toString()
+                    }
                 )
             }
         }
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun DeepLinksReceiverScreenPreview() {
+private fun DeepLinksReceiverScreenPreviewDark() {
     AppTheme {
         DeepLinksReceiverScreen(
             action = "Lorem",
@@ -179,22 +180,12 @@ fun DeepLinksReceiverScreenPreview() {
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun DeepLinksReceiverScreenPreviewDark() {
-    AppTheme {
-        DeepLinksReceiverScreen(
-            action = "Lorem",
-            data = "Ipsum"
-        )
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun DeepLinksReceiverScreen(
-    goBack: () -> Unit = {},
     action: String,
-    data: String
+    data: String,
+    goBack: () -> Unit = {}
 ) {
     Scaffold { innerPadding ->
         Column(
@@ -211,7 +202,7 @@ fun DeepLinksReceiverScreen(
                 goBack = goBack
             )
 
-            Divider()
+            HorizontalDivider()
 
             Text(
                 modifier = Modifier.padding(top = 16.dp),

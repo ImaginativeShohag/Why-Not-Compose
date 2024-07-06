@@ -38,10 +38,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.Divider
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -82,10 +82,10 @@ fun PermissionScreen(
 
     PermissionScreenSkeleton(
         goBack = goBack,
-        onSinglePermissionClicked = {
+        onSinglePermissionClick = {
             requestSinglePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         },
-        onMultiplePermissionsClicked = {
+        onMultiplePermissionsClick = {
             requestMultiplePermission.launch(
                 arrayOf(
                     Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -98,7 +98,7 @@ fun PermissionScreen(
 
 @Preview
 @Composable
-fun PermissionScreenSkeletonPreview() {
+private fun PermissionScreenSkeletonPreview() {
     AppTheme {
         PermissionScreenSkeleton()
     }
@@ -106,17 +106,18 @@ fun PermissionScreenSkeletonPreview() {
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun PermissionScreenSkeletonPreviewDark() {
+private fun PermissionScreenSkeletonPreviewDark() {
     AppTheme {
         PermissionScreenSkeleton()
     }
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun PermissionScreenSkeleton(
     goBack: () -> Unit = {},
-    onSinglePermissionClicked: () -> Unit = {},
-    onMultiplePermissionsClicked: () -> Unit = {}
+    onSinglePermissionClick: () -> Unit = {},
+    onMultiplePermissionsClick: () -> Unit = {}
 ) {
     Scaffold(
         Modifier
@@ -138,7 +139,7 @@ fun PermissionScreenSkeleton(
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
 
-            Divider()
+            HorizontalDivider()
 
             // ----------------------------------------------------------------
 
@@ -147,7 +148,7 @@ fun PermissionScreenSkeleton(
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 32.dp),
                 onClick = {
-                    onSinglePermissionClicked()
+                    onSinglePermissionClick()
                 }
             ) {
                 Text("Request Single Permission")
@@ -160,7 +161,7 @@ fun PermissionScreenSkeleton(
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 32.dp),
                 onClick = {
-                    onMultiplePermissionsClicked()
+                    onMultiplePermissionsClick()
                 }
             ) {
                 Text("Request Multiple Permissions")

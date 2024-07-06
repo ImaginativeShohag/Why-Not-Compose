@@ -35,9 +35,9 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Divider
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -59,7 +59,7 @@ fun LazyColumnSampleTwoScreen(
 
 @Preview
 @Composable
-fun LazyColumnSampleTwoScreenSkeletonPreview() {
+private fun LazyColumnSampleTwoScreenSkeletonPreview() {
     AppTheme {
         LazyColumnSampleTwoScreenSkeleton()
     }
@@ -67,7 +67,7 @@ fun LazyColumnSampleTwoScreenSkeletonPreview() {
 
 @Preview
 @Composable
-fun LazyColumnSampleTwoScreenSkeletonPreviewDark() {
+private fun LazyColumnSampleTwoScreenSkeletonPreviewDark() {
     AppTheme(
         darkTheme = true
     ) {
@@ -98,7 +98,7 @@ fun LazyColumnSampleTwoScreenSkeleton(
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
 
-            Divider()
+            HorizontalDivider()
 
             val sections = listOf("A", "B", "C", "D", "E", "F", "G")
 

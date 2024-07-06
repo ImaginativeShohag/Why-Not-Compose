@@ -38,9 +38,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -76,7 +76,7 @@ fun TheStoryScreen() {
 
 @Preview
 @Composable
-fun TheStoryScreenSkeletonPreview() {
+private fun TheStoryScreenSkeletonPreview() {
     AppTheme {
         TheStoryScreenSkeleton()
     }
@@ -84,12 +84,13 @@ fun TheStoryScreenSkeletonPreview() {
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun TheStoryScreenSkeletonPreviewDark() {
+private fun TheStoryScreenSkeletonPreviewDark() {
     AppTheme {
         TheStoryScreenSkeleton()
     }
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun TheStoryScreenSkeleton() {
     var animState by remember { mutableIntStateOf(0) }
@@ -235,13 +236,13 @@ fun TheStoryScreenSkeleton() {
 
                     withStyle(
                         SpanStyle(
-                            color = MaterialTheme.colors.onBackground
+                            color = MaterialTheme.colorScheme.onBackground
                         )
                     ) {
                         append("Compose!")
                     }
                 },
-                color = MaterialTheme.colors.composeThemeColor,
+                color = MaterialTheme.colorScheme.composeThemeColor,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Medium
             )

@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.composition.appbar
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -35,20 +34,22 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
@@ -64,22 +65,15 @@ fun AppBarScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun AppBarScreenSkeletonPreview() {
+private fun AppBarScreenSkeletonPreviewDark() {
     AppTheme {
         AppBarScreenSkeleton()
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun AppBarScreenSkeletonPreviewDark() {
-    AppTheme {
-        AppBarScreenSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun AppBarScreenSkeleton(
     goBack: () -> Unit = {}
@@ -88,20 +82,20 @@ fun AppBarScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            Header(
+                "App Bar",
+                goBack = goBack
+            )
+        },
+        containerColor = MaterialTheme.colorScheme.surface
     ) { innerPadding ->
         Column(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            Header(
-                "App Bar",
-                goBack = goBack
-            )
-
-            // ----------------------------------------------------------------
-
             TopAppBar(
                 title = { Text("Simple TopAppBar") },
                 navigationIcon = {
@@ -117,38 +111,50 @@ fun AppBarScreenSkeleton(
                     IconButton(onClick = { /* doSomething() */ }) {
                         Icon(Icons.Filled.Favorite, contentDescription = "Localized description")
                     }
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant
+                )
             )
 
             // ----------------------------------------------------------------
 
             AppComponent.MediumSpacer()
 
-            TopAppBar {
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = "Flexible TopAppBar",
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 24.sp
+            TopAppBar(
+                title = {
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = "Flexible TopAppBar",
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 24.sp
+                    )
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant
                 )
-            }
+            )
 
             // ----------------------------------------------------------------
 
             AppComponent.MediumSpacer()
 
             TopAppBar(
-                modifier = Modifier.clip(RoundedCornerShape(0.dp, 0.dp, 24.dp, 24.dp))
-            ) {
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = "Custom TopAppBar",
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 24.sp
+                modifier = Modifier.clip(RoundedCornerShape(0.dp, 0.dp, 24.dp, 24.dp)),
+                title = {
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = "Custom TopAppBar",
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 24.sp
+                    )
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant
                 )
-            }
+            )
         }
     }
 }

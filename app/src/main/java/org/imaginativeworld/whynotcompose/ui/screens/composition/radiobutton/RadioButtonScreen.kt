@@ -37,18 +37,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.RadioButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
@@ -64,14 +63,15 @@ fun RadioButtonScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun RadioButtonScreenSkeletonPreview() {
+private fun RadioButtonScreenSkeletonPreview() {
     AppTheme {
         RadioButtonScreenSkeleton()
     }
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun RadioButtonScreenSkeleton(
     goBack: () -> Unit = {}
@@ -80,23 +80,19 @@ fun RadioButtonScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "Radio Button",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            AppComponent.Header(
-                "Radio Button",
-                goBack = goBack
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            Divider()
-
             Column(
                 Modifier.padding(start = 16.dp, end = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -115,6 +111,7 @@ fun RadioButtonScreenSkeleton(
     }
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun RadioGroupSample() {
     // The first item of Pair is the caption and the second item is the value
@@ -129,7 +126,7 @@ fun RadioGroupSample() {
                 text = text.first,
                 value = text.second,
                 selectedOption = selectedOption,
-                onOptionSelected = onOptionSelected
+                onOptionSelect = onOptionSelected
             )
         }
     }
@@ -137,11 +134,11 @@ fun RadioGroupSample() {
 
 @Composable
 fun <T> GeneralRadioButton(
-    modifier: Modifier = Modifier,
     text: String,
     value: T,
     selectedOption: T,
-    onOptionSelected: (T) -> Unit
+    onOptionSelect: (T) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Row(
         modifier
@@ -149,7 +146,7 @@ fun <T> GeneralRadioButton(
             .height(ELEMENT_HEIGHT)
             .selectable(
                 selected = (value == selectedOption),
-                onClick = { onOptionSelected(value) },
+                onClick = { onOptionSelect(value) },
                 role = Role.RadioButton
             )
             .padding(horizontal = 16.dp),
@@ -162,7 +159,7 @@ fun <T> GeneralRadioButton(
         )
         Text(
             text = text,
-            style = MaterialTheme.typography.body1.merge(),
+            style = MaterialTheme.typography.bodyLarge.merge(),
             modifier = Modifier.padding(start = 16.dp)
         )
     }

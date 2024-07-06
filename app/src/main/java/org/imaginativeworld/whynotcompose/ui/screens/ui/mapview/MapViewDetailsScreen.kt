@@ -37,13 +37,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -69,7 +69,7 @@ fun MapViewDetailsScreen(
 
 @Preview
 @Composable
-fun MapViewDetailsScreenSkeletonPreview() {
+private fun MapViewDetailsScreenSkeletonPreview() {
     AppTheme {
         MapViewDetailsScreenSkeleton(
             item = MapPlaceRepo.getDemoPlace()
@@ -79,7 +79,7 @@ fun MapViewDetailsScreenSkeletonPreview() {
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun MapViewDetailsScreenSkeletonPreviewDark() {
+private fun MapViewDetailsScreenSkeletonPreviewDark() {
     AppTheme {
         MapViewDetailsScreenSkeleton(
             item = MapPlaceRepo.getDemoPlace()
@@ -87,6 +87,7 @@ fun MapViewDetailsScreenSkeletonPreviewDark() {
     }
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun MapViewDetailsScreenSkeleton(
     item: MapPlace,
@@ -109,7 +110,7 @@ fun MapViewDetailsScreenSkeleton(
                     IconButton(onClick = {
                         goBack()
                     }) {
-                        Icon(Icons.Rounded.ArrowBack, contentDescription = null)
+                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = null)
                     }
                 }
             )

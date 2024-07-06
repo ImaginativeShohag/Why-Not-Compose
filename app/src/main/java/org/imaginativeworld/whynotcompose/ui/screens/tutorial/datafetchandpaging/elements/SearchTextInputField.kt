@@ -43,8 +43,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -76,8 +76,8 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.errorInputBackgro
 fun SearchTextInputField(
     modifier: Modifier = Modifier,
     textFieldValue: MutableState<TextFieldValue>,
-    background: Color = MaterialTheme.colors.surface,
-    errorBackground: Color = MaterialTheme.colors.errorInputBackground,
+    background: Color = MaterialTheme.colorScheme.surface,
+    errorBackground: Color = MaterialTheme.colorScheme.errorInputBackground,
     shape: Shape = RoundedCornerShape(8.dp),
     placeholder: String = "",
     keyboardType: KeyboardType = KeyboardType.Text,
@@ -123,9 +123,9 @@ fun SearchTextInputField(
     BasicTextField(
         value = textFieldValue.value,
         singleLine = rSingleLine,
-        textStyle = MaterialTheme.typography.body1.copy(
+        textStyle = MaterialTheme.typography.bodyLarge.copy(
             fontSize = rFontSize,
-            color = MaterialTheme.colors.onSurface
+            color = MaterialTheme.colorScheme.onSurface
         ),
         onValueChange = {
             textFieldValue.value = it
@@ -166,7 +166,7 @@ fun SearchTextInputField(
                         if (textFieldValue.value.text.isEmpty()) {
                             Text(
                                 text = rPlaceholder,
-                                color = MaterialTheme.colors.onSurface.copy(.35f),
+                                color = MaterialTheme.colorScheme.onSurface.copy(.35f),
                                 fontSize = rFontSize,
                                 maxLines = if (rSingleLine) 1 else Int.MAX_VALUE,
                                 overflow = TextOverflow.Ellipsis
@@ -192,7 +192,7 @@ fun SearchTextInputField(
                         if (textFieldValue.value.text.isEmpty()) {
                             Text(
                                 text = rPlaceholder,
-                                color = MaterialTheme.colors.onBackground.copy(.35f),
+                                color = MaterialTheme.colorScheme.onBackground.copy(.35f),
                                 fontSize = rFontSize,
                                 maxLines = if (rSingleLine) 1 else Int.MAX_VALUE,
                                 overflow = TextOverflow.Ellipsis

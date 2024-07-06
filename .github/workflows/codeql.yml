@@ -60,6 +60,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          lfs: 'true'
 
       - name: Initialize local properties
         env:

@@ -35,4 +35,4 @@ import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 @PreviewFontScale
 @PreviewLightDark
 @PreviewDynamicColors
-annotation class CommonPreviews
+annotation class PreviewAll

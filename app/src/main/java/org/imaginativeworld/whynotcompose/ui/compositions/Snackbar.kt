@@ -45,10 +45,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CustomSnackbarHost(state: SnackbarHostState) {
-    SnackbarHost(state) { data ->
+fun CustomSnackbarHost(
+    state: SnackbarHostState,
+    modifier: Modifier = Modifier
+) {
+    SnackbarHost(state, modifier) { data ->
         CustomSnackbar(
-            modifier = Modifier,
             snackbarData = data,
             backgroundColor = MaterialTheme.colorScheme.onBackground
         )

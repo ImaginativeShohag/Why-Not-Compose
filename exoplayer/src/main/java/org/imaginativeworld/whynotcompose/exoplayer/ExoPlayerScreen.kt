@@ -110,6 +110,7 @@ private fun ExoPlayerScreenSkeletonPreviewDark() {
     }
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun ExoPlayerScreenSkeleton(
     goBack: () -> Unit = {}
@@ -149,8 +150,8 @@ fun ExoPlayerScreenSkeleton(
 
 @Composable
 private fun VideoList(
-    modifier: Modifier = Modifier,
-    videos: List<Video>
+    videos: List<Video>,
+    modifier: Modifier = Modifier
 ) {
     val lazyListState = rememberLazyListState()
     // play the video on the first visible item in the list
@@ -177,13 +178,17 @@ private fun VideoList(
 }
 
 @Composable
-fun VideoItem(video: Video, focusedVideo: Boolean) {
+fun VideoItem(
+    video: Video,
+    focusedVideo: Boolean,
+    modifier: Modifier = Modifier
+) {
     val animateBackground by animateColorAsState(
         targetValue = if (focusedVideo) TailwindCSSColor.Red500 else MaterialTheme.colorScheme.surface
     )
 
     Card(
-        modifier = Modifier.padding(horizontal = 16.dp, 6.dp),
+        modifier = modifier.padding(horizontal = 16.dp, 6.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         colors = CardDefaults.cardColors(
             containerColor = animateBackground
@@ -250,7 +255,11 @@ fun VideoItem(video: Video, focusedVideo: Boolean) {
 }
 
 @Composable
-private fun Player(modifier: Modifier = Modifier, video: Video, focusedVideo: Boolean) {
+private fun Player(
+    video: Video,
+    focusedVideo: Boolean,
+    modifier: Modifier = Modifier
+) {
     val context = LocalContext.current
     val exoPlayer = remember { SimpleExoPlayerHolder.get(context) }
     var playerView: StyledPlayerView? = null

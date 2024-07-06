@@ -60,9 +60,9 @@ import timber.log.Timber
 
 @Composable
 fun EmptyView(
-    modifier: Modifier = Modifier,
     loadState: CombinedLoadStates,
     itemCount: Int,
+    modifier: Modifier = Modifier,
     title: String = "Nothing here!",
     message: String? = "No item found."
 ) {
@@ -95,7 +95,7 @@ fun EmptyView(
 
 @Preview(showBackground = true)
 @Composable
-fun EmptyViewPreview() {
+private fun EmptyViewPreview() {
     CMSAppTheme {
         Surface {
             EmptyView(
@@ -110,7 +110,7 @@ fun EmptyViewPreview() {
 
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun EmptyViewPreviewDark() {
+private fun EmptyViewPreviewDark() {
     CMSAppTheme {
         Surface {
             EmptyView(
@@ -125,10 +125,10 @@ fun EmptyViewPreviewDark() {
 
 @Composable
 fun EmptyView(
-    modifier: Modifier = Modifier,
     show: Boolean,
     title: String,
-    message: String?
+    message: String?,
+    modifier: Modifier = Modifier
 ) {
     AnimatedVisibility(
         visible = show,

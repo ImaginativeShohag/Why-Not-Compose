@@ -5,7 +5,7 @@
     <ktlintRulesetVersion>V1_3_0</ktlintRulesetVersion>
     <externalJarPaths>
       <list>
-        <option value="$PROJECT_DIR$/spotless/ktlint/ktlint-compose-0.4.4-all.jar" />
+        <option value="$PROJECT_DIR$/spotless/ktlint/ktlint-compose-0.4.5-all.jar" />
       </list>
     </externalJarPaths>
   </component>

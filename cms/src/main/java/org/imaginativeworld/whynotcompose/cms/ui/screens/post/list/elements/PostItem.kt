@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.screens.post.list.elements
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -42,7 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import org.imaginativeworld.whynotcompose.cms.repositories.MockData
@@ -93,35 +92,9 @@ fun PostItem(
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
 private fun PostItemPreview() {
-    CMSAppTheme {
-        Surface {
-            Column(Modifier.padding(16.dp)) {
-                PostItem(
-                    title = MockData.dummyPost.title,
-                    body = MockData.dummyPost.body,
-                    isPreview = true,
-                    featuredImageUrl = MockData.dummyPost.getFeaturedImageUrl()
-                )
-
-                Spacer(Modifier.height(16.dp))
-
-                PostItem(
-                    title = MockData.dummyPost.title,
-                    body = MockData.dummyPost.body,
-                    isPreview = false,
-                    featuredImageUrl = MockData.dummyPost.getFeaturedImageUrl()
-                )
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-private fun PostItemPreviewDark() {
     CMSAppTheme {
         Surface {
             Column(Modifier.padding(16.dp)) {

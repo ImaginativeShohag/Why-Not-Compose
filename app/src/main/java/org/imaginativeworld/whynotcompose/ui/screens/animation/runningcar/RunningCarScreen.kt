@@ -176,8 +176,8 @@ fun RunningCarScreenSkeleton(
                         }
                     ) { state ->
                         when (state) {
-                            //true -> -400f
-                            //else -> 0f
+                            // true -> -400f
+                            // else -> 0f
                             CarState.INITIAL -> 0f
                             CarState.RUNNING -> -400f
                             CarState.GONE -> -800f
@@ -194,8 +194,8 @@ fun RunningCarScreenSkeleton(
                         }
                     ) { state ->
                         when (state) {
-                            //true -> -700f
-                            //else -> 0f
+                            // true -> -700f
+                            // else -> 0f
 
                             CarState.INITIAL -> 0f
                             CarState.RUNNING -> -700f
@@ -213,8 +213,8 @@ fun RunningCarScreenSkeleton(
                         }
                     ) { state ->
                         when (state) {
-                            //true -> 0f
-                            //else -> -1000f
+                            // true -> 0f
+                            // else -> -1000f
 
                             CarState.INITIAL -> -1000f
                             CarState.RUNNING -> 0f

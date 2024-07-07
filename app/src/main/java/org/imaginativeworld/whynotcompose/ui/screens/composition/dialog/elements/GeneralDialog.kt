@@ -67,14 +67,14 @@ private fun GeneralDialogPreview() {
     }
 }
 
-@Suppress("ktlint:compose:param-order-check")
 @Composable
 fun GeneralDialog(
     onDismiss: () -> Unit,
     title: String,
-    message: String? = null,
     positiveBtnText: String,
-    onPositiveBtnClick: () -> Unit = {},
+    onPositiveBtnClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    message: String? = null,
     negativeBtnText: String? = null,
     onNegativeBtnClick: (() -> Unit)? = null,
     properties: DialogProperties = DialogProperties()
@@ -86,6 +86,7 @@ fun GeneralDialog(
         properties = properties
     ) {
         GeneralDialogSkeleton(
+            modifier = modifier,
             title = title,
             message = message,
             positiveBtnText = positiveBtnText,
@@ -119,17 +120,17 @@ private fun GeneralDialogSkeletonPreview() {
     }
 }
 
-@Suppress("ktlint:compose:modifier-missing-check", "ktlint:compose:param-order-check")
 @Composable
 fun GeneralDialogSkeleton(
     title: String,
-    message: String? = null,
     positiveBtnText: String,
-    onPositiveBtnClick: () -> Unit = {},
+    onPositiveBtnClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    message: String? = null,
     negativeBtnText: String? = null,
     onNegativeBtnClick: (() -> Unit)? = null
 ) {
-    Box(Modifier.fillMaxSize()) {
+    Box(modifier.fillMaxSize()) {
         Card(
             modifier = Modifier
                 .align(Alignment.BottomCenter)

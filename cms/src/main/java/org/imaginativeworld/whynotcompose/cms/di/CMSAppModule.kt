@@ -50,44 +50,32 @@ import retrofit2.Retrofit
 class CMSAppModule {
     @Singleton
     @Provides
-    fun provideAppDatabase(@ApplicationContext context: Context): CMSDatabase {
-        return CMSDatabase(context)
-    }
+    fun provideAppDatabase(@ApplicationContext context: Context): CMSDatabase = CMSDatabase(context)
 
     @Singleton
     @Provides
     @Named("CMS")
-    fun provideRetrofit(moshi: Moshi): Retrofit {
-        return ApiClient.getRetrofit(
-            moshi,
-            Constants.CMS_SERVER_ENDPOINT + "/",
-            mapOf(
-                "Authorization" to "Bearer ${BuildConfig.CMS_API_KEY}"
-            )
+    fun provideRetrofit(moshi: Moshi): Retrofit = ApiClient.getRetrofit(
+        moshi,
+        Constants.CMS_SERVER_ENDPOINT + "/",
+        mapOf(
+            "Authorization" to "Bearer ${BuildConfig.CMS_API_KEY}"
         )
-    }
+    )
 
     @Singleton
     @Provides
-    fun provideUserApiInterface(@Named("CMS") retrofit: Retrofit): UserApiInterface {
-        return retrofit.create(UserApiInterface::class.java)
-    }
+    fun provideUserApiInterface(@Named("CMS") retrofit: Retrofit): UserApiInterface = retrofit.create(UserApiInterface::class.java)
 
     @Singleton
     @Provides
-    fun provideTodoApiInterface(@Named("CMS") retrofit: Retrofit): TodoApiInterface {
-        return retrofit.create(TodoApiInterface::class.java)
-    }
+    fun provideTodoApiInterface(@Named("CMS") retrofit: Retrofit): TodoApiInterface = retrofit.create(TodoApiInterface::class.java)
 
     @Singleton
     @Provides
-    fun providePostApiInterface(@Named("CMS") retrofit: Retrofit): PostApiInterface {
-        return retrofit.create(PostApiInterface::class.java)
-    }
+    fun providePostApiInterface(@Named("CMS") retrofit: Retrofit): PostApiInterface = retrofit.create(PostApiInterface::class.java)
 
     @Singleton
     @Provides
-    fun provideCommentApiInterface(@Named("CMS") retrofit: Retrofit): CommentApiInterface {
-        return retrofit.create(CommentApiInterface::class.java)
-    }
+    fun provideCommentApiInterface(@Named("CMS") retrofit: Retrofit): CommentApiInterface = retrofit.create(CommentApiInterface::class.java)
 }

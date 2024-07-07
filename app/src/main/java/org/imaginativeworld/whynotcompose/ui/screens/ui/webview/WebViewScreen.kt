@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.ui.webview
 
-import android.content.res.Configuration
 import android.view.ViewGroup
 import android.webkit.WebView
 import androidx.activity.compose.BackHandler

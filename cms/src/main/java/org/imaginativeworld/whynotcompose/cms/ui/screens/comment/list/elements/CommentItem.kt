@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.screens.comment.list.elements
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -45,7 +44,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import org.imaginativeworld.whynotcompose.cms.repositories.MockData
@@ -104,37 +103,9 @@ fun CommentItem(
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
 private fun CommentItemPreview() {
-    CMSAppTheme {
-        Surface {
-            Column(Modifier.padding(16.dp)) {
-                CommentItem(
-                    name = MockData.dummyComment.name,
-                    email = MockData.dummyComment.email,
-                    body = MockData.dummyComment.body,
-                    isPreview = true,
-                    userImageUrl = MockData.dummyComment.getAvatarImageUrl()
-                )
-
-                Spacer(Modifier.height(16.dp))
-
-                CommentItem(
-                    name = MockData.dummyComment.name,
-                    email = MockData.dummyComment.email,
-                    body = MockData.dummyComment.body,
-                    isPreview = false,
-                    userImageUrl = MockData.dummyComment.getAvatarImageUrl()
-                )
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-private fun CommentItemPreviewDark() {
     CMSAppTheme {
         Surface {
             Column(Modifier.padding(16.dp)) {

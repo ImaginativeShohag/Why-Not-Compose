@@ -152,10 +152,11 @@ fun SwitchScreenSkeleton(
 fun GeneralStartSwitch(
     text: String,
     state: Boolean,
+    modifier: Modifier = Modifier,
     onStateChange: (Boolean) -> Unit
 ) {
     Row(
-        Modifier
+        modifier
             .fillMaxWidth()
             .height(ELEMENT_HEIGHT)
             .selectable(
@@ -183,10 +184,11 @@ fun GeneralEndSwitch(
     text: String,
     state: Boolean,
     onStateChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier,
     fontWeight: FontWeight? = MaterialTheme.typography.bodyLarge.fontWeight
 ) {
     Row(
-        Modifier
+        modifier
             .fillMaxWidth()
             .height(ELEMENT_HEIGHT)
             .selectable(

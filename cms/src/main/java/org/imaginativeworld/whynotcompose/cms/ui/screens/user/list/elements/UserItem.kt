@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.screens.user.list.elements
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -43,7 +42,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import org.imaginativeworld.whynotcompose.cms.theme.CMSAppTheme
@@ -120,27 +119,12 @@ fun UserItem(
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
 private fun UserItemPreview() {
     CMSAppTheme {
         UserItem(
             name = "Mahmudul Hasan Shohag Mahmudul Hasan Shohag",
-            email = "imaginativeshohag@gmail.com",
-            gender = "male",
-            status = "Active",
-            statusColor = TailwindCSSColor.Red500,
-            userImageUrl = "https://picsum.photos/seed/u1/200/200"
-        )
-    }
-}
-
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-private fun UserItemPreviewDark() {
-    CMSAppTheme {
-        UserItem(
-            name = "Mahmudul Hasan Shohag",
             email = "imaginativeshohag@gmail.com",
             gender = "male",
             status = "Active",

@@ -100,7 +100,7 @@ Feel free to request features or suggestions for improvements.
 - [ ] New: File browser using MediaStore
 - [ ] Get sidebar from Emudi app (https://www.youtube.com/watch?v=HNSKJIQtb4c)
 - [ ] Update `popBackStack()`
-- [ ] Migrate ExoPlayer: 
+- [ ] Migrate ExoPlayer: https://developer.android.com/media/media3/exoplayer/migration-guide
 
 # Note
 

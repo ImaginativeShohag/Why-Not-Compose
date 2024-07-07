@@ -104,8 +104,8 @@ fun TodoDetailsScreen(
         retryDataLoad = {
             viewModel.getDetails(todoId)
         },
-        onDeleteClicked = { openDeleteDialog = true },
-        onEditClicked = {
+        onDeleteClick = { openDeleteDialog = true },
+        onEditClick = {
             openEditTodoSheet.value = !openEditTodoSheet.value
         }
     )
@@ -185,12 +185,12 @@ fun TodoDetailsScreenSkeleton(
     goBack: () -> Unit = {},
     toggleUIMode: () -> Unit = {},
     retryDataLoad: () -> Unit = {},
-    onDeleteClicked: () -> Unit = {},
-    onEditClicked: () -> Unit = {}
+    onDeleteClick: () -> Unit = {},
+    onEditClick: () -> Unit = {}
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
-    LaunchedEffect(showMessage) {
+    LaunchedEffect(showMessage, retryDataLoad) {
         showMessage?.getValueOnce()?.let { actionMessage ->
             when (actionMessage.action) {
                 TodoDetailsViewAction.TODO_LOAD_ERROR -> {
@@ -263,7 +263,7 @@ fun TodoDetailsScreenSkeleton(
                             caption = "Delete",
                             icon = Icons.Rounded.Delete
                         ) {
-                            onDeleteClicked()
+                            onDeleteClick()
                         }
 
                         Spacer(Modifier.width(16.dp))
@@ -273,7 +273,7 @@ fun TodoDetailsScreenSkeleton(
                             caption = "Edit",
                             icon = Icons.Rounded.Edit
                         ) {
-                            onEditClicked()
+                            onEditClick()
                         }
                     }
                 }

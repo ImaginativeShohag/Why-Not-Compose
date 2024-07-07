@@ -32,10 +32,8 @@ import androidx.core.content.FileProvider
 import java.io.File
 import org.imaginativeworld.whynotcompose.BuildConfig
 
-fun File.getUriForFile(context: Context): Uri {
-    return FileProvider.getUriForFile(
-        context,
-        "${BuildConfig.APPLICATION_ID}.fileprovider",
-        this
-    )
-}
+fun File.getUriForFile(context: Context): Uri = FileProvider.getUriForFile(
+    context,
+    "${BuildConfig.APPLICATION_ID}.fileprovider",
+    this
+)

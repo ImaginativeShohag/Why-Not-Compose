@@ -96,7 +96,6 @@ fun BadgeScreenSkeleton(
             )
         },
         bottomBar = {
-
             NavigationBar {
                 NavigationBarItem(
                     icon = {

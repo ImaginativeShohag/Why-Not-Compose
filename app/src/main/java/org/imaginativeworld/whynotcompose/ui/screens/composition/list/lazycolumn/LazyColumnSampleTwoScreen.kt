@@ -75,6 +75,7 @@ private fun LazyColumnSampleTwoScreenSkeletonPreviewDark() {
     }
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun LazyColumnSampleTwoScreenSkeleton(
     goBack: () -> Unit = {}

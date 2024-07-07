@@ -265,7 +265,7 @@ fun LoadingIndicatorScreenSkeleton(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     CircularProgressIndicator(
-                        progress = { animatedProgress2 },
+                        progress = { animatedProgress2 }
                     )
 
                     Spacer(Modifier.requiredHeight(32.dp))

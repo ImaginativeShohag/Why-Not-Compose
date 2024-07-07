@@ -49,7 +49,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.state.ToggleableState
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
@@ -137,7 +136,7 @@ fun CheckBoxScreenSkeleton(
 }
 
 @Composable
-fun TriStateCheckboxSample() {
+private fun TriStateCheckboxSample() {
     Column {
         // define dependent checkboxes states
         val (state1, onStateChange1) = remember { mutableStateOf(true) }
@@ -184,10 +183,11 @@ fun TriStateCheckboxSample() {
 fun GeneralTriStateCheckBox(
     text: String,
     state: ToggleableState,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
     Row(
-        Modifier
+        modifier
             .fillMaxWidth()
             .height(ELEMENT_HEIGHT)
             .selectable(
@@ -207,15 +207,15 @@ fun GeneralTriStateCheckBox(
     }
 }
 
-// TODO: Add `Modifier` param.
 @Composable
 fun GeneralCheckBox(
     text: String,
     state: Boolean,
+    modifier: Modifier = Modifier,
     onStateChange: (Boolean) -> Unit
 ) {
     Row(
-        Modifier
+        modifier
             .fillMaxWidth()
             .height(ELEMENT_HEIGHT)
             .selectable(

@@ -712,8 +712,8 @@ fun ButtonScreenSkeleton(
 
 @Composable
 fun SolidButton(
-    modifier: Modifier = Modifier,
     text: String,
+    modifier: Modifier = Modifier,
     @DrawableRes startIcon: Int? = null,
     @DrawableRes endIcon: Int? = null,
     height: Dp = ButtonDefaults.MinHeight,
@@ -766,8 +766,8 @@ fun SolidButton(
 
 @Composable
 fun SolidWideButton(
-    modifier: Modifier = Modifier,
     text: String,
+    modifier: Modifier = Modifier,
     @DrawableRes startIcon: Int? = null,
     @DrawableRes endIcon: Int? = null,
     height: Dp = ButtonDefaults.MinHeight,
@@ -832,8 +832,8 @@ fun SolidWideButton(
 
 @Composable
 fun GradientButton(
-    modifier: Modifier = Modifier,
     text: String,
+    modifier: Modifier = Modifier,
     @DrawableRes startIcon: Int? = null,
     @DrawableRes endIcon: Int? = null,
     height: Dp = ButtonDefaults.MinHeight,
@@ -892,8 +892,8 @@ fun GradientButton(
 
 @Composable
 fun GradientWideButton(
-    modifier: Modifier = Modifier,
     text: String,
+    modifier: Modifier = Modifier,
     @DrawableRes startIcon: Int? = null,
     @DrawableRes endIcon: Int? = null,
     height: Dp = ButtonDefaults.MinHeight,
@@ -967,8 +967,8 @@ fun GradientWideButton(
 
 @Composable
 fun BorderedButton(
-    modifier: Modifier = Modifier,
     text: String,
+    modifier: Modifier = Modifier,
     @DrawableRes startIcon: Int? = null,
     @DrawableRes endIcon: Int? = null,
     height: Dp = ButtonDefaults.MinHeight,
@@ -1025,8 +1025,8 @@ fun BorderedButton(
 
 @Composable
 fun BorderedWideButton(
-    modifier: Modifier = Modifier,
     text: String,
+    modifier: Modifier = Modifier,
     @DrawableRes startIcon: Int? = null,
     @DrawableRes endIcon: Int? = null,
     height: Dp = ButtonDefaults.MinHeight,
@@ -1096,8 +1096,8 @@ fun BorderedWideButton(
 
 @Composable
 fun BorderlessButton(
-    modifier: Modifier = Modifier,
     text: String,
+    modifier: Modifier = Modifier,
     @DrawableRes startIcon: Int? = null,
     @DrawableRes endIcon: Int? = null,
     height: Dp = ButtonDefaults.MinHeight,
@@ -1148,8 +1148,8 @@ fun BorderlessButton(
 
 @Composable
 fun BorderlessWideButton(
-    modifier: Modifier = Modifier,
     text: String,
+    modifier: Modifier = Modifier,
     @DrawableRes startIcon: Int? = null,
     @DrawableRes endIcon: Int? = null,
     height: Dp = ButtonDefaults.MinHeight,
@@ -1213,9 +1213,9 @@ fun BorderlessWideButton(
 
 @Composable
 fun SolidIconButton(
-    modifier: Modifier = Modifier,
     @DrawableRes icon: Int,
     contentDescription: String?,
+    modifier: Modifier = Modifier,
     backgroundColor: Color = MaterialTheme.colorScheme.primary,
     size: Dp = ButtonDefaults.MinHeight,
     shape: Shape = MaterialTheme.shapes.medium,
@@ -1251,9 +1251,9 @@ fun SolidIconButton(
 
 @Composable
 fun GradientIconButton(
-    modifier: Modifier = Modifier,
     @DrawableRes icon: Int,
     contentDescription: String?,
+    modifier: Modifier = Modifier,
     backgroundGradient: Brush = defaultButtonBackgroundBrush(),
     size: Dp = ButtonDefaults.MinHeight,
     shape: Shape = MaterialTheme.shapes.medium,
@@ -1292,9 +1292,9 @@ fun GradientIconButton(
 
 @Composable
 fun BorderlessIconButton(
-    modifier: Modifier = Modifier,
     @DrawableRes icon: Int,
     contentDescription: String?,
+    modifier: Modifier = Modifier,
     size: Dp = ButtonDefaults.MinHeight,
     shape: Shape = MaterialTheme.shapes.medium,
     onClick: () -> Unit

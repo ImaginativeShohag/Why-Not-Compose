@@ -48,7 +48,6 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Label
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.RangeSlider
 import androidx.compose.material3.RangeSliderState
@@ -61,7 +60,6 @@ import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -72,7 +70,6 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import java.util.Locale
 import kotlin.math.roundToInt
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
@@ -172,7 +169,6 @@ fun SliderScreenSkeleton(
                 AppComponent.MediumSpacer()
 
                 RangeSliderWithCustomComponents()
-
             }
 
             // ----------------------------------------------------------------
@@ -501,4 +497,3 @@ private fun RangeSliderWithCustomComponents() {
         )
     }
 }
-

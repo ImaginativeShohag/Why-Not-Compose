@@ -49,23 +49,17 @@ data class Todo(
     @Json(name = "user_id")
     val userId: Int
 ) {
-    fun getDueDate(): String {
-        return dueOn?.getHumanReadableDate() ?: "No"
-    }
+    fun getDueDate(): String = dueOn?.getHumanReadableDate() ?: "No"
 
-    fun getStatusLabel(): String {
-        return status.replaceFirstChar {
-            if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
-        }
+    fun getStatusLabel(): String = status.replaceFirstChar {
+        if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
     }
 
     @ColorRes
-    fun getStatusColor(): Color {
-        return if (status.toLower() == "completed") {
-            FlatColor.FlatAwesomeGreen2
-        } else {
-            FlatColor.FlatRed2
-        }
+    fun getStatusColor(): Color = if (status.toLower() == "completed") {
+        FlatColor.FlatAwesomeGreen2
+    } else {
+        FlatColor.FlatRed2
     }
 }
 

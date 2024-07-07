@@ -44,13 +44,11 @@ class StorageCacheDataSource @Inject constructor(
     private var sharedPref: SharedPreferences? = null
 
     @PublishedApi
-    internal fun getSharedPerf(): SharedPreferences {
-        return sharedPref ?: synchronized(this) {
-            context.getSharedPreferences(
-                "${context.packageName}.storage.cache",
-                Context.MODE_PRIVATE
-            )
-        }
+    internal fun getSharedPerf(): SharedPreferences = sharedPref ?: synchronized(this) {
+        context.getSharedPreferences(
+            "${context.packageName}.storage.cache",
+            Context.MODE_PRIVATE
+        )
     }
 
     inline fun <reified T> get(forKey: StorageCacheKey): T? {

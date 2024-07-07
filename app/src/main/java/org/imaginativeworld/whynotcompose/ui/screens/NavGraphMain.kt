@@ -91,9 +91,10 @@ import org.imaginativeworld.whynotcompose.ui.screens.composition.listitem.ListIt
 import org.imaginativeworld.whynotcompose.ui.screens.composition.loadingindicator.LoadingIndicatorScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.radiobutton.RadioButtonScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold.ScaffoldIndexScreen
-import org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold.ScaffoldWithBottomBarAndCutoutScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold.ScaffoldWithCoroutinesSnackbarScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold.ScaffoldWithCustomSnackbarScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold.ScaffoldWithIndefiniteSnackbarScreen
+import org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold.ScaffoldWithMultilineSnackbarScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold.ScaffoldWithSimpleSnackbarScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold.SimpleScaffoldWithTopBarScreen
 import org.imaginativeworld.whynotcompose.ui.screens.composition.slider.SliderScreen
@@ -190,6 +191,7 @@ sealed class CompositionsScreen(val route: String) {
     data object CompositionScaffoldThree : CompositionsScreen("composition/scaffold/3")
     data object CompositionScaffoldFour : CompositionsScreen("composition/scaffold/4")
     data object CompositionScaffoldFive : CompositionsScreen("composition/scaffold/5")
+    data object CompositionScaffoldSix : CompositionsScreen("composition/scaffold/6")
 
     data object CompositionSnackbar : CompositionsScreen("composition/snackbar")
     data object CompositionSwitch : CompositionsScreen("composition/switch")
@@ -297,9 +299,9 @@ sealed class TutorialsScreen(val route: String) {
 
 @Composable
 fun NavHostMain(
-    modifier: Modifier = Modifier,
     navController: NavHostController,
-    updateUiThemeMode: (UIThemeMode) -> Unit
+    updateUiThemeMode: (UIThemeMode) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     NavHost(
         modifier = modifier,
@@ -550,7 +552,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         }
 
         composable(CompositionsScreen.CompositionScaffoldTwo.route) {
-            ScaffoldWithBottomBarAndCutoutScreen()
+            ScaffoldWithMultilineSnackbarScreen()
         }
 
         composable(CompositionsScreen.CompositionScaffoldThree.route) {
@@ -563,6 +565,10 @@ private fun NavGraphBuilder.addCompositionScreens(
 
         composable(CompositionsScreen.CompositionScaffoldFive.route) {
             ScaffoldWithCoroutinesSnackbarScreen()
+        }
+
+        composable(CompositionsScreen.CompositionScaffoldSix.route) {
+            ScaffoldWithIndefiniteSnackbarScreen()
         }
 
         composable(CompositionsScreen.CompositionSnackbar.route) {

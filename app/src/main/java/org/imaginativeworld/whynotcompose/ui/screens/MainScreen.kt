@@ -27,7 +27,7 @@
 package org.imaginativeworld.whynotcompose.ui.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,7 +46,7 @@ fun MainScreen(
 
 @Preview
 @Composable
-fun MainScreenSkeletonPreview() {
+private fun MainScreenSkeletonPreview() {
     AppTheme {
         MainScreenSkeleton(
             updateUiThemeMode = {}
@@ -54,6 +54,7 @@ fun MainScreenSkeletonPreview() {
     }
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun MainScreenSkeleton(
     updateUiThemeMode: (UIThemeMode) -> Unit
@@ -61,8 +62,8 @@ fun MainScreenSkeleton(
     val navController = rememberNavController()
 
     NavHostMain(
-        Modifier.background(MaterialTheme.colors.background),
         navController = navController,
-        updateUiThemeMode = updateUiThemeMode
+        updateUiThemeMode = updateUiThemeMode,
+        Modifier.background(MaterialTheme.colorScheme.background)
     )
 }

@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.counter
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -38,10 +37,9 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Button
-import androidx.compose.material.Divider
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -49,7 +47,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
@@ -64,22 +62,15 @@ fun CounterScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun CounterScreenSkeletonPreview() {
+private fun CounterScreenSkeletonPreview() {
     AppTheme {
         CounterScreenSkeleton()
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun CounterScreenSkeletonPreviewDark() {
-    AppTheme {
-        CounterScreenSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun CounterScreenSkeleton(
     goBack: () -> Unit = {}
@@ -88,61 +79,54 @@ fun CounterScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "Counter",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
+                .padding(start = 16.dp, end = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            AppComponent.Header(
-                "Counter",
-                goBack = goBack
+            var counter by remember { mutableIntStateOf(0) }
+
+            Text(
+                modifier = Modifier.padding(top = 32.dp),
+                text = "$counter",
+                fontSize = 64.sp
             )
 
-            Divider()
-
-            Column(
+            Row(
                 Modifier
-                    .weight(1f)
+                    .padding(top = 32.dp)
                     .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
             ) {
-                var counter by remember { mutableIntStateOf(0) }
-
-                Text(
-                    modifier = Modifier.padding(top = 32.dp),
-                    text = "$counter",
-                    fontSize = 64.sp
-                )
-
-                Row(
-                    Modifier
-                        .padding(top = 32.dp)
-                        .fillMaxWidth()
+                Button(
+                    modifier = Modifier
+                        .weight(1f),
+                    onClick = { counter += 1 }
                 ) {
-                    Button(
-                        modifier = Modifier
-                            .weight(1f),
-                        onClick = { counter += 1 }
-                    ) {
-                        Text(
-                            text = "Increase"
-                        )
-                    }
+                    Text(
+                        text = "Increase"
+                    )
+                }
 
-                    Spacer(Modifier.width(16.dp))
+                Spacer(Modifier.width(16.dp))
 
-                    Button(
-                        modifier = Modifier.weight(1f),
-                        onClick = { counter -= 1 }
-                    ) {
-                        Text(
-                            text = "Decrease"
-                        )
-                    }
+                Button(
+                    modifier = Modifier.weight(1f),
+                    onClick = { counter -= 1 }
+                ) {
+                    Text(
+                        text = "Decrease"
+                    )
                 }
             }
         }

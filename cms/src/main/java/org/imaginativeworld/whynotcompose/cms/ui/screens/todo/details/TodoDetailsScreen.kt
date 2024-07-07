@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.screens.todo.details
 
-import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -59,7 +58,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.base.models.Event
 import org.imaginativeworld.whynotcompose.cms.models.ActionMessage
@@ -90,7 +89,7 @@ fun TodoDetailsScreen(
         viewModel.getDetails(todoId)
     }
 
-    LaunchedEffect(state.deleteSuccess) {
+    LaunchedEffect(state.deleteSuccess, goBack) {
         if (state.deleteSuccess?.getValueOnce() == true) {
             goBack()
         }
@@ -105,8 +104,8 @@ fun TodoDetailsScreen(
         retryDataLoad = {
             viewModel.getDetails(todoId)
         },
-        onDeleteClicked = { openDeleteDialog = true },
-        onEditClicked = {
+        onDeleteClick = { openDeleteDialog = true },
+        onEditClick = {
             openEditTodoSheet.value = !openEditTodoSheet.value
         }
     )
@@ -165,40 +164,33 @@ fun TodoDetailsScreen(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun TodoDetailsScreenSkeletonPreview() {
+private fun TodoDetailsScreenSkeletonPreviewDark() {
     CMSAppTheme {
         TodoDetailsScreenSkeleton(
+            showLoading = false,
+            showMessage = null,
             todo = MockData.dummyTodo
         )
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun TodoDetailsScreenSkeletonPreviewDark() {
-    CMSAppTheme {
-        TodoDetailsScreenSkeleton(
-            todo = MockData.dummyTodo
-        )
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun TodoDetailsScreenSkeleton(
+    showLoading: Boolean,
+    showMessage: Event<ActionMessage>?,
     todo: Todo?,
-    showLoading: Boolean = false,
-    showMessage: Event<ActionMessage>? = null,
     goBack: () -> Unit = {},
     toggleUIMode: () -> Unit = {},
     retryDataLoad: () -> Unit = {},
-    onDeleteClicked: () -> Unit = {},
-    onEditClicked: () -> Unit = {}
+    onDeleteClick: () -> Unit = {},
+    onEditClick: () -> Unit = {}
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
-    LaunchedEffect(showMessage) {
+    LaunchedEffect(showMessage, retryDataLoad) {
         showMessage?.getValueOnce()?.let { actionMessage ->
             when (actionMessage.action) {
                 TodoDetailsViewAction.TODO_LOAD_ERROR -> {
@@ -271,7 +263,7 @@ fun TodoDetailsScreenSkeleton(
                             caption = "Delete",
                             icon = Icons.Rounded.Delete
                         ) {
-                            onDeleteClicked()
+                            onDeleteClick()
                         }
 
                         Spacer(Modifier.width(16.dp))
@@ -281,7 +273,7 @@ fun TodoDetailsScreenSkeleton(
                             caption = "Edit",
                             icon = Icons.Rounded.Edit
                         ) {
-                            onEditClicked()
+                            onEditClick()
                         }
                     }
                 }

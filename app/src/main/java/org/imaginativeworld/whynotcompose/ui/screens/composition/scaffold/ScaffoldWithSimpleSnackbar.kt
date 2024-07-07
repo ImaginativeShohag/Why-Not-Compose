@@ -27,15 +27,13 @@
 package org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.ExtendedFloatingActionButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -43,64 +41,48 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
-// Source: https://cs.android.com/androidx/platform/tools/dokka-devsite-plugin/+/master:testData/compose/samples/material/samples/ScaffoldSamples.kt
+// Source: https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:compose/material3/material3/samples/src/main/java/androidx/compose/material3/samples/ScaffoldSamples.kt
 
 @Composable
 fun ScaffoldWithSimpleSnackbarScreen() {
     ScaffoldWithSimpleSnackbarScreenSkeleton()
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun ScaffoldWithSimpleSnackbarScreenSkeletonPreview() {
+private fun ScaffoldWithSimpleSnackbarScreenSkeletonPreview() {
     AppTheme {
         ScaffoldWithSimpleSnackbarScreenSkeleton()
     }
 }
 
-@Preview
-@Composable
-fun ScaffoldWithSimpleSnackbarScreenSkeletonPreviewDark() {
-    AppTheme(
-        darkTheme = true
-    ) {
-        ScaffoldWithSimpleSnackbarScreenSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun ScaffoldWithSimpleSnackbarScreenSkeleton() {
-    val scaffoldState = rememberScaffoldState()
+    val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+
     Scaffold(
-        modifier = Modifier
-            .navigationBarsPadding()
-            .imePadding()
-            .statusBarsPadding(),
-        scaffoldState = scaffoldState,
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         floatingActionButton = {
             var clickCount by remember { mutableIntStateOf(0) }
             ExtendedFloatingActionButton(
-                text = { Text("Show snackbar") },
                 onClick = {
                     // show snackbar as a suspend function
-                    scope.launch {
-                        scaffoldState.snackbarHostState.showSnackbar("Snackbar # ${++clickCount}")
-                    }
+                    scope.launch { snackbarHostState.showSnackbar("Snackbar # ${++clickCount}") }
                 }
-            )
+            ) {
+                Text("Show snackbar")
+            }
         },
         content = { innerPadding ->
             Text(
                 text = "Body content",
-                modifier = Modifier
-                    .padding(innerPadding)
-                    .fillMaxSize()
-                    .wrapContentSize()
+                modifier = Modifier.padding(innerPadding).fillMaxSize().wrapContentSize()
             )
         }
     )

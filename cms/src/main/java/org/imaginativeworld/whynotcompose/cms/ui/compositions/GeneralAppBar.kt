@@ -26,10 +26,9 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.compositions
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.BrightnessAuto
 import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.DarkMode
@@ -42,23 +41,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import org.imaginativeworld.whynotcompose.base.models.UIThemeMode
 import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
 import org.imaginativeworld.whynotcompose.cms.theme.CMSAppTheme
 
 @Composable
 fun GeneralAppBar(
-    title: String = "CMS",
     subTitle: String,
+    modifier: Modifier = Modifier,
+    title: String = "CMS",
     goBack: () -> Unit = {},
     toggleUIMode: () -> Unit = {}
 ) {
     val uiThemeMode by UIThemeController.uiThemeMode.collectAsState()
 
     CenterAlignedTopAppBar(
+        modifier = modifier,
         title = {
             Row(
                 verticalAlignment = Alignment.CenterVertically
@@ -87,7 +89,7 @@ fun GeneralAppBar(
                 goBack()
             }) {
                 Icon(
-                    imageVector = Icons.Rounded.ArrowBack,
+                    imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
                     contentDescription = "Go back"
                 )
             }
@@ -97,7 +99,7 @@ fun GeneralAppBar(
                 toggleUIMode()
             }) {
                 Icon(
-                    imageVector = when(uiThemeMode) {
+                    imageVector = when (uiThemeMode) {
                         UIThemeMode.AUTO -> Icons.Rounded.BrightnessAuto
                         UIThemeMode.LIGHT -> Icons.Rounded.LightMode
                         UIThemeMode.DARK -> Icons.Rounded.DarkMode
@@ -109,19 +111,9 @@ fun GeneralAppBar(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun GeneralAppBarPreview() {
-    CMSAppTheme {
-        GeneralAppBar(
-            subTitle = "Users"
-        )
-    }
-}
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun GeneralAppBarPreviewDark() {
+private fun GeneralAppBarPreview() {
     CMSAppTheme {
         GeneralAppBar(
             subTitle = "Users"

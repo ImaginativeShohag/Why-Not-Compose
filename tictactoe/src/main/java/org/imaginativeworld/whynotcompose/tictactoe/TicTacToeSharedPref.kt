@@ -46,13 +46,11 @@ class TicTacToeSharedPref @Inject constructor(
     @Volatile
     private var sharedPref: SharedPreferences? = null
 
-    private fun getSharedPerf(): SharedPreferences {
-        return sharedPref ?: synchronized(this) {
-            context.getSharedPreferences(
-                "${BuildConfig.LIBRARY_PACKAGE_NAME}.main",
-                Context.MODE_PRIVATE
-            )
-        }
+    private fun getSharedPerf(): SharedPreferences = sharedPref ?: synchronized(this) {
+        context.getSharedPreferences(
+            "${BuildConfig.LIBRARY_PACKAGE_NAME}.main",
+            Context.MODE_PRIVATE
+        )
     }
 
     // ----------------------------------------------------------------
@@ -72,7 +70,5 @@ class TicTacToeSharedPref @Inject constructor(
             }
     }
 
-    fun getData(): Set<String> {
-        return getSharedPerf().getStringSet(PREF_DATA, emptySet()) ?: emptySet()
-    }
+    fun getData(): Set<String> = getSharedPerf().getStringSet(PREF_DATA, emptySet()) ?: emptySet()
 }

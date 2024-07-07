@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.composition.dialog
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
@@ -35,19 +34,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
-import androidx.compose.material.Divider
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
@@ -72,40 +69,35 @@ fun DialogScreen(
     )
 
     if (openDefaultDialog.value) {
-        DefaultAlertDialog(
-            state = openDefaultDialog
-        )
+        DefaultAlertDialog {
+            openDefaultDialog.value = false
+        }
     }
 
     if (openCustomDialog.value) {
         GeneralDialog(
-            dialogState = openCustomDialog,
+            onDismiss = {
+                openCustomDialog.value = false
+            },
             title = "Are you sure?",
             message = "This cannot be undone.",
             positiveBtnText = "Yes",
-            onPositiveBtnClicked = {},
+            onPositiveBtnClick = {},
             negativeBtnText = "No",
-            onNegativeBtnClicked = {}
+            onNegativeBtnClick = {}
         )
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun DialogScreenSkeletonPreview() {
+private fun DialogScreenSkeletonPreview() {
     AppTheme {
-        DialogScreenSkeleton()
+        DialogScreen {}
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun DialogScreenSkeletonPreviewDark() {
-    AppTheme {
-        DialogScreenSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun DialogScreenSkeleton(
     goBack: () -> Unit = {},
@@ -116,7 +108,13 @@ fun DialogScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "Dialog",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
@@ -124,16 +122,6 @@ fun DialogScreenSkeleton(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            AppComponent.Header(
-                "Dialog",
-                goBack = goBack
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            Divider()
-
             Button(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
@@ -169,14 +157,14 @@ fun DialogScreenSkeleton(
 
 @Composable
 fun DefaultAlertDialog(
-    state: MutableState<Boolean>
+    onDismiss: () -> Unit
 ) {
     AlertDialog(
         onDismissRequest = {
             // Dismiss the dialog when the user clicks outside the dialog or on the back
             // button. If you want to disable that functionality, simply use an empty
             // onCloseRequest.
-            state.value = false
+            onDismiss()
         },
         title = {
             Text(text = "Title")
@@ -190,7 +178,7 @@ fun DefaultAlertDialog(
         confirmButton = {
             TextButton(
                 onClick = {
-                    state.value = false
+                    onDismiss()
                 }
             ) {
                 Text("Confirm")
@@ -199,7 +187,7 @@ fun DefaultAlertDialog(
         dismissButton = {
             TextButton(
                 onClick = {
-                    state.value = false
+                    onDismiss()
                 }
             ) {
                 Text("Dismiss")

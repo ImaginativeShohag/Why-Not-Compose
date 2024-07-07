@@ -43,22 +43,16 @@ import retrofit2.Retrofit
 class AppModule {
     @Singleton
     @Provides
-    fun provideMoshi(): Moshi {
-        return MoshiUtil.getMoshi()
-    }
+    fun provideMoshi(): Moshi = MoshiUtil.getMoshi()
 
     @Singleton
     @Provides
-    fun provideRetrofit(moshi: Moshi): Retrofit {
-        return ApiClient.getRetrofit(moshi)
-    }
+    fun provideRetrofit(moshi: Moshi): Retrofit = ApiClient.getRetrofit(moshi)
 
     @Singleton
     @Provides
-    fun provideGithubApiInterface(moshi: Moshi): GithubApiInterface {
-        return ApiClient.getRetrofit(
-            moshi,
-            Constants.SERVER_ENDPOINT + "/"
-        ).create(GithubApiInterface::class.java)
-    }
+    fun provideGithubApiInterface(moshi: Moshi): GithubApiInterface = ApiClient.getRetrofit(
+        moshi,
+        Constants.SERVER_ENDPOINT + "/"
+    ).create(GithubApiInterface::class.java)
 }

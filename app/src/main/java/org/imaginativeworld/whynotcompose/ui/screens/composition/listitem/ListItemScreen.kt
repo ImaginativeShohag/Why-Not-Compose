@@ -37,22 +37,22 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Checkbox
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.ListItem
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Switch
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
@@ -66,24 +66,15 @@ fun ListItemScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun ListItemScreenSkeletonPreview() {
+private fun ListItemScreenSkeletonPreview() {
     AppTheme {
         ListItemScreenSkeleton()
     }
 }
 
-@Preview
-@Composable
-fun ListItemScreenSkeletonPreviewDark() {
-    AppTheme(
-        darkTheme = true
-    ) {
-        ListItemScreenSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun ListItemScreenSkeleton(
     goBack: () -> Unit = {}
@@ -92,23 +83,19 @@ fun ListItemScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "ListItem",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            AppComponent.Header(
-                "ListItem",
-                goBack = goBack
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            Divider()
-
             // ----------------------------------------------------------------
             // One-line items
             // ----------------------------------------------------------------
@@ -121,21 +108,21 @@ fun ListItemScreenSkeleton(
                     .verticalScroll(scrollState)
                     .padding(0.dp)
             ) {
-                ListItem(text = { Text("One line list item with no icon") })
-                Divider()
+                ListItem(headlineContent = { Text("One line list item with no icon") })
+                HorizontalDivider()
                 ListItem(
-                    text = { Text("One line list item with 24x24 icon") },
-                    icon = {
+                    headlineContent = { Text("One line list item with 24x24 icon") },
+                    leadingContent = {
                         Icon(
                             Icons.Filled.Favorite,
-                            contentDescription = null
+                            contentDescription = "Localized description"
                         )
                     }
                 )
-                Divider()
+                HorizontalDivider()
                 ListItem(
-                    text = { Text("One line list item with 40x40 icon") },
-                    icon = {
+                    headlineContent = { Text("One line list item with 40x40 icon") },
+                    leadingContent = {
                         Icon(
                             Icons.Filled.Favorite,
                             contentDescription = null,
@@ -143,10 +130,10 @@ fun ListItemScreenSkeleton(
                         )
                     }
                 )
-                Divider()
+                HorizontalDivider()
                 ListItem(
-                    text = { Text("One line list item with 56x56 icon") },
-                    icon = {
+                    headlineContent = { Text("One line list item with 56x56 icon") },
+                    leadingContent = {
                         Icon(
                             Icons.Filled.Favorite,
                             contentDescription = null,
@@ -154,10 +141,10 @@ fun ListItemScreenSkeleton(
                         )
                     }
                 )
-                Divider()
+                HorizontalDivider()
                 ListItem(
-                    text = { Text("One line clickable list item") },
-                    icon = {
+                    headlineContent = { Text("One line clickable list item") },
+                    leadingContent = {
                         Icon(
                             Icons.Filled.Favorite,
                             contentDescription = null,
@@ -166,64 +153,64 @@ fun ListItemScreenSkeleton(
                     },
                     modifier = Modifier.clickable { }
                 )
-                Divider()
+                HorizontalDivider()
                 ListItem(
-                    text = { Text("One line list item with trailing icon") },
-                    trailing = {
+                    headlineContent = { Text("One line list item with trailing icon") },
+                    trailingContent = {
                         Icon(
                             Icons.Filled.Favorite,
                             contentDescription = "Localized Description"
                         )
                     }
                 )
-                Divider()
+                HorizontalDivider()
                 ListItem(
-                    text = { Text("One line list item") },
-                    icon = {
+                    headlineContent = { Text("One line list item") },
+                    leadingContent = {
                         Icon(
                             Icons.Filled.Favorite,
                             contentDescription = null,
                             modifier = Modifier.size(40.dp)
                         )
                     },
-                    trailing = {
+                    trailingContent = {
                         Icon(
                             Icons.Filled.Favorite,
                             contentDescription = "Localized description"
                         )
                     }
                 )
-                Divider()
+                HorizontalDivider()
 
                 // ----------------------------------------------------------------
                 // Two-line items
                 // ----------------------------------------------------------------
 
                 ListItem(
-                    text = { Text("Two line list item") },
-                    secondaryText = { Text("Secondary text") }
+                    headlineContent = { Text("Two line list item") },
+                    supportingContent = { Text("Secondary text") }
                 )
-                Divider()
+                HorizontalDivider()
                 ListItem(
-                    text = { Text("Two line list item") },
-                    overlineText = { Text("OVERLINE") }
+                    headlineContent = { Text("Two line list item") },
+                    overlineContent = { Text("OVERLINE") }
                 )
-                Divider()
+                HorizontalDivider()
                 ListItem(
-                    text = { Text("Two line list item with 24x24 icon") },
-                    secondaryText = { Text("Secondary text") },
-                    icon = {
+                    headlineContent = { Text("Two line list item with 24x24 icon") },
+                    supportingContent = { Text("Secondary text") },
+                    leadingContent = {
                         Icon(
                             Icons.Filled.Favorite,
                             contentDescription = null
                         )
                     }
                 )
-                Divider()
+                HorizontalDivider()
                 ListItem(
-                    text = { Text("Two line list item with 40x40 icon") },
-                    secondaryText = { Text("Secondary text") },
-                    icon = {
+                    headlineContent = { Text("Two line list item with 40x40 icon") },
+                    supportingContent = { Text("Secondary text") },
+                    leadingContent = {
                         Icon(
                             Icons.Filled.Favorite,
                             contentDescription = null,
@@ -231,12 +218,12 @@ fun ListItemScreenSkeleton(
                         )
                     }
                 )
-                Divider()
+                HorizontalDivider()
                 ListItem(
-                    text = { Text("Two line list item with 40x40 icon") },
-                    secondaryText = { Text("Secondary text") },
-                    trailing = { Text("meta") },
-                    icon = {
+                    headlineContent = { Text("Two line list item with 40x40 icon") },
+                    supportingContent = { Text("Secondary text") },
+                    trailingContent = { Text("meta") },
+                    leadingContent = {
                         Icon(
                             Icons.Filled.Favorite,
                             contentDescription = null,
@@ -244,71 +231,68 @@ fun ListItemScreenSkeleton(
                         )
                     }
                 )
-                Divider()
+                HorizontalDivider()
 
                 // ----------------------------------------------------------------
                 // Three-line items
                 // ----------------------------------------------------------------
 
                 ListItem(
-                    text = { Text("Three line list item") },
-                    secondaryText = {
+                    headlineContent = { Text("Three line list item") },
+                    supportingContent = {
                         Text(
                             "This is a long secondary text for the current list item, " +
                                 "displayed on two lines"
                         )
                     },
-                    singleLineSecondaryText = false,
-                    trailing = { Text("meta") }
+                    trailingContent = { Text("meta") }
                 )
-                Divider()
+                HorizontalDivider()
                 ListItem(
-                    text = { Text("Three line list item") },
-                    overlineText = { Text("OVERLINE") },
-                    secondaryText = { Text("Secondary text") }
+                    headlineContent = { Text("Three line list item") },
+                    overlineContent = { Text("OVERLINE") },
+                    supportingContent = { Text("Secondary text") }
                 )
-                Divider()
+                HorizontalDivider()
                 ListItem(
-                    text = { Text("Three line list item with 24x24 icon") },
-                    secondaryText = {
+                    headlineContent = { Text("Three line list item with 24x24 icon") },
+                    supportingContent = {
                         Text(
                             "This is a long secondary text for the current list item " +
                                 "displayed on two lines"
                         )
                     },
-                    singleLineSecondaryText = false,
-                    icon = {
+                    leadingContent = {
                         Icon(
                             Icons.Filled.Favorite,
                             contentDescription = null
                         )
                     }
                 )
-                Divider()
+                HorizontalDivider()
                 ListItem(
-                    text = { Text("Three line list item with trailing icon") },
-                    secondaryText = {
+                    headlineContent = { Text("Three line list item with trailing icon") },
+                    supportingContent = {
                         Text(
                             "This is a long secondary text for the current list" +
                                 " item, displayed on two lines"
                         )
                     },
-                    singleLineSecondaryText = false,
-                    trailing = {
+                    trailingContent = {
                         Icon(
                             Icons.Filled.Favorite,
                             contentDescription = "Localized description"
                         )
                     }
                 )
-                Divider()
+                HorizontalDivider()
                 ListItem(
-                    text = { Text("Three line list item") },
-                    overlineText = { Text("OVERLINE") },
-                    secondaryText = { Text("Secondary text") },
-                    trailing = { Text("meta") }
+                    headlineContent = { Text("Three line list item") },
+                    overlineContent = { Text("OVERLINE") },
+                    supportingContent = { Text("Secondary text") },
+                    trailingContent = { Text("meta") }
                 )
-                Divider()
+                HorizontalDivider()
 
                 // ----------------------------------------------------------------
                 // You can combine this component with a checkbox or switch as in
@@ -318,8 +302,8 @@ fun ListItemScreenSkeleton(
                 var switched by remember { mutableStateOf(false) }
                 val onSwitchedChange: (Boolean) -> Unit = { switched = it }
                 ListItem(
-                    text = { Text("Switch ListItem") },
-                    trailing = {
+                    headlineContent = { Text("Switch ListItem") },
+                    trailingContent = {
                         // Note: `onCheckedChange = null` recommended for accessibility with screenreaders.
                         Switch(
                             checked = switched,
@@ -331,12 +315,12 @@ fun ListItemScreenSkeleton(
                         onValueChange = onSwitchedChange
                     )
                 )
-                Divider()
+                HorizontalDivider()
                 var checked by remember { mutableStateOf(true) }
                 val onCheckedChange: (Boolean) -> Unit = { checked = it }
                 ListItem(
-                    text = { Text("Checkbox ListItem") },
-                    trailing = {
+                    headlineContent = { Text("Checkbox ListItem") },
+                    trailingContent = {
                         // Note: `onCheckedChange = null` recommended for accessibility with screenreaders.
                         Checkbox(
                             checked = checked,
@@ -348,7 +332,7 @@ fun ListItemScreenSkeleton(
                         onValueChange = onCheckedChange
                     )
                 )
-                Divider()
+                HorizontalDivider()
             }
         }
     }

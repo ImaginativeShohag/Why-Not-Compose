@@ -28,6 +28,7 @@ package org.imaginativeworld.whynotcompose.ui.screens.composition.index
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
@@ -36,9 +37,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.Divider
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -60,12 +61,13 @@ fun CompositionIndexScreen(
 
 @Preview
 @Composable
-fun CompositionIndexSkeletonPreview() {
+private fun CompositionIndexSkeletonPreview() {
     AppTheme {
         CompositionIndexSkeleton()
     }
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun CompositionIndexSkeleton(
     goBack: () -> Unit = {},
@@ -75,25 +77,26 @@ fun CompositionIndexSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            Header(
+                "Compositions",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            Header(
-                "Compositions",
-                goBack = goBack
-            )
-
-            Divider()
-
-            LazyColumn(Modifier.fillMaxSize()) {
+            LazyColumn(
+                Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(bottom = 16.dp)
+            ) {
                 itemsIndexed(Composition.compositionList) { index, item ->
-
                     if (index != 0) {
-                        Divider(Modifier.padding(16.dp, 0.dp))
+                        HorizontalDivider(Modifier.padding(16.dp, 0.dp))
                     }
 
                     Text(

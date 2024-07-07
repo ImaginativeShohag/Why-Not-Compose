@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.screens.post.details
 
-import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -61,7 +60,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.base.models.Event
 import org.imaginativeworld.whynotcompose.cms.models.ActionMessage
@@ -83,7 +82,7 @@ fun PostDetailsScreen(
     postId: Int,
     goBack: () -> Unit,
     toggleUIMode: () -> Unit,
-    onCommentsClicked: () -> Unit
+    onCommentsClick: () -> Unit
 ) {
     val openEditPostSheet = rememberSaveable { mutableStateOf(false) }
     val state by viewModel.state.collectAsState()
@@ -94,7 +93,7 @@ fun PostDetailsScreen(
         viewModel.getDetails(postId)
     }
 
-    LaunchedEffect(state.deleteSuccess) {
+    LaunchedEffect(state.deleteSuccess, goBack) {
         if (state.deleteSuccess?.getValueOnce() == true) {
             goBack()
         }
@@ -109,11 +108,11 @@ fun PostDetailsScreen(
         retryDataLoad = {
             viewModel.getDetails(postId)
         },
-        onDeleteClicked = { openDeleteDialog = true },
-        onEditClicked = {
+        onDeleteClick = { openDeleteDialog = true },
+        onEditClick = {
             openEditPostSheet.value = !openEditPostSheet.value
         },
-        onCommentsClicked = onCommentsClicked
+        onCommentsClick = onCommentsClick
     )
 
     // ----------------------------------------------------------------
@@ -170,41 +169,34 @@ fun PostDetailsScreen(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun PostDetailsScreenSkeletonPreview() {
+private fun PostDetailsScreenSkeletonPreviewDark() {
     CMSAppTheme {
         PostDetailsScreenSkeleton(
+            showLoading = false,
+            showMessage = null,
             post = MockData.dummyPost
         )
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun PostDetailsScreenSkeletonPreviewDark() {
-    CMSAppTheme {
-        PostDetailsScreenSkeleton(
-            post = MockData.dummyPost
-        )
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun PostDetailsScreenSkeleton(
+    showLoading: Boolean,
+    showMessage: Event<ActionMessage>?,
     post: Post?,
-    showLoading: Boolean = false,
-    showMessage: Event<ActionMessage>? = null,
     goBack: () -> Unit = {},
     toggleUIMode: () -> Unit = {},
     retryDataLoad: () -> Unit = {},
-    onDeleteClicked: () -> Unit = {},
-    onEditClicked: () -> Unit = {},
-    onCommentsClicked: () -> Unit = {}
+    onDeleteClick: () -> Unit = {},
+    onEditClick: () -> Unit = {},
+    onCommentsClick: () -> Unit = {}
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
-    LaunchedEffect(showMessage) {
+    LaunchedEffect(showMessage, retryDataLoad) {
         showMessage?.getValueOnce()?.let { actionMessage ->
             when (actionMessage.action) {
                 PostDetailsViewAction.POST_LOAD_ERROR -> {
@@ -277,7 +269,7 @@ fun PostDetailsScreenSkeleton(
                             caption = "Delete",
                             icon = Icons.Rounded.Delete
                         ) {
-                            onDeleteClicked()
+                            onDeleteClick()
                         }
 
                         Spacer(Modifier.width(16.dp))
@@ -287,7 +279,7 @@ fun PostDetailsScreenSkeleton(
                             caption = "Edit",
                             icon = Icons.Rounded.Edit
                         ) {
-                            onEditClicked()
+                            onEditClick()
                         }
                     }
 
@@ -299,7 +291,7 @@ fun PostDetailsScreenSkeleton(
                             caption = "Comments",
                             icon = Icons.Rounded.Chat
                         ) {
-                            onCommentsClicked()
+                            onCommentsClick()
                         }
 
                         Spacer(Modifier.weight(1f))

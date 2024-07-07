@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.screens.user.edit
 
-import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
@@ -71,7 +70,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
@@ -85,12 +84,13 @@ import org.imaginativeworld.whynotcompose.cms.ui.compositions.LoadingContainer
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralFilledButton
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralOutlinedButton
 
+@Suppress("ktlint:compose:mutable-state-param-check")
 @Composable
 fun UserEditSheet(
-    viewModel: UserEditViewModel = hiltViewModel(),
     userId: Int,
     showSheet: MutableState<Boolean>,
-    onSuccess: () -> Unit
+    onSuccess: () -> Unit,
+    viewModel: UserEditViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -117,7 +117,7 @@ fun UserEditSheet(
         viewModel.getDetails(userId)
     }
 
-    LaunchedEffect(state.updateUserSuccess) {
+    LaunchedEffect(state.updateUserSuccess, onSuccess) {
         state.updateUserSuccess?.getValueOnce()?.let { isAddUserSuccess ->
             if (isAddUserSuccess) {
                 context.toast("User successfully updated.")
@@ -150,31 +150,24 @@ fun UserEditSheet(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun UserEditSheetSkeletonPreview() {
+private fun UserEditSheetSkeletonPreviewDark() {
     CMSAppTheme {
         UserEditSheetSkeleton(
+            showLoading = false,
+            showMessage = null,
             user = MockData.dummyUser
         )
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun UserEditSheetSkeletonPreviewDark() {
-    CMSAppTheme {
-        UserEditSheetSkeleton(
-            user = MockData.dummyUser
-        )
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun UserEditSheetSkeleton(
+    showLoading: Boolean,
+    showMessage: Event<String>?,
     user: User?,
-    showLoading: Boolean = false,
-    showMessage: Event<String>? = null,
     goBack: () -> Unit = {},
     updateUser: (
         name: String,
@@ -215,7 +208,7 @@ fun UserEditSheetSkeleton(
         topBar = {
             GeneralSheetAppBar(
                 title = "Edit User",
-                onCancelClicked = goBack
+                onCancelClick = goBack
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },

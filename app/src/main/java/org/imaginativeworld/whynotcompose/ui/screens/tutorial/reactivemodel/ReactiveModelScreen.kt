@@ -41,16 +41,16 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Button
-import androidx.compose.material.Card
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Remove
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -75,8 +75,8 @@ fun ReactiveModelScreen(
     val counter = viewModel.products.collectAsState()
 
     CounterWithVMScreenSkeleton(
-        goBack = goBack,
         products = counter.value,
+        goBack = goBack,
         increaseQuantity = viewModel::incrementQuantity,
         decreaseQuantity = viewModel::decreaseQuantity
     )
@@ -84,7 +84,7 @@ fun ReactiveModelScreen(
 
 @PreviewLightDark
 @Composable
-fun CounterWithVMScreenSkeletonPreview() {
+private fun CounterWithVMScreenSkeletonPreview() {
     val products by remember {
         mutableStateOf(
             ProductReactiveModelMock.items
@@ -104,10 +104,11 @@ fun CounterWithVMScreenSkeletonPreview() {
     }
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun CounterWithVMScreenSkeleton(
-    goBack: () -> Unit = {},
     products: List<ProductReactiveModel>,
+    goBack: () -> Unit = {},
     increaseQuantity: (ProductReactiveModel) -> Unit = {},
     decreaseQuantity: (ProductReactiveModel) -> Unit = {}
 ) {
@@ -115,42 +116,31 @@ fun CounterWithVMScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
-    ) { innerPadding ->
-        Column(
-            Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-        ) {
+            .statusBarsPadding(),
+        topBar = {
             AppComponent.Header(
                 "Reactive Model",
                 goBack = goBack
             )
-
-            Divider()
-
-            Column(
-                Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp)
-            ) {
-                LazyColumn(
-                    Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(vertical = 4.dp)
-                ) {
-                    items(products) { product ->
-                        ProductItemView(
-                            modifier = Modifier.padding(vertical = 8.dp),
-                            name = product.name,
-                            price = product.price,
-                            quantity = product.quantity,
-                            totalPrice = product.totalPrice,
-                            increase = { increaseQuantity(product) },
-                            decrease = { decreaseQuantity(product) }
-                        )
-                    }
-                }
+        }
+    ) { innerPadding ->
+        LazyColumn(
+            Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+                .padding(start = 16.dp, end = 16.dp),
+            contentPadding = PaddingValues(vertical = 4.dp)
+        ) {
+            items(products) { product ->
+                ProductItemView(
+                    modifier = Modifier.padding(vertical = 8.dp),
+                    name = product.name,
+                    price = product.price,
+                    quantity = product.quantity,
+                    totalPrice = product.totalPrice,
+                    increase = { increaseQuantity(product) },
+                    decrease = { decreaseQuantity(product) }
+                )
             }
         }
     }
@@ -158,38 +148,43 @@ fun CounterWithVMScreenSkeleton(
 
 @Composable
 private fun ProductItemView(
-    modifier: Modifier = Modifier,
     name: String,
     price: Double,
     quantity: Int,
     totalPrice: Double,
     increase: () -> Unit,
-    decrease: () -> Unit
+    decrease: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    Card(modifier, elevation = 4.dp) {
+    Card(
+        modifier,
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 4.dp
+        )
+    ) {
         Column(Modifier.padding(8.dp)) {
             Text(
                 name,
-                style = MaterialTheme.typography.h6
+                style = MaterialTheme.typography.titleLarge
             )
 
             Row {
                 Text(
                     "Price: $price $",
-                    style = MaterialTheme.typography.subtitle2
+                    style = MaterialTheme.typography.titleSmall
                 )
 
-                Spacer(modifier.weight(1f))
+                Spacer(Modifier.weight(1f))
 
                 Text(
                     "Quantity: $quantity",
-                    style = MaterialTheme.typography.subtitle2
+                    style = MaterialTheme.typography.titleSmall
                 )
             }
 
             Card(
                 Modifier.padding(top = 8.dp),
-                border = BorderStroke(1.dp, MaterialTheme.colors.onBackground.copy(0.2f))
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.onBackground.copy(0.2f))
             ) {
                 Row(
                     Modifier
@@ -219,7 +214,7 @@ private fun ProductItemView(
 
                     Text(
                         "Total: $totalPrice $",
-                        style = MaterialTheme.typography.subtitle1
+                        style = MaterialTheme.typography.titleMedium
                     )
                 }
             }

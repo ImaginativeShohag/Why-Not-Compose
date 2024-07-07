@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.animation.runningcar
 
-import android.content.res.Configuration
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
@@ -38,7 +37,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -49,8 +47,7 @@ import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -62,27 +59,39 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.imaginativeworld.whynotcompose.R
+import org.imaginativeworld.whynotcompose.base.models.isLight
+import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
+
+enum class CarState {
+    INITIAL,
+    RUNNING,
+    GONE
+}
 
 @Composable
 fun RunningCarScreen() {
-    val animState = MutableStateFlow(false)
+    val animState = MutableStateFlow(CarState.INITIAL)
 
     LaunchedEffect(Unit) {
         while (true) {
             delay(100)
 
-            animState.value = true
+            animState.value = CarState.INITIAL
 
             delay(3000)
 
-            animState.value = false
+            animState.value = CarState.RUNNING
+
+            delay(3000)
+
+            animState.value = CarState.GONE
 
             delay(2500)
         }
@@ -93,38 +102,33 @@ fun RunningCarScreen() {
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun RunningCarScreenSkeletonPreview() {
+private fun RunningCarScreenPreview() {
     AppTheme {
-        RunningCarScreenSkeleton(
-            MutableStateFlow(true)
-        )
+        RunningCarScreen()
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun RunningCarScreenSkeletonPreviewDark() {
-    AppTheme {
-        RunningCarScreenSkeleton(
-            MutableStateFlow(true)
-        )
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun RunningCarScreenSkeleton(
-    _animState: StateFlow<Boolean>
+    animStateFlow: StateFlow<CarState>
 ) {
-    val animState = _animState.collectAsState()
+    val uiThemeMode by UIThemeController.uiThemeMode.collectAsState()
+    val animState = animStateFlow.collectAsState()
 
     val animRotationZ by animateFloatAsState(
-        targetValue = if (animState.value) 360f else 0f,
+        targetValue = when (animState.value) {
+            CarState.INITIAL -> 0f
+            CarState.RUNNING -> 360f
+            CarState.GONE -> 720f
+        },
         animationSpec = tween(
             durationMillis = 2000,
             easing = FastOutSlowInEasing
-        )
+        ),
+        label = "Compose Logo"
     )
 
     Scaffold(
@@ -134,7 +138,7 @@ fun RunningCarScreenSkeleton(
             .statusBarsPadding()
             .fillMaxSize()
     ) { innerPadding ->
-        BoxWithConstraints(
+        Box(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
@@ -163,6 +167,24 @@ fun RunningCarScreenSkeleton(
                         updateTransition(animState.value, label = "fore&back-ground")
 
                     val animatePositionBackground by updateTransition.animateFloat(
+                        label = "background",
+                        transitionSpec = {
+                            tween(
+                                2000,
+                                easing = CubicBezierEasing(0.0f, 0.0f, 0.5f, 1.0f)
+                            )
+                        }
+                    ) { state ->
+                        when (state) {
+                            // true -> -400f
+                            // else -> 0f
+                            CarState.INITIAL -> 0f
+                            CarState.RUNNING -> -400f
+                            CarState.GONE -> -800f
+                        }
+                    }
+
+                    val animatePositionForeground by updateTransition.animateFloat(
                         label = "foreground",
                         transitionSpec = {
                             tween(
@@ -172,28 +194,17 @@ fun RunningCarScreenSkeleton(
                         }
                     ) { state ->
                         when (state) {
-                            true -> -400f
-                            else -> 0f
-                        }
-                    }
+                            // true -> -700f
+                            // else -> 0f
 
-                    val animatePositionForeground by updateTransition.animateFloat(
-                        label = "background",
-                        transitionSpec = {
-                            tween(
-                                2000,
-                                easing = CubicBezierEasing(0.0f, 0.0f, 0.5f, 1.0f)
-                            )
-                        }
-                    ) { state ->
-                        when (state) {
-                            true -> -700f
-                            else -> 0f
+                            CarState.INITIAL -> 0f
+                            CarState.RUNNING -> -700f
+                            CarState.GONE -> -1400f
                         }
                     }
 
                     val animateCarPositionX by updateTransition.animateFloat(
-                        label = "background",
+                        label = "Car X position",
                         transitionSpec = {
                             tween(
                                 2000,
@@ -202,15 +213,20 @@ fun RunningCarScreenSkeleton(
                         }
                     ) { state ->
                         when (state) {
-                            true -> 0f
-                            else -> -1000f
+                            // true -> 0f
+                            // else -> -1000f
+
+                            CarState.INITIAL -> -1000f
+                            CarState.RUNNING -> 0f
+                            CarState.GONE -> 1000f
                         }
                     }
 
                     val animatePositionCar by transition.animateFloat(
                         initialValue = 3f,
                         targetValue = -3f,
-                        animationSpec = infiniteRepeatable(tween(300), RepeatMode.Reverse)
+                        animationSpec = infiniteRepeatable(tween(300), RepeatMode.Reverse),
+                        label = "Car"
                     )
 
                     Image(
@@ -226,7 +242,7 @@ fun RunningCarScreenSkeleton(
                             },
                         contentScale = ContentScale.Inside,
                         colorFilter = ColorFilter.tint(
-                            if (MaterialTheme.colors.isLight) {
+                            if (uiThemeMode.isLight()) {
                                 Color(0xFFE6E6E6)
                             } else {
                                 Color(0xFF2B2B2B)
@@ -247,7 +263,7 @@ fun RunningCarScreenSkeleton(
                             },
                         contentScale = ContentScale.Inside,
                         colorFilter = ColorFilter.tint(
-                            if (MaterialTheme.colors.isLight) {
+                            if (uiThemeMode.isLight()) {
                                 Color(0xFFD4D4D4)
                             } else {
                                 Color(0xFF3D3D3D)

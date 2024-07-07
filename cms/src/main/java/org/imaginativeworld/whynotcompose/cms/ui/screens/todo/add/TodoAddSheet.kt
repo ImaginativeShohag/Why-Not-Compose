@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.screens.todo.add
 
-import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
@@ -75,7 +74,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import java.util.Calendar
@@ -92,12 +91,13 @@ import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralFill
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralOutlinedButton
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralTextButton
 
+@Suppress("ktlint:compose:mutable-state-param-check")
 @Composable
 fun TodoAddSheet(
-    viewModel: TodoAddViewModel = hiltViewModel(),
     userId: Int,
     showSheet: MutableState<Boolean>,
-    onSuccess: () -> Unit
+    onSuccess: () -> Unit,
+    viewModel: TodoAddViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -120,7 +120,7 @@ fun TodoAddSheet(
         }
     }
 
-    LaunchedEffect(state.addTodoSuccess) {
+    LaunchedEffect(state.addTodoSuccess, onSuccess) {
         state.addTodoSuccess?.getValueOnce()?.let { isAddTodoSuccess ->
             if (isAddTodoSuccess) {
                 context.toast("Todo successfully added.")
@@ -151,26 +151,22 @@ fun TodoAddSheet(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun TodoAddSheetSkeletonPreview() {
+private fun TodoAddSheetSkeletonPreview() {
     CMSAppTheme {
-        TodoAddSheetSkeleton()
+        TodoAddSheetSkeleton(
+            showLoading = false,
+            showMessage = null
+        )
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun TodoAddSheetSkeletonPreviewDark() {
-    CMSAppTheme {
-        TodoAddSheetSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun TodoAddSheetSkeleton(
-    showLoading: Boolean = false,
-    showMessage: Event<String>? = null,
+    showLoading: Boolean,
+    showMessage: Event<String>?,
     goBack: () -> Unit = {},
     addTodo: (
         title: String,
@@ -200,7 +196,7 @@ fun TodoAddSheetSkeleton(
         topBar = {
             GeneralSheetAppBar(
                 title = "Add Todo",
-                onCancelClicked = goBack
+                onCancelClick = goBack
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -342,14 +338,10 @@ fun TodoAddSheetSkeleton(
                 val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
 
                 // Blocks previous dates from being selected.
-                override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-                    return utcTimeMillis >= calendar.timeInMillis
-                }
+                override fun isSelectableDate(utcTimeMillis: Long): Boolean = utcTimeMillis >= calendar.timeInMillis
 
                 // Allow selecting dates from current year forward.
-                override fun isSelectableYear(year: Int): Boolean {
-                    return year >= calendar.get(Calendar.YEAR)
-                }
+                override fun isSelectableYear(year: Int): Boolean = year >= calendar.get(Calendar.YEAR)
             }
         )
 

@@ -26,9 +26,9 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging.elements
 
-import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -39,9 +39,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,7 +51,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.placeholder.PlaceholderHighlight
@@ -63,20 +64,20 @@ import org.imaginativeworld.whynotcompose.repositories.MockData
 
 @Composable
 fun GithubRepoItem(
-    modifier: Modifier,
     item: GithubRepo,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
     Card(
-        modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(8.dp),
-        elevation = 2.dp,
-        onClick = {
-            onClick()
-        }
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable {
+                onClick()
+            },
+        shape = RoundedCornerShape(8.dp)
     ) {
         Column(
-            modifier
+            Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
@@ -97,7 +98,7 @@ fun GithubRepoItem(
                     modifier = Modifier
                         .size(16.dp)
                         .clip(CircleShape)
-                        .background(MaterialTheme.colors.onSurface.copy(.15f)),
+                        .background(MaterialTheme.colorScheme.onSurface.copy(.15f)),
                     painter = rememberImagePainter(item.owner.avatarUrl),
                     contentDescription = "User image"
                 )
@@ -149,55 +150,30 @@ fun GithubRepoItem(
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
-fun GithubRepoItemPreview() {
+private fun GithubRepoItemPreview() {
     AppTheme {
-        Column {
-            repeat(3) {
-                GithubRepoItem(
-                    modifier = Modifier.padding(
-                        start = 12.dp,
-                        top = 4.dp,
-                        end = 12.dp,
-                        bottom = 4.dp
-                    ),
-                    item = if (it % 2 == 0) {
-                        MockData.dummyGithubRepo
-                    } else {
-                        MockData.dummyGithubRepo.copy(
-                            description = null
-                        )
-                    },
-                    onClick = {}
-                )
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun GithubRepoItemPreviewDark() {
-    AppTheme {
-        Column {
-            repeat(3) {
-                GithubRepoItem(
-                    modifier = Modifier.padding(
-                        start = 12.dp,
-                        top = 4.dp,
-                        end = 12.dp,
-                        bottom = 4.dp
-                    ),
-                    item = if (it % 2 == 0) {
-                        MockData.dummyGithubRepo
-                    } else {
-                        MockData.dummyGithubRepo.copy(
-                            description = null
-                        )
-                    },
-                    onClick = {}
-                )
+        Scaffold { innerPadding ->
+            Column(Modifier.padding(innerPadding)) {
+                repeat(10) {
+                    GithubRepoItem(
+                        modifier = Modifier.padding(
+                            start = 12.dp,
+                            top = 4.dp,
+                            end = 12.dp,
+                            bottom = 4.dp
+                        ),
+                        item = if (it % 2 == 0) {
+                            MockData.dummyGithubRepo
+                        } else {
+                            MockData.dummyGithubRepo.copy(
+                                description = null
+                            )
+                        },
+                        onClick = {}
+                    )
+                }
             }
         }
     }
@@ -205,54 +181,18 @@ fun GithubRepoItemPreviewDark() {
 
 // ================================================================
 
-@Preview(showBackground = true)
-@Composable
-fun LoadingGithubRepoItemPreview() {
-    AppTheme {
-        Column(
-            Modifier
-                .fillMaxWidth()
-        ) {
-            repeat(3) {
-                LoadingGithubRepoItem(
-                    Modifier
-                        .alpha(1f)
-                        .padding(start = 12.dp, top = 4.dp, end = 12.dp, bottom = 4.dp)
-                )
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun LoadingGithubRepoItemPreviewDark() {
-    AppTheme {
-        Column(
-            Modifier
-                .fillMaxWidth()
-        ) {
-            repeat(3) {
-                LoadingGithubRepoItem(
-                    Modifier
-                        .alpha(1f)
-                        .padding(start = 12.dp, top = 4.dp, end = 12.dp, bottom = 4.dp)
-                )
-            }
-        }
-    }
-}
-
 @Composable
 fun LoadingGithubRepoItem(
     modifier: Modifier = Modifier
 ) {
+    val onBackgroundColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.15f)
+
     Column(
         modifier
             .padding()
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .background(MaterialTheme.colors.surface)
+            .background(MaterialTheme.colorScheme.surfaceVariant)
             .padding(8.dp)
     ) {
         Box(
@@ -262,6 +202,7 @@ fun LoadingGithubRepoItem(
                 .height(16.dp)
                 .placeholder(
                     visible = true,
+                    color = onBackgroundColor,
                     highlight = PlaceholderHighlight.shimmer()
                 )
         )
@@ -278,6 +219,7 @@ fun LoadingGithubRepoItem(
                     .clip(CircleShape)
                     .placeholder(
                         visible = true,
+                        color = onBackgroundColor,
                         highlight = PlaceholderHighlight.shimmer()
                     )
             )
@@ -290,6 +232,7 @@ fun LoadingGithubRepoItem(
                     .height(10.dp)
                     .placeholder(
                         visible = true,
+                        color = onBackgroundColor,
                         highlight = PlaceholderHighlight.shimmer()
                     )
             )
@@ -303,6 +246,7 @@ fun LoadingGithubRepoItem(
                 .height(10.dp)
                 .placeholder(
                     visible = true,
+                    color = onBackgroundColor,
                     highlight = PlaceholderHighlight.shimmer()
                 )
         )
@@ -315,6 +259,7 @@ fun LoadingGithubRepoItem(
                 .height(10.dp)
                 .placeholder(
                     visible = true,
+                    color = onBackgroundColor,
                     highlight = PlaceholderHighlight.shimmer()
                 )
         )
@@ -327,6 +272,7 @@ fun LoadingGithubRepoItem(
                 .height(10.dp)
                 .placeholder(
                     visible = true,
+                    color = onBackgroundColor,
                     highlight = PlaceholderHighlight.shimmer()
                 )
         )
@@ -349,8 +295,27 @@ fun LoadingGithubRepoItem(
                             .height(16.dp)
                             .placeholder(
                                 visible = true,
+                                color = onBackgroundColor,
                                 highlight = PlaceholderHighlight.shimmer()
                             )
+                    )
+                }
+            }
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun LoadingGithubRepoItemPreview() {
+    AppTheme {
+        Scaffold { innerPadding ->
+            Column(Modifier.padding(innerPadding)) {
+                repeat(10) {
+                    LoadingGithubRepoItem(
+                        Modifier
+                            .alpha(1f)
+                            .padding(start = 12.dp, top = 4.dp, end = 12.dp, bottom = 4.dp)
                     )
                 }
             }

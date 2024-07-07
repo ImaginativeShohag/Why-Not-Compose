@@ -27,7 +27,6 @@
 package org.imaginativeworld.whynotcompose.ui.screens.composition.list
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
@@ -36,12 +35,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.Divider
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
@@ -60,24 +59,15 @@ fun LazyColumnIndexScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun LazyColumnIndexScreenSkeletonPreview() {
+private fun LazyColumnIndexScreenSkeletonPreviewDark() {
     AppTheme {
         LazyColumnIndexScreenSkeleton()
     }
 }
 
-@Preview
-@Composable
-fun LazyColumnIndexScreenSkeletonPreviewDark() {
-    AppTheme(
-        darkTheme = true
-    ) {
-        LazyColumnIndexScreenSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun LazyColumnIndexScreenSkeleton(
     goBack: () -> Unit = {},
@@ -87,40 +77,38 @@ fun LazyColumnIndexScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
-    ) { innerPadding ->
-        Column(
-            Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-        ) {
+            .statusBarsPadding(),
+        topBar = {
             AppComponent.Header(
                 "LazyColumn",
                 goBack = goBack
             )
-
-            LazyColumn(Modifier.fillMaxSize()) {
-                itemsIndexed(LazyColumnComposition.layColumnCompositionList) { index, item ->
-
-                    if (index != 0) {
-                        Divider(Modifier.padding(16.dp, 0.dp))
-                    }
-
-                    Text(
-                        modifier = Modifier
-                            .clickable {
-                                navigate(item.route)
-                            }
-                            .padding(
-                                start = 16.dp,
-                                top = 8.dp,
-                                end = 16.dp,
-                                bottom = 8.dp
-                            )
-                            .fillMaxWidth(),
-                        text = item.name
-                    )
+        }
+    ) { innerPadding ->
+        LazyColumn(
+            Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+        ) {
+            itemsIndexed(LazyColumnComposition.layColumnCompositionList) { index, item ->
+                if (index != 0) {
+                    HorizontalDivider(Modifier.padding(16.dp, 0.dp))
                 }
+
+                Text(
+                    modifier = Modifier
+                        .clickable {
+                            navigate(item.route)
+                        }
+                        .padding(
+                            start = 16.dp,
+                            top = 8.dp,
+                            end = 16.dp,
+                            bottom = 8.dp
+                        )
+                        .fillMaxWidth(),
+                    text = item.name
+                )
             }
         }
     }

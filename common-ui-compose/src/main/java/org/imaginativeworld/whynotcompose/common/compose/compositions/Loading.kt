@@ -39,24 +39,28 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
-@Preview
 @Composable
 fun LoadingContainer(
-    show: Boolean = true
+    show: Boolean,
+    modifier: Modifier = Modifier
 ) {
     AnimatedVisibility(
+        modifier = modifier,
         visible = show,
         enter = fadeIn(),
         exit = fadeOut()
@@ -77,7 +81,7 @@ fun LoadingContainer(
                     .size(200.dp, 180.dp)
                     .align(Alignment.Center),
                 shape = RoundedCornerShape(8.dp),
-                elevation = 8.dp
+                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
             ) {
                 Column(
                     Modifier.fillMaxSize(),
@@ -96,6 +100,19 @@ fun LoadingContainer(
                     )
                 }
             }
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun LoadingContainerPreview() {
+    AppTheme {
+        Scaffold { innerPadding ->
+            LoadingContainer(
+                show = true,
+                modifier = Modifier.padding(innerPadding)
+            )
         }
     }
 }

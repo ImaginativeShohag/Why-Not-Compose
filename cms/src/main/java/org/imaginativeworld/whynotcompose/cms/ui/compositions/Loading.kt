@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.compositions
 
-import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -48,32 +47,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.imaginativeworld.whynotcompose.cms.theme.CMSAppTheme
 
-@Preview(showBackground = true)
-@Composable
-fun LoadingContainerPreview() {
-    CMSAppTheme {
-        LoadingContainer()
-    }
-}
-
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun LoadingContainerPreviewDark() {
-    CMSAppTheme {
-        LoadingContainer()
-    }
-}
-
 @Composable
 fun LoadingContainer(
-    show: Boolean = true
+    show: Boolean,
+    modifier: Modifier = Modifier
 ) {
     AnimatedVisibility(
+        modifier = modifier,
         visible = show,
         enter = fadeIn(),
         exit = fadeOut()
@@ -113,5 +98,15 @@ fun LoadingContainer(
                 }
             }
         }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun LoadingContainerPreviewDark() {
+    CMSAppTheme {
+        LoadingContainer(
+            show = true
+        )
     }
 }

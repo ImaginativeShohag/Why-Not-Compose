@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.compositions
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -45,8 +44,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.Wallpapers
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
@@ -177,37 +175,16 @@ fun LoadingItem(
     }
 }
 
-@Preview(showBackground = true, wallpaper = Wallpapers.NONE)
+@PreviewLightDark
 @Composable
-fun LoadingItemPreview() {
+private fun LoadingItemPreview() {
     CMSAppTheme {
         Surface(
             Modifier
                 .fillMaxWidth()
         ) {
             Column {
-                repeat(3) {
-                    LoadingItem(
-                        Modifier
-                            .alpha(1f)
-                            .padding(start = 12.dp, top = 4.dp, end = 12.dp, bottom = 4.dp)
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun LoadingItemPreviewDark() {
-    CMSAppTheme {
-        Surface(
-            Modifier
-                .fillMaxWidth()
-        ) {
-            Column {
-                repeat(3) {
+                repeat(5) {
                     LoadingItem(
                         Modifier
                             .alpha(1f)

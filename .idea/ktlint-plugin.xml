@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="KtLint plugin">
+    <ktlintMode>DISTRACT_FREE</ktlintMode>
+    <ktlintRulesetVersion>V1_3_0</ktlintRulesetVersion>
+    <externalJarPaths>
+      <list>
+        <option value="$PROJECT_DIR$/spotless/ktlint/ktlint-compose-0.4.5-all.jar" />
+      </list>
+    </externalJarPaths>
+  </component>
+</project>

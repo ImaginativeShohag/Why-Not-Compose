@@ -101,16 +101,16 @@ object Libs {
         }
 
         object PlayService {
-            const val maps = "com.google.android.gms:play-services-maps:18.2.0"
+            const val maps = "com.google.android.gms:play-services-maps:19.0.0"
         }
 
         object Maps {
-            private const val version = "5.0.0"
+            private const val version = "5.1.0"
             const val secretsGradlePluginVersion = "2.0.1"
 
             const val core = "com.google.maps.android:maps-ktx:$version"
             const val utils = "com.google.maps.android:maps-utils-ktx:$version"
-            const val compose = "com.google.maps.android:maps-compose:5.0.4"
+            const val compose = "com.google.maps.android:maps-compose:6.0.0"
             const val secretsGradlePlugin =
                 "com.google.android.libraries.mapsplatform.secrets-gradle-plugin"
         }
@@ -136,7 +136,7 @@ object Libs {
         const val version = "2.0.0"
 
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$version"
-        const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.0"
+        const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1"
 
         const val composeCompilerGradlePlugin = "org.jetbrains.kotlin.plugin.compose"
         const val percelizeGradlePlugin = "kotlin-parcelize"
@@ -173,7 +173,7 @@ object Libs {
             const val materialIconsExtended =
                 "androidx.compose.material:material-icons-extended"
 
-            const val material3 = "androidx.compose.material3:material3"
+            const val material3 = "androidx.compose.material3:material3:1.3.0-beta04" // Remove when stable
             const val material3WindowSizeClass =
                 "androidx.compose.material3:material3-window-size-class"
 
@@ -211,7 +211,7 @@ object Libs {
         }
 
         object Lifecycle {
-            private const val version = "2.8.2"
+            private const val version = "2.8.3"
 
             const val extensions = "androidx.lifecycle:lifecycle-extensions:$version"
             const val livedata = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
@@ -222,7 +222,7 @@ object Libs {
         }
 
         object Navigation {
-            private const val version = "2.8.0-beta03"
+            private const val version = "2.8.0-beta04"
 
             const val fragment = "androidx.navigation:navigation-fragment-ktx:$version"
             const val uiKtx = "androidx.navigation:navigation-ui-ktx:$version"
@@ -251,12 +251,12 @@ object Libs {
             const val rules = "androidx.test:rules:$version"
 
             object Ext {
-                private const val version = "1.1.5"
+                private const val version = "1.2.1"
 
                 const val junit = "androidx.test.ext:junit-ktx:$version"
             }
 
-            const val espressoCore = "androidx.test.espresso:espresso-core:3.5.1"
+            const val espressoCore = "androidx.test.espresso:espresso-core:3.6.1"
         }
     }
 

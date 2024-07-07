@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.screens.user.add
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -69,7 +68,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
@@ -81,11 +80,12 @@ import org.imaginativeworld.whynotcompose.cms.ui.compositions.LoadingContainer
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralFilledButton
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralOutlinedButton
 
+@Suppress("ktlint:compose:mutable-state-param-check")
 @Composable
 fun UserAddSheet(
-    viewModel: UserAddViewModel = hiltViewModel(),
     showSheet: MutableState<Boolean>,
-    onSuccess: () -> Unit
+    onSuccess: () -> Unit,
+    viewModel: UserAddViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -108,7 +108,7 @@ fun UserAddSheet(
         }
     }
 
-    LaunchedEffect(state.addUserSuccess) {
+    LaunchedEffect(state.addUserSuccess, onSuccess) {
         state.addUserSuccess?.getValueOnce()?.let { isAddUserSuccess ->
             if (isAddUserSuccess) {
                 context.toast("User successfully added.")
@@ -142,26 +142,22 @@ fun UserAddSheet(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun UserAddSheetSkeletonPreview() {
+private fun UserAddSheetSkeletonPreviewDark() {
     CMSAppTheme {
-        UserAddSheetSkeleton()
+        UserAddSheetSkeleton(
+            showLoading = false,
+            showMessage = null
+        )
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun UserAddSheetSkeletonPreviewDark() {
-    CMSAppTheme {
-        UserAddSheetSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun UserAddSheetSkeleton(
-    showLoading: Boolean = false,
-    showMessage: Event<String>? = null,
+    showLoading: Boolean,
+    showMessage: Event<String>?,
     goBack: () -> Unit = {},
     addUser: (
         name: String,
@@ -194,7 +190,7 @@ fun UserAddSheetSkeleton(
         topBar = {
             GeneralSheetAppBar(
                 title = "Add User",
-                onCancelClicked = goBack
+                onCancelClick = goBack
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },

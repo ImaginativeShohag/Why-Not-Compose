@@ -41,7 +41,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import org.imaginativeworld.whynotcompose.BuildConfig
 import timber.log.Timber
 
@@ -53,15 +53,12 @@ private const val CUSTOM_BLANK = "about:blank?app"
 
 @HiltViewModel
 class WebViewViewModel @Inject constructor() : ViewModel() {
-
     private val _state = MutableStateFlow(WebViewState())
-    val state: StateFlow<WebViewState>
-        get() = _state
+    val state = _state.asStateFlow()
 
     // ----------------------------------------------------------------
 
     private var swipeRefreshLayout: WeakReference<SwipeRefreshLayout>? = null
-
     private var webView: WeakReference<WebView>? = null
 
     // ----------------------------------------------------------------
@@ -150,6 +147,7 @@ class WebViewViewModel @Inject constructor() : ViewModel() {
                     }
                 }
 
+                @Deprecated("Deprecated in Java")
                 override fun onReceivedError(
                     view: WebView?,
                     errorCode: Int,

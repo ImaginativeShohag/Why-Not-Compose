@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.exoplayer
 
-import android.content.res.Configuration
 import android.net.Uri
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -48,12 +47,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Card
-import androidx.compose.material.Divider
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -68,7 +68,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -93,22 +93,15 @@ fun ExoPlayerScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun ExoPlayerScreenSkeletonPreview() {
+private fun ExoPlayerScreenSkeletonPreview() {
     AppTheme {
         ExoPlayerScreenSkeleton()
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun ExoPlayerScreenSkeletonPreviewDark() {
-    AppTheme {
-        ExoPlayerScreenSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun ExoPlayerScreenSkeleton(
     goBack: () -> Unit = {}
@@ -132,7 +125,7 @@ fun ExoPlayerScreenSkeleton(
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
 
-            Divider()
+            HorizontalDivider()
 
             // ----------------------------------------------------------------
 
@@ -148,8 +141,8 @@ fun ExoPlayerScreenSkeleton(
 
 @Composable
 private fun VideoList(
-    modifier: Modifier,
-    videos: List<Video>
+    videos: List<Video>,
+    modifier: Modifier = Modifier
 ) {
     val lazyListState = rememberLazyListState()
     // play the video on the first visible item in the list
@@ -176,15 +169,21 @@ private fun VideoList(
 }
 
 @Composable
-fun VideoItem(video: Video, focusedVideo: Boolean) {
+fun VideoItem(
+    video: Video,
+    focusedVideo: Boolean,
+    modifier: Modifier = Modifier
+) {
     val animateBackground by animateColorAsState(
-        targetValue = if (focusedVideo) TailwindCSSColor.Red500 else MaterialTheme.colors.surface
+        targetValue = if (focusedVideo) TailwindCSSColor.Red500 else MaterialTheme.colorScheme.surface
     )
 
     Card(
-        modifier = Modifier.padding(horizontal = 16.dp, 6.dp),
-        elevation = 2.dp,
-        backgroundColor = animateBackground
+        modifier = modifier.padding(horizontal = 16.dp, 6.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = animateBackground
+        )
     ) {
         Column(
             modifier = Modifier.fillMaxWidth()
@@ -198,7 +197,7 @@ fun VideoItem(video: Video, focusedVideo: Boolean) {
                 Image(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(MaterialTheme.colors.onSurface.copy(.1f)),
+                        .background(MaterialTheme.colorScheme.onSurface.copy(.1f)),
                     painter = rememberImagePainter(data = video.thumb),
                     contentDescription = null,
                     contentScale = ContentScale.Crop
@@ -247,7 +246,11 @@ fun VideoItem(video: Video, focusedVideo: Boolean) {
 }
 
 @Composable
-private fun Player(modifier: Modifier = Modifier, video: Video, focusedVideo: Boolean) {
+private fun Player(
+    video: Video,
+    focusedVideo: Boolean,
+    modifier: Modifier = Modifier
+) {
     val context = LocalContext.current
     val exoPlayer = remember { SimpleExoPlayerHolder.get(context) }
     var playerView: StyledPlayerView? = null

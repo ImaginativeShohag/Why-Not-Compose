@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.ui.webview
 
-import android.content.res.Configuration
 import android.view.ViewGroup
 import android.webkit.WebView
 import androidx.activity.compose.BackHandler
@@ -55,11 +54,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -73,6 +72,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -89,17 +89,18 @@ import timber.log.Timber
 // TODO: Error/message pages
 
 sealed class WebViewTarget(val name: String, val url: String) {
-    object AboutMe : WebViewTarget(
+    data object AboutMe : WebViewTarget(
         name = "About Me",
         url = "https://imaginativeshohag.github.io"
     )
 
-    object SourceCode : WebViewTarget(
+    data object SourceCode : WebViewTarget(
         name = "Source Code",
         url = "https://github.com/ImaginativeShohag/Why-Not-Compose"
     )
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun WebViewScreen(
     viewModel: WebViewViewModel,
@@ -135,9 +136,9 @@ fun WebViewScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun WebViewSkeletonPreview() {
+private fun WebViewSkeletonPreview() {
     AppTheme {
         WebViewSkeleton(
             title = WebViewTarget.AboutMe.name,
@@ -153,24 +154,7 @@ fun WebViewSkeletonPreview() {
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun WebViewSkeletonPreviewDark() {
-    AppTheme {
-        WebViewSkeleton(
-            title = WebViewTarget.AboutMe.name,
-            goBack = {},
-            webView = {
-                Box(
-                    Modifier
-                        .fillMaxSize()
-                        .background(TailwindCSSColor.Yellow500)
-                )
-            }
-        )
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun WebViewSkeleton(
     title: String,
@@ -230,17 +214,17 @@ fun WebViewSkeleton(
 
 @Composable
 private fun WebViewContainer(
-    modifier: Modifier,
     url: String,
     loadingProgress: Int?,
     initSwipeRefresh: (swipeRefreshLayout: SwipeRefreshLayout) -> Unit,
-    initWebView: (webView: WebView) -> Unit
+    initWebView: (webView: WebView) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
     ) {
-        Box(modifier.fillMaxSize()) {
+        Box(Modifier.fillMaxSize()) {
             AndroidView(
                 modifier = Modifier.fillMaxSize(),
                 factory = { context ->
@@ -288,26 +272,26 @@ private fun WebViewContainer(
 
 @Preview
 @Composable
-fun LoadingContainerPreview() {
+private fun LoadingContainerPreview() {
     val scope = rememberCoroutineScope()
     val progress = remember { mutableIntStateOf(0) }
 
     LaunchedEffect(true) {
         scope.launch {
             while (true) {
-                progress.value = 0
+                progress.intValue = 0
 
                 delay(1000)
 
-                progress.value = 33
+                progress.intValue = 33
 
                 delay(1000)
 
-                progress.value = 66
+                progress.intValue = 66
 
                 delay(1000)
 
-                progress.value = 100
+                progress.intValue = 100
 
                 delay(1000)
             }
@@ -315,7 +299,7 @@ fun LoadingContainerPreview() {
     }
 
     LoadingContainer(
-        progress.value
+        progress.intValue
     )
 }
 
@@ -324,14 +308,15 @@ private fun LoadingContainer(
     progress: Int,
     visible: Boolean = true
 ) {
-    val infiniteTransition = rememberInfiniteTransition()
+    val infiniteTransition = rememberInfiniteTransition(label = "Loading")
     val color by infiniteTransition.animateColor(
         initialValue = TailwindCSSColor.Green500,
         targetValue = TailwindCSSColor.Green700,
         animationSpec = infiniteRepeatable(
             animation = tween(1000, easing = LinearEasing),
             repeatMode = RepeatMode.Reverse
-        )
+        ),
+        label = "Color"
     )
 
     AnimatedVisibility(

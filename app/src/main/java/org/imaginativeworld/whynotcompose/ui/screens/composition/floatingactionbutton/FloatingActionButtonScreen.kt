@@ -26,34 +26,43 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.composition.floatingactionbutton
 
-import android.content.res.Configuration
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Divider
-import androidx.compose.material.ExtendedFloatingActionButton
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LargeFloatingActionButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SmallFloatingActionButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 // Source:
-// https://cs.android.com/androidx/platform/tools/dokka-devsite-plugin/+/master:testData/compose/samples/material/samples/FloatingActionButtonSamples.kt
+// https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:compose/material3/material3/samples/src/main/java/androidx/compose/material3/samples/FloatingActionButtonSamples.kt
 
 @Composable
 fun FloatingActionButtonScreen(
@@ -64,22 +73,15 @@ fun FloatingActionButtonScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun FloatingActionButtonScreenSkeletonPreview() {
+private fun FloatingActionButtonScreenSkeletonPreviewDark() {
     AppTheme {
         FloatingActionButtonScreenSkeleton()
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun FloatingActionButtonScreenSkeletonPreviewDark() {
-    AppTheme {
-        FloatingActionButtonScreenSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun FloatingActionButtonScreenSkeleton(
     goBack: () -> Unit = {}
@@ -88,71 +90,110 @@ fun FloatingActionButtonScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "FloatingActionButton",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
         ) {
-            AppComponent.Header(
-                "FloatingActionButton",
-                goBack = goBack
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            Divider()
-
-            // ----------------------------------------------------------------
-
             Column(
-                Modifier.padding(start = 16.dp, end = 16.dp),
+                Modifier,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 AppComponent.MediumSpacer()
 
-                FloatingActionButton(onClick = { /*do something*/ }) {
-                    Icon(Icons.Filled.Favorite, contentDescription = "Localized description")
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    FloatingActionButton(
+                        onClick = { /* do something */ }
+                    ) {
+                        Icon(Icons.Filled.Add, "Localized description")
+                    }
+
+                    // ----------------------------------------------------------------
+
+                    SmallFloatingActionButton(
+                        onClick = { /* do something */ }
+                    ) {
+                        Icon(Icons.Filled.Add, contentDescription = "Localized description")
+                    }
+
+                    // ----------------------------------------------------------------
+
+                    LargeFloatingActionButton(
+                        onClick = { /* do something */ }
+                    ) {
+                        Icon(
+                            Icons.Filled.Add,
+                            contentDescription = "Localized description",
+                            modifier = Modifier.size(FloatingActionButtonDefaults.LargeIconSize)
+                        )
+                    }
                 }
 
                 // ----------------------------------------------------------------
 
                 AppComponent.MediumSpacer()
 
-                ExtendedFloatingActionButton(
-                    text = { Text("EXTENDED") },
-                    onClick = {}
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    ExtendedFloatingActionButton(onClick = { /* do something */ }) { Text(text = "Extended FAB") }
+
+                    // ----------------------------------------------------------------
+
+                    ExtendedFloatingActionButton(
+                        onClick = { /* do something */ },
+                        icon = { Icon(Icons.Filled.Add, "Localized description") },
+                        text = { Text(text = "Extended FAB") }
+                    )
+                }
 
                 // ----------------------------------------------------------------
 
                 AppComponent.MediumSpacer()
 
-                ExtendedFloatingActionButton(
-                    icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
-                    text = { Text("ADD TO BASKET") },
-                    onClick = { /*do something*/ }
-                )
+                HorizontalDivider()
 
-                // ----------------------------------------------------------------
-
-                AppComponent.MediumSpacer()
-
-                ExtendedFloatingActionButton(
-                    icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
-                    text = { Text("FLUID FAB") },
-                    onClick = { /*do something*/ },
-                    modifier = Modifier.fillMaxWidth()
-                )
+                val listState = rememberLazyListState()
+                // The FAB is initially expanded. Once the first visible item is past the first item we
+                // collapse the FAB. We use a remembered derived state to minimize unnecessary compositions.
+                val expandedFab by remember { derivedStateOf { listState.firstVisibleItemIndex == 0 } }
+                Scaffold(
+                    modifier = Modifier.weight(1f),
+                    floatingActionButton = {
+                        ExtendedFloatingActionButton(
+                            onClick = { /* do something */ },
+                            expanded = expandedFab,
+                            icon = { Icon(Icons.Filled.Add, "Localized Description") },
+                            text = { Text(text = "Extended FAB") }
+                        )
+                    },
+                    floatingActionButtonPosition = FabPosition.End
+                ) { innerPadding ->
+                    LazyColumn(
+                        state = listState,
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                    ) {
+                        for (index in 0 until 100) {
+                            item { Text(text = "List item - $index", modifier = Modifier.padding(24.dp)) }
+                        }
+                    }
+                }
             }
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            AppComponent.BigSpacer()
         }
     }
 }

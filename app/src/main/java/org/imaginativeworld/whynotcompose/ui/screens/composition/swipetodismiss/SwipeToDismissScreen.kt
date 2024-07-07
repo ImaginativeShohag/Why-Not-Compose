@@ -26,16 +26,13 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.composition.swipetodismiss
 
-import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -45,23 +42,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Card
-import androidx.compose.material.DismissDirection.EndToStart
-import androidx.compose.material.DismissDirection.StartToEnd
-import androidx.compose.material.DismissValue.Default
-import androidx.compose.material.DismissValue.DismissedToEnd
-import androidx.compose.material.DismissValue.DismissedToStart
-import androidx.compose.material.Divider
-import androidx.compose.material.FractionalThreshold
-import androidx.compose.material.Icon
-import androidx.compose.material.ListItem
-import androidx.compose.material.Scaffold
-import androidx.compose.material.SwipeToDismiss
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material.rememberDismissState
+import androidx.compose.material3.Card
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxValue
+import androidx.compose.material3.Text
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -74,16 +66,16 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
-import org.imaginativeworld.whynotcompose.models.ListItem
+import org.imaginativeworld.whynotcompose.models.ListItemModel
 import org.imaginativeworld.whynotcompose.repositories.MockData
 
 // Source:
-// https://cs.android.com/androidx/platform/tools/dokka-devsite-plugin/+/master:testData/compose/samples/material/samples/SwipeToDismissSamples.kt
+// https://cs.android.com/androidx/platform/tools/dokka-devsite-plugin/+/master:testData/compose/samples/material3/samples/SwipeToDismissSamples.kt
 
 private val dummyItems = MockData.dummyListItem.toList()
 
@@ -104,9 +96,9 @@ fun SwipeToDismissScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun SwipeToDismissScreenSkeletonPreview() {
+private fun SwipeToDismissScreenSkeletonPreview() {
     AppTheme {
         val items = remember { mutableStateOf(dummyItems) }
 
@@ -121,160 +113,119 @@ fun SwipeToDismissScreenSkeletonPreview() {
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun SwipeToDismissScreenSkeletonPreviewDark() {
-    AppTheme {
-        val items = remember { mutableStateOf(dummyItems) }
-
-        SwipeToDismissScreenSkeleton(
-            items = items.value,
-            onDelete = {
-                items.value = items.value.toMutableList().apply {
-                    remove(it)
-                }
-            }
-        )
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun SwipeToDismissScreenSkeleton(
-    goBack: () -> Unit = {},
-    items: List<ListItem>,
-    onDelete: (ListItem) -> Unit
+    items: List<ListItemModel>,
+    onDelete: (ListItemModel) -> Unit,
+    goBack: () -> Unit = {}
 ) {
     Scaffold(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
-    ) { innerPadding ->
-        Column(
-            Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-        ) {
+            .statusBarsPadding(),
+        topBar = {
             AppComponent.Header(
                 "SwipeToDismiss",
                 goBack = goBack
             )
+        }
+    ) { innerPadding ->
+        LazyColumn(
+            Modifier
+                .padding(innerPadding)
+                .fillMaxWidth(),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
+        ) {
+            items(
+                items = items,
+                key = { listItem: ListItemModel -> listItem.id }
+            ) { item ->
+                var deleted by remember { mutableStateOf(false) }
+                var unread by remember { mutableStateOf(true) }
+                val dismissState = rememberSwipeToDismissBoxState(
+                    confirmValueChange = {
+                        if (it == SwipeToDismissBoxValue.StartToEnd) unread = !unread
 
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            Divider()
-
-            // ----------------------------------------------------------------
-
-            // This is an example of a list of dismissible items, similar to what you would see in an
-            // email app. Swiping left reveals a 'delete' icon and swiping right reveals a 'done' icon.
-            // The background will start as grey, but once the dismiss threshold is reached, the colour
-            // will animate to red if you're swiping left or green if you're swiping right. When you let
-            // go, the item will animate out of the way if you're swiping left (like deleting an email) or
-            // back to its default position if you're swiping right (like marking an email as read/unread).
-            LazyColumn(
-                Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
-            ) {
-                items(
-                    items = items,
-                    key = { listItem: ListItem -> listItem.id }
-                ) { item ->
-                    var deleted by remember { mutableStateOf(false) }
-                    var unread by remember { mutableStateOf(true) }
-                    val dismissState = rememberDismissState(
-                        confirmStateChange = {
-                            if (it == DismissedToEnd) unread = !unread
-
-                            if (it == DismissedToStart) {
-                                deleted = true
-                                return@rememberDismissState true
-                            }
-                            return@rememberDismissState false
+                        if (it == SwipeToDismissBoxValue.EndToStart) {
+                            deleted = true
+                            return@rememberSwipeToDismissBoxState true
                         }
-                    )
-
-                    LaunchedEffect(deleted) {
-                        if (deleted) {
-                            delay(500)
-
-                            onDelete(item)
-                        }
+                        return@rememberSwipeToDismissBoxState false
                     }
+                )
 
-                    AnimatedVisibility(
-                        visible = !deleted,
-                        enter = expandVertically(),
-                        exit = shrinkVertically()
-                    ) {
-                        SwipeToDismiss(
-                            state = dismissState,
-                            modifier = Modifier.padding(vertical = 4.dp),
-                            directions = setOf(
-                                StartToEnd,
-                                EndToStart
-                            ),
-                            dismissThresholds = { direction ->
-                                FractionalThreshold(if (direction == StartToEnd) 0.25f else 0.5f)
-                            },
-                            background = {
-                                val direction =
-                                    dismissState.dismissDirection ?: return@SwipeToDismiss
-                                val color by animateColorAsState(
-                                    when (dismissState.targetValue) {
-                                        Default -> Color.LightGray
-                                        DismissedToEnd -> Color.Green
-                                        DismissedToStart -> Color.Red
-                                    }
-                                )
-                                val alignment = when (direction) {
-                                    StartToEnd -> Alignment.CenterStart
-                                    EndToStart -> Alignment.CenterEnd
-                                }
-                                val icon = when (direction) {
-                                    StartToEnd -> Icons.Default.Done
-                                    EndToStart -> Icons.Default.Delete
-                                }
-                                val scale by animateFloatAsState(
-                                    if (dismissState.targetValue == Default) 0.75f else 1f
-                                )
+                LaunchedEffect(deleted, onDelete) {
+                    if (deleted) {
+                        delay(500)
 
-                                Box(
-                                    Modifier
-                                        .fillMaxSize()
-                                        .background(color)
-                                        .padding(horizontal = 20.dp),
-                                    contentAlignment = alignment
-                                ) {
-                                    Icon(
-                                        icon,
-                                        contentDescription = "Localized description",
-                                        modifier = Modifier.scale(scale)
-                                    )
+                        onDelete(item)
+                    }
+                }
+
+                AnimatedVisibility(
+                    visible = !deleted,
+                    enter = expandVertically(),
+                    exit = shrinkVertically()
+                ) {
+                    SwipeToDismissBox(
+                        state = dismissState,
+                        backgroundContent = {
+                            val direction =
+                                dismissState.dismissDirection
+
+                            val color by animateColorAsState(
+                                when (dismissState.targetValue) {
+                                    SwipeToDismissBoxValue.Settled -> Color.Transparent
+                                    SwipeToDismissBoxValue.StartToEnd -> Color.Green
+                                    SwipeToDismissBoxValue.EndToStart -> Color.Red
                                 }
-                            },
-                            dismissContent = {
-                                Card(
-                                    elevation = animateDpAsState(
-                                        if (dismissState.dismissDirection != null) 4.dp else 0.dp
-                                    ).value
-                                ) {
-                                    ListItem(
-                                        text = {
-                                            Text(
-                                                item.name,
-                                                fontWeight = if (unread) FontWeight.Bold else null,
-                                                textDecoration = if (unread) TextDecoration.None else TextDecoration.LineThrough
-                                            )
-                                        },
-                                        secondaryText = { Text("Swipe me left or right!") }
-                                    )
-                                }
+                            )
+                            // Box(Modifier.fillMaxSize().background(color))
+
+                            val alignment = when (direction) {
+                                SwipeToDismissBoxValue.StartToEnd -> Alignment.CenterStart
+                                SwipeToDismissBoxValue.EndToStart -> Alignment.CenterEnd
+                                SwipeToDismissBoxValue.Settled -> Alignment.Center
                             }
-                        )
+                            val icon = when (direction) {
+                                SwipeToDismissBoxValue.StartToEnd -> Icons.Default.Done
+                                SwipeToDismissBoxValue.EndToStart -> Icons.Default.Delete
+                                SwipeToDismissBoxValue.Settled -> Icons.Default.Delete
+                            }
+                            val scale by animateFloatAsState(
+                                if (dismissState.targetValue == SwipeToDismissBoxValue.Settled) 0.75f else 1f
+                            )
+
+                            Box(
+                                Modifier
+                                    .fillMaxSize()
+                                    .background(color)
+                                    .padding(horizontal = 20.dp),
+                                contentAlignment = alignment
+                            ) {
+                                Icon(
+                                    icon,
+                                    contentDescription = "Localized description",
+                                    modifier = Modifier.scale(scale)
+                                )
+                            }
+                        }
+                    ) {
+                        Card {
+                            ListItem(
+                                headlineContent = {
+                                    Text(
+                                        item.name,
+                                        fontWeight = if (unread) FontWeight.Bold else null,
+                                        textDecoration = if (unread) TextDecoration.None else TextDecoration.LineThrough
+                                    )
+                                },
+                                supportingContent = { Text("Swipe me left or right!") }
+                            )
+                            HorizontalDivider()
+                        }
                     }
                 }
             }

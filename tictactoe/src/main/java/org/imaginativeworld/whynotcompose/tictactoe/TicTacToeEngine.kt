@@ -111,9 +111,7 @@ object TicTacToeEngine {
      * 1X2X3X4X5X6X7X8X9X
      * 012345678912345678 <- index
      */
-    fun whoWin(playingMoves: String, winPosition: WinPosition): Piece {
-        return Piece.valueOf(
-            playingMoves[playingMoves.indexOf(winPosition.places[0].toString()) + 1].toString()
-        )
-    }
+    fun whoWin(playingMoves: String, winPosition: WinPosition): Piece = Piece.valueOf(
+        playingMoves[playingMoves.indexOf(winPosition.places[0].toString()) + 1].toString()
+    )
 }

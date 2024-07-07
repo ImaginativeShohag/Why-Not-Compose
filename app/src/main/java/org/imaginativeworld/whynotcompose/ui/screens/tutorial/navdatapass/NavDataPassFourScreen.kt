@@ -35,11 +35,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.Divider
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -75,7 +75,7 @@ fun NavDataPassFourScreen(
 
 @PreviewLightDark
 @Composable
-fun NavDataPassFourScreenSkeletonPreview() {
+private fun NavDataPassFourScreenSkeletonPreview() {
     AppTheme {
         NavDataPassFourScreenSkeleton(
             id = 1,
@@ -85,6 +85,7 @@ fun NavDataPassFourScreenSkeletonPreview() {
     }
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun NavDataPassFourScreenSkeleton(
     id: Int,
@@ -100,7 +101,13 @@ fun NavDataPassFourScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "Data passed by Memory Cache",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
@@ -109,16 +116,6 @@ fun NavDataPassFourScreenSkeleton(
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            AppComponent.Header(
-                "Data passed by Memory Cache",
-                goBack = goBack
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            Divider()
-
             AppComponent.BigSpacer()
 
             Text(
@@ -153,13 +150,14 @@ fun NavDataPassFourScreenSkeleton(
 
             // ----------------------------------------------------------------
 
-            Divider()
+            HorizontalDivider()
 
             AppComponent.BigSpacer()
 
             OutlinedTextField(
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
+                    .padding(bottom = 16.dp)
                     .fillMaxWidth(),
                 value = text,
                 onValueChange = { text = it },
@@ -184,7 +182,7 @@ fun NavDataPassFourScreenSkeleton(
 
             // ----------------------------------------------------------------
 
-            Divider()
+            HorizontalDivider()
 
             AppComponent.BigSpacer()
 

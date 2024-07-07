@@ -38,11 +38,11 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.Divider
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.common.compose.composeutils.rememberImagePainter
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
@@ -57,24 +57,15 @@ fun LazyVerticalGridScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun LazyVerticalGridScreenSkeletonPreview() {
+private fun LazyVerticalGridScreenSkeletonPreview() {
     AppTheme {
         LazyVerticalGridScreenSkeleton()
     }
 }
 
-@Preview
-@Composable
-fun LazyVerticalGridScreenSkeletonPreviewDark() {
-    AppTheme(
-        darkTheme = true
-    ) {
-        LazyVerticalGridScreenSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun LazyVerticalGridScreenSkeleton(
     goBack: () -> Unit = {}
@@ -83,28 +74,24 @@ fun LazyVerticalGridScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "Grid with LazyVerticalGrid",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            AppComponent.Header(
-                "Grid with LazyVerticalGrid",
-                goBack = goBack
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            Divider()
-
             AppComponent.SubHeader(
                 text = "Adaptive Columns"
             )
 
-            Divider()
+            HorizontalDivider()
 
             val itemsList = (1..102).toList()
 
@@ -133,13 +120,13 @@ fun LazyVerticalGridScreenSkeleton(
 
             // ----------------------------------------------------------------
 
-            Divider()
+            HorizontalDivider()
 
             AppComponent.SubHeader(
                 text = "Fixed Columns"
             )
 
-            Divider()
+            HorizontalDivider()
 
             LazyVerticalGrid(
                 columns = GridCells.Fixed(3),

@@ -26,21 +26,36 @@
 
 package org.imaginativeworld.whynotcompose.common.compose.theme
 
-import androidx.compose.material.Colors
+import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import org.imaginativeworld.whynotcompose.base.models.isLight
+import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
+import org.imaginativeworld.whynotcompose.common.compose.R
 
-val Colors.composeThemeColor: Color
+val ColorScheme.composeThemeColor: Color
     @Composable get() = Color(0xFF4285f4)
 
-val Colors.inputBackground: Color
-    @Composable get() = if (isLight) TailwindCSSColor.Gray100 else TailwindCSSColor.Gray800
+val ColorScheme.inputBackground: Color
+    @Composable get() {
+        val uiThemeMode by UIThemeController.uiThemeMode.collectAsState()
+        return if (uiThemeMode.isLight()) TailwindCSSColor.Gray100 else TailwindCSSColor.Gray800
+    }
 
-val Colors.onInputBackground: Color
-    @Composable get() = if (isLight) TailwindCSSColor.Gray900 else TailwindCSSColor.Gray50
+val ColorScheme.onInputBackground: Color
+    @Composable get() {
+        val uiThemeMode by UIThemeController.uiThemeMode.collectAsState()
+        return if (uiThemeMode.isLight()) TailwindCSSColor.Gray900 else TailwindCSSColor.Gray50
+    }
 
-val Colors.errorInputBackground: Color
-    @Composable get() = if (isLight) TailwindCSSColor.Red500.copy(.1f) else TailwindCSSColor.Red900.copy(.95f)
+val ColorScheme.errorInputBackground: Color
+    @Composable get() {
+        val uiThemeMode by UIThemeController.uiThemeMode.collectAsState()
+        return if (uiThemeMode.isLight()) TailwindCSSColor.Red500.copy(.1f) else TailwindCSSColor.Red900.copy(.95f)
+    }
 
 object AppColor {
 //    val ExampleColor = Color(0xff123456)
@@ -118,4 +133,48 @@ object TailwindCSSColor {
     val Pink500 = Color(0xFFEC4899)
     val Pink700 = Color(0xFFBE185D)
     val Pink900 = Color(0xFF831843)
+}
+
+/**
+ * Apple system colors.
+ *
+ * Reference: https://www.figma.com/community/file/1248375255495415511
+ */
+object AppleSystemColor {
+    val Red: Color
+        @Composable get() = colorResource(id = R.color.ios_system_red)
+    val Orange: Color
+        @Composable get() = colorResource(id = R.color.ios_system_orange)
+    val Yellow: Color
+        @Composable get() = colorResource(id = R.color.ios_system_yellow)
+    val Green: Color
+        @Composable get() = colorResource(id = R.color.ios_system_green)
+    val Mint: Color
+        @Composable get() = colorResource(id = R.color.ios_system_mint)
+    val Teal: Color
+        @Composable get() = colorResource(id = R.color.ios_system_teal)
+    val Cyan: Color
+        @Composable get() = colorResource(id = R.color.ios_system_cyan)
+    val Blue: Color
+        @Composable get() = colorResource(id = R.color.ios_system_blue)
+    val Indigo: Color
+        @Composable get() = colorResource(id = R.color.ios_system_indigo)
+    val Purple: Color
+        @Composable get() = colorResource(id = R.color.ios_system_purple)
+    val Pink: Color
+        @Composable get() = colorResource(id = R.color.ios_system_pink)
+    val Brown: Color
+        @Composable get() = colorResource(id = R.color.ios_system_brown)
+    val Gray: Color
+        @Composable get() = colorResource(id = R.color.ios_system_gray)
+    val Gray2: Color
+        @Composable get() = colorResource(id = R.color.ios_system_gray2)
+    val Gray3: Color
+        @Composable get() = colorResource(id = R.color.ios_system_gray3)
+    val Gray4: Color
+        @Composable get() = colorResource(id = R.color.ios_system_gray4)
+    val Gray5: Color
+        @Composable get() = colorResource(id = R.color.ios_system_gray5)
+    val Gray6: Color
+        @Composable get() = colorResource(id = R.color.ios_system_gray6)
 }

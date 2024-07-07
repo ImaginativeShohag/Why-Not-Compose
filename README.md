@@ -19,6 +19,7 @@ Feel free to request features or suggestions for improvements.
 - Hilt
 - Everywhere dark mode support
 - A lot of Ready to use compositions
+- Material 3
 - Gradle Kotlin DSL
 - CI/CD
     - ktlint
@@ -80,7 +81,7 @@ Feel free to request features or suggestions for improvements.
 
 - Migrate to Material 3
     - [x] CMS
-    - [ ] Full app
+    - [x] Full app
 - [ ] Add accompanist WebView
 - [ ] x, y, z translation simulation
 - [ ] Shadow manipulation with device gyroscope
@@ -98,6 +99,8 @@ Feel free to request features or suggestions for improvements.
 - [x] Check map example issue: on click freeze
 - [ ] New: File browser using MediaStore
 - [ ] Get sidebar from Emudi app (https://www.youtube.com/watch?v=HNSKJIQtb4c)
+- [ ] Update `popBackStack()`
+- [ ] Migrate ExoPlayer: https://developer.android.com/media/media3/exoplayer/migration-guide
 
 # Note
 

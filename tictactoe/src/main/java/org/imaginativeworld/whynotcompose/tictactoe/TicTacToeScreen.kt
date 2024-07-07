@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.tictactoe
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
@@ -78,7 +77,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.imaginativeworld.whynotcompose.base.extensions.toast
@@ -111,28 +110,18 @@ fun TicTacToeScreen(
         totalNeurons = state.totalNeurons,
         winPosition = state.winPosition,
         goBack = goBack,
-        onBoxClicked = { position ->
+        onBoxClick = { position ->
             viewModel.act(
                 position = position
             )
         },
-        onRestartClicked = {
+        onRestartClick = {
             viewModel.restart()
         }
     )
 }
 
-@Preview
-@Composable
-private fun TicTacToeScreenSkeletonPreview() {
-    AppTheme {
-        TicTacToeScreenSkeleton(
-            currentPlayingMoves = "1O3O5X7X9O2X4X6X8O"
-        )
-    }
-}
-
-@Preview(uiMode = UI_MODE_NIGHT_YES)
+@PreviewLightDark
 @Composable
 private fun TicTacToeScreenSkeletonPreviewDark() {
     AppTheme {
@@ -142,6 +131,7 @@ private fun TicTacToeScreenSkeletonPreviewDark() {
     }
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun TicTacToeScreenSkeleton(
     loading: Boolean = false,
@@ -153,12 +143,12 @@ fun TicTacToeScreenSkeleton(
     totalNeurons: Int = 0,
     winPosition: WinPosition? = null,
     goBack: () -> Unit = {},
-    onBoxClicked: (position: Int) -> Unit = {},
-    onRestartClicked: () -> Unit = {}
+    onBoxClick: (position: Int) -> Unit = {},
+    onRestartClick: () -> Unit = {}
 ) {
     val snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
 
-    LaunchedEffect(message) {
+    LaunchedEffect(message, onRestartClick) {
         message?.getValueOnce()?.let { value ->
             val result = snackbarHostState.showSnackbar(
                 message = value,
@@ -167,7 +157,7 @@ fun TicTacToeScreenSkeleton(
             )
 
             if (result == SnackbarResult.ActionPerformed) {
-                onRestartClicked()
+                onRestartClick()
             }
         }
     }
@@ -251,7 +241,7 @@ fun TicTacToeScreenSkeleton(
                                 enabled = !paused,
                                 isMarked = winPosition != null && i in winPosition.places,
                                 onClick = {
-                                    onBoxClicked(i)
+                                    onBoxClick(i)
                                 }
                             )
                         }
@@ -264,7 +254,7 @@ fun TicTacToeScreenSkeleton(
                                 enabled = !paused,
                                 isMarked = winPosition != null && i in winPosition.places,
                                 onClick = {
-                                    onBoxClicked(i)
+                                    onBoxClick(i)
                                 }
                             )
                         }
@@ -277,7 +267,7 @@ fun TicTacToeScreenSkeleton(
                                 enabled = !paused,
                                 isMarked = winPosition != null && i in winPosition.places,
                                 onClick = {
-                                    onBoxClicked(i)
+                                    onBoxClick(i)
                                 }
                             )
                         }
@@ -335,6 +325,7 @@ fun RowScope.Block(
     currentPlayingMoves: String,
     enabled: Boolean,
     isMarked: Boolean,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit = {}
 ) {
     var currentPiece by remember { mutableStateOf<String?>(null) }
@@ -360,7 +351,7 @@ fun RowScope.Block(
     )
 
     Box(
-        Modifier
+        modifier
             .padding(4.dp)
             .clip(CircleShape)
             .weight(1f)

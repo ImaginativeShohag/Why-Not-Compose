@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.screens.post.add
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -62,7 +61,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
@@ -74,12 +73,13 @@ import org.imaginativeworld.whynotcompose.cms.ui.compositions.LoadingContainer
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralFilledButton
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralOutlinedButton
 
+@Suppress("ktlint:compose:mutable-state-param-check")
 @Composable
 fun PostAddSheet(
-    viewModel: PostAddViewModel = hiltViewModel(),
     userId: Int,
     showSheet: MutableState<Boolean>,
-    onSuccess: () -> Unit
+    onSuccess: () -> Unit,
+    viewModel: PostAddViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -102,7 +102,7 @@ fun PostAddSheet(
         }
     }
 
-    LaunchedEffect(state.addPostSuccess) {
+    LaunchedEffect(state.addPostSuccess, onSuccess) {
         state.addPostSuccess?.getValueOnce()?.let { isAddPostSuccess ->
             if (isAddPostSuccess) {
                 context.toast("Post successfully added.")
@@ -132,26 +132,22 @@ fun PostAddSheet(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun PostAddSheetSkeletonPreview() {
+private fun PostAddSheetSkeletonPreviewDark() {
     CMSAppTheme {
-        PostAddSheetSkeleton()
+        PostAddSheetSkeleton(
+            showLoading = false,
+            showMessage = null
+        )
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun PostAddSheetSkeletonPreviewDark() {
-    CMSAppTheme {
-        PostAddSheetSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun PostAddSheetSkeleton(
-    showLoading: Boolean = false,
-    showMessage: Event<String>? = null,
+    showLoading: Boolean,
+    showMessage: Event<String>?,
     goBack: () -> Unit = {},
     addPost: (
         title: String,
@@ -174,7 +170,7 @@ fun PostAddSheetSkeleton(
         topBar = {
             GeneralSheetAppBar(
                 title = "Add Post",
-                onCancelClicked = goBack
+                onCancelClick = goBack
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },

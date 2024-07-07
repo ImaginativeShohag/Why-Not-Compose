@@ -118,10 +118,10 @@ sealed class CommentScreen {
 
 @Composable
 fun CMSNavHost(
-    modifier: Modifier = Modifier,
     navController: NavHostController,
     updateUiThemeMode: (UIThemeMode) -> Unit,
-    goBack: () -> Unit
+    goBack: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     NavHost(
         modifier = modifier,
@@ -196,14 +196,14 @@ private fun NavGraphBuilder.addUserScreens(
             toggleUIMode = {
                 updateUiThemeMode(isDarkMode.nextMode())
             },
-            onTodosClicked = {
+            onTodosClick = {
                 navController.navigate(
                     TodoScreen.TodoList(
                         userId = userId
                     )
                 )
             },
-            onPostsClicked = {
+            onPostsClick = {
                 navController.navigate(
                     PostScreen.PostList(
                         userId = userId
@@ -326,7 +326,7 @@ private fun NavGraphBuilder.addPostScreens(
             toggleUIMode = {
                 updateUiThemeMode(isDarkMode.nextMode())
             },
-            onCommentsClicked = {
+            onCommentsClick = {
                 navController.navigate(
                     CommentScreen.CommentList(
                         postId = postId

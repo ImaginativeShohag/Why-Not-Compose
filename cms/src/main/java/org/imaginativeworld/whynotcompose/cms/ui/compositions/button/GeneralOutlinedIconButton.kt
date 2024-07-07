@@ -26,22 +26,25 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.compositions.button
 
-import android.content.res.Configuration
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedIconButton
-import androidx.compose.material3.Surface
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.tooling.preview.Preview
-import org.imaginativeworld.whynotcompose.cms.theme.CMSAppTheme
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
 fun GeneralOutlinedIconButton(
-    modifier: Modifier = Modifier,
     icon: ImageVector,
+    modifier: Modifier = Modifier,
     contentDescription: String? = null,
     onClick: () -> Unit
 ) {
@@ -56,26 +59,21 @@ fun GeneralOutlinedIconButton(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun GeneralOutlinedIconButtonPreview() {
-    CMSAppTheme {
-        Surface {
-            GeneralOutlinedIconButton(
-                icon = Icons.Outlined.Star
-            ) {}
-        }
-    }
-}
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun GeneralOutlinedIconButtonPreviewDark() {
-    CMSAppTheme {
-        Surface {
-            GeneralOutlinedIconButton(
-                icon = Icons.Outlined.Star
-            ) {}
+private fun GeneralOutlinedButtonPreview() {
+    AppTheme {
+        Scaffold { innerPadding ->
+            Column(
+                Modifier
+                    .padding(innerPadding)
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                GeneralOutlinedIconButton(
+                    icon = Icons.Outlined.Star
+                ) {}
+            }
         }
     }
 }

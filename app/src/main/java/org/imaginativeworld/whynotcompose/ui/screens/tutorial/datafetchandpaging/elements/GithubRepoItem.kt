@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging.elements
 
-import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -41,8 +40,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -52,7 +51,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.placeholder.PlaceholderHighlight
@@ -65,8 +64,8 @@ import org.imaginativeworld.whynotcompose.repositories.MockData
 
 @Composable
 fun GithubRepoItem(
-    modifier: Modifier,
     item: GithubRepo,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
     Card(
@@ -75,10 +74,7 @@ fun GithubRepoItem(
             .clickable {
                 onClick()
             },
-        shape = RoundedCornerShape(8.dp),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 2.dp
-        )
+        shape = RoundedCornerShape(8.dp)
     ) {
         Column(
             Modifier
@@ -154,99 +150,36 @@ fun GithubRepoItem(
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
-fun GithubRepoItemPreview() {
+private fun GithubRepoItemPreview() {
     AppTheme {
-        Column {
-            repeat(3) {
-                GithubRepoItem(
-                    modifier = Modifier.padding(
-                        start = 12.dp,
-                        top = 4.dp,
-                        end = 12.dp,
-                        bottom = 4.dp
-                    ),
-                    item = if (it % 2 == 0) {
-                        MockData.dummyGithubRepo
-                    } else {
-                        MockData.dummyGithubRepo.copy(
-                            description = null
-                        )
-                    },
-                    onClick = {}
-                )
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun GithubRepoItemPreviewDark() {
-    AppTheme {
-        Column {
-            repeat(3) {
-                GithubRepoItem(
-                    modifier = Modifier.padding(
-                        start = 12.dp,
-                        top = 4.dp,
-                        end = 12.dp,
-                        bottom = 4.dp
-                    ),
-                    item = if (it % 2 == 0) {
-                        MockData.dummyGithubRepo
-                    } else {
-                        MockData.dummyGithubRepo.copy(
-                            description = null
-                        )
-                    },
-                    onClick = {}
-                )
+        Scaffold { innerPadding ->
+            Column(Modifier.padding(innerPadding)) {
+                repeat(10) {
+                    GithubRepoItem(
+                        modifier = Modifier.padding(
+                            start = 12.dp,
+                            top = 4.dp,
+                            end = 12.dp,
+                            bottom = 4.dp
+                        ),
+                        item = if (it % 2 == 0) {
+                            MockData.dummyGithubRepo
+                        } else {
+                            MockData.dummyGithubRepo.copy(
+                                description = null
+                            )
+                        },
+                        onClick = {}
+                    )
+                }
             }
         }
     }
 }
 
 // ================================================================
-
-@Preview(showBackground = true)
-@Composable
-fun LoadingGithubRepoItemPreview() {
-    AppTheme {
-        Column(
-            Modifier
-                .fillMaxWidth()
-        ) {
-            repeat(3) {
-                LoadingGithubRepoItem(
-                    Modifier
-                        .alpha(1f)
-                        .padding(start = 12.dp, top = 4.dp, end = 12.dp, bottom = 4.dp)
-                )
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun LoadingGithubRepoItemPreviewDark() {
-    AppTheme {
-        Column(
-            Modifier
-                .fillMaxWidth()
-        ) {
-            repeat(3) {
-                LoadingGithubRepoItem(
-                    Modifier
-                        .alpha(1f)
-                        .padding(start = 12.dp, top = 4.dp, end = 12.dp, bottom = 4.dp)
-                )
-            }
-        }
-    }
-}
 
 @Composable
 fun LoadingGithubRepoItem(
@@ -365,6 +298,24 @@ fun LoadingGithubRepoItem(
                                 color = onBackgroundColor,
                                 highlight = PlaceholderHighlight.shimmer()
                             )
+                    )
+                }
+            }
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun LoadingGithubRepoItemPreview() {
+    AppTheme {
+        Scaffold { innerPadding ->
+            Column(Modifier.padding(innerPadding)) {
+                repeat(10) {
+                    LoadingGithubRepoItem(
+                        Modifier
+                            .alpha(1f)
+                            .padding(start = 12.dp, top = 4.dp, end = 12.dp, bottom = 4.dp)
                     )
                 }
             }

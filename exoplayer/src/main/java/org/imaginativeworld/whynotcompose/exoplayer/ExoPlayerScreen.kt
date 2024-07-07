@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.exoplayer
 
-import android.content.res.Configuration
 import android.net.Uri
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -69,7 +68,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -94,17 +93,9 @@ fun ExoPlayerScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
 private fun ExoPlayerScreenSkeletonPreview() {
-    AppTheme {
-        ExoPlayerScreenSkeleton()
-    }
-}
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-private fun ExoPlayerScreenSkeletonPreviewDark() {
     AppTheme {
         ExoPlayerScreenSkeleton()
     }

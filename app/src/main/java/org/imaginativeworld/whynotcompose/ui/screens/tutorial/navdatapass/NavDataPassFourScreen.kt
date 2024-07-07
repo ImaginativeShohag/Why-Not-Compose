@@ -101,7 +101,13 @@ fun NavDataPassFourScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "Data passed by Memory Cache",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
@@ -110,16 +116,6 @@ fun NavDataPassFourScreenSkeleton(
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            AppComponent.Header(
-                "Data passed by Memory Cache",
-                goBack = goBack
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            HorizontalDivider()
-
             AppComponent.BigSpacer()
 
             Text(

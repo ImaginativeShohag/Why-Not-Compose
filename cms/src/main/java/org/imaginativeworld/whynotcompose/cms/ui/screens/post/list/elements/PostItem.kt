@@ -51,11 +51,11 @@ import org.imaginativeworld.whynotcompose.common.compose.R
 
 @Composable
 fun PostItem(
-    modifier: Modifier = Modifier,
     title: String,
     body: String,
     featuredImageUrl: String,
     isPreview: Boolean,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit = {}
 ) {
     Card(
@@ -95,7 +95,7 @@ fun PostItem(
 
 @Preview(showBackground = true)
 @Composable
-fun PostItemPreview() {
+private fun PostItemPreview() {
     CMSAppTheme {
         Surface {
             Column(Modifier.padding(16.dp)) {
@@ -121,7 +121,7 @@ fun PostItemPreview() {
 
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun PostItemPreviewDark() {
+private fun PostItemPreviewDark() {
     CMSAppTheme {
         Surface {
             Column(Modifier.padding(16.dp)) {

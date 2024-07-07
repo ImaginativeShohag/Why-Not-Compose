@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.ui.mapview
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -49,7 +48,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
@@ -67,19 +66,9 @@ fun MapViewDetailsScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
 private fun MapViewDetailsScreenSkeletonPreview() {
-    AppTheme {
-        MapViewDetailsScreenSkeleton(
-            item = MapPlaceRepo.getDemoPlace()
-        )
-    }
-}
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-private fun MapViewDetailsScreenSkeletonPreviewDark() {
     AppTheme {
         MapViewDetailsScreenSkeleton(
             item = MapPlaceRepo.getDemoPlace()

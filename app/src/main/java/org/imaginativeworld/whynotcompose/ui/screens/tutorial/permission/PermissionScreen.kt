@@ -27,7 +27,6 @@
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.permission
 
 import android.Manifest
-import android.content.res.Configuration
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
@@ -39,14 +38,13 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.base.extensions.toast
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
@@ -96,17 +94,9 @@ fun PermissionScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
 private fun PermissionScreenSkeletonPreview() {
-    AppTheme {
-        PermissionScreenSkeleton()
-    }
-}
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-private fun PermissionScreenSkeletonPreviewDark() {
     AppTheme {
         PermissionScreenSkeleton()
     }
@@ -123,7 +113,13 @@ fun PermissionScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "Permission",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
@@ -131,22 +127,11 @@ fun PermissionScreenSkeleton(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            AppComponent.Header(
-                "Permission",
-                goBack = goBack
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            HorizontalDivider()
-
-            // ----------------------------------------------------------------
+            AppComponent.BigSpacer()
 
             Button(
                 modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(top = 32.dp),
+                    .align(Alignment.CenterHorizontally),
                 onClick = {
                     onSinglePermissionClick()
                 }

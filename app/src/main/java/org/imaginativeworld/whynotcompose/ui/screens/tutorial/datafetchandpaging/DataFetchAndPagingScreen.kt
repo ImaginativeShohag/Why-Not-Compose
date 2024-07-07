@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging
 
-import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.fadeIn
@@ -52,6 +51,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -70,7 +70,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
@@ -78,7 +77,6 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -93,23 +91,14 @@ import kotlinx.coroutines.isActive
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.base.models.Event
 import org.imaginativeworld.whynotcompose.base.models.github.GithubRepo
-import org.imaginativeworld.whynotcompose.base.models.isLight
-import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.compositions.LoadingContainer
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
-import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
 import org.imaginativeworld.whynotcompose.repositories.MockData
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging.elements.EmptyView
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging.elements.GithubRepoItem
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging.elements.LoadingGithubRepoItem
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging.elements.SearchTextInputField
-
-private val searchErrorInputBackground: Color
-    @Composable get() {
-        val uiThemeMode by UIThemeController.uiThemeMode.collectAsState()
-        return if (uiThemeMode.isLight()) TailwindCSSColor.Red500 else TailwindCSSColor.Red900
-    }
 
 @Composable
 fun DataFetchAndPagingScreen(
@@ -147,20 +136,16 @@ fun DataFetchAndPagingScreen(
 
 @PreviewLightDark
 @Composable
-fun DataFetchAndPagingScreenSkeletonPreviewDark() {
+private fun DataFetchAndPagingScreenSkeletonPreview() {
     AppTheme {
         DataFetchAndPagingScreenSkeleton(
+            showLoadingView = false,
+            showMessage = null,
             repos = flowOf(
                 PagingData.from(
-                    listOf(
-                        MockData.dummyGithubRepo,
-                        MockData.dummyGithubRepo,
-                        MockData.dummyGithubRepo,
-                        MockData.dummyGithubRepo,
-                        MockData.dummyGithubRepo,
-                        MockData.dummyGithubRepo,
-                        MockData.dummyGithubRepo
-                    )
+                    (1..10).map {
+                        MockData.dummyGithubRepo.copy(id = it)
+                    }
                 )
             ).collectAsLazyPagingItems(),
             searchTFV = remember { mutableStateOf(TextFieldValue("Lorem")) }
@@ -168,10 +153,26 @@ fun DataFetchAndPagingScreenSkeletonPreviewDark() {
     }
 }
 
+@PreviewLightDark
+@Composable
+private fun DataFetchAndPagingScreenSkeletonBlankSearchPreview() {
+    AppTheme {
+        DataFetchAndPagingScreenSkeleton(
+            showLoadingView = false,
+            showMessage = null,
+            repos = flowOf(
+                PagingData.empty<GithubRepo>()
+            ).collectAsLazyPagingItems(),
+            searchTFV = remember { mutableStateOf(TextFieldValue()) }
+        )
+    }
+}
+
+@Suppress("ktlint:compose:modifier-missing-check", "ktlint:compose:param-order-check", "ktlint:compose:mutable-state-param-check")
 @Composable
 fun DataFetchAndPagingScreenSkeleton(
-    showLoadingView: Boolean = false,
-    showMessage: Event<String>? = null,
+    showLoadingView: Boolean,
+    showMessage: Event<String>?,
     repos: LazyPagingItems<GithubRepo>,
     searchTFV: MutableState<TextFieldValue>,
     openSearch: Boolean = false,
@@ -211,110 +212,84 @@ fun DataFetchAndPagingScreenSkeleton(
             .navigationBarsPadding()
             .imePadding()
             .statusBarsPadding(),
-        snackbarHost = { SnackbarHost(snackbarHostState) }
-    ) { innerPadding ->
-        Column(
-            Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-        ) {
+        topBar = {
             AppComponent.Header(
                 "Data Fetch and Paging",
                 goBack = goBack
             )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
+        },
+        snackbarHost = { SnackbarHost(snackbarHostState) }
+    ) { innerPadding ->
+        Box(
+            Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+        ) {
             Box(
                 Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
             ) {
-                Box(
+                repos.apply {
+                    Column(
+                        Modifier.verticalScroll(rememberScrollState())
+                    ) {
+                        EmptyView(
+                            modifier = Modifier,
+                            loadState = loadState,
+                            itemCount = repos.itemCount,
+                            title = if (searchTFV.value.text.isBlank()) {
+                                "No search keyword!"
+                            } else {
+                                "Nothing found!"
+                            },
+                            message = if (searchTFV.value.text.isBlank()) {
+                                "Enter anything to the search field."
+                            } else {
+                                "No repository found for \"${searchTFV.value.text}\"."
+                            }
+                        )
+                    }
+                }
+
+                LazyColumn(
                     Modifier
-                        .padding(top = 32.dp)
                         .fillMaxSize(),
-                    contentAlignment = Alignment.Center
+                    state = lazyListState,
+                    contentPadding = PaddingValues(top = 52.dp, bottom = 4.dp)
                 ) {
-                    repos.apply {
-                        Column(
-                            Modifier.verticalScroll(rememberScrollState())
-                        ) {
-                            EmptyView(
-                                modifier = Modifier,
-                                loadState = loadState,
-                                itemCount = repos.itemCount,
-                                title = if (searchTFV.value.text.isBlank()) {
-                                    "No search keyword!"
-                                } else {
-                                    "Nothing found!"
-                                },
-                                message = if (searchTFV.value.text.isBlank()) {
-                                    "Enter anything to the search field."
-                                } else {
-                                    "No repository found for \"${searchTFV.value.text}\"."
+                    items(
+                        count = repos.itemCount,
+                        key = repos.itemKey { it.id }
+                    ) { index ->
+                        val repo = repos[index]
+
+                        if (repo == null) {
+                            Text("Loading...")
+                        } else {
+                            GithubRepoItem(
+                                modifier = Modifier.padding(
+                                    start = 12.dp,
+                                    top = 4.dp,
+                                    end = 12.dp,
+                                    bottom = 4.dp
+                                ),
+                                item = repo,
+                                onClick = {
+                                    // do something...
                                 }
                             )
                         }
                     }
 
-                    LazyColumn(
-                        Modifier
-                            .fillMaxSize(),
-                        state = lazyListState,
-                        contentPadding = PaddingValues(top = 28.dp, bottom = 4.dp)
-                    ) {
-                        items(
-                            count = repos.itemCount,
-                            key = repos.itemKey { it.id }
-                        ) { index ->
-                            val repo = repos[index]
-
-                            if (repo == null) {
-                                Text("Loading...")
-                            } else {
-                                GithubRepoItem(
-                                    modifier = Modifier.padding(
-                                        start = 12.dp,
-                                        top = 4.dp,
-                                        end = 12.dp,
-                                        bottom = 4.dp
-                                    ),
-                                    item = repo,
-                                    onClick = {
-                                        // do something...
-                                    }
-                                )
-                            }
-                        }
-
-                        repos.apply {
-                            when {
-                                loadState.refresh is LoadState.Loading -> {
-                                    item {
-                                        Column {
-                                            for (i in 1..6) {
-                                                LoadingGithubRepoItem(
-                                                    Modifier
-                                                        .padding(
-                                                            start = 16.dp,
-                                                            top = 4.dp,
-                                                            end = 16.dp,
-                                                            bottom = 4.dp
-                                                        )
-                                                )
-                                            }
-                                        }
-                                    }
-                                }
-
-                                loadState.append is LoadState.Loading -> {
-                                    item {
-                                        Column {
+                    repos.apply {
+                        when {
+                            loadState.refresh is LoadState.Loading -> {
+                                item {
+                                    Column {
+                                        for (i in 1..6) {
                                             LoadingGithubRepoItem(
                                                 Modifier
-                                                    .alpha(1f)
                                                     .padding(
                                                         start = 16.dp,
                                                         top = 4.dp,
@@ -325,127 +300,139 @@ fun DataFetchAndPagingScreenSkeleton(
                                         }
                                     }
                                 }
+                            }
 
-                                loadState.refresh is LoadState.Error -> {
-                                    item {
-                                        // Note: this should be full screen using fillParentMaxSize()
-                                        ErrorItem(
-                                            message = "Error! " + (repos.loadState.refresh as LoadState.Error).error.message,
-                                            onRetryClick = {
-                                                retry()
-                                            }
+                            loadState.append is LoadState.Loading -> {
+                                item {
+                                    Column {
+                                        LoadingGithubRepoItem(
+                                            Modifier
+                                                .alpha(1f)
+                                                .padding(
+                                                    start = 16.dp,
+                                                    top = 4.dp,
+                                                    end = 16.dp,
+                                                    bottom = 4.dp
+                                                )
                                         )
                                     }
                                 }
+                            }
 
-                                loadState.append is LoadState.Error -> {
-                                    item {
-                                        ErrorItem(
-                                            message = "Error! " + (repos.loadState.append as LoadState.Error).error.message,
-                                            onRetryClick = {
-                                                retry()
-                                            }
-                                        )
-                                    }
+                            loadState.refresh is LoadState.Error -> {
+                                item {
+                                    // Note: this should be full screen using fillParentMaxSize()
+                                    ErrorItem(
+                                        message = "Error! " + (repos.loadState.refresh as LoadState.Error).error.message,
+                                        onRetryClick = {
+                                            retry()
+                                        }
+                                    )
+                                }
+                            }
+
+                            loadState.append is LoadState.Error -> {
+                                item {
+                                    ErrorItem(
+                                        message = "Error! " + (repos.loadState.append as LoadState.Error).error.message,
+                                        onRetryClick = {
+                                            retry()
+                                        }
+                                    )
                                 }
                             }
                         }
                     }
                 }
+            }
 
-                // ----------------------------------------------------------------
+            // ----------------------------------------------------------------
+
+            Box(
+                Modifier
+                    .padding(horizontal = 8.dp)
+                    .fillMaxWidth()
+                    .height(56.dp)
+            ) {
+                val searchBackgroundColor by animateColorAsState(
+                    targetValue = if (searchTFV.value.text.isBlank()) {
+                        MaterialTheme.colorScheme.errorContainer
+                    } else {
+                        MaterialTheme.colorScheme.background
+                    }
+                )
 
                 Box(
                     Modifier
-                        .padding(horizontal = 8.dp)
-                        .fillMaxWidth()
-                        .height(56.dp)
-                        .shadow(
-                            elevation = 4.dp,
-                            shape = RoundedCornerShape(24.dp, 24.dp, 24.dp, 24.dp)
-                        )
+                        .padding(start = 8.dp, top = 8.dp, end = 8.dp)
                         .background(
-                            MaterialTheme.colorScheme.surface,
-                            RoundedCornerShape(24.dp, 24.dp, 24.dp, 24.dp)
+                            color = searchBackgroundColor,
+                            shape = RoundedCornerShape(20.dp)
+                        )
+                        .border(
+                            width = 1.dp,
+                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f),
+                            shape = RoundedCornerShape(20.dp)
                         )
                 ) {
-                    val searchBackgroundColor by animateColorAsState(
-                        targetValue = if (searchTFV.value.text.isBlank()) {
-                            searchErrorInputBackground
-                        } else {
-                            MaterialTheme.colorScheme.background
-                        }
+                    SearchTextInputField(
+                        modifier = Modifier
+                            .focusRequester(focusRequester)
+                            .padding(end = 34.dp),
+                        value = searchTFV.value,
+                        onValueChange = {
+                            searchTFV.value = it
+                        },
+                        background = Color.Transparent,
+                        errorBackground = Color.Transparent,
+                        shape = RoundedCornerShape(20.dp),
+                        height = 40.dp,
+                        horizontalPadding = 16.dp,
+                        fontSize = 16.sp,
+                        placeholder = "Search Github repositories...",
+                        isError = searchTFV.value.text.isBlank()
                     )
-
-                    Box(
+                    Column(
                         Modifier
-                            .padding(start = 8.dp, top = 8.dp, end = 8.dp)
-                            .background(
-                                color = searchBackgroundColor,
-                                shape = RoundedCornerShape(20.dp)
-                            )
-                            .border(
-                                width = 1.dp,
-                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f),
-                                shape = RoundedCornerShape(20.dp)
-                            )
+                            .padding(end = 16.dp)
+                            .align(Alignment.CenterEnd)
+                            .size(18.dp)
                     ) {
-                        SearchTextInputField(
-                            modifier = Modifier
-                                .focusRequester(focusRequester)
-                                .padding(end = 34.dp),
-                            background = Color.Transparent,
-                            errorBackground = Color.Transparent,
-                            shape = RoundedCornerShape(20.dp),
-                            height = 40.dp,
-                            horizontalPadding = 16.dp,
-                            fontSize = 16.sp,
-                            textFieldValue = searchTFV,
-                            placeholder = "Search Github repositories...",
-                            isError = searchTFV.value.text.isBlank()
-                        )
-                        Column(
-                            Modifier
-                                .padding(end = 16.dp)
-                                .align(Alignment.CenterEnd)
-                                .size(18.dp)
+                        AnimatedVisibility(
+                            modifier = Modifier,
+                            visible = searchTFV.value.text.isNotEmpty(),
+                            enter = fadeIn(),
+                            exit = fadeOut()
                         ) {
-                            AnimatedVisibility(
-                                modifier = Modifier,
-                                visible = searchTFV.value.text.isNotEmpty(),
-                                enter = fadeIn(),
-                                exit = fadeOut()
-                            ) {
-                                Image(
-                                    modifier = Modifier
-                                        .size(18.dp)
-                                        .clickable {
-                                            searchTFV.value = TextFieldValue()
-                                        },
-                                    painter = painterResource(id = R.drawable.ic_close),
-                                    contentDescription = "Clear",
-                                    colorFilter = ColorFilter.tint(
-                                        MaterialTheme.colorScheme.onBackground
-                                    )
+                            Image(
+                                modifier = Modifier
+                                    .size(18.dp)
+                                    .clickable {
+                                        searchTFV.value = TextFieldValue()
+                                    },
+                                painter = painterResource(id = R.drawable.ic_close),
+                                contentDescription = "Clear",
+                                colorFilter = ColorFilter.tint(
+                                    MaterialTheme.colorScheme.onBackground
                                 )
-                            }
+                            )
+                        }
 
-                            AnimatedVisibility(
-                                modifier = Modifier,
-                                visible = searchTFV.value.text.isEmpty(),
-                                enter = fadeIn(),
-                                exit = fadeOut()
-                            ) {
-                                Image(
-                                    modifier = Modifier
-                                        .size(18.dp),
-                                    painter = painterResource(id = R.drawable.ic_search),
-                                    contentDescription = "Search",
-                                    colorFilter = ColorFilter.tint(
-                                        MaterialTheme.colorScheme.onBackground
-                                    )
+                        AnimatedVisibility(
+                            modifier = Modifier,
+                            visible = searchTFV.value.text.isEmpty(),
+                            enter = fadeIn(),
+                            exit = fadeOut()
+                        ) {
+                            Image(
+                                modifier = Modifier
+                                    .size(18.dp),
+                                painter = painterResource(id = R.drawable.ic_search),
+                                contentDescription = "Search",
+                                colorFilter = ColorFilter.tint(
+                                    MaterialTheme.colorScheme.onBackground
                                 )
-                            }
+                            )
                         }
                     }
                 }
@@ -460,7 +447,7 @@ fun DataFetchAndPagingScreenSkeleton(
 
 @PreviewLightDark
 @Composable
-fun ErrorItemPreview() {
+private fun ErrorItemPreview() {
     AppTheme {
         ErrorItem(
             "Something went wrong!"
@@ -472,7 +459,7 @@ fun ErrorItemPreview() {
 @Composable
 fun ErrorItem(
     message: String,
-    modifier : Modifier = Modifier,
+    modifier: Modifier = Modifier,
     onRetryClick: () -> Unit
 ) {
     Card(
@@ -482,9 +469,6 @@ fun ErrorItem(
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.errorContainer
-        ),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 2.dp
         )
     ) {
         Column(
@@ -504,6 +488,9 @@ fun ErrorItem(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(8.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.onErrorContainer
+                ),
                 onClick = {
                     onRetryClick()
                 }

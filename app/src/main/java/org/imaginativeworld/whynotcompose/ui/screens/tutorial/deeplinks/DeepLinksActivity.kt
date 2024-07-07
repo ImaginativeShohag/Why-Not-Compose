@@ -187,7 +187,14 @@ fun DeepLinksReceiverScreen(
     data: String,
     goBack: () -> Unit = {}
 ) {
-    Scaffold { innerPadding ->
+    Scaffold(
+        topBar = {
+            AppComponent.Header(
+                "Deep Links Receiver",
+                goBack = goBack
+            )
+        }
+    ) { innerPadding ->
         Column(
             Modifier
                 .padding(innerPadding)
@@ -197,13 +204,6 @@ fun DeepLinksReceiverScreen(
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            AppComponent.Header(
-                "Deep Links Receiver",
-                goBack = goBack
-            )
-
-            HorizontalDivider()
-
             Text(
                 modifier = Modifier.padding(top = 16.dp),
                 text = "This activity will only open from the deep-links.",

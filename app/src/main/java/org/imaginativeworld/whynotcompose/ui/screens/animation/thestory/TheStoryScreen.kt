@@ -58,6 +58,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
@@ -74,17 +75,9 @@ fun TheStoryScreen() {
     TheStoryScreenSkeleton()
 }
 
-@Preview
+@PreviewLightDark
 @Composable
 private fun TheStoryScreenSkeletonPreview() {
-    AppTheme {
-        TheStoryScreenSkeleton()
-    }
-}
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-private fun TheStoryScreenSkeletonPreviewDark() {
     AppTheme {
         TheStoryScreenSkeleton()
     }

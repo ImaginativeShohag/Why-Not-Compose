@@ -85,7 +85,13 @@ fun NavDataPassTwoScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "Data passed as Parcelable",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
@@ -94,16 +100,6 @@ fun NavDataPassTwoScreenSkeleton(
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            AppComponent.Header(
-                "Data passed as Parcelable",
-                goBack = goBack
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            HorizontalDivider()
-
             AppComponent.BigSpacer()
 
             Text(

@@ -52,13 +52,13 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
 
 @Composable
 fun UserItem(
-    modifier: Modifier = Modifier,
     name: String,
     email: String,
     gender: String,
     status: String,
     statusColor: Color,
     userImageUrl: String,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit = {}
 ) {
     Card(
@@ -122,7 +122,7 @@ fun UserItem(
 
 @Preview(showBackground = true)
 @Composable
-fun UserItemPreview() {
+private fun UserItemPreview() {
     CMSAppTheme {
         UserItem(
             name = "Mahmudul Hasan Shohag Mahmudul Hasan Shohag",
@@ -137,7 +137,7 @@ fun UserItemPreview() {
 
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun UserItemPreviewDark() {
+private fun UserItemPreviewDark() {
     CMSAppTheme {
         UserItem(
             name = "Mahmudul Hasan Shohag",

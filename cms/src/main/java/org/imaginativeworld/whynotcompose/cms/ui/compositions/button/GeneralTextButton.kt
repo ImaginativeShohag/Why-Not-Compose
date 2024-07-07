@@ -26,26 +26,29 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.compositions.button
 
-import android.content.res.Configuration
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Surface
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.tooling.preview.Preview
-import org.imaginativeworld.whynotcompose.cms.theme.CMSAppTheme
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
 fun GeneralTextButton(
-    modifier: Modifier = Modifier,
     caption: String,
+    modifier: Modifier = Modifier,
     icon: ImageVector? = null,
     onClick: () -> Unit
 ) {
@@ -70,28 +73,26 @@ fun GeneralTextButton(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun GeneralTextButtonPreview() {
-    CMSAppTheme {
-        Surface {
-            GeneralTextButton(
-                caption = "Click Me",
-                icon = Icons.Outlined.Star
-            ) {}
-        }
-    }
-}
+private fun GeneralTextButtonPreview() {
+    AppTheme {
+        Scaffold { innerPadding ->
+            Column(
+                Modifier
+                    .padding(innerPadding)
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                GeneralTextButton(
+                    caption = "Click Me"
+                ) {}
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun GeneralTextButtonPreviewDark() {
-    CMSAppTheme {
-        Surface {
-            GeneralTextButton(
-                caption = "Click Me",
-                icon = Icons.Outlined.Star
-            ) {}
+                GeneralTextButton(
+                    caption = "Click Me",
+                    icon = Icons.Outlined.Star
+                ) {}
+            }
         }
     }
 }

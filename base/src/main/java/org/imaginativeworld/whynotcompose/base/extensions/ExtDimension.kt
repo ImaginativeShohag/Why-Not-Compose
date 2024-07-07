@@ -35,31 +35,25 @@ import androidx.annotation.AttrRes
 /**
  * This method converts device specific pixels to density independent pixels.
  */
-fun Int.pxToDp(context: Context): Int {
-    return (this / (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)).toInt()
-}
+fun Int.pxToDp(context: Context): Int = (this / (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)).toInt()
 
 /**
  * This method converts dp unit to equivalent pixels, depending on device density.
  */
-fun Int.dpToPx(): Int {
-    return TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_DIP,
-        this.toFloat(),
-        Resources.getSystem().displayMetrics
-    ).toInt()
-}
+fun Int.dpToPx(): Int = TypedValue.applyDimension(
+    TypedValue.COMPLEX_UNIT_DIP,
+    this.toFloat(),
+    Resources.getSystem().displayMetrics
+).toInt()
 
 /**
  * This method converts sp unit to equivalent pixels, depending on device density.
  */
-fun Int.spToPx(): Int {
-    return TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_SP,
-        this.toFloat(),
-        Resources.getSystem().displayMetrics
-    ).toInt()
-}
+fun Int.spToPx(): Int = TypedValue.applyDimension(
+    TypedValue.COMPLEX_UNIT_SP,
+    this.toFloat(),
+    Resources.getSystem().displayMetrics
+).toInt()
 
 /**
  * Get dimension attributes value

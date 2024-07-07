@@ -33,7 +33,7 @@ import javax.inject.Inject
 import kotlin.random.Random
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.base.extensions.combine
@@ -43,7 +43,6 @@ import org.imaginativeworld.whynotcompose.base.models.Event
 class TicTacToeViewModel @Inject constructor(
     private val sharedPref: TicTacToeSharedPref
 ) : ViewModel() {
-
     private val winPlayingMoves = mutableSetOf<String>()
 
     // ----------------------------------------------------------------
@@ -61,8 +60,7 @@ class TicTacToeViewModel @Inject constructor(
     // ----------------------------------------------------------------
 
     private val _state = MutableStateFlow(UiState())
-    val state: StateFlow<UiState>
-        get() = _state
+    val state = _state.asStateFlow()
 
     // ----------------------------------------------------------------
 
@@ -78,9 +76,17 @@ class TicTacToeViewModel @Inject constructor(
                 currentPlayingMoves,
                 totalNeurons,
                 winPosition
-            ) { showLoading, showMessage, showToast,
-                paused, userWinCount, aiWinCount,
-                currentPlayingMoves, totalNeurons, winPosition ->
+            ) {
+                    showLoading,
+                    showMessage,
+                    showToast,
+                    paused,
+                    userWinCount,
+                    aiWinCount,
+                    currentPlayingMoves,
+                    totalNeurons,
+                    winPosition
+                ->
                 UiState(
                     loading = showLoading,
                     message = showMessage,

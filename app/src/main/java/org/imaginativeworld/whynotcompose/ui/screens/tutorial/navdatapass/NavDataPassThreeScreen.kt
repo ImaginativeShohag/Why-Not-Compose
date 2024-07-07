@@ -35,7 +35,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -82,7 +81,13 @@ fun NavDataPassThreeScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "Data passed as Parameter",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
@@ -91,16 +96,6 @@ fun NavDataPassThreeScreenSkeleton(
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            AppComponent.Header(
-                "Data passed as Parameter",
-                goBack = goBack
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            HorizontalDivider()
-
             AppComponent.BigSpacer()
 
             Text(

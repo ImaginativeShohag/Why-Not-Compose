@@ -27,7 +27,6 @@
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -142,140 +141,130 @@ fun NavDataPassHomeScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
-    ) { innerPadding ->
-        Column(
-            Modifier
-                .padding(innerPadding)
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+            .statusBarsPadding(),
+        topBar = {
             AppComponent.Header(
                 "Navigation Data Pass",
                 goBack = goBack
             )
+        }
+    ) { innerPadding ->
+        Column(
+            Modifier
+                .padding(innerPadding)
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            AppComponent.BigSpacer()
+
+            Text(
+                "Received Data (By SavedState)",
+                fontWeight = FontWeight.Bold
+            )
+
+            Text(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                text = "$receivedDataBySavedState",
+                textAlign = TextAlign.Center
+            )
+
+            AppComponent.MediumSpacer()
+
+            Text(
+                "Received Data (By Memory Cache)",
+                fontWeight = FontWeight.Bold
+            )
+
+            Text(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                text = "$receivedDataByMemoryCache",
+                textAlign = TextAlign.Center
+            )
+
+            AppComponent.BigSpacer()
+
+            // ----------------------------------------------------------------
 
             HorizontalDivider()
 
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
+            AppComponent.BigSpacer()
 
-            Column(
-                Modifier
-                    .fillMaxWidth()
-                    .verticalScroll(rememberScrollState()),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                AppComponent.BigSpacer()
+            Text(
+                "Pass simple data as parameter (Recommended)",
+                fontWeight = FontWeight.Bold
+            )
 
-                Text(
-                    "Received Data (By SavedState)",
-                    fontWeight = FontWeight.Bold
+            OutlinedTextField(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth(),
+                value = id,
+                onValueChange = {
+                    val regex = Regex("[^0-9]")
+                    id = regex.replace(it, "")
+                },
+                label = {
+                    Text("ID Parameter")
+                },
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Number
                 )
+            )
 
-                Text(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    text = "$receivedDataBySavedState",
-                    textAlign = TextAlign.Center
-                )
-
-                AppComponent.MediumSpacer()
-
-                Text(
-                    "Received Data (By Memory Cache)",
-                    fontWeight = FontWeight.Bold
-                )
-
-                Text(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    text = "$receivedDataByMemoryCache",
-                    textAlign = TextAlign.Center
-                )
-
-                AppComponent.BigSpacer()
-
-                // ----------------------------------------------------------------
-
-                HorizontalDivider()
-
-                AppComponent.BigSpacer()
-
-                Text(
-                    "Pass simple data as parameter (Recommended)",
-                    fontWeight = FontWeight.Bold
-                )
-
-                OutlinedTextField(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .fillMaxWidth(),
-                    value = id,
-                    onValueChange = {
-                        val regex = Regex("[^0-9]")
-                        id = regex.replace(it, "")
-                    },
-                    label = {
-                        Text("ID Parameter")
-                    },
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Number
-                    )
-                )
-
-                OutlinedTextField(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .fillMaxWidth(),
-                    value = name,
-                    onValueChange = { name = it },
-                    label = {
-                        Text("Name Parameter")
-                    }
-                )
-
-                AppComponent.MediumSpacer()
-
-                Button(onClick = {
-                    gotoScreenThree(id.toInt(), name)
-                }) {
-                    Text("Pass Parameters")
+            OutlinedTextField(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth(),
+                value = name,
+                onValueChange = { name = it },
+                label = {
+                    Text("Name Parameter")
                 }
+            )
 
-                AppComponent.MediumSpacer()
+            AppComponent.MediumSpacer()
 
-                Button(onClick = {
-                    gotoScreenFour(id.toInt(), name)
-                }) {
-                    Text("Pass by Memory Cache")
-                }
-
-                AppComponent.BigSpacer()
-
-                // ----------------------------------------------------------------
-
-                HorizontalDivider()
-
-                AppComponent.BigSpacer()
-
-                Button(onClick = {
-                    gotoScreenOne()
-                }) {
-                    Text("Pass complex data as String")
-                }
-
-                AppComponent.MediumSpacer()
-
-                Button(onClick = {
-                    gotoScreenTwo()
-                }) {
-                    Text("Pass complex data as Parcelable")
-                }
-
-                // ----------------------------------------------------------------
-                // ----------------------------------------------------------------
-
-                AppComponent.BigSpacer()
+            Button(onClick = {
+                gotoScreenThree(id.toInt(), name)
+            }) {
+                Text("Pass Parameters")
             }
+
+            AppComponent.MediumSpacer()
+
+            Button(onClick = {
+                gotoScreenFour(id.toInt(), name)
+            }) {
+                Text("Pass by Memory Cache")
+            }
+
+            AppComponent.BigSpacer()
+
+            // ----------------------------------------------------------------
+
+            HorizontalDivider()
+
+            AppComponent.BigSpacer()
+
+            Button(onClick = {
+                gotoScreenOne()
+            }) {
+                Text("Pass complex data as String")
+            }
+
+            AppComponent.MediumSpacer()
+
+            Button(onClick = {
+                gotoScreenTwo()
+            }) {
+                Text("Pass complex data as Parcelable")
+            }
+
+            // ----------------------------------------------------------------
+            // ----------------------------------------------------------------
+
+            AppComponent.BigSpacer()
         }
     }
 }

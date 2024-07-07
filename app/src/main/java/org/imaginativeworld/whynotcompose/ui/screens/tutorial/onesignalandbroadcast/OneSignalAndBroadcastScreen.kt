@@ -32,7 +32,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -41,7 +40,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -198,43 +196,32 @@ fun OneSignalAndBroadcastScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "OneSignal and Broadcast",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
+                .padding(start = 16.dp, end = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            AppComponent.Header(
-                "OneSignal and Broadcast",
-                goBack = goBack
-            )
+            AppComponent.MediumSpacer()
 
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            HorizontalDivider()
-
-            // ----------------------------------------------------------------
+            Text("Current value: $currentValue")
 
             AppComponent.MediumSpacer()
 
-            Column(
-                Modifier
-                    .padding(start = 16.dp, end = 16.dp)
-                    .fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text("Current value: $currentValue")
-
-                AppComponent.MediumSpacer()
-
-                Button(onClick = {
-                    sendNotification()
-                }) {
-                    Text("Post New Value")
-                }
+            Button(onClick = {
+                sendNotification()
+            }) {
+                Text("Post New Value")
             }
 
             // ----------------------------------------------------------------

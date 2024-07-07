@@ -42,6 +42,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -51,13 +52,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
-@PreviewLightDark
 @Composable
-private fun LoadingContainer(
-    show: Boolean = true
+fun LoadingContainer(
+    show: Boolean,
+    modifier: Modifier = Modifier
 ) {
     AnimatedVisibility(
+        modifier = modifier,
         visible = show,
         enter = fadeIn(),
         exit = fadeOut()
@@ -97,6 +100,19 @@ private fun LoadingContainer(
                     )
                 }
             }
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun LoadingContainerPreview() {
+    AppTheme {
+        Scaffold { innerPadding ->
+            LoadingContainer(
+                show = true,
+                modifier = Modifier.padding(innerPadding)
+            )
         }
     }
 }

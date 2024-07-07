@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.screens.post.edit
 
-import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
@@ -65,7 +64,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
@@ -79,13 +78,14 @@ import org.imaginativeworld.whynotcompose.cms.ui.compositions.LoadingContainer
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralFilledButton
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralOutlinedButton
 
+@Suppress("ktlint:compose:mutable-state-param-check")
 @Composable
 fun PostEditSheet(
-    viewModel: PostEditViewModel = hiltViewModel(),
     userId: Int,
     postId: Int,
     showSheet: MutableState<Boolean>,
-    onSuccess: () -> Unit
+    onSuccess: () -> Unit,
+    viewModel: PostEditViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -112,7 +112,7 @@ fun PostEditSheet(
         viewModel.getDetails(postId)
     }
 
-    LaunchedEffect(state.updatePostSuccess) {
+    LaunchedEffect(state.updatePostSuccess, onSuccess) {
         state.updatePostSuccess?.getValueOnce()?.let { isAddPostSuccess ->
             if (isAddPostSuccess) {
                 context.toast("Post successfully updated.")
@@ -144,31 +144,24 @@ fun PostEditSheet(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun PostEditSheetSkeletonPreview() {
+private fun PostEditSheetSkeletonPreviewDark() {
     CMSAppTheme {
         PostEditSheetSkeleton(
+            showLoading = false,
+            showMessage = null,
             post = MockData.dummyPost
         )
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun PostEditSheetSkeletonPreviewDark() {
-    CMSAppTheme {
-        PostEditSheetSkeleton(
-            post = MockData.dummyPost
-        )
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun PostEditSheetSkeleton(
+    showLoading: Boolean,
+    showMessage: Event<String>?,
     post: Post?,
-    showLoading: Boolean = false,
-    showMessage: Event<String>? = null,
     goBack: () -> Unit = {},
     updatePost: (
         title: String,
@@ -191,7 +184,7 @@ fun PostEditSheetSkeleton(
         topBar = {
             GeneralSheetAppBar(
                 title = "Edit Post",
-                onCancelClicked = goBack
+                onCancelClick = goBack
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },

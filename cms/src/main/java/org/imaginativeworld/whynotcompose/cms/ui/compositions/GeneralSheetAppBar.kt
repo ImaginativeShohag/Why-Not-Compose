@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.compositions
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -45,16 +44,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import org.imaginativeworld.whynotcompose.cms.theme.CMSAppTheme
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralOutlinedIconButton
 
 @Composable
 fun GeneralSheetAppBar(
     title: String,
-    onCancelClicked: () -> Unit
+    modifier: Modifier = Modifier,
+    onCancelClick: () -> Unit
 ) {
     TopAppBar(
+        modifier = modifier,
         title = {
             Row(
                 verticalAlignment = Alignment.CenterVertically
@@ -71,7 +72,7 @@ fun GeneralSheetAppBar(
                 icon = Icons.Rounded.Close,
                 contentDescription = "Cancel"
             ) {
-                onCancelClicked()
+                onCancelClick()
             }
 
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
@@ -84,24 +85,13 @@ fun GeneralSheetAppBar(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun GeneralSheetAppBarPreview() {
+private fun GeneralSheetAppBarPreviewDark() {
     CMSAppTheme {
         GeneralSheetAppBar(
             title = "Users",
-            onCancelClicked = {}
-        )
-    }
-}
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun GeneralSheetAppBarPreviewDark() {
-    CMSAppTheme {
-        GeneralSheetAppBar(
-            title = "Users",
-            onCancelClicked = {}
+            onCancelClick = {}
         )
     }
 }

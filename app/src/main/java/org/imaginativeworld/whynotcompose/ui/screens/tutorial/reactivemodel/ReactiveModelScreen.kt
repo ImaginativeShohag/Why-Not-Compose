@@ -47,7 +47,6 @@ import androidx.compose.material.icons.rounded.Remove
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -117,42 +116,31 @@ fun CounterWithVMScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
-    ) { innerPadding ->
-        Column(
-            Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-        ) {
+            .statusBarsPadding(),
+        topBar = {
             AppComponent.Header(
                 "Reactive Model",
                 goBack = goBack
             )
-
-            HorizontalDivider()
-
-            Column(
-                Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp)
-            ) {
-                LazyColumn(
-                    Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(vertical = 4.dp)
-                ) {
-                    items(products) { product ->
-                        ProductItemView(
-                            modifier = Modifier.padding(vertical = 8.dp),
-                            name = product.name,
-                            price = product.price,
-                            quantity = product.quantity,
-                            totalPrice = product.totalPrice,
-                            increase = { increaseQuantity(product) },
-                            decrease = { decreaseQuantity(product) }
-                        )
-                    }
-                }
+        }
+    ) { innerPadding ->
+        LazyColumn(
+            Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+                .padding(start = 16.dp, end = 16.dp),
+            contentPadding = PaddingValues(vertical = 4.dp)
+        ) {
+            items(products) { product ->
+                ProductItemView(
+                    modifier = Modifier.padding(vertical = 8.dp),
+                    name = product.name,
+                    price = product.price,
+                    quantity = product.quantity,
+                    totalPrice = product.totalPrice,
+                    increase = { increaseQuantity(product) },
+                    decrease = { decreaseQuantity(product) }
+                )
             }
         }
     }

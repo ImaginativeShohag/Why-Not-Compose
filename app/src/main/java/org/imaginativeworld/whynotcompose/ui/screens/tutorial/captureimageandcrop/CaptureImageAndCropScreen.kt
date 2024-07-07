@@ -56,6 +56,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import java.io.File
 import java.util.Date
@@ -123,17 +124,9 @@ fun CaptureImageAndCropScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
 private fun CaptureImageAndCropScreenSkeletonPreview() {
-    AppTheme {
-        CaptureImageAndCropScreenSkeleton()
-    }
-}
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-private fun CaptureImageAndCropScreenSkeletonPreviewDark() {
     AppTheme {
         CaptureImageAndCropScreenSkeleton()
     }
@@ -150,7 +143,13 @@ fun CaptureImageAndCropScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "Capture Image and Crop for Upload",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
@@ -158,18 +157,6 @@ fun CaptureImageAndCropScreenSkeleton(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            AppComponent.Header(
-                "Capture Image and Crop for Upload",
-                goBack = goBack
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            HorizontalDivider()
-
-            // ----------------------------------------------------------------
-
             Image(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)

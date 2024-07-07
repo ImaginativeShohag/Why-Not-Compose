@@ -37,16 +37,14 @@ fun String?.toFormRequestBody() = this?.toRequestBody(MultipartBody.FORM)
 /**
  * @return [MultipartBody.Part] from the file's real path or null if the path is null.
  */
-fun String?.createFormDataFromPath(fieldName: String): MultipartBody.Part? {
-    return this?.let { filePath ->
-        val imageFile = File(filePath)
+fun String?.createFormDataFromPath(fieldName: String): MultipartBody.Part? = this?.let { filePath ->
+    val imageFile = File(filePath)
 
-        val requestBody = imageFile.asRequestBody(filePath.toMediaTypeOrNull())
+    val requestBody = imageFile.asRequestBody(filePath.toMediaTypeOrNull())
 
-        MultipartBody.Part.createFormData(
-            fieldName,
-            imageFile.name,
-            requestBody
-        )
-    }
+    MultipartBody.Part.createFormData(
+        fieldName,
+        imageFile.name,
+        requestBody
+    )
 }

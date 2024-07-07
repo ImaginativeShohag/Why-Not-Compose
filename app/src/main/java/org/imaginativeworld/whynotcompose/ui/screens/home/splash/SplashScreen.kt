@@ -67,6 +67,7 @@ import org.imaginativeworld.whynotcompose.base.R as BaseR
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.ui.screens.animation.composeone.dotBackgroundColor
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun SplashScreen(
     gotoHomeIndex: () -> Unit = {}
@@ -74,7 +75,7 @@ fun SplashScreen(
     val density = LocalDensity.current
     val dotBackground = dotBackgroundColor
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(Unit, gotoHomeIndex) {
         delay(3000)
 
         gotoHomeIndex()

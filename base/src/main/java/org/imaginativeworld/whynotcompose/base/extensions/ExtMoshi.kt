@@ -37,11 +37,9 @@ import org.imaginativeworld.whynotcompose.base.network.jsonadapter.DateJsonAdapt
 import timber.log.Timber
 
 object MoshiUtil {
-    fun getMoshi(): Moshi {
-        return Moshi.Builder()
-            .add(Date::class.java, DateJsonAdapter())
-            .build()
-    }
+    fun getMoshi(): Moshi = Moshi.Builder()
+        .add(Date::class.java, DateJsonAdapter())
+        .build()
 }
 
 /**
@@ -98,10 +96,6 @@ inline fun <reified T> T?.getJsonFromObj(urlEncode: Boolean = true): String? {
     }
 }
 
-fun String.urlEncode(): String {
-    return URLEncoder.encode(this, "utf-8")
-}
+fun String.urlEncode(): String = URLEncoder.encode(this, "utf-8")
 
-fun String.urlDecode(): String {
-    return URLDecoder.decode(this, "utf-8")
-}
+fun String.urlDecode(): String = URLDecoder.decode(this, "utf-8")

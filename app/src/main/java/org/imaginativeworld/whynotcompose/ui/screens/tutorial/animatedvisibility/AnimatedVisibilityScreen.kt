@@ -31,14 +31,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Card
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -83,36 +81,29 @@ fun AnimatedVisibilityScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "AnimatedVisibility",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
+                .padding(start = 16.dp, end = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            AppComponent.Header(
-                "AnimatedVisibility",
-                goBack = goBack
+            var expanded by remember { mutableStateOf(true) }
+
+            JetpackComposeCard(
+                isExpanded = expanded,
+                onClick = { expanded = !expanded },
+                modifier = Modifier
             )
-
-            HorizontalDivider()
-
-            Column(
-                Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                var expanded by remember { mutableStateOf(true) }
-
-                JetpackComposeCard(
-                    isExpanded = expanded,
-                    onClick = { expanded = !expanded },
-                    modifier = Modifier
-                )
-            }
         }
     }
 }

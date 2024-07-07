@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.ui.mapview
 
-import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -48,17 +47,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -75,7 +69,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -91,8 +85,8 @@ import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.base.extensions.dpToPx
 import org.imaginativeworld.whynotcompose.common.compose.R as CommonComposeR
 import org.imaginativeworld.whynotcompose.common.compose.composeutils.bitmapDescriptorFromVector
+import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
-import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
 import org.imaginativeworld.whynotcompose.models.MapPlace
 import org.imaginativeworld.whynotcompose.ui.compositions.CustomSnackbarHost
 import timber.log.Timber
@@ -230,7 +224,7 @@ fun MapScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
 private fun MapSkeletonPreview() {
     AppTheme {
@@ -239,23 +233,7 @@ private fun MapSkeletonPreview() {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(TailwindCSSColor.Green500)
-                )
-            }
-        )
-    }
-}
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-private fun MapSkeletonPreviewDark() {
-    AppTheme {
-        MapSkeleton(
-            mapView = {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(TailwindCSSColor.Green500)
+                        .background(MaterialTheme.colorScheme.surfaceVariant)
                 )
             }
         )
@@ -278,6 +256,12 @@ fun MapSkeleton(
             .navigationBarsPadding()
             .imePadding()
             .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "Divisions of Bangladesh",
+                goBack = goBack
+            )
+        },
         snackbarHost = { CustomSnackbarHost(snackbarHostState) }
     ) { innerPadding ->
         mapView(
@@ -289,24 +273,17 @@ fun MapSkeleton(
 
         MapEmptyView(
             modifier = Modifier
-                .padding(top = 56.dp)
+                .padding(innerPadding)
                 .fillMaxSize(),
             show = showEmptyView,
             onRetryClick = onRetryClick
         )
 
-        Column(Modifier.fillMaxSize()) {
-            TopAppBar(
-                title = { Text("Divisions of Bangladesh") },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        goBack()
-                    }) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = null)
-                    }
-                }
-            )
-
+        Column(
+            Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+        ) {
             Box(
                 Modifier
                     .fillMaxWidth(),

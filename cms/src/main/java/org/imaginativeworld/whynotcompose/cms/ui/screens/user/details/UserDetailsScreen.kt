@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.screens.user.details
 
-import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -61,7 +60,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.base.models.Event
 import org.imaginativeworld.whynotcompose.cms.models.ActionMessage
@@ -82,8 +81,8 @@ fun UserDetailsScreen(
     userId: Int,
     goBack: () -> Unit,
     toggleUIMode: () -> Unit,
-    onTodosClicked: () -> Unit,
-    onPostsClicked: () -> Unit
+    onTodosClick: () -> Unit,
+    onPostsClick: () -> Unit
 ) {
     val openEditUserSheet = rememberSaveable { mutableStateOf(false) }
     val state by viewModel.state.collectAsState()
@@ -94,7 +93,7 @@ fun UserDetailsScreen(
         viewModel.getDetails(userId)
     }
 
-    LaunchedEffect(state.deleteSuccess) {
+    LaunchedEffect(state.deleteSuccess, goBack) {
         if (state.deleteSuccess?.getValueOnce() == true) {
             goBack()
         }
@@ -109,12 +108,12 @@ fun UserDetailsScreen(
         retryDataLoad = {
             viewModel.getDetails(userId)
         },
-        onDeleteClicked = { openDeleteDialog = true },
-        onEditClicked = {
+        onDeleteClick = { openDeleteDialog = true },
+        onEditClick = {
             openEditUserSheet.value = !openEditUserSheet.value
         },
-        onTodosClicked = onTodosClicked,
-        onPostsClicked = onPostsClicked
+        onTodosClick = onTodosClick,
+        onPostsClick = onPostsClick
     )
 
     // ----------------------------------------------------------------
@@ -170,42 +169,35 @@ fun UserDetailsScreen(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun UserDetailsScreenSkeletonPreview() {
+private fun UserDetailsScreenSkeletonPreview() {
     CMSAppTheme {
         UserDetailsScreenSkeleton(
+            showLoading = false,
+            showMessage = null,
             user = MockData.dummyUser
         )
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun UserDetailsScreenSkeletonPreviewDark() {
-    CMSAppTheme {
-        UserDetailsScreenSkeleton(
-            user = MockData.dummyUser
-        )
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun UserDetailsScreenSkeleton(
+    showLoading: Boolean,
+    showMessage: Event<ActionMessage>?,
     user: User?,
-    showLoading: Boolean = false,
-    showMessage: Event<ActionMessage>? = null,
     goBack: () -> Unit = {},
     toggleUIMode: () -> Unit = {},
     retryDataLoad: () -> Unit = {},
-    onDeleteClicked: () -> Unit = {},
-    onEditClicked: () -> Unit = {},
-    onTodosClicked: () -> Unit = {},
-    onPostsClicked: () -> Unit = {}
+    onDeleteClick: () -> Unit = {},
+    onEditClick: () -> Unit = {},
+    onTodosClick: () -> Unit = {},
+    onPostsClick: () -> Unit = {}
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
-    LaunchedEffect(showMessage) {
+    LaunchedEffect(showMessage, retryDataLoad) {
         showMessage?.getValueOnce()?.let { actionMessage ->
             when (actionMessage.action) {
                 UserDetailsViewAction.USER_LOAD_ERROR -> {
@@ -280,7 +272,7 @@ fun UserDetailsScreenSkeleton(
                             caption = "Delete",
                             icon = Icons.Rounded.Delete
                         ) {
-                            onDeleteClicked()
+                            onDeleteClick()
                         }
 
                         Spacer(Modifier.width(16.dp))
@@ -290,7 +282,7 @@ fun UserDetailsScreenSkeleton(
                             caption = "Edit",
                             icon = Icons.Rounded.Edit
                         ) {
-                            onEditClicked()
+                            onEditClick()
                         }
                     }
 
@@ -300,7 +292,7 @@ fun UserDetailsScreenSkeleton(
                             caption = "Todos",
                             icon = Icons.Rounded.Ballot
                         ) {
-                            onTodosClicked()
+                            onTodosClick()
                         }
 
                         Spacer(Modifier.width(16.dp))
@@ -310,7 +302,7 @@ fun UserDetailsScreenSkeleton(
                             caption = "Posts",
                             icon = Icons.Rounded.TextSnippet
                         ) {
-                            onPostsClicked()
+                            onPostsClick()
                         }
                     }
                 }

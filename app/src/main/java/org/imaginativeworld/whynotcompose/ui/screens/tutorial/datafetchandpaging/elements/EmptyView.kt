@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging.elements
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -48,7 +47,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.CombinedLoadStates
@@ -59,9 +58,9 @@ import timber.log.Timber
 
 @Composable
 fun EmptyView(
-    modifier: Modifier = Modifier,
     loadState: CombinedLoadStates,
     itemCount: Int,
+    modifier: Modifier = Modifier,
     title: String = "Nothing here!",
     message: String? = "No repository found."
 ) {
@@ -92,23 +91,11 @@ fun EmptyView(
     )
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
-fun EmptyViewPreview() {
+private fun EmptyViewPreviewDark() {
     AppTheme {
         EmptyView(
-            modifier = Modifier,
-            show = true
-        )
-    }
-}
-
-@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
-@Composable
-fun EmptyViewPreviewDark() {
-    AppTheme {
-        EmptyView(
-            modifier = Modifier,
             show = true
         )
     }
@@ -116,8 +103,8 @@ fun EmptyViewPreviewDark() {
 
 @Composable
 fun EmptyView(
-    modifier: Modifier = Modifier,
     show: Boolean,
+    modifier: Modifier = Modifier,
     title: String = "Nothing here!",
     message: String? = "No repository found!"
 ) {

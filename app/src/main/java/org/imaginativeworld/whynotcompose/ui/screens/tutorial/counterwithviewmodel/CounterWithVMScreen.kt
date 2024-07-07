@@ -38,7 +38,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -105,59 +104,52 @@ fun CounterWithVMScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "Counter with ViewModel",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
+                .padding(start = 16.dp, end = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            AppComponent.Header(
-                "Counter with ViewModel",
-                goBack = goBack
+            Text(
+                modifier = Modifier.padding(top = 32.dp),
+                text = "$counter",
+                fontSize = 64.sp
             )
 
-            HorizontalDivider()
-
-            Column(
+            Row(
                 Modifier
-                    .weight(1f)
+                    .padding(top = 32.dp)
                     .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
             ) {
-                Text(
-                    modifier = Modifier.padding(top = 32.dp),
-                    text = "$counter",
-                    fontSize = 64.sp
-                )
-
-                Row(
-                    Modifier
-                        .padding(top = 32.dp)
-                        .fillMaxWidth()
+                Button(
+                    modifier = Modifier
+                        .weight(1f),
+                    onClick = { increase() }
                 ) {
-                    Button(
-                        modifier = Modifier
-                            .weight(1f),
-                        onClick = { increase() }
-                    ) {
-                        Text(
-                            text = "Increase"
-                        )
-                    }
+                    Text(
+                        text = "Increase"
+                    )
+                }
 
-                    Spacer(Modifier.width(16.dp))
+                Spacer(Modifier.width(16.dp))
 
-                    Button(
-                        modifier = Modifier.weight(1f),
-                        onClick = { decrease() }
-                    ) {
-                        Text(
-                            text = "Decrease"
-                        )
-                    }
+                Button(
+                    modifier = Modifier.weight(1f),
+                    onClick = { decrease() }
+                ) {
+                    Text(
+                        text = "Decrease"
+                    )
                 }
             }
         }

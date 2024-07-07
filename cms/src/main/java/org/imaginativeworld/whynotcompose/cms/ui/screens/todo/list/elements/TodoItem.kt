@@ -45,11 +45,11 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
 
 @Composable
 fun TodoItem(
-    modifier: Modifier = Modifier,
     title: String,
     dueDate: String,
     status: String,
     statusColor: Color,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit = {}
 ) {
     Card(
@@ -89,7 +89,7 @@ fun TodoItem(
 
 @Preview(showBackground = true)
 @Composable
-fun TodoItemPreview() {
+private fun TodoItemPreview() {
     CMSAppTheme {
         TodoItem(
             title = "The quick brown fox jumps over the lazy dog.",
@@ -102,7 +102,7 @@ fun TodoItemPreview() {
 
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun TodoItemPreviewDark() {
+private fun TodoItemPreviewDark() {
     CMSAppTheme {
         TodoItem(
             title = "The quick brown fox jumps over the lazy dog.",

@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.ui.webview.components
 
-import android.content.res.Configuration
 import android.webkit.WebViewClient.ERROR_HOST_LOOKUP
 import android.webkit.WebViewClient.ERROR_TIMEOUT
 import androidx.compose.foundation.Image
@@ -49,35 +48,11 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
-
-@Preview
-@Composable
-fun ErrorViewPreview() {
-    AppTheme {
-        ErrorView(
-            errorCode = ERROR_HOST_LOOKUP,
-            description = "Webpage not available",
-            failingUrl = "https://imaginativeworld.org"
-        )
-    }
-}
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun ErrorViewPreviewDark() {
-    AppTheme {
-        ErrorView(
-            errorCode = ERROR_HOST_LOOKUP,
-            description = "Webpage not available",
-            failingUrl = "https://imaginativeworld.org"
-        )
-    }
-}
 
 @Composable
 fun ErrorView(
@@ -152,4 +127,16 @@ private fun getMessage(
     ERROR_HOST_LOOKUP -> "The website not found! Maybe you are not connected to the Internet."
     ERROR_TIMEOUT -> "Time out! Please try again."
     else -> description ?: "Please try again after some time."
+}
+
+@PreviewLightDark
+@Composable
+private fun ErrorViewPreview() {
+    AppTheme {
+        ErrorView(
+            errorCode = ERROR_HOST_LOOKUP,
+            description = "Webpage not available",
+            failingUrl = "https://imaginativeworld.org"
+        )
+    }
 }

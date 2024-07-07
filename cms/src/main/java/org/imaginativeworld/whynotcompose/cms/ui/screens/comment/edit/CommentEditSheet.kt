@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.screens.comment.edit
 
-import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
@@ -67,7 +66,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
@@ -81,13 +80,14 @@ import org.imaginativeworld.whynotcompose.cms.ui.compositions.LoadingContainer
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralFilledButton
 import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralOutlinedButton
 
+@Suppress("ktlint:compose:mutable-state-param-check")
 @Composable
 fun CommentEditSheet(
-    viewModel: CommentEditViewModel = hiltViewModel(),
     postId: Int,
     commentId: Int,
     showSheet: MutableState<Boolean>,
-    onSuccess: () -> Unit
+    onSuccess: () -> Unit,
+    viewModel: CommentEditViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -114,7 +114,7 @@ fun CommentEditSheet(
         viewModel.getDetails(commentId)
     }
 
-    LaunchedEffect(state.updateCommentSuccess) {
+    LaunchedEffect(state.updateCommentSuccess, onSuccess) {
         state.updateCommentSuccess?.getValueOnce()?.let { isAddCommentSuccess ->
             if (isAddCommentSuccess) {
                 context.toast("Comment successfully updated.")
@@ -147,31 +147,24 @@ fun CommentEditSheet(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun CommentEditSheetSkeletonPreview() {
+private fun CommentEditSheetSkeletonPreviewDark() {
     CMSAppTheme {
         CommentEditSheetSkeleton(
+            showLoading = false,
+            showMessage = null,
             comment = MockData.dummyComment
         )
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun CommentEditSheetSkeletonPreviewDark() {
-    CMSAppTheme {
-        CommentEditSheetSkeleton(
-            comment = MockData.dummyComment
-        )
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun CommentEditSheetSkeleton(
+    showLoading: Boolean,
+    showMessage: Event<String>?,
     comment: Comment?,
-    showLoading: Boolean = false,
-    showMessage: Event<String>? = null,
     goBack: () -> Unit = {},
     updateComment: (
         name: String,
@@ -196,7 +189,7 @@ fun CommentEditSheetSkeleton(
         topBar = {
             GeneralSheetAppBar(
                 title = "Edit Comment",
-                onCancelClicked = goBack
+                onCancelClick = goBack
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },

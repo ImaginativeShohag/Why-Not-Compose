@@ -54,12 +54,12 @@ import org.imaginativeworld.whynotcompose.common.compose.R
 
 @Composable
 fun CommentItem(
-    modifier: Modifier = Modifier,
     name: String,
     email: String,
     body: String,
     userImageUrl: String,
     isPreview: Boolean,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit = {}
 ) {
     Card(
@@ -106,7 +106,7 @@ fun CommentItem(
 
 @Preview(showBackground = true)
 @Composable
-fun CommentItemPreview() {
+private fun CommentItemPreview() {
     CMSAppTheme {
         Surface {
             Column(Modifier.padding(16.dp)) {
@@ -134,7 +134,7 @@ fun CommentItemPreview() {
 
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun CommentItemPreviewDark() {
+private fun CommentItemPreviewDark() {
     CMSAppTheme {
         Surface {
             Column(Modifier.padding(16.dp)) {

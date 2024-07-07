@@ -96,7 +96,13 @@ fun LottieScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "Lottie",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
@@ -104,15 +110,12 @@ fun LottieScreenSkeleton(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            AppComponent.Header(
-                "Lottie",
-                goBack = goBack
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            Box(Modifier.padding(start = 16.dp, end = 16.dp)) {
+            Box(
+                Modifier.padding(
+                    horizontal = 16.dp,
+                    vertical = 16.dp
+                )
+            ) {
                 Card(
                     Modifier
                         .fillMaxWidth()
@@ -172,7 +175,7 @@ fun LottieScreenSkeleton(
                             modifier = Modifier
                                 .requiredSize(96.dp)
                                 .clickable(
-                                    interactionSource = MutableInteractionSource(),
+                                    interactionSource = remember { MutableInteractionSource() },
                                     indication = null,
                                     onClick = {
                                         compositionHeart ?: return@clickable

@@ -81,8 +81,6 @@ fun RunningCarScreen() {
 
     LaunchedEffect(Unit) {
         while (true) {
-            delay(100)
-
             animState.value = CarState.INITIAL
 
             delay(3000)

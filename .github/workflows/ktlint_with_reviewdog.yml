@@ -9,7 +9,6 @@ jobs:
       - name: Clone repo
         uses: actions/checkout@master
         with:
-          lfs: 'true'
           fetch-depth: 1
       - name: ktlint
         uses: ScaCap/action-ktlint@master

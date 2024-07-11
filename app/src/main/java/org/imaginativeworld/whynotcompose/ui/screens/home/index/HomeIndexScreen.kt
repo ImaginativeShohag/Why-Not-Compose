@@ -205,7 +205,7 @@ fun HomeIndexScreen(
                 LazyVerticalGrid(
                     modifier = Modifier.fillMaxSize(),
                     columns = GridCells.Fixed(2),
-                    contentPadding = PaddingValues(24.dp, 8.dp, 24.dp, 24.dp)
+                    contentPadding = PaddingValues(24.dp, 24.dp, 24.dp, 24.dp)
                 ) {
                     item(span = { GridItemSpan(maxCurrentLineSpan) }) {
                         Column(
@@ -218,7 +218,7 @@ fun HomeIndexScreen(
                                 modifier = Modifier
                                     .padding(
                                         start = 16.dp,
-                                        top = 32.dp,
+                                        top = 16.dp,
                                         end = 16.dp
                                     )
                                     .fillMaxWidth(),
@@ -369,7 +369,8 @@ fun HomeIndexScreen(
             Row(
                 Modifier
                     .fillMaxWidth()
-                    .padding(top = 16.dp, bottom = 12.dp),
+                    .padding(horizontal = 20.dp)
+                    .padding(top = 16.dp, bottom = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(
@@ -378,10 +379,10 @@ fun HomeIndexScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     TextButton(
-                        modifier = Modifier.padding(horizontal = 8.dp),
                         onClick = {
                             context.openUrl("https://www.buymeacoffee.com/ImShohag")
-                        }
+                        },
+                        shape = RoundedCornerShape(8.dp)
                     ) {
                         Image(
                             painter = painterResource(id = R.drawable.bmc_button),
@@ -415,7 +416,7 @@ fun HomeIndexScreen(
                                     "https://github.com/ImaginativeShohag/Why-Not-Compose"
                                 )
                             }
-                            .padding(4.dp),
+                            .padding(horizontal = 8.dp),
                         text = "GitHub",
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Bold

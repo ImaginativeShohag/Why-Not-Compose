@@ -37,6 +37,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
+import org.imaginativeworld.whynotcompose.base.extensions.popBackStackOrIgnore
 import org.imaginativeworld.whynotcompose.base.models.UIThemeMode
 import org.imaginativeworld.whynotcompose.base.models.nextMode
 import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
@@ -191,7 +192,7 @@ private fun NavGraphBuilder.addUserScreens(
             viewModel = viewModel,
             userId = userId,
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             },
             toggleUIMode = {
                 updateUiThemeMode(isDarkMode.nextMode())
@@ -239,7 +240,7 @@ private fun NavGraphBuilder.addTodoScreens(
             viewModel = viewModel,
             userId = userId,
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             },
             toggleUIMode = {
                 updateUiThemeMode(isDarkMode.nextMode())
@@ -268,7 +269,7 @@ private fun NavGraphBuilder.addTodoScreens(
             userId = userId,
             todoId = todoId,
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             },
             toggleUIMode = {
                 updateUiThemeMode(isDarkMode.nextMode())
@@ -292,7 +293,7 @@ private fun NavGraphBuilder.addPostScreens(
             viewModel = viewModel,
             userId = userId,
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             },
             toggleUIMode = {
                 updateUiThemeMode(isDarkMode.nextMode())
@@ -321,7 +322,7 @@ private fun NavGraphBuilder.addPostScreens(
             userId = userId,
             postId = postId,
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             },
             toggleUIMode = {
                 updateUiThemeMode(isDarkMode.nextMode())
@@ -357,7 +358,7 @@ private fun NavGraphBuilder.addCommentScreens(
             viewModel = viewModel,
             postId = postId,
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             },
             toggleUIMode = {
                 updateUiThemeMode(isDarkMode.nextMode())
@@ -386,7 +387,7 @@ private fun NavGraphBuilder.addCommentScreens(
             postId = postId,
             commentId = commentId,
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             },
             toggleUIMode = {
                 updateUiThemeMode(uiThemeMode.nextMode())

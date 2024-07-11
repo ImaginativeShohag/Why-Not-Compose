@@ -55,6 +55,7 @@ import org.imaginativeworld.whynotcompose.base.extensions.getObjFromJson
 import org.imaginativeworld.whynotcompose.base.extensions.navArg
 import org.imaginativeworld.whynotcompose.base.extensions.navResult
 import org.imaginativeworld.whynotcompose.base.extensions.navigate
+import org.imaginativeworld.whynotcompose.base.extensions.popBackStackOrIgnore
 import org.imaginativeworld.whynotcompose.base.extensions.popBackStackWithResult
 import org.imaginativeworld.whynotcompose.base.models.UIThemeMode
 import org.imaginativeworld.whynotcompose.cms.ui.screens.CMSMainScreen
@@ -397,7 +398,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionAppBar.route) {
             AppBarScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 }
             )
         }
@@ -405,7 +406,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionButton.route) {
             ButtonScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 }
             )
         }
@@ -413,7 +414,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionCard.route) {
             CardScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 }
             )
         }
@@ -421,7 +422,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionCheckBox.route) {
             CheckBoxScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 }
             )
         }
@@ -429,7 +430,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionDialog.route) {
             DialogScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 }
             )
         }
@@ -437,7 +438,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionDropDownMenu.route) {
             DropDownMenuScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 }
             )
         }
@@ -445,7 +446,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionListIndex.route) {
             ListIndexScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 },
                 navigate = { screen ->
                     navController.navigate(screen.route)
@@ -456,7 +457,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionListColumn.route) {
             ListColumnScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 }
             )
         }
@@ -464,7 +465,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionListRow.route) {
             ListRowScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 }
             )
         }
@@ -472,7 +473,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionListLazyColumnIndex.route) {
             LazyColumnIndexScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 },
                 navigate = { screen ->
                     navController.navigate(screen.route)
@@ -483,7 +484,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionListLazyColumnOne.route) {
             LazyColumnSampleOneScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 }
             )
         }
@@ -491,7 +492,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionListLazyColumnTwo.route) {
             LazyColumnSampleTwoScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 }
             )
         }
@@ -499,7 +500,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionListLazyRow.route) {
             LazyRowScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 }
             )
         }
@@ -507,7 +508,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionListGridVertical.route) {
             LazyVerticalGridScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 }
             )
         }
@@ -515,7 +516,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionListItem.route) {
             ListItemScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 }
             )
         }
@@ -523,7 +524,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionLoadingIndicator.route) {
             LoadingIndicatorScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 }
             )
         }
@@ -531,7 +532,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionRadioButton.route) {
             RadioButtonScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 }
             )
         }
@@ -539,7 +540,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionScaffoldIndex.route) {
             ScaffoldIndexScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 },
                 navigate = { screen ->
                     navController.navigate(screen.route)
@@ -574,7 +575,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionSnackbar.route) {
             SnackbarScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 },
                 navigate = { route ->
                     navController.navigate(route)
@@ -585,7 +586,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionSwitch.route) {
             SwitchScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 }
             )
         }
@@ -593,7 +594,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionTextField.route) {
             TextFieldScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 }
             )
         }
@@ -601,7 +602,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionSwipeToDismiss.route) {
             SwipeToDismissScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 }
             )
         }
@@ -609,7 +610,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionSwipeRefresh.route) {
             SwipeRefreshScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 }
             )
         }
@@ -617,7 +618,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionBadge.route) {
             BadgeScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 }
             )
         }
@@ -625,7 +626,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionFloatingActionButton.route) {
             FloatingActionButtonScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 }
             )
         }
@@ -633,7 +634,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionSlider.route) {
             SliderScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 }
             )
         }
@@ -641,7 +642,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionText.route) {
             TextScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 }
             )
         }
@@ -649,7 +650,7 @@ private fun NavGraphBuilder.addCompositionScreens(
         composable(CompositionsScreen.CompositionBottomNavigation.route) {
             BottomNavigationScreen(
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 }
             )
         }
@@ -676,7 +677,7 @@ private fun NavGraphBuilder.addUiScreens(
                 viewModel = viewModel,
                 target = WebViewTarget.AboutMe,
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 }
             )
         }
@@ -687,7 +688,7 @@ private fun NavGraphBuilder.addUiScreens(
             MapScreen(
                 viewModel = viewModel,
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 },
                 gotoDetailsScreen = { item ->
                     navController.navigate(UIsScreen.UiMapViewDetails.createRoute(item))
@@ -710,7 +711,7 @@ private fun NavGraphBuilder.addUiScreens(
                 MapViewDetailsScreen(
                     item = item,
                     goBack = {
-                        navController.popBackStack()
+                        navController.popBackStackOrIgnore()
                     }
                 )
             }
@@ -723,7 +724,7 @@ private fun NavGraphBuilder.addUiScreens(
                 viewModel = viewModel,
                 phoneNumber = "+8801234567891",
                 goBack = {
-                    navController.popBackStack()
+                    navController.popBackStackOrIgnore()
                 }
             )
         }
@@ -793,7 +794,7 @@ private fun NavGraphBuilder.addAnimationIndexScreen(
     composable(AnimationsScreen.AnimationIndex.route) {
         AnimationIndexScreen(
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             },
             navigate = { screen ->
                 navController.navigate(screen.route)
@@ -810,7 +811,7 @@ private fun NavGraphBuilder.addCompositionIndexScreen(
     composable(CompositionsScreen.CompositionIndex.route) {
         CompositionIndexScreen(
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             },
             navigate = { screen ->
                 navController.navigate(screen.route)
@@ -827,7 +828,7 @@ private fun NavGraphBuilder.addUiIndexScreen(
     composable(UIsScreen.UiIndex.route) {
         UiIndexScreen(
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             },
             navigate = { screen ->
                 navController.navigate(screen.route)
@@ -847,7 +848,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
 
         TutorialIndexScreen(
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             },
             navigate = { screen ->
                 if (screen.route == TutorialsScreen.TutorialPopBackStack.route) {
@@ -864,7 +865,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
     composable(TutorialsScreen.TutorialCounter.route) {
         CounterScreen(
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             }
         )
     }
@@ -875,7 +876,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
         CounterWithVMScreen(
             viewModel = viewModel,
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             }
         )
     }
@@ -883,7 +884,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
     composable(TutorialsScreen.TutorialAnimatedVisibility.route) {
         AnimatedVisibilityScreen(
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             }
         )
     }
@@ -891,7 +892,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
     composable(TutorialsScreen.TutorialLottie.route) {
         LottieScreen(
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             }
         )
     }
@@ -902,7 +903,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
         SelectImageAndCropScreen(
             viewModel = viewModel,
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             }
         )
     }
@@ -913,7 +914,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
         CaptureImageAndCropScreen(
             viewModel = viewModel,
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             }
         )
     }
@@ -921,7 +922,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
     composable(TutorialsScreen.TutorialPermission.route) {
         PermissionScreen(
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             }
         )
     }
@@ -932,7 +933,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
         DataFetchAndPagingScreen(
             viewModel = viewModel,
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             }
         )
     }
@@ -943,7 +944,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
         TicTacToeScreen(
             viewModel = viewModel,
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             }
         )
     }
@@ -951,7 +952,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
     composable(TutorialsScreen.TutorialOneSignalAndBroadcast.route) {
         OneSignalAndBroadcastScreen(
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             }
         )
     }
@@ -959,7 +960,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
     composable(TutorialsScreen.TutorialExoPlayer.route) {
         ExoPlayerScreen(
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             }
         )
     }
@@ -968,7 +969,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
         CMSMainScreen(
             updateUiThemeMode = updateUiThemeMode,
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             }
         )
     }
@@ -976,7 +977,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
     composable(TutorialsScreen.TutorialDeepLink.route) {
         DeepLinksScreen(
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             }
         )
     }
@@ -1004,7 +1005,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
             receivedDataBySavedState = resultDataBySavedState.value,
             receivedDataByMemoryCache = resultDataByMemoryCache,
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             },
             gotoScreenOne = { item ->
                 navController.navigate(TutorialsScreen.TutorialNavDataPassScreen1.createRoute(item))
@@ -1062,7 +1063,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
         NavDataPassOneScreen(
             data = receivedData,
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             },
             backWithData = { data ->
                 // Send-back data using `SavedStateHandle`.
@@ -1073,7 +1074,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
                         data
                     )
 
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             }
         )
     }
@@ -1087,7 +1088,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
         NavDataPassTwoScreen(
             data = data,
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             }
         )
     }
@@ -1116,7 +1117,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
             id = id,
             name = name,
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             }
         )
     }
@@ -1146,7 +1147,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
             name = name,
             ranks = ranks,
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             },
             backWithData = { data ->
                 // Send-back data using Memory Cache.
@@ -1173,7 +1174,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
             Spacer(Modifier.height(16.dp))
 
             Button(onClick = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             }) {
                 Text("Go Back")
             }
@@ -1190,7 +1191,7 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
         ReactiveModelScreen(
             viewModel = viewModel,
             goBack = {
-                navController.popBackStack()
+                navController.popBackStackOrIgnore()
             }
         )
     }

@@ -35,9 +35,7 @@ object MemoryCache {
     var cache = mutableMapOf<String, Any>()
         private set
 
-    inline fun <reified T> get(forKey: MemoryCacheKey): T? {
-        return cache[forKey.name] as? T
-    }
+    inline fun <reified T> get(forKey: MemoryCacheKey): T? = cache[forKey.name] as? T
 
     inline fun <reified T> set(forKey: MemoryCacheKey, @NonNull value: T) {
         if (value != null) {

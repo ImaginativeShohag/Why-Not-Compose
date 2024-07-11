@@ -40,7 +40,7 @@ import java.util.Locale
 import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.base.extensions.combine
@@ -51,24 +51,17 @@ import timber.log.Timber
 
 @HiltViewModel
 class MapViewModel @Inject constructor() : ViewModel() {
-
     private val eventShowLoading = MutableStateFlow(false)
-
     private val eventShowEmpty = MutableStateFlow(false)
-
     private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
-
     private val eventCurrentLocationName = MutableStateFlow("Loading...")
-
     private val places = MutableStateFlow<List<MapPlace>>(emptyList())
-
     private val selectedPlace = MutableStateFlow<MapPlace?>(null)
 
     // ----------------------------------------------------------------
 
     private val _state = MutableStateFlow(MapViewState())
-    val state: StateFlow<MapViewState>
-        get() = _state
+    val state = _state.asStateFlow()
 
     // ----------------------------------------------------------------
 
@@ -192,10 +185,11 @@ class MapViewModel @Inject constructor() : ViewModel() {
     fun hasLocationPermission(context: Context) = ActivityCompat.checkSelfPermission(
         context,
         Manifest.permission.ACCESS_FINE_LOCATION
-    ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-        context,
-        Manifest.permission.ACCESS_COARSE_LOCATION
-    ) == PackageManager.PERMISSION_GRANTED
+    ) == PackageManager.PERMISSION_GRANTED &&
+        ActivityCompat.checkSelfPermission(
+            context,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
 }
 
 data class MapViewState(

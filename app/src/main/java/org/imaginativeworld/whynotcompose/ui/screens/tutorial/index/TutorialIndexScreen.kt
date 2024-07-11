@@ -37,10 +37,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
@@ -48,7 +48,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent.Header
@@ -67,14 +67,15 @@ fun TutorialIndexScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun TutorialIndexSkeletonPreview() {
+private fun TutorialIndexSkeletonPreview() {
     AppTheme {
         TutorialIndexSkeleton()
     }
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun TutorialIndexSkeleton(
     goBack: () -> Unit = {},
@@ -84,94 +85,104 @@ fun TutorialIndexSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            Header(
+                "Tutorials",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            Header(
-                "Tutorials",
-                goBack = goBack
-            )
-
-            Divider()
-
             LazyColumn(
-                Modifier
-                    .weight(1f)
-                    .fillMaxWidth(),
-                contentPadding = PaddingValues(bottom = 8.dp)
+                Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(bottom = 16.dp)
             ) {
                 itemsIndexed(Tutorial.tutorialList) { index, item ->
-
                     if (index != 0) {
-                        Divider(Modifier.padding(16.dp, 0.dp))
+                        HorizontalDivider(Modifier.padding(16.dp, 0.dp))
                     }
 
-                    Column(
-                        Modifier
-                            .clickable {
-                                navigate(item.route)
-                            }
-                            .padding(
-                                start = 16.dp,
-                                top = 8.dp,
-                                end = 16.dp,
-                                bottom = 8.dp
-                            )
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            text = buildAnnotatedString {
-                                append(item.name)
-                                append(" ")
-
-                                withStyle(
-                                    SpanStyle(
-                                        color = item.level.color,
-                                        fontWeight = FontWeight.Bold,
-                                        fontSize = 12.sp
-                                    )
-                                ) {
-                                    append(item.level.name.uppercase())
-                                }
-                            }
-                        )
-
-                        if (item.description != null) {
-                            Text(
-                                modifier = Modifier.padding(
-                                    top = 4.dp
-                                ),
-                                text = buildAnnotatedString {
-                                    for (section in LiteMarkdown.getSections(item.description)) {
-                                        if (section.second) {
-                                            withStyle(
-                                                SpanStyle(
-                                                    fontFamily = FontFamily.Monospace,
-                                                    fontSize = 11.sp,
-                                                    background = MaterialTheme.colors.onBackground.copy(
-                                                        .05f
-                                                    )
-                                                )
-                                            ) {
-                                                append(section.first)
-                                            }
-                                        } else {
-                                            append(section.first)
-                                        }
-                                    }
-                                },
-                                fontSize = 12.sp
-                            )
+                    MenuItem(
+                        item = item,
+                        onClick = {
+                            navigate(item.route)
                         }
-                    }
+                    )
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun MenuItem(
+    item: Tutorial,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier
+            .clickable {
+                onClick()
+            }
+            .padding(
+                start = 16.dp,
+                top = 8.dp,
+                end = 16.dp,
+                bottom = 8.dp
+            )
+            .fillMaxWidth()
+    ) {
+        Text(
+            modifier = Modifier
+                .fillMaxWidth(),
+            text = buildAnnotatedString {
+                append(item.name)
+                append(" ")
+
+                withStyle(
+                    SpanStyle(
+                        color = item.level.color,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 12.sp
+                    )
+                ) {
+                    append(item.level.name.uppercase())
+                }
+            }
+        )
+
+        if (item.description != null) {
+            Text(
+                modifier = Modifier.padding(
+                    top = 4.dp
+                ),
+                text = buildAnnotatedString {
+                    for (section in LiteMarkdown.getSections(item.description)) {
+                        if (section.second) {
+                            withStyle(
+                                SpanStyle(
+                                    fontFamily = FontFamily.Monospace,
+                                    fontSize = 11.sp,
+                                    background = MaterialTheme.colorScheme.onBackground.copy(
+                                        .05f
+                                    )
+                                )
+                            ) {
+                                append(section.first)
+                            }
+                        } else {
+                            append(section.first)
+                        }
+                    }
+                },
+                fontSize = 12.sp
+            )
         }
     }
 }

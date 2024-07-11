@@ -38,19 +38,15 @@ object PlayerViewPool {
 
     private val playerViewPool = Pools.SimplePool<StyledPlayerView>(2)
 
-    fun get(context: Context): StyledPlayerView {
-        return playerViewPool.acquire() ?: createPlayerView(context)
-    }
+    fun get(context: Context): StyledPlayerView = playerViewPool.acquire() ?: createPlayerView(context)
 
     fun release(player: StyledPlayerView) {
         playerViewPool.release(player)
     }
 
     @SuppressLint("InflateParams")
-    private fun createPlayerView(context: Context): StyledPlayerView {
-        return (
-            LayoutInflater.from(context)
-                .inflate(R.layout.exoplayer_texture_view, null, false) as StyledPlayerView
-            )
-    }
+    private fun createPlayerView(context: Context): StyledPlayerView = (
+        LayoutInflater.from(context)
+            .inflate(R.layout.exoplayer_texture_view, null, false) as StyledPlayerView
+        )
 }

@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.selectimageandcrop
 
-import android.content.res.Configuration
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -42,10 +41,9 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.Divider
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -56,7 +54,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import java.io.File
 import java.util.Date
@@ -147,15 +145,15 @@ fun SelectImageAndCropScreen(
     // ----------------------------------------------------------------
 
     SelectImageAndCropScreenSkeleton(
-        goBack = goBack,
         imagePath = imageUri,
-        onChooseImage1Clicked = {
+        goBack = goBack,
+        onChooseImage1Click = {
             imageSelectorLauncher1.launch("image/*")
         },
-        onChooseImage2Clicked = {
+        onChooseImage2Click = {
             imageSelectorLauncher2.launch(arrayOf("image/*"))
         },
-        onChooseImage3Clicked = {
+        onChooseImage3Click = {
             imageSelectorLauncher3.launch(
                 PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
             )
@@ -163,35 +161,34 @@ fun SelectImageAndCropScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun SelectImageAndCropScreenSkeletonPreview() {
+private fun SelectImageAndCropScreenSkeletonPreview() {
     AppTheme {
         SelectImageAndCropScreenSkeleton()
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun SelectImageAndCropScreenSkeletonPreviewDark() {
-    AppTheme {
-        SelectImageAndCropScreenSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun SelectImageAndCropScreenSkeleton(
-    goBack: () -> Unit = {},
     imagePath: Uri? = null,
-    onChooseImage1Clicked: () -> Unit = {},
-    onChooseImage2Clicked: () -> Unit = {},
-    onChooseImage3Clicked: () -> Unit = {}
+    goBack: () -> Unit = {},
+    onChooseImage1Click: () -> Unit = {},
+    onChooseImage2Click: () -> Unit = {},
+    onChooseImage3Click: () -> Unit = {}
 ) {
     Scaffold(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "Select Image and Crop for Upload",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
@@ -199,18 +196,6 @@ fun SelectImageAndCropScreenSkeleton(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            AppComponent.Header(
-                "Select Image and Crop for Upload",
-                goBack = goBack
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            Divider()
-
-            // ----------------------------------------------------------------
-
             Image(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
@@ -230,7 +215,7 @@ fun SelectImageAndCropScreenSkeleton(
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 32.dp),
                 onClick = {
-                    onChooseImage1Clicked()
+                    onChooseImage1Click()
                 }
             ) {
                 Text("Choose Image (GetContent())")
@@ -241,7 +226,7 @@ fun SelectImageAndCropScreenSkeleton(
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 8.dp),
                 onClick = {
-                    onChooseImage2Clicked()
+                    onChooseImage2Click()
                 }
             ) {
                 Text("Choose Image (OpenDocument())")
@@ -252,7 +237,7 @@ fun SelectImageAndCropScreenSkeleton(
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 8.dp),
                 onClick = {
-                    onChooseImage3Clicked()
+                    onChooseImage3Click()
                 }
             ) {
                 Text("Choose Image (PickVisualMedia())")

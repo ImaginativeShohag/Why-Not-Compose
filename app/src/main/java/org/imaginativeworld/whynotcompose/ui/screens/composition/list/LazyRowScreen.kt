@@ -28,7 +28,6 @@ package org.imaginativeworld.whynotcompose.ui.screens.composition.list
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
@@ -39,16 +38,15 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
@@ -62,24 +60,15 @@ fun LazyRowScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun LazyRowScreenSkeletonPreview() {
+private fun LazyRowScreenSkeletonPreview() {
     AppTheme {
         LazyRowScreenSkeleton()
     }
 }
 
-@Preview
-@Composable
-fun LazyRowScreenSkeletonPreviewDark() {
-    AppTheme(
-        darkTheme = true
-    ) {
-        LazyRowScreenSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun LazyRowScreenSkeleton(
     goBack: () -> Unit = {}
@@ -88,42 +77,33 @@ fun LazyRowScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
-    ) { innerPadding ->
-        Column(
-            Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-        ) {
+            .statusBarsPadding(),
+        topBar = {
             AppComponent.Header(
                 "List with Row",
                 goBack = goBack
             )
+        }
+    ) { innerPadding ->
+        val itemsList = (0..5).toList()
+        val itemsIndexedList = listOf("A", "B", "C")
 
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
+        LazyRow(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize(),
+            contentPadding = PaddingValues(8.dp, 8.dp)
+        ) {
+            items(itemsList) {
+                CustomItemList("Item is $it")
+            }
 
-            Divider()
+            item {
+                CustomItemList("Single item")
+            }
 
-            val itemsList = (0..5).toList()
-            val itemsIndexedList = listOf("A", "B", "C")
-
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxSize(),
-                contentPadding = PaddingValues(8.dp, 8.dp)
-            ) {
-                items(itemsList) {
-                    CustomItemList("Item is $it")
-                }
-
-                item {
-                    CustomItemList("Single item")
-                }
-
-                itemsIndexed(itemsIndexedList) { index, item ->
-                    CustomItemList("Item at index $index is $item")
-                }
+            itemsIndexed(itemsIndexedList) { index, item ->
+                CustomItemList("Item at index $index is $item")
             }
         }
     }
@@ -141,7 +121,7 @@ private fun CustomItemList(
             .clickable {
                 // do things here.
             }
-            .background(MaterialTheme.colors.surface)
+            .background(MaterialTheme.colorScheme.surface)
             .padding(32.dp, 32.dp),
         text = text,
         textAlign = TextAlign.Center

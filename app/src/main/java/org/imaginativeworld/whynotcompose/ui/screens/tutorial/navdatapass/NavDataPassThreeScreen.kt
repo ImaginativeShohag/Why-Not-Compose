@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -36,16 +35,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Divider
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
@@ -63,9 +59,9 @@ fun NavDataPassThreeScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun NavDataPassThreeScreenSkeletonPreview() {
+private fun NavDataPassThreeScreenSkeletonPreviewDark() {
     AppTheme {
         NavDataPassThreeScreenSkeleton(
             id = 1,
@@ -74,17 +70,7 @@ fun NavDataPassThreeScreenSkeletonPreview() {
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun NavDataPassThreeScreenSkeletonPreviewDark() {
-    AppTheme {
-        NavDataPassThreeScreenSkeleton(
-            id = 1,
-            name = "Mahmudul Hasan Shohag"
-        )
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun NavDataPassThreeScreenSkeleton(
     id: Int,
@@ -95,7 +81,13 @@ fun NavDataPassThreeScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "Data passed as Parameter",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
@@ -104,16 +96,6 @@ fun NavDataPassThreeScreenSkeleton(
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            AppComponent.Header(
-                "Data passed as Parameter",
-                goBack = goBack
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            Divider()
-
             AppComponent.BigSpacer()
 
             Text(

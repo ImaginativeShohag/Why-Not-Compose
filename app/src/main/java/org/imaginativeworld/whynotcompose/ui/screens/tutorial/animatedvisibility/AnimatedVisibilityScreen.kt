@@ -26,24 +26,20 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.animatedvisibility
 
-import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material.Card
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -53,7 +49,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
@@ -68,22 +64,15 @@ fun AnimatedVisibilityScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun AnimatedVisibilityScreenSkeletonPreview() {
+private fun AnimatedVisibilityScreenSkeletonPreview() {
     AppTheme {
         AnimatedVisibilityScreenSkeleton()
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun AnimatedVisibilityScreenSkeletonPreviewDark() {
-    AppTheme {
-        AnimatedVisibilityScreenSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun AnimatedVisibilityScreenSkeleton(
     goBack: () -> Unit = {}
@@ -92,54 +81,59 @@ fun AnimatedVisibilityScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "AnimatedVisibility",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
+                .padding(start = 16.dp, end = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            AppComponent.Header(
-                "AnimatedVisibility",
-                goBack = goBack
+            var expanded by remember { mutableStateOf(true) }
+
+            JetpackComposeCard(
+                isExpanded = expanded,
+                onClick = { expanded = !expanded },
+                modifier = Modifier
             )
+        }
+    }
+}
 
-            Divider()
-
-            Column(
-                Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Card {
-                    var expanded by remember { mutableStateOf(false) }
-
-                    Column(
-                        Modifier
-                            .clickable { expanded = !expanded }
-                            .padding(16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Image(
-                            modifier = Modifier
-                                .size(96.dp),
-                            painter = painterResource(id = R.drawable.ic_jetpack_compose_logo),
-                            contentDescription = null
-                        )
-                        AnimatedVisibility(expanded) {
-                            Text(
-                                modifier = Modifier
-                                    .padding(top = 16.dp),
-                                text = "Jetpack\nCompose",
-                                style = MaterialTheme.typography.h2,
-                                textAlign = TextAlign.Center
-                            )
-                        }
-                    }
-                }
+@Composable
+private fun JetpackComposeCard(
+    isExpanded: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Card(modifier = modifier, onClick = onClick) {
+        Column(
+            Modifier
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                modifier = Modifier
+                    .size(96.dp),
+                painter = painterResource(id = R.drawable.ic_jetpack_compose_logo),
+                contentDescription = null
+            )
+            AnimatedVisibility(isExpanded) {
+                Text(
+                    modifier = Modifier
+                        .padding(top = 16.dp),
+                    text = "Jetpack\nCompose",
+                    style = MaterialTheme.typography.titleLarge,
+                    textAlign = TextAlign.Center
+                )
             }
         }
     }

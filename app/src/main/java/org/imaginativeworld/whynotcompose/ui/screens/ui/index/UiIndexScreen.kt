@@ -28,6 +28,7 @@ package org.imaginativeworld.whynotcompose.ui.screens.ui.index
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
@@ -36,12 +37,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.Divider
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent.Header
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
@@ -58,14 +59,15 @@ fun UiIndexScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun UiIndexSkeletonPreview() {
+private fun UiIndexSkeletonPreview() {
     AppTheme {
         UiIndexSkeleton()
     }
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun UiIndexSkeleton(
     goBack: () -> Unit = {},
@@ -75,25 +77,26 @@ fun UiIndexSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            Header(
+                "UIs",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            Header(
-                "UIs",
-                goBack = goBack
-            )
-
-            Divider()
-
-            LazyColumn(Modifier.fillMaxSize()) {
+            LazyColumn(
+                Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(bottom = 16.dp)
+            ) {
                 itemsIndexed(Ui.uiList) { index, item ->
-
                     if (index != 0) {
-                        Divider(Modifier.padding(16.dp, 0.dp))
+                        HorizontalDivider(Modifier.padding(16.dp, 0.dp))
                     }
 
                     Text(

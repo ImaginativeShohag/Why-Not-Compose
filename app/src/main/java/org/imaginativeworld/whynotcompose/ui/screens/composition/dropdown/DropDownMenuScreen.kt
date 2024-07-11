@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.composition.dropdown
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -42,16 +41,16 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -62,7 +61,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
@@ -79,22 +78,15 @@ fun DropDownMenuScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun DropDownMenuScreenSkeletonPreview() {
+private fun DropDownMenuScreenSkeletonPreviewDark() {
     AppTheme {
         DropDownMenuScreenSkeleton()
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun DropDownMenuScreenSkeletonPreviewDark() {
-    AppTheme {
-        DropDownMenuScreenSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun DropDownMenuScreenSkeleton(
     goBack: () -> Unit = {}
@@ -103,23 +95,19 @@ fun DropDownMenuScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "DropDown Menu",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            AppComponent.Header(
-                "DropDown Menu",
-                goBack = goBack
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            Divider()
-
             AppComponent.SubHeader("Menu")
 
             // ----------------------------------------------------------------
@@ -139,38 +127,47 @@ fun DropDownMenuScreenSkeleton(
                     expanded = expanded,
                     onDismissRequest = { expanded = false }
                 ) {
-                    DropdownMenuItem(onClick = {
-                        expanded = false
+                    DropdownMenuItem(
+                        text = {
+                            Text("Refresh")
+                        },
+                        onClick = {
+                            expanded = false
 
-                        /* Handle refresh! */
-                    }) {
-                        Text("Refresh")
-                    }
+                            /* Handle refresh! */
+                        }
+                    )
 
-                    DropdownMenuItem(onClick = {
-                        expanded = false
+                    DropdownMenuItem(
+                        text = {
+                            Text("Settings")
+                        },
+                        onClick = {
+                            expanded = false
 
-                        /* Handle settings! */
-                    }) {
-                        Text("Settings")
-                    }
+                            /* Handle settings! */
+                        }
+                    )
 
-                    Divider()
+                    HorizontalDivider()
 
-                    DropdownMenuItem(onClick = {
-                        expanded = false
+                    DropdownMenuItem(
+                        text = {
+                            Text("Send Feedback")
+                        },
+                        onClick = {
+                            expanded = false
 
-                        /* Handle send feedback! */
-                    }) {
-                        Text("Send Feedback")
-                    }
+                            /* Handle send feedback! */
+                        }
+                    )
                 }
             }
 
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
 
-            Divider()
+            HorizontalDivider()
 
             AppComponent.SubHeader("Spinner")
 
@@ -188,23 +185,23 @@ fun DropDownMenuScreenSkeleton(
             var selectedItem2 by remember { mutableStateOf("Bangladesh") }
 
             DropDownSpinner(
-                modifier = Modifier.padding(start = 16.dp, end = 16.dp),
-                defaultText = "Select Country...",
                 selectedItem = selectedItem1,
-                onItemSelected = { index, item ->
+                onItemSelect = { index, item ->
                     selectedItem1 = item
                 },
-                itemList = countryList
+                itemList = countryList,
+                modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+                defaultText = "Select Country..."
             )
 
             DropDownSpinner(
-                modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
-                defaultText = "Select Country...",
                 selectedItem = selectedItem2,
-                onItemSelected = { index, item ->
+                onItemSelect = { index, item ->
                     selectedItem2 = item
                 },
-                itemList = countryList
+                itemList = countryList,
+                modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
+                defaultText = "Select Country..."
             )
 
             // ----------------------------------------------------------------
@@ -216,11 +213,11 @@ fun DropDownMenuScreenSkeleton(
 
 @Composable
 fun <E> DropDownSpinner(
-    modifier: Modifier = Modifier,
-    defaultText: String = "Select...",
     selectedItem: E,
-    onItemSelected: (Int, E) -> Unit,
-    itemList: List<E>?
+    onItemSelect: (Int, E) -> Unit,
+    itemList: List<E>?,
+    modifier: Modifier = Modifier,
+    defaultText: String = "Select..."
 ) {
     var isOpen by remember { mutableStateOf(false) }
 
@@ -228,7 +225,7 @@ fun <E> DropDownSpinner(
         modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .background(MaterialTheme.colors.surface)
+            .background(MaterialTheme.colorScheme.surface)
             .height(ELEMENT_HEIGHT),
         contentAlignment = Alignment.CenterStart
     ) {
@@ -238,7 +235,7 @@ fun <E> DropDownSpinner(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp, bottom = 3.dp),
-                color = MaterialTheme.colors.onSurface.copy(.45f)
+                color = MaterialTheme.colorScheme.onSurface.copy(.45f)
             )
         }
 
@@ -247,7 +244,7 @@ fun <E> DropDownSpinner(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 32.dp, bottom = 3.dp),
-            color = MaterialTheme.colors.onSurface
+            color = MaterialTheme.colorScheme.onSurface
         )
 
         DropdownMenu(
@@ -259,13 +256,14 @@ fun <E> DropDownSpinner(
         ) {
             itemList?.forEachIndexed { index, item ->
                 DropdownMenuItem(
+                    text = {
+                        Text(item.toString())
+                    },
                     onClick = {
                         isOpen = false
-                        onItemSelected(index, item)
+                        onItemSelect(index, item)
                     }
-                ) {
-                    Text(item.toString())
-                }
+                )
             }
         }
 

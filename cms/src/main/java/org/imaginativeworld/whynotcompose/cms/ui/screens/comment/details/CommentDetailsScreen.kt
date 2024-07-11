@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.screens.comment.details
 
-import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -59,7 +58,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.base.models.Event
 import org.imaginativeworld.whynotcompose.cms.models.ActionMessage
@@ -90,7 +89,7 @@ fun CommentDetailsScreen(
         viewModel.getDetails(commentId)
     }
 
-    LaunchedEffect(state.deleteSuccess) {
+    LaunchedEffect(state.deleteSuccess, goBack) {
         if (state.deleteSuccess?.getValueOnce() == true) {
             goBack()
         }
@@ -105,8 +104,8 @@ fun CommentDetailsScreen(
         retryDataLoad = {
             viewModel.getDetails(commentId)
         },
-        onDeleteClicked = { openDeleteDialog = true },
-        onEditClicked = {
+        onDeleteClick = { openDeleteDialog = true },
+        onEditClick = {
             openEditCommentSheet.value = !openEditCommentSheet.value
         }
     )
@@ -165,40 +164,33 @@ fun CommentDetailsScreen(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun CommentDetailsScreenSkeletonPreview() {
+private fun CommentDetailsScreenSkeletonPreviewDark() {
     CMSAppTheme {
         CommentDetailsScreenSkeleton(
+            showLoading = false,
+            showMessage = null,
             comment = MockData.dummyComment
         )
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun CommentDetailsScreenSkeletonPreviewDark() {
-    CMSAppTheme {
-        CommentDetailsScreenSkeleton(
-            comment = MockData.dummyComment
-        )
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun CommentDetailsScreenSkeleton(
+    showLoading: Boolean,
+    showMessage: Event<ActionMessage>?,
     comment: Comment?,
-    showLoading: Boolean = false,
-    showMessage: Event<ActionMessage>? = null,
     goBack: () -> Unit = {},
     toggleUIMode: () -> Unit = {},
     retryDataLoad: () -> Unit = {},
-    onDeleteClicked: () -> Unit = {},
-    onEditClicked: () -> Unit = {}
+    onDeleteClick: () -> Unit = {},
+    onEditClick: () -> Unit = {}
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
-    LaunchedEffect(showMessage) {
+    LaunchedEffect(showMessage, retryDataLoad) {
         showMessage?.getValueOnce()?.let { actionMessage ->
             when (actionMessage.action) {
                 CommentDetailsViewAction.COMMENT_LOAD_ERROR -> {
@@ -272,7 +264,7 @@ fun CommentDetailsScreenSkeleton(
                             caption = "Delete",
                             icon = Icons.Rounded.Delete
                         ) {
-                            onDeleteClicked()
+                            onDeleteClick()
                         }
 
                         Spacer(Modifier.width(16.dp))
@@ -282,7 +274,7 @@ fun CommentDetailsScreenSkeleton(
                             caption = "Edit",
                             icon = Icons.Rounded.Edit
                         ) {
-                            onEditClicked()
+                            onEditClick()
                         }
                     }
                 }

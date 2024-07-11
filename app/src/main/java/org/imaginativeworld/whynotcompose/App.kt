@@ -36,8 +36,9 @@ import org.imaginativeworld.whynotcompose.utils.onesignal.MyNotificationWillShow
 import timber.log.Timber
 
 @HiltAndroidApp
-class App : Application(), OnMapsSdkInitializedCallback {
-
+class App :
+    Application(),
+    OnMapsSdkInitializedCallback {
     override fun onCreate() {
         super.onCreate()
 

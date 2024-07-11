@@ -28,33 +28,27 @@ package org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.ExtendedFloatingActionButton
-import androidx.compose.material.FabPosition
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
-// Source: https://cs.android.com/androidx/platform/tools/dokka-devsite-plugin/+/master:testData/compose/samples/material/samples/ScaffoldSamples.kt
+// Source: https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:compose/material3/material3/samples/src/main/java/androidx/compose/material3/samples/ScaffoldSamples.kt
 
 private val colors = listOf(
     Color(0xFFffd7d7.toInt()),
@@ -69,46 +63,23 @@ fun SimpleScaffoldWithTopBarScreen() {
     SimpleScaffoldWithTopBarScreenSkeleton()
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun SimpleScaffoldWithTopBarScreenSkeletonPreview() {
+private fun SimpleScaffoldWithTopBarScreenSkeletonPreview() {
     AppTheme {
         SimpleScaffoldWithTopBarScreenSkeleton()
     }
 }
 
-@Preview
-@Composable
-fun SimpleScaffoldWithTopBarScreenSkeletonPreviewDark() {
-    AppTheme(
-        darkTheme = true
-    ) {
-        SimpleScaffoldWithTopBarScreenSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun SimpleScaffoldWithTopBarScreenSkeleton() {
-    val scaffoldState = rememberScaffoldState()
-    val scope = rememberCoroutineScope()
-
     Scaffold(
-        modifier = Modifier
-            .navigationBarsPadding()
-            .imePadding()
-            .statusBarsPadding(),
-        scaffoldState = scaffoldState,
-        drawerContent = { Text("Drawer content") },
-        drawerShape = RectangleShape,
         topBar = {
             TopAppBar(
                 title = { Text("Simple Scaffold Screen") },
                 navigationIcon = {
-                    IconButton(
-                        onClick = {
-                            scope.launch { scaffoldState.drawerState.open() }
-                        }
-                    ) {
+                    IconButton(onClick = { /* "Open nav drawer" */ }) {
                         Icon(Icons.Filled.Menu, contentDescription = "Localized description")
                     }
                 }
@@ -116,13 +87,14 @@ fun SimpleScaffoldWithTopBarScreenSkeleton() {
         },
         floatingActionButtonPosition = FabPosition.End,
         floatingActionButton = {
-            ExtendedFloatingActionButton(
-                text = { Text("Extended FAB") },
-                onClick = { /* fab click handler */ }
-            )
+            ExtendedFloatingActionButton(onClick = { /* fab click handler */ }) { Text("Inc") }
         },
         content = { innerPadding ->
-            LazyColumn(contentPadding = innerPadding) {
+            LazyColumn(
+                // consume insets as scaffold doesn't do it by default
+                modifier = Modifier.consumeWindowInsets(innerPadding),
+                contentPadding = innerPadding
+            ) {
                 items(count = 100) {
                     Box(
                         Modifier

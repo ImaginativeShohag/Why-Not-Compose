@@ -147,6 +147,12 @@ data class Tutorial(
                 description = "Example of reactive model in `MVVM`.",
                 route = TutorialsScreen.TutorialReactiveModel,
                 level = TutorialLevel.Beginner
+            ),
+            Tutorial(
+                name = "Navigation blank screen issue",
+                description = "Solutions for `popBackStack()` blank screen issue.",
+                route = TutorialsScreen.TutorialPopBackStack,
+                level = TutorialLevel.Intermediate
             )
         )
     }

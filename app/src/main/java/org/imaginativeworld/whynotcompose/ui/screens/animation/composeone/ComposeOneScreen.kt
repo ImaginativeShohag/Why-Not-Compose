@@ -40,12 +40,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Colors
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -58,23 +57,29 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlin.math.min
 import kotlin.random.Random
 import kotlinx.coroutines.delay
 import org.imaginativeworld.whynotcompose.R
+import org.imaginativeworld.whynotcompose.base.models.isLight
+import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
 
-val Colors.dotBackground: Color
-    get() = if (isLight) TailwindCSSColor.Gray200 else TailwindCSSColor.Gray800
+val dotBackgroundColor: Color
+    @Composable get() {
+        val uiThemeMode by UIThemeController.uiThemeMode.collectAsState()
+        return if (uiThemeMode.isLight()) TailwindCSSColor.Gray200 else TailwindCSSColor.Gray800
+    }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun ComposeOneScreen() {
     val density = LocalDensity.current
-    val dotBackground = MaterialTheme.colors.dotBackground
+    val dotBackground = dotBackgroundColor
 
     Scaffold { innerPadding ->
         BoxWithConstraints(
@@ -217,14 +222,6 @@ fun ComposeOneScreen() {
     }
 }
 
-@Preview
-@Composable
-fun ComposeOneScreenPreview() {
-    AppTheme {
-        ComposeOneScreen()
-    }
-}
-
 @Composable
 fun AnimatedText(
     text: String,
@@ -266,5 +263,13 @@ fun AnimatedText(
                 }
             )
         }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun ComposeOneScreenPreview() {
+    AppTheme {
+        ComposeOneScreen()
     }
 }

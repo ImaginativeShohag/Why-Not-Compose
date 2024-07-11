@@ -41,19 +41,17 @@ object SimpleExoPlayerHolder {
         return exoplayer!!
     }
 
-    private fun createExoPlayer(context: Context): ExoPlayer {
-        return ExoPlayer.Builder(context)
-            .setLoadControl(
-                DefaultLoadControl.Builder().setBufferDurationsMs(
-                    DefaultLoadControl.DEFAULT_MIN_BUFFER_MS,
-                    DefaultLoadControl.DEFAULT_MAX_BUFFER_MS,
-                    DefaultLoadControl.DEFAULT_BUFFER_FOR_PLAYBACK_MS / 10,
-                    DefaultLoadControl.DEFAULT_BUFFER_FOR_PLAYBACK_AFTER_REBUFFER_MS / 10
-                ).build()
-            )
-            .build()
-            .apply {
-                repeatMode = Player.REPEAT_MODE_ONE
-            }
-    }
+    private fun createExoPlayer(context: Context): ExoPlayer = ExoPlayer.Builder(context)
+        .setLoadControl(
+            DefaultLoadControl.Builder().setBufferDurationsMs(
+                DefaultLoadControl.DEFAULT_MIN_BUFFER_MS,
+                DefaultLoadControl.DEFAULT_MAX_BUFFER_MS,
+                DefaultLoadControl.DEFAULT_BUFFER_FOR_PLAYBACK_MS / 10,
+                DefaultLoadControl.DEFAULT_BUFFER_FOR_PLAYBACK_AFTER_REBUFFER_MS / 10
+            ).build()
+        )
+        .build()
+        .apply {
+            repeatMode = Player.REPEAT_MODE_ONE
+        }
 }

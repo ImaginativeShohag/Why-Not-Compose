@@ -30,22 +30,19 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
-import androidx.compose.material.Divider
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -56,7 +53,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.onesignal.OneSignal
@@ -180,22 +177,15 @@ private fun sendNewNotification(value: String, onError: (String) -> Unit) {
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun OneSignalAndBroadcastScreenSkeletonPreview() {
+private fun OneSignalAndBroadcastScreenSkeletonPreviewDark() {
     AppTheme {
         OneSignalAndBroadcastScreenSkeleton()
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun OneSignalAndBroadcastScreenSkeletonPreviewDark() {
-    AppTheme {
-        OneSignalAndBroadcastScreenSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun OneSignalAndBroadcastScreenSkeleton(
     goBack: () -> Unit = {},
@@ -206,43 +196,32 @@ fun OneSignalAndBroadcastScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "OneSignal and Broadcast",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
+                .padding(start = 16.dp, end = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            AppComponent.Header(
-                "OneSignal and Broadcast",
-                goBack = goBack
-            )
+            AppComponent.MediumSpacer()
 
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            Divider()
-
-            // ----------------------------------------------------------------
+            Text("Current value: $currentValue")
 
             AppComponent.MediumSpacer()
 
-            Column(
-                Modifier
-                    .padding(start = 16.dp, end = 16.dp)
-                    .fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text("Current value: $currentValue")
-
-                AppComponent.MediumSpacer()
-
-                Button(onClick = {
-                    sendNotification()
-                }) {
-                    Text("Post New Value")
-                }
+            Button(onClick = {
+                sendNotification()
+            }) {
+                Text("Post New Value")
             }
 
             // ----------------------------------------------------------------

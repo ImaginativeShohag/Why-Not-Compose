@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.screens.comment.list.elements
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -45,7 +44,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import org.imaginativeworld.whynotcompose.cms.repositories.MockData
@@ -54,12 +53,12 @@ import org.imaginativeworld.whynotcompose.common.compose.R
 
 @Composable
 fun CommentItem(
-    modifier: Modifier = Modifier,
     name: String,
     email: String,
     body: String,
     userImageUrl: String,
     isPreview: Boolean,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit = {}
 ) {
     Card(
@@ -104,37 +103,9 @@ fun CommentItem(
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
-fun CommentItemPreview() {
-    CMSAppTheme {
-        Surface {
-            Column(Modifier.padding(16.dp)) {
-                CommentItem(
-                    name = MockData.dummyComment.name,
-                    email = MockData.dummyComment.email,
-                    body = MockData.dummyComment.body,
-                    isPreview = true,
-                    userImageUrl = MockData.dummyComment.getAvatarImageUrl()
-                )
-
-                Spacer(Modifier.height(16.dp))
-
-                CommentItem(
-                    name = MockData.dummyComment.name,
-                    email = MockData.dummyComment.email,
-                    body = MockData.dummyComment.body,
-                    isPreview = false,
-                    userImageUrl = MockData.dummyComment.getAvatarImageUrl()
-                )
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun CommentItemPreviewDark() {
+private fun CommentItemPreview() {
     CMSAppTheme {
         Surface {
             Column(Modifier.padding(16.dp)) {

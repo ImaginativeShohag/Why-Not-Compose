@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.screens.todo.list.elements
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -38,18 +37,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.cms.theme.CMSAppTheme
 import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
 
 @Composable
 fun TodoItem(
-    modifier: Modifier = Modifier,
     title: String,
     dueDate: String,
     status: String,
     statusColor: Color,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit = {}
 ) {
     Card(
@@ -87,22 +86,9 @@ fun TodoItem(
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
-fun TodoItemPreview() {
-    CMSAppTheme {
-        TodoItem(
-            title = "The quick brown fox jumps over the lazy dog.",
-            dueDate = "Tue, 20 Jun 2023",
-            status = "Completed",
-            statusColor = TailwindCSSColor.Red500
-        )
-    }
-}
-
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun TodoItemPreviewDark() {
+private fun TodoItemPreview() {
     CMSAppTheme {
         TodoItem(
             title = "The quick brown fox jumps over the lazy dog.",

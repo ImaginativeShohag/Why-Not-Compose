@@ -27,17 +27,14 @@
 package org.imaginativeworld.whynotcompose.ui.screens.composition.scaffold
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.ExtendedFloatingActionButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.SnackbarHostState
-import androidx.compose.material.SnackbarResult
-import androidx.compose.material.Text
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -45,49 +42,42 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
-// Source: https://cs.android.com/androidx/platform/tools/dokka-devsite-plugin/+/master:testData/compose/samples/material/samples/ScaffoldSamples.kt
+// Source: https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:compose/material3/material3/samples/src/main/java/androidx/compose/material3/samples/ScaffoldSamples.kt
 
 @Composable
 fun ScaffoldWithCoroutinesSnackbarScreen() {
     ScaffoldWithCoroutinesSnackbarScreenSkeleton()
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun ScaffoldWithCoroutinesSnackbarScreenSkeletonPreview() {
+private fun ScaffoldWithCoroutinesSnackbarScreenSkeletonPreview() {
     AppTheme {
         ScaffoldWithCoroutinesSnackbarScreenSkeleton()
     }
 }
 
-@Preview
-@Composable
-fun ScaffoldWithCoroutinesSnackbarScreenSkeletonPreviewDark() {
-    AppTheme(
-        darkTheme = true
-    ) {
-        ScaffoldWithCoroutinesSnackbarScreenSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun ScaffoldWithCoroutinesSnackbarScreenSkeleton() {
     // decouple snackbar host state from scaffold state for demo purposes
     // this state, channel and flow is for demo purposes to demonstrate business logic layer
     val snackbarHostState = remember { SnackbarHostState() }
     // we allow only one snackbar to be in the queue here, hence conflated
-    val channel = remember { Channel<Int>(Channel.Factory.CONFLATED) }
+    val channel = remember { Channel<Int>(Channel.CONFLATED) }
+
     LaunchedEffect(channel) {
         channel.receiveAsFlow().collect { index ->
-            val result = snackbarHostState.showSnackbar(
-                message = "Snackbar # $index",
-                actionLabel = "Action on $index"
-            )
+            val result =
+                snackbarHostState.showSnackbar(
+                    message = "Snackbar # $index",
+                    actionLabel = "Action on $index"
+                )
             when (result) {
                 SnackbarResult.ActionPerformed -> {
                     /* action has been performed */
@@ -100,21 +90,17 @@ fun ScaffoldWithCoroutinesSnackbarScreenSkeleton() {
         }
     }
     Scaffold(
-        modifier = Modifier
-            .navigationBarsPadding()
-            .imePadding()
-            .statusBarsPadding(),
-        // attach snackbar host state to the scaffold
-        scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState),
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         floatingActionButton = {
             var clickCount by remember { mutableIntStateOf(0) }
             ExtendedFloatingActionButton(
-                text = { Text("Show snackbar") },
                 onClick = {
                     // offset snackbar data to the business logic
                     channel.trySend(++clickCount)
                 }
-            )
+            ) {
+                Text("Show snackbar")
+            }
         },
         content = { innerPadding ->
             Text(

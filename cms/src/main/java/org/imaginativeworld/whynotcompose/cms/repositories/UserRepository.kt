@@ -83,27 +83,19 @@ class UserRepository @Inject constructor(
 
     suspend fun saveUserInDB(
         userModel: UserEntity
-    ): Long {
-        return withContext(Dispatchers.IO) {
-            db.userDao().insert(userModel)
-        }
+    ): Long = withContext(Dispatchers.IO) {
+        db.userDao().insert(userModel)
     }
 
-    suspend fun removeAllUsersFromDB() {
-        return withContext(Dispatchers.IO) {
-            db.userDao().removeAll()
-        }
+    suspend fun removeAllUsersFromDB() = withContext(Dispatchers.IO) {
+        db.userDao().removeAll()
     }
 
-    suspend fun getUsersFromDB(): List<UserEntity> {
-        return withContext(Dispatchers.IO) {
-            db.userDao().getAll()
-        }
+    suspend fun getUsersFromDB(): List<UserEntity> = withContext(Dispatchers.IO) {
+        db.userDao().getAll()
     }
 
-    suspend fun updateUserToDB(user: UserEntity) {
-        return withContext(Dispatchers.IO) {
-            db.userDao().update(user)
-        }
+    suspend fun updateUserToDB(user: UserEntity) = withContext(Dispatchers.IO) {
+        db.userDao().update(user)
     }
 }

@@ -26,8 +26,9 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.compositions
 
-import android.content.res.Configuration
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -36,45 +37,45 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.imaginativeworld.whynotcompose.cms.theme.CMSAppTheme
 
-@Preview
+@PreviewLightDark
 @Composable
-fun ErrorItemPreview() {
+private fun ErrorItemPreview() {
     CMSAppTheme {
-        ErrorItem(
-            "Something went wrong!"
-        ) {
-        }
-    }
-}
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun ErrorItemPreviewDark() {
-    CMSAppTheme {
-        ErrorItem(
-            "Something went wrong!"
-        ) {
+        Scaffold { innerPadding ->
+            Box(
+                Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                ErrorItem(
+                    "Something went wrong!"
+                ) {
+                }
+            }
         }
     }
 }
 
 @Composable
 fun ErrorItem(
-    errorMessage: String,
-    onRetryClicked: () -> Unit
+    message: String,
+    modifier: Modifier = Modifier,
+    onRetryClick: () -> Unit
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(16.dp, 8.dp),
         shape = RoundedCornerShape(8.dp),
@@ -89,7 +90,7 @@ fun ErrorItem(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 8.dp, top = 8.dp, end = 8.dp),
-                text = errorMessage,
+                text = message,
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.onErrorContainer,
                 textAlign = TextAlign.Center
@@ -103,7 +104,7 @@ fun ErrorItem(
                     containerColor = MaterialTheme.colorScheme.onErrorContainer
                 ),
                 onClick = {
-                    onRetryClicked()
+                    onRetryClick()
                 }
             ) {
                 Text("Retry")

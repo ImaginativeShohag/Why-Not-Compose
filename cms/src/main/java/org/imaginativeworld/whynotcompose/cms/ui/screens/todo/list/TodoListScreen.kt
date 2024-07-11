@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.screens.todo.list
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -56,7 +55,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.PagingData
@@ -123,11 +122,13 @@ fun TodoListScreen(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun TodoListScreenSkeletonPreview() {
+private fun TodoListScreenSkeletonPreviewDark() {
     CMSAppTheme {
         TodoListScreenSkeleton(
+            showLoading = false,
+            showMessage = null,
             goBack = {},
             toggleUIMode = {},
             todos = flowOf(
@@ -139,28 +140,13 @@ fun TodoListScreenSkeletonPreview() {
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun TodoListScreenSkeletonPreviewDark() {
-    CMSAppTheme {
-        TodoListScreenSkeleton(
-            goBack = {},
-            toggleUIMode = {},
-            todos = flowOf(
-                PagingData.from(
-                    MockData.dummyTodoList
-                )
-            ).collectAsLazyPagingItems()
-        )
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun TodoListScreenSkeleton(
+    showLoading: Boolean,
+    showMessage: Event<String>?,
     goBack: () -> Unit,
     toggleUIMode: () -> Unit,
-    showLoading: Boolean = false,
-    showMessage: Event<String>? = null,
     todos: LazyPagingItems<Todo>,
     retryDataLoad: () -> Unit = {},
     openAddTodoSheet: () -> Unit = {},
@@ -175,7 +161,7 @@ fun TodoListScreenSkeleton(
         }
     }
 
-    LaunchedEffect(showMessage) {
+    LaunchedEffect(showMessage, retryDataLoad) {
         showMessage?.getValueOnce()?.let { message ->
             val result = snackbarHostState.showSnackbar(message)
 
@@ -300,8 +286,8 @@ fun TodoListScreenSkeleton(
                                 item {
                                     // Note: this should be full screen using fillParentMaxSize()
                                     ErrorItem(
-                                        errorMessage = "Error! " + (todos.loadState.refresh as LoadState.Error).error.message,
-                                        onRetryClicked = {
+                                        message = "Error! " + (todos.loadState.refresh as LoadState.Error).error.message,
+                                        onRetryClick = {
                                             retry()
                                         }
                                     )
@@ -311,8 +297,8 @@ fun TodoListScreenSkeleton(
                             loadState.append is LoadState.Error -> {
                                 item {
                                     ErrorItem(
-                                        errorMessage = "Error! " + (todos.loadState.append as LoadState.Error).error.message,
-                                        onRetryClicked = {
+                                        message = "Error! " + (todos.loadState.append as LoadState.Error).error.message,
+                                        onRetryClick = {
                                             retry()
                                         }
                                     )

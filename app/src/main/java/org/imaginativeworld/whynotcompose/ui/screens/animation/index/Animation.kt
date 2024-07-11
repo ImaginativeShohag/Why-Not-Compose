@@ -39,7 +39,7 @@ data class Animation(
                 route = AnimationsScreen.AnimationComposeOne
             ),
             Animation(
-                name = "Emudi",
+                name = "Emudi™",
                 route = AnimationsScreen.AnimationEmudi
             ),
             Animation(

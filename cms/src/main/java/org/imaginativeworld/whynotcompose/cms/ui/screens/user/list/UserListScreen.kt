@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.screens.user.list
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -56,7 +55,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.PagingData
@@ -121,11 +120,13 @@ fun UserListScreen(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun UserListScreenSkeletonPreview() {
+private fun UserListScreenSkeletonPreviewDark() {
     CMSAppTheme {
         UserListScreenSkeleton(
+            showLoading = false,
+            showMessage = null,
             goBack = {},
             toggleUIMode = {},
             users = flowOf(
@@ -137,28 +138,13 @@ fun UserListScreenSkeletonPreview() {
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun UserListScreenSkeletonPreviewDark() {
-    CMSAppTheme {
-        UserListScreenSkeleton(
-            goBack = {},
-            toggleUIMode = {},
-            users = flowOf(
-                PagingData.from(
-                    MockData.dummyUserList
-                )
-            ).collectAsLazyPagingItems()
-        )
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun UserListScreenSkeleton(
+    showLoading: Boolean,
+    showMessage: Event<String>?,
     goBack: () -> Unit,
     toggleUIMode: () -> Unit,
-    showLoading: Boolean = false,
-    showMessage: Event<String>? = null,
     users: LazyPagingItems<User>,
     retryDataLoad: () -> Unit = {},
     openAddUserSheet: () -> Unit = {},
@@ -173,7 +159,7 @@ fun UserListScreenSkeleton(
         }
     }
 
-    LaunchedEffect(showMessage) {
+    LaunchedEffect(showMessage, retryDataLoad) {
         showMessage?.getValueOnce()?.let { message ->
             val result = snackbarHostState.showSnackbar(message)
 
@@ -300,8 +286,8 @@ fun UserListScreenSkeleton(
                                 item {
                                     // Note: this should be full screen using fillParentMaxSize()
                                     ErrorItem(
-                                        errorMessage = "Error! " + (users.loadState.refresh as LoadState.Error).error.message,
-                                        onRetryClicked = {
+                                        message = "Error! " + (users.loadState.refresh as LoadState.Error).error.message,
+                                        onRetryClick = {
                                             retry()
                                         }
                                     )
@@ -311,8 +297,8 @@ fun UserListScreenSkeleton(
                             loadState.append is LoadState.Error -> {
                                 item {
                                     ErrorItem(
-                                        errorMessage = "Error! " + (users.loadState.append as LoadState.Error).error.message,
-                                        onRetryClicked = {
+                                        message = "Error! " + (users.loadState.append as LoadState.Error).error.message,
+                                        onRetryClick = {
                                             retry()
                                         }
                                     )

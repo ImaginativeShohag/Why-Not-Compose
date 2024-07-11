@@ -26,16 +26,12 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.datafetchandpaging.elements
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.relocation.bringIntoViewRequester
@@ -43,14 +39,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -62,24 +56,23 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.common.compose.theme.errorInputBackground
 
 @Composable
 fun SearchTextInputField(
+    value: TextFieldValue,
+    onValueChange: (TextFieldValue) -> Unit,
     modifier: Modifier = Modifier,
-    textFieldValue: MutableState<TextFieldValue>,
-    background: Color = MaterialTheme.colors.surface,
-    errorBackground: Color = MaterialTheme.colors.errorInputBackground,
+    placeholder: String? = null,
+    background: Color = MaterialTheme.colorScheme.surface,
+    errorBackground: Color = MaterialTheme.colorScheme.errorInputBackground,
     shape: Shape = RoundedCornerShape(8.dp),
-    placeholder: String = "",
     keyboardType: KeyboardType = KeyboardType.Text,
     readOnly: Boolean = false,
     singleLine: Boolean = true,
@@ -88,71 +81,43 @@ fun SearchTextInputField(
     fontSize: TextUnit = 16.sp,
     height: Dp = 48.dp,
     horizontalPadding: Dp = 12.dp,
-    isError: Boolean = false,
-    onValueChange: (TextFieldValue) -> Unit = {}
+    isError: Boolean = false
 ) {
     val focusManager = LocalFocusManager.current
     val bringIntoViewRequester = remember { BringIntoViewRequester() }
     val interactionSource = remember { MutableInteractionSource() }
-    val interactionSourceState = interactionSource.collectIsFocusedAsState()
-    val scope = rememberCoroutineScope()
-    val isImeVisible = WindowInsets.isImeVisible
-
-    LaunchedEffect(isImeVisible, interactionSourceState.value) {
-        if (isImeVisible && interactionSourceState.value) {
-            scope.launch {
-                delay(300)
-                bringIntoViewRequester.bringIntoView()
-            }
-        }
-    }
-
-    val rModifier = remember { modifier }
-    val rBackground = remember { background }
-    val rErrorBackground = remember { errorBackground }
-    val rPlaceholder = remember { placeholder }
-    val rKeyboardType = remember { keyboardType }
-    val rReadOnly = remember { readOnly }
-    val rSingleLine = remember { singleLine }
-    val rImeAction = remember { imeAction }
-    val rKeyboardActions = remember { keyboardActions }
-    val rFontSize = remember { fontSize }
-    val rHeight = remember { height }
-    val rOnValueChange = remember { onValueChange }
 
     BasicTextField(
-        value = textFieldValue.value,
-        singleLine = rSingleLine,
-        textStyle = MaterialTheme.typography.body1.copy(
-            fontSize = rFontSize,
-            color = MaterialTheme.colors.onSurface
+        value = value,
+        singleLine = singleLine,
+        textStyle = MaterialTheme.typography.bodyLarge.copy(
+            fontSize = fontSize,
+            color = MaterialTheme.colorScheme.onSurface
         ),
         onValueChange = {
-            textFieldValue.value = it
-
-            rOnValueChange(it)
+            onValueChange(it)
         },
-        keyboardActions = rKeyboardActions ?: KeyboardActions(
+        keyboardActions = keyboardActions ?: KeyboardActions(
             onDone = { focusManager.clearFocus() },
             onNext = { focusManager.moveFocus(FocusDirection.Down) },
             onSearch = { focusManager.clearFocus() }
         ),
         keyboardOptions = KeyboardOptions(
-            keyboardType = rKeyboardType,
-            imeAction = rImeAction
+            keyboardType = keyboardType,
+            imeAction = imeAction
         ),
         interactionSource = interactionSource,
-        modifier = rModifier
+        modifier = modifier
             .bringIntoViewRequester(bringIntoViewRequester)
             .fillMaxWidth(),
-        readOnly = rReadOnly,
+        readOnly = readOnly,
         decorationBox = { innerTextField ->
-            if (rSingleLine) {
+            if (singleLine) {
                 Box(
                     Modifier
                         .clip(shape)
-                        .background(if (isError) rErrorBackground else rBackground)
-                        .height(rHeight)
+                        .background(if (isError) errorBackground else background)
+                        .height(height)
                         .padding(horizontal = horizontalPadding),
                     contentAlignment = Alignment.CenterStart
                 ) {
@@ -163,12 +128,12 @@ fun SearchTextInputField(
                     ) {
                         innerTextField()
 
-                        if (textFieldValue.value.text.isEmpty()) {
+                        if (value.text.isEmpty() && placeholder != null) {
                             Text(
-                                text = rPlaceholder,
-                                color = MaterialTheme.colors.onSurface.copy(.35f),
-                                fontSize = rFontSize,
-                                maxLines = if (rSingleLine) 1 else Int.MAX_VALUE,
+                                text = placeholder,
+                                color = MaterialTheme.colorScheme.onSurface.copy(.35f),
+                                fontSize = fontSize,
+                                maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
                         }
@@ -178,8 +143,8 @@ fun SearchTextInputField(
                 Box(
                     Modifier
                         .clip(shape)
-                        .background(if (isError) rErrorBackground else rBackground)
-                        .height(rHeight)
+                        .background(if (isError) errorBackground else background)
+                        .height(height)
                         .padding(horizontal = horizontalPadding)
                 ) {
                     Box(
@@ -189,12 +154,12 @@ fun SearchTextInputField(
                     ) {
                         innerTextField()
 
-                        if (textFieldValue.value.text.isEmpty()) {
+                        if (value.text.isEmpty() && placeholder != null) {
                             Text(
-                                text = rPlaceholder,
-                                color = MaterialTheme.colors.onBackground.copy(.35f),
-                                fontSize = rFontSize,
-                                maxLines = if (rSingleLine) 1 else Int.MAX_VALUE,
+                                text = placeholder,
+                                color = MaterialTheme.colorScheme.onBackground.copy(.35f),
+                                fontSize = fontSize,
+                                maxLines = Int.MAX_VALUE,
                                 overflow = TextOverflow.Ellipsis
                             )
                         }
@@ -205,90 +170,70 @@ fun SearchTextInputField(
     )
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
-fun SearchTextInputFieldPreview() {
+private fun SearchTextInputFieldPreview() {
     AppTheme {
-        Column(Modifier.fillMaxWidth()) {
-            SearchTextInputField(
-                textFieldValue = remember { mutableStateOf(TextFieldValue()) },
-                placeholder = "I am  a placeholder",
-                keyboardType = KeyboardType.Text
-            )
+        Scaffold(
+            containerColor = MaterialTheme.colorScheme.surfaceContainer
+        ) { innerPadding ->
+            Column(
+                Modifier
+                    .padding(innerPadding)
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                val (value1, onChange1) = remember { mutableStateOf(TextFieldValue()) }
 
-            SearchTextInputField(
-                modifier = Modifier.padding(top = 32.dp),
-                textFieldValue = remember { mutableStateOf(TextFieldValue("I am an input.")) },
-                placeholder = "I am  a placeholder"
-            )
+                SearchTextInputField(
+                    value = value1,
+                    onValueChange = onChange1,
+                    placeholder = "I am  a placeholder",
+                    keyboardType = KeyboardType.Text
+                )
 
-            SearchTextInputField(
-                modifier = Modifier.padding(top = 32.dp),
-                textFieldValue = remember { mutableStateOf(TextFieldValue()) },
-                placeholder = "I am  a placeholder",
-                isError = true
-            )
+                val (value2, onChange2) = remember { mutableStateOf(TextFieldValue("I am an input.")) }
 
-            SearchTextInputField(
-                modifier = Modifier.padding(top = 32.dp),
-                textFieldValue = remember { mutableStateOf(TextFieldValue("I am an input.")) },
-                placeholder = "I am  a placeholder",
-                isError = true
-            )
+                SearchTextInputField(
+                    value = value2,
+                    onValueChange = onChange2,
+                    modifier = Modifier.padding(top = 32.dp),
+                    placeholder = "I am  a placeholder."
+                )
 
-            SearchTextInputField(
-                modifier = Modifier
-                    .padding(top = 32.dp)
-                    .height(128.dp),
-                textFieldValue = remember { mutableStateOf(TextFieldValue()) },
-                placeholder = "The quick brown fox jumps over a lazy dog, and the quick black cat jumps over a lazy tiger.",
-                keyboardType = KeyboardType.Text,
-                singleLine = false
-            )
-        }
-    }
-}
+                val (value3, onChange3) = remember { mutableStateOf(TextFieldValue()) }
 
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun SearchTextInputFieldPreviewDark() {
-    AppTheme {
-        Column(Modifier.fillMaxWidth()) {
-            SearchTextInputField(
-                textFieldValue = remember { mutableStateOf(TextFieldValue()) },
-                placeholder = "I am  a placeholder",
-                keyboardType = KeyboardType.Text
-            )
+                SearchTextInputField(
+                    value = value3,
+                    onValueChange = onChange3,
+                    modifier = Modifier.padding(top = 32.dp),
+                    placeholder = "I am  a placeholder",
+                    isError = true
+                )
 
-            SearchTextInputField(
-                modifier = Modifier.padding(top = 32.dp),
-                textFieldValue = remember { mutableStateOf(TextFieldValue("I am an input.")) },
-                placeholder = "I am  a placeholder"
-            )
+                val (value4, onChange4) = remember { mutableStateOf(TextFieldValue("I am an input.")) }
 
-            SearchTextInputField(
-                modifier = Modifier.padding(top = 32.dp),
-                textFieldValue = remember { mutableStateOf(TextFieldValue()) },
-                placeholder = "I am  a placeholder",
-                isError = true
-            )
+                SearchTextInputField(
+                    value = value4,
+                    onValueChange = onChange4,
+                    modifier = Modifier.padding(top = 32.dp),
+                    placeholder = "I am  a placeholder",
+                    isError = true
+                )
 
-            SearchTextInputField(
-                modifier = Modifier.padding(top = 32.dp),
-                textFieldValue = remember { mutableStateOf(TextFieldValue("I am an input.")) },
-                placeholder = "I am  a placeholder",
-                isError = true
-            )
+                val (value5, onChange5) = remember { mutableStateOf(TextFieldValue()) }
 
-            SearchTextInputField(
-                modifier = Modifier
-                    .padding(top = 32.dp)
-                    .height(128.dp),
-                textFieldValue = remember { mutableStateOf(TextFieldValue()) },
-                placeholder = "The quick brown fox jumps over a lazy dog, and the quick black cat jumps over a lazy tiger.",
-                keyboardType = KeyboardType.Text,
-                singleLine = false
-            )
+                SearchTextInputField(
+                    value = value5,
+                    onValueChange = onChange5,
+                    modifier = Modifier
+                        .padding(top = 32.dp)
+                        .height(128.dp),
+                    placeholder = "The quick brown fox jumps over a lazy dog, and the quick black cat jumps over a lazy tiger.",
+                    keyboardType = KeyboardType.Text,
+                    singleLine = false
+                )
+            }
         }
     }
 }

@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.screens.splash
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -37,7 +36,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.coroutines.delay
 import org.imaginativeworld.whynotcompose.cms.theme.CMSAppTheme
 
@@ -45,7 +44,7 @@ import org.imaginativeworld.whynotcompose.cms.theme.CMSAppTheme
 fun SplashScreen(
     gotoHomeIndex: () -> Unit = {}
 ) {
-    LaunchedEffect(Unit) {
+    LaunchedEffect(gotoHomeIndex) {
         delay(1000)
 
         gotoHomeIndex()
@@ -54,22 +53,15 @@ fun SplashScreen(
     SplashScreenSkeleton()
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun SplashScreenSkeletonPreview() {
+private fun SplashScreenSkeletonPreview() {
     CMSAppTheme {
         SplashScreenSkeleton()
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun SplashScreenSkeletonPreviewDark() {
-    CMSAppTheme {
-        SplashScreenSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun SplashScreenSkeleton() {
     Scaffold { innerPadding ->

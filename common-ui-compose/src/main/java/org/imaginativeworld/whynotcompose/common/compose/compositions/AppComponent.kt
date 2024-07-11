@@ -26,31 +26,29 @@
 
 package org.imaginativeworld.whynotcompose.common.compose.compositions
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.rounded.ArrowBackIosNew
+import androidx.compose.material3.Card
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
@@ -61,34 +59,18 @@ object AppComponent {
         modifier: Modifier = Modifier,
         goBack: () -> Unit
     ) {
-        Row(
-            Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(
-                modifier = Modifier.size(48.dp),
-                onClick = goBack
-            ) {
-                Icon(
-                    Icons.Rounded.ArrowBackIosNew,
-                    contentDescription = "Go Back"
-                )
-            }
-
-            Text(
-                modifier = modifier
-                    .padding(
-                        start = 0.dp,
-                        top = 32.dp,
-                        end = 48.dp,
-                        bottom = 32.dp
-                    )
-                    .fillMaxWidth(),
-                text = text,
-                style = MaterialTheme.typography.h1,
-                textAlign = TextAlign.Center
+        TopAppBar(
+            modifier = modifier,
+            title = { Text(text) },
+            navigationIcon = {
+                IconButton(onClick = goBack) {
+                    Icon(Icons.Filled.ArrowBackIosNew, contentDescription = "Go Back")
+                }
+            },
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.surfaceContainer
             )
-        }
+        )
     }
 
     @Composable
@@ -106,7 +88,7 @@ object AppComponent {
                 )
                 .fillMaxWidth(),
             text = text,
-            style = MaterialTheme.typography.h2,
+            style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center
         )
     }
@@ -138,58 +120,59 @@ object AppComponent {
         text: String,
         modifier: Modifier = Modifier
     ) {
-        Text(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(16.dp, 4.dp)
-                .shadow(2.dp, RoundedCornerShape(4.dp))
-                .clip(RoundedCornerShape(4.dp))
-                .clickable {
-                    // do things here.
-                }
-                .background(MaterialTheme.colors.surface)
-                .padding(16.dp, 8.dp),
-            text = text,
-            textAlign = TextAlign.Center
-        )
+        Card(modifier.padding(16.dp, 4.dp)) {
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp, 8.dp),
+                text = text,
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun AppComponentPreview() {
+private fun AppComponentPreview() {
     AppTheme {
         Scaffold { innerPadding ->
-            Column(Modifier.padding(innerPadding)) {
+            Column(
+                Modifier
+                    .verticalScroll(rememberScrollState())
+                    .padding(innerPadding)
+            ) {
                 AppComponent.Header(text = "Lorem Ipsum") {}
-
-                Divider()
-
-                AppComponent.Header(text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit") {}
-
-                Divider()
-
-                AppComponent.SubHeader(text = "Lorem Ipsum")
-
-                Divider()
-
-                AppComponent.SubHeader(text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit")
-
-                Divider()
 
                 AppComponent.MediumSpacer()
 
-                Divider()
+                AppComponent.Header(text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit") {}
+
+                AppComponent.MediumSpacer()
+
+                HorizontalDivider()
+
+                AppComponent.SubHeader(text = "Lorem Ipsum")
+
+                HorizontalDivider()
+
+                AppComponent.SubHeader(text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit")
+
+                HorizontalDivider()
+
+                AppComponent.MediumSpacer()
+
+                HorizontalDivider()
 
                 AppComponent.BigSpacer()
 
-                Divider()
+                HorizontalDivider()
 
-                AppComponent.CustomListItem(text = "Lorem Ipsum")
+                for (i in 1..10) {
+                    AppComponent.CustomListItem(text = "Lorem Ipsum")
 
-                Divider()
-
-                AppComponent.CustomListItem(text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit")
+                    AppComponent.CustomListItem(text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit")
+                }
             }
         }
     }

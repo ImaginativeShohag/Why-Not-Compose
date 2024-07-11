@@ -33,7 +33,6 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -60,16 +59,16 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Card
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -136,7 +135,7 @@ private val menuItems = listOf(
     )
 )
 
-@ExperimentalFoundationApi
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun HomeIndexScreen(
     navigate: (Screen) -> Unit = {},
@@ -206,7 +205,7 @@ fun HomeIndexScreen(
                 LazyVerticalGrid(
                     modifier = Modifier.fillMaxSize(),
                     columns = GridCells.Fixed(2),
-                    contentPadding = PaddingValues(24.dp, 8.dp, 24.dp, 24.dp)
+                    contentPadding = PaddingValues(24.dp, 24.dp, 24.dp, 24.dp)
                 ) {
                     item(span = { GridItemSpan(maxCurrentLineSpan) }) {
                         Column(
@@ -219,12 +218,12 @@ fun HomeIndexScreen(
                                 modifier = Modifier
                                     .padding(
                                         start = 16.dp,
-                                        top = 32.dp,
+                                        top = 16.dp,
                                         end = 16.dp
                                     )
                                     .fillMaxWidth(),
                                 text = stringResource(id = BaseR.string.app_name),
-                                style = MaterialTheme.typography.h1,
+                                style = MaterialTheme.typography.titleLarge,
                                 textAlign = TextAlign.Center
                             )
 
@@ -316,7 +315,7 @@ fun HomeIndexScreen(
                                 ),
                             shape = MaterialTheme.shapes.medium,
                             colors = ButtonDefaults.buttonColors(
-                                backgroundColor = MaterialTheme.colors.surface,
+                                containerColor = MaterialTheme.colorScheme.surface,
                                 contentColor = TailwindCSSColor.Pink500
                             ),
                             onClick = {
@@ -335,7 +334,7 @@ fun HomeIndexScreen(
                                 Text(
                                     text = "Developed By —",
                                     fontSize = 12.sp,
-                                    color = MaterialTheme.colors.onBackground.copy(.75f)
+                                    color = MaterialTheme.colorScheme.onBackground.copy(.75f)
                                 )
 
                                 Text(
@@ -361,7 +360,7 @@ fun HomeIndexScreen(
                         .background(
                             Brush.verticalGradient(
                                 0f to Color.Transparent,
-                                1f to MaterialTheme.colors.background
+                                1f to MaterialTheme.colorScheme.background
                             )
                         )
                 )
@@ -370,7 +369,8 @@ fun HomeIndexScreen(
             Row(
                 Modifier
                     .fillMaxWidth()
-                    .padding(top = 16.dp, bottom = 12.dp),
+                    .padding(horizontal = 20.dp)
+                    .padding(top = 16.dp, bottom = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(
@@ -379,10 +379,10 @@ fun HomeIndexScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     TextButton(
-                        modifier = Modifier.padding(horizontal = 8.dp),
                         onClick = {
                             context.openUrl("https://www.buymeacoffee.com/ImShohag")
-                        }
+                        },
+                        shape = RoundedCornerShape(8.dp)
                     ) {
                         Image(
                             painter = painterResource(id = R.drawable.bmc_button),
@@ -391,7 +391,7 @@ fun HomeIndexScreen(
                     }
                 }
 
-                Divider(
+                HorizontalDivider(
                     Modifier
                         .width(1.dp)
                         .height(24.dp)
@@ -405,7 +405,7 @@ fun HomeIndexScreen(
                     Text(
                         text = "Source Code —",
                         fontSize = 12.sp,
-                        color = MaterialTheme.colors.onBackground.copy(.75f)
+                        color = MaterialTheme.colorScheme.onBackground.copy(.75f)
                     )
 
                     Text(
@@ -416,7 +416,7 @@ fun HomeIndexScreen(
                                     "https://github.com/ImaginativeShohag/Why-Not-Compose"
                                 )
                             }
-                            .padding(4.dp),
+                            .padding(horizontal = 8.dp),
                         text = "GitHub",
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Bold
@@ -432,10 +432,11 @@ fun ModuleButton(
     name: String,
     @DrawableRes icon: Int,
     color: Color,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
     Button(
-        modifier = Modifier
+        modifier = modifier
             .padding(0.dp)
             .fillMaxWidth()
             .shadow(
@@ -446,7 +447,7 @@ fun ModuleButton(
             ),
         shape = MaterialTheme.shapes.medium,
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = MaterialTheme.colors.surface,
+            containerColor = MaterialTheme.colorScheme.surface,
             contentColor = color
         ),
         onClick = onClick,
@@ -477,17 +478,17 @@ fun ModuleButton(
     }
 }
 
-@PreviewLightDark
-@Composable
-fun HomeIndexScreenPreview() {
-    AppTheme {
-        HomeIndexScreen()
-    }
-}
-
 data class MenuItem(
     val name: String,
     @DrawableRes val icon: Int,
     val color: Color,
     val route: Screen
 )
+
+@PreviewLightDark
+@Composable
+private fun HomeIndexScreenPreview() {
+    AppTheme {
+        HomeIndexScreen()
+    }
+}

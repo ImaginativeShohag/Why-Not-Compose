@@ -36,8 +36,8 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.Divider
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -58,7 +58,7 @@ fun LazyColumnSampleOneScreen(
 
 @Preview
 @Composable
-fun LazyColumnSampleOneScreenSkeletonPreview() {
+private fun LazyColumnSampleOneScreenSkeletonPreview() {
     AppTheme {
         LazyColumnSampleOneScreenSkeleton()
     }
@@ -66,7 +66,7 @@ fun LazyColumnSampleOneScreenSkeletonPreview() {
 
 @Preview
 @Composable
-fun LazyColumnSampleOneScreenSkeletonPreviewDark() {
+private fun LazyColumnSampleOneScreenSkeletonPreviewDark() {
     AppTheme(
         darkTheme = true
     ) {
@@ -74,6 +74,7 @@ fun LazyColumnSampleOneScreenSkeletonPreviewDark() {
     }
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun LazyColumnSampleOneScreenSkeleton(
     goBack: () -> Unit = {}
@@ -97,7 +98,7 @@ fun LazyColumnSampleOneScreenSkeleton(
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
 
-            Divider()
+            HorizontalDivider()
 
             val itemsList = (0..10).toList()
             val itemsIndexedList = listOf("A", "B", "C", "D", "E", "F", "G")

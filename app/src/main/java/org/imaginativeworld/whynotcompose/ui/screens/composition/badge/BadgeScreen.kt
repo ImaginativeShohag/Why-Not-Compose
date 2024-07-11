@@ -26,34 +26,31 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.composition.badge
 
-import android.content.res.Configuration
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Badge
-import androidx.compose.material.BadgedBox
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Person
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import org.imaginativeworld.whynotcompose.base.extensions.toWords
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
@@ -70,58 +67,37 @@ fun BadgeScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun BadgeScreenSkeletonPreview() {
+private fun BadgeScreenSkeletonPreviewDark() {
     AppTheme {
         BadgeScreenSkeleton()
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun BadgeScreenSkeletonPreviewDark() {
-    AppTheme {
-        BadgeScreenSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun BadgeScreenSkeleton(
     goBack: () -> Unit = {}
 ) {
+    var homeCounter by remember { mutableIntStateOf(0) }
+    var favoriteCounter by remember { mutableIntStateOf(0) }
+    var profileCounter by remember { mutableIntStateOf(0) }
+
     Scaffold(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
-    ) { innerPadding ->
-        Column(
-            Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-        ) {
+            .statusBarsPadding(),
+        topBar = {
             AppComponent.Header(
                 "Badge",
                 goBack = goBack
             )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            Divider()
-
-            AppComponent.MediumSpacer()
-
-            // ----------------------------------------------------------------
-
-            var homeCounter by remember { mutableIntStateOf(0) }
-            var favoriteCounter by remember { mutableIntStateOf(0) }
-            var profileCounter by remember { mutableIntStateOf(0) }
-
-            BottomNavigation {
-                BottomNavigationItem(
+        },
+        bottomBar = {
+            NavigationBar {
+                NavigationBarItem(
                     icon = {
                         BadgedBox(badge = { Badge { Text("$homeCounter") } }) {
                             Icon(
@@ -135,7 +111,7 @@ fun BadgeScreenSkeleton(
                         homeCounter++
                     }
                 )
-                BottomNavigationItem(
+                NavigationBarItem(
                     icon = {
                         BadgedBox(badge = {
                             if (favoriteCounter > 0) {
@@ -155,7 +131,7 @@ fun BadgeScreenSkeleton(
                         favoriteCounter++
                     }
                 )
-                BottomNavigationItem(
+                NavigationBarItem(
                     icon = {
                         BadgedBox(badge = {
                             Badge {
@@ -180,11 +156,15 @@ fun BadgeScreenSkeleton(
                     }
                 )
             }
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            AppComponent.BigSpacer()
+        }
+    ) { innerPadding ->
+        Box(
+            Modifier
+                .padding(innerPadding)
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text("Badge Example")
         }
     }
 }

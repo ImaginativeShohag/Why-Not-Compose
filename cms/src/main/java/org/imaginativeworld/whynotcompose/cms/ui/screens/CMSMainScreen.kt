@@ -71,12 +71,13 @@ fun CMSMainScreen(
 
 @Preview
 @Composable
-fun CMSMainScreenSkeletonPreview() {
+private fun CMSMainScreenSkeletonPreview() {
     CMSAppTheme {
         CMSMainScreenSkeleton()
     }
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun CMSMainScreenSkeleton(
     updateUiThemeMode: (UIThemeMode) -> Unit = {},

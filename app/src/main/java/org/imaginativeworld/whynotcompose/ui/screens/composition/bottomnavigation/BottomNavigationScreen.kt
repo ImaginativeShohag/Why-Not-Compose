@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.composition.bottomnavigation
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
@@ -35,22 +34,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
@@ -63,22 +60,15 @@ fun BottomNavigationScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun BottomNavigationScreenSkeletonPreview() {
+private fun BottomNavigationScreenSkeletonPreviewDark() {
     AppTheme {
         BottomNavigationScreenSkeleton()
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun BottomNavigationScreenSkeletonPreviewDark() {
-    AppTheme {
-        BottomNavigationScreenSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun BottomNavigationScreenSkeleton(
     goBack: () -> Unit = {}
@@ -87,7 +77,13 @@ fun BottomNavigationScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "Bottom Navigation",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
@@ -95,18 +91,9 @@ fun BottomNavigationScreenSkeleton(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            AppComponent.Header(
-                "Bottom Navigation",
-                goBack = goBack
-            )
+            AppComponent.MediumSpacer()
 
             // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            Divider()
-
-            // ----------------------------------------------------------------
-
             BottomNavigationSample()
 
             // ----------------------------------------------------------------
@@ -128,9 +115,9 @@ private fun BottomNavigationSample() {
     var selectedItem by remember { mutableIntStateOf(0) }
     val items = listOf("Songs", "Artists", "Playlists")
 
-    BottomNavigation {
+    NavigationBar {
         items.forEachIndexed { index, item ->
-            BottomNavigationItem(
+            NavigationBarItem(
                 icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
                 label = { Text(item) },
                 selected = selectedItem == index,
@@ -142,12 +129,12 @@ private fun BottomNavigationSample() {
 
 @Composable
 private fun BottomNavigationWithOnlySelectedLabelsSample() {
-    var selectedItem by remember { mutableStateOf(0) }
+    var selectedItem by remember { mutableIntStateOf(0) }
     val items = listOf("Songs", "Artists", "Playlists")
 
-    BottomNavigation {
+    NavigationBar {
         items.forEachIndexed { index, item ->
-            BottomNavigationItem(
+            NavigationBarItem(
                 icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
                 label = { Text(item) },
                 selected = selectedItem == index,

@@ -36,92 +36,86 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.Card
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
-@Preview
+@PreviewLightDark
 @Composable
-fun GeneralDialogPreview() {
+private fun GeneralDialogPreview() {
     AppTheme {
         GeneralDialog(
-            dialogState = remember { mutableStateOf(true) },
+            onDismiss = {},
             title = "Are you sure?",
             message = "This cannot be undone.",
             positiveBtnText = "Yes",
-            onPositiveBtnClicked = {},
+            onPositiveBtnClick = {},
             negativeBtnText = "No",
-            onNegativeBtnClicked = {}
+            onNegativeBtnClick = {}
         )
     }
 }
 
 @Composable
 fun GeneralDialog(
-    onDismissRequest: (() -> Unit)? = null,
-    properties: DialogProperties = DialogProperties(),
-    dialogState: MutableState<Boolean>,
+    onDismiss: () -> Unit,
     title: String,
-    message: String? = null,
     positiveBtnText: String,
-    onPositiveBtnClicked: () -> Unit = {},
+    onPositiveBtnClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    message: String? = null,
     negativeBtnText: String? = null,
-    onNegativeBtnClicked: (() -> Unit)? = null
+    onNegativeBtnClick: (() -> Unit)? = null,
+    properties: DialogProperties = DialogProperties()
 ) {
     Dialog(
         onDismissRequest = {
-            dialogState.value = false
-
-            onDismissRequest?.invoke()
+            onDismiss()
         },
         properties = properties
     ) {
         GeneralDialogSkeleton(
+            modifier = modifier,
             title = title,
             message = message,
             positiveBtnText = positiveBtnText,
-            onPositiveBtnClicked = {
-                dialogState.value = false
+            onPositiveBtnClick = {
+                onDismiss()
 
-                onPositiveBtnClicked()
+                onPositiveBtnClick()
             },
             negativeBtnText = negativeBtnText,
-            onNegativeBtnClicked = {
-                dialogState.value = false
+            onNegativeBtnClick = {
+                onDismiss()
 
-                onNegativeBtnClicked?.invoke()
+                onNegativeBtnClick?.invoke()
             }
         )
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun GeneralDialogSkeletonPreview() {
+private fun GeneralDialogSkeletonPreview() {
     AppTheme {
         GeneralDialogSkeleton(
             title = "Are you sure?",
             message = "This cannot be undone.",
             positiveBtnText = "Yes",
-            onPositiveBtnClicked = {},
+            onPositiveBtnClick = {},
             negativeBtnText = "No",
-            onNegativeBtnClicked = {}
+            onNegativeBtnClick = {}
         )
     }
 }
@@ -129,13 +123,14 @@ fun GeneralDialogSkeletonPreview() {
 @Composable
 fun GeneralDialogSkeleton(
     title: String,
-    message: String? = null,
     positiveBtnText: String,
-    onPositiveBtnClicked: () -> Unit = {},
+    onPositiveBtnClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    message: String? = null,
     negativeBtnText: String? = null,
-    onNegativeBtnClicked: (() -> Unit)? = null
+    onNegativeBtnClick: (() -> Unit)? = null
 ) {
-    Box(Modifier.fillMaxSize()) {
+    Box(modifier.fillMaxSize()) {
         Card(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -149,19 +144,17 @@ fun GeneralDialogSkeleton(
                 Text(
                     modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
                     text = title,
-                    fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
-                    fontSize = 20.sp
+                    style = MaterialTheme.typography.titleLarge
                 )
 
                 if (message != null) {
                     Text(
                         modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
                         text = message,
-                        fontSize = 15.sp,
-                        color = Color(0xFF677987),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         textAlign = TextAlign.Center,
-                        lineHeight = 23.sp
+                        style = MaterialTheme.typography.bodyLarge
                     )
                 }
 
@@ -178,7 +171,7 @@ fun GeneralDialogSkeleton(
                                 modifier = Modifier
                                     .weight(.5f),
                                 onClick = {
-                                    onNegativeBtnClicked?.invoke()
+                                    onNegativeBtnClick?.invoke()
                                 }
                             ) {
                                 Text(negativeBtnText)
@@ -191,7 +184,7 @@ fun GeneralDialogSkeleton(
                             modifier = Modifier
                                 .weight(.5f),
                             onClick = {
-                                onPositiveBtnClicked()
+                                onPositiveBtnClick()
                             }
                         ) {
                             Text(positiveBtnText)

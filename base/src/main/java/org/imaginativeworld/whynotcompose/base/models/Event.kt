@@ -52,13 +52,11 @@ data class Event<out T>(
     /**
      * Get the [value] only once.
      */
-    fun getValueOnce(): T? {
-        return if (!valueSent) {
-            valueSent = true
+    fun getValueOnce(): T? = if (!valueSent) {
+        valueSent = true
 
-            value
-        } else {
-            null
-        }
+        value
+    } else {
+        null
     }
 }

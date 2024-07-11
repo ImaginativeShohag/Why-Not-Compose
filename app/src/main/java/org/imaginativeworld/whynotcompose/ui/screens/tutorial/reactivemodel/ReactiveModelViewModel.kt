@@ -79,9 +79,7 @@ class ProductReactiveModel internal constructor(
     }
 
     // Use Android Studio menu "Code -> Generate -> toString()" to auto generate `toString()`.
-    override fun toString(): String {
-        return "ProductReactiveModel(name='$name', price=$price, quantity=$quantity, totalPrice=$totalPrice)"
-    }
+    override fun toString(): String = "ProductReactiveModel(name='$name', price=$price, quantity=$quantity, totalPrice=$totalPrice)"
 }
 
 // Region: Mocks

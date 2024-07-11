@@ -57,13 +57,11 @@ class SharedPref @Inject constructor(
     @Volatile
     private var user: User? = null
 
-    private fun getSharedPerf(): SharedPreferences {
-        return sharedPref ?: synchronized(this) {
-            context.getSharedPreferences(
-                "${context.packageName}.main",
-                Context.MODE_PRIVATE
-            )
-        }
+    private fun getSharedPerf(): SharedPreferences = sharedPref ?: synchronized(this) {
+        context.getSharedPreferences(
+            "${context.packageName}.main",
+            Context.MODE_PRIVATE
+        )
     }
 
     fun reset() {
@@ -78,9 +76,7 @@ class SharedPref @Inject constructor(
         getSharedPerf().set(PREF_TOKEN, token)
     }
 
-    fun getToken(): String {
-        return getSharedPerf().get(PREF_TOKEN, default = "") ?: ""
-    }
+    fun getToken(): String = getSharedPerf().get(PREF_TOKEN, default = "") ?: ""
 
     // ----------------------------------------------------------------
 
@@ -99,33 +95,29 @@ class SharedPref @Inject constructor(
         this.user = null
     }
 
-    fun getUser(): User? {
-        return user ?: synchronized(this) {
-            getSharedPerf()
-                .let {
-                    val moshi = Moshi.Builder().build()
-                    val jsonAdapter = moshi.adapter(User::class.java)
+    fun getUser(): User? = user ?: synchronized(this) {
+        getSharedPerf()
+            .let {
+                val moshi = Moshi.Builder().build()
+                val jsonAdapter = moshi.adapter(User::class.java)
 
-                    val userJson = it.getString(PREF_USER, null)
+                val userJson = it.getString(PREF_USER, null)
 
-                    user = if (userJson == null) {
-                        null
-                    } else {
-                        jsonAdapter.fromJson(userJson)
-                    }
-
-                    Timber.d("user: $user")
-
-                    user
+                user = if (userJson == null) {
+                    null
+                } else {
+                    jsonAdapter.fromJson(userJson)
                 }
-        }
+
+                Timber.d("user: $user")
+
+                user
+            }
     }
 
     // ----------------------------------------------------------------
 
-    fun isUserLoggedIn(): Boolean {
-        return getUser() != null
-    }
+    fun isUserLoggedIn(): Boolean = getUser() != null
 
     // ----------------------------------------------------------------
 

@@ -51,7 +51,9 @@ android {
 
         // Enable experimental compose APIs
         freeCompilerArgs =
-            freeCompilerArgs + "-opt-in=androidx.compose.material.ExperimentalMaterialApi"
+            freeCompilerArgs + "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
+        freeCompilerArgs =
+            freeCompilerArgs + "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
         freeCompilerArgs =
             freeCompilerArgs + "-opt-in=androidx.compose.animation.ExperimentalAnimationApi"
         freeCompilerArgs =
@@ -70,6 +72,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":base"))
+
     implementation(Libs.Kotlin.stdlib)
     implementation(Libs.AndroidX.coreKtx)
     implementation(Libs.AndroidX.appcompat)
@@ -91,7 +95,8 @@ dependencies {
     implementation(Libs.AndroidX.Compose.foundation)
     implementation(Libs.AndroidX.Compose.layout)
     // Material Design
-    implementation(Libs.AndroidX.Compose.material)
+    implementation(Libs.AndroidX.Compose.material3)
+    implementation(Libs.AndroidX.Compose.material3WindowSizeClass)
     // Material design icons
     implementation(Libs.AndroidX.Compose.materialIconsCore)
     implementation(Libs.AndroidX.Compose.materialIconsExtended)

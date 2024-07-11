@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.screens.comment.list
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -56,7 +55,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.PagingData
@@ -123,11 +122,13 @@ fun CommentListScreen(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun CommentListScreenSkeletonPreview() {
+private fun CommentListScreenSkeletonPreview() {
     CMSAppTheme {
         CommentListScreenSkeleton(
+            showLoading = false,
+            showMessage = null,
             goBack = {},
             toggleUIMode = {},
             comments = flowOf(
@@ -139,28 +140,13 @@ fun CommentListScreenSkeletonPreview() {
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun CommentListScreenSkeletonPreviewDark() {
-    CMSAppTheme {
-        CommentListScreenSkeleton(
-            goBack = {},
-            toggleUIMode = {},
-            comments = flowOf(
-                PagingData.from(
-                    MockData.dummyCommentList
-                )
-            ).collectAsLazyPagingItems()
-        )
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun CommentListScreenSkeleton(
+    showLoading: Boolean,
+    showMessage: Event<String>?,
     goBack: () -> Unit,
     toggleUIMode: () -> Unit,
-    showLoading: Boolean = false,
-    showMessage: Event<String>? = null,
     comments: LazyPagingItems<Comment>,
     retryDataLoad: () -> Unit = {},
     openAddCommentSheet: () -> Unit = {},
@@ -175,7 +161,7 @@ fun CommentListScreenSkeleton(
         }
     }
 
-    LaunchedEffect(showMessage) {
+    LaunchedEffect(showMessage, retryDataLoad) {
         showMessage?.getValueOnce()?.let { message ->
             val result = snackbarHostState.showSnackbar(message)
 
@@ -301,8 +287,8 @@ fun CommentListScreenSkeleton(
                                 item {
                                     // Note: this should be full screen using fillParentMaxSize()
                                     ErrorItem(
-                                        errorMessage = "Error! " + (comments.loadState.refresh as LoadState.Error).error.message,
-                                        onRetryClicked = {
+                                        message = "Error! " + (comments.loadState.refresh as LoadState.Error).error.message,
+                                        onRetryClick = {
                                             retry()
                                         }
                                     )
@@ -312,8 +298,8 @@ fun CommentListScreenSkeleton(
                             loadState.append is LoadState.Error -> {
                                 item {
                                     ErrorItem(
-                                        errorMessage = "Error! " + (comments.loadState.append as LoadState.Error).error.message,
-                                        onRetryClicked = {
+                                        message = "Error! " + (comments.loadState.append as LoadState.Error).error.message,
+                                        onRetryClick = {
                                             retry()
                                         }
                                     )

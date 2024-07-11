@@ -26,58 +26,65 @@
 
 package org.imaginativeworld.whynotcompose.common.compose.theme
 
+import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 
-private val DarkColorPalette = darkColors(
-    primary = TailwindCSSColor.Green700,
-    primaryVariant = TailwindCSSColor.Green900,
-    secondary = TailwindCSSColor.Pink700,
-    secondaryVariant = TailwindCSSColor.Pink900,
-    background = TailwindCSSColor.Gray900,
-    surface = Color.Black,
-    error = TailwindCSSColor.Red700,
+private val DarkColorScheme
+    @Composable get() = darkColorScheme(
+        primary = TailwindCSSColor.Green700,
+        secondary = TailwindCSSColor.Pink700,
+        background = TailwindCSSColor.Gray900,
+        surface = Color.Black,
+        error = TailwindCSSColor.Red700,
 
-    onPrimary = TailwindCSSColor.Gray50,
-    onSecondary = TailwindCSSColor.Gray50,
-    onBackground = TailwindCSSColor.Gray50,
-    onSurface = TailwindCSSColor.Gray50
-)
+        onPrimary = TailwindCSSColor.Gray50,
+        onSecondary = TailwindCSSColor.Gray50,
+        onBackground = TailwindCSSColor.Gray50,
+        onSurface = TailwindCSSColor.Gray50
+    )
 
-private val LightColorPalette = lightColors(
-    primary = TailwindCSSColor.Green500,
-    primaryVariant = TailwindCSSColor.Green700,
-    secondary = TailwindCSSColor.Pink500,
-    secondaryVariant = TailwindCSSColor.Pink700,
-    background = TailwindCSSColor.Gray50,
-    surface = Color.White,
-    error = TailwindCSSColor.Red500,
+private val LightColorScheme
+    @Composable get() = lightColorScheme(
+        primary = TailwindCSSColor.Green500,
+        secondary = TailwindCSSColor.Pink500,
+        background = TailwindCSSColor.Gray50,
+        surface = Color.White,
+        error = TailwindCSSColor.Red500,
 
-    onPrimary = TailwindCSSColor.Gray50,
-    onSecondary = TailwindCSSColor.Gray50,
-    onBackground = TailwindCSSColor.Gray900,
-    onSurface = TailwindCSSColor.Gray900
-)
+        onPrimary = TailwindCSSColor.Gray50,
+        onSecondary = TailwindCSSColor.Gray50,
+        onBackground = TailwindCSSColor.Gray900,
+        onSurface = TailwindCSSColor.Gray900
+    )
 
 @Composable
 fun AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
+    // Dynamic color is available on Android 12+
+    dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
+    val colorScheme = when {
+        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+            val context = LocalContext.current
+            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+        }
+
+        darkTheme -> DarkColorScheme
+        else -> LightColorScheme
     }
 
     MaterialTheme(
-        colors = colors,
+        colorScheme = colorScheme,
         typography = Typography,
-        shapes = Shapes,
         content = content
     )
 }

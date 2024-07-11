@@ -26,20 +26,29 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.compositions.button
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
 fun GeneralFilledButton(
-    modifier: Modifier = Modifier,
     caption: String,
+    modifier: Modifier = Modifier,
     icon: ImageVector? = null,
     onClick: () -> Unit
 ) {
@@ -61,5 +70,29 @@ fun GeneralFilledButton(
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
         }
         Text(caption)
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun GeneralFilledButtonPreview() {
+    AppTheme {
+        Scaffold { innerPadding ->
+            Column(
+                Modifier
+                    .padding(innerPadding)
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                GeneralFilledButton(
+                    caption = "Click Me"
+                ) {}
+
+                GeneralFilledButton(
+                    caption = "Click Me",
+                    icon = Icons.Outlined.Star
+                ) {}
+            }
+        }
     }
 }

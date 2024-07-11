@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.lottie
 
-import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -44,11 +43,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Card
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -57,7 +56,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.airbnb.lottie.compose.LottieAnimation
@@ -80,22 +79,15 @@ fun LottieScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun LottieScreenSkeletonPreview() {
+private fun LottieScreenSkeletonPreviewDark() {
     AppTheme {
         LottieScreenSkeleton()
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun LottieScreenSkeletonPreviewDark() {
-    AppTheme {
-        LottieScreenSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun LottieScreenSkeleton(
     goBack: () -> Unit = {}
@@ -104,7 +96,13 @@ fun LottieScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "Lottie",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
@@ -112,15 +110,12 @@ fun LottieScreenSkeleton(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            AppComponent.Header(
-                "Lottie",
-                goBack = goBack
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            Box(Modifier.padding(start = 16.dp, end = 16.dp)) {
+            Box(
+                Modifier.padding(
+                    horizontal = 16.dp,
+                    vertical = 16.dp
+                )
+            ) {
                 Card(
                     Modifier
                         .fillMaxWidth()
@@ -141,7 +136,7 @@ fun LottieScreenSkeleton(
 
                         // ----------------------------------------------------------------
 
-                        Divider()
+                        HorizontalDivider()
 
                         Spacer(
                             modifier = Modifier
@@ -163,7 +158,7 @@ fun LottieScreenSkeleton(
                             .weight(1f),
                         text = "Let's Ride a Bike",
                         fontSize = 16.sp,
-                        color = MaterialTheme.colors.onSurface.copy(.75f)
+                        color = MaterialTheme.colorScheme.onSurface.copy(.75f)
                     )
 
                     Box(Modifier.size(48.dp)) {
@@ -180,7 +175,7 @@ fun LottieScreenSkeleton(
                             modifier = Modifier
                                 .requiredSize(96.dp)
                                 .clickable(
-                                    interactionSource = MutableInteractionSource(),
+                                    interactionSource = remember { MutableInteractionSource() },
                                     indication = null,
                                     onClick = {
                                         compositionHeart ?: return@clickable

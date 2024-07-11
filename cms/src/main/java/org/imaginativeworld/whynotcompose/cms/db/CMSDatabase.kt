@@ -74,12 +74,8 @@ abstract class CMSDatabase : RoomDatabase() {
 
 class DateConverter {
     @TypeConverter
-    fun toDatabaseValue(date: Date?): Long? {
-        return date?.time
-    }
+    fun toDatabaseValue(date: Date?): Long? = date?.time
 
     @TypeConverter
-    fun fromDatabaseValue(value: Long?): Date? {
-        return value?.let { Date(it) }
-    }
+    fun fromDatabaseValue(value: Long?): Date? = value?.let { Date(it) }
 }

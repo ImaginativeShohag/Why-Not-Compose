@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.cms.ui.compositions
 
-import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -39,7 +38,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -49,7 +48,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.CombinedLoadStates
@@ -60,9 +59,9 @@ import timber.log.Timber
 
 @Composable
 fun EmptyView(
-    modifier: Modifier = Modifier,
     loadState: CombinedLoadStates,
     itemCount: Int,
+    modifier: Modifier = Modifier,
     title: String = "Nothing here!",
     message: String? = "No item found."
 ) {
@@ -93,42 +92,12 @@ fun EmptyView(
     )
 }
 
-@Preview(showBackground = true)
-@Composable
-fun EmptyViewPreview() {
-    CMSAppTheme {
-        Surface {
-            EmptyView(
-                modifier = Modifier,
-                show = true,
-                title = "Nothing here!",
-                message = "No item found."
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun EmptyViewPreviewDark() {
-    CMSAppTheme {
-        Surface {
-            EmptyView(
-                modifier = Modifier,
-                show = true,
-                title = "Nothing here!",
-                message = "No item found."
-            )
-        }
-    }
-}
-
 @Composable
 fun EmptyView(
-    modifier: Modifier = Modifier,
     show: Boolean,
     title: String,
-    message: String?
+    message: String?,
+    modifier: Modifier = Modifier
 ) {
     AnimatedVisibility(
         visible = show,
@@ -179,6 +148,21 @@ fun EmptyView(
                     )
                 }
             }
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun EmptyViewPreview() {
+    CMSAppTheme {
+        Scaffold { innerPadding ->
+            EmptyView(
+                modifier = Modifier.padding(innerPadding),
+                show = true,
+                title = "Nothing here!",
+                message = "No item found."
+            )
         }
     }
 }

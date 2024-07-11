@@ -47,25 +47,19 @@ data class User(
     @Json(name = "status")
     val status: String
 ) {
-    fun getStatusLabel(): String {
-        return status.replaceFirstChar {
-            if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
-        }
+    fun getStatusLabel(): String = status.replaceFirstChar {
+        if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
     }
 
-    fun getGenderLabel(): String {
-        return gender.replaceFirstChar {
-            if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
-        }
+    fun getGenderLabel(): String = gender.replaceFirstChar {
+        if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
     }
 
     @ColorRes
-    fun getStatusColor(): Color {
-        return if (status.toLower() == "active") {
-            FlatColor.FlatAwesomeGreen2
-        } else {
-            FlatColor.FlatRed2
-        }
+    fun getStatusColor(): Color = if (status.toLower() == "active") {
+        FlatColor.FlatAwesomeGreen2
+    } else {
+        FlatColor.FlatRed2
     }
 
     fun getAvatarImageUrl() = "https://picsum.photos/seed/u$id/200/200"

@@ -101,3 +101,4 @@ lint/tmp/
 
 # IntelliJ project icon
 !.idea/icon.svg
+!.idea/ktlint-plugin.xml

@@ -26,7 +26,6 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.ui.mapview
 
-import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -48,17 +47,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
-import androidx.compose.material.TopAppBar
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -75,7 +69,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -91,8 +85,8 @@ import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.base.extensions.dpToPx
 import org.imaginativeworld.whynotcompose.common.compose.R as CommonComposeR
 import org.imaginativeworld.whynotcompose.common.compose.composeutils.bitmapDescriptorFromVector
+import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
-import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
 import org.imaginativeworld.whynotcompose.models.MapPlace
 import org.imaginativeworld.whynotcompose.ui.compositions.CustomSnackbarHost
 import timber.log.Timber
@@ -102,6 +96,7 @@ import timber.log.Timber
 // TODO: Displaying info window if the place is selected:
 // https://github.com/googlemaps/android-maps-compose/issues/16
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun MapScreen(
     viewModel: MapViewModel,
@@ -142,7 +137,7 @@ fun MapScreen(
         showLoadingView = state.loading,
         showEmptyView = state.empty && !state.loading,
         goBack = goBack,
-        onRetryClicked = {
+        onRetryClick = {
             viewModel.loadMapPlaces()
         },
         mapView = { modifier ->
@@ -205,10 +200,10 @@ fun MapScreen(
                                 .clip(RoundedCornerShape(8.dp))
                                 .border(
                                     1.dp,
-                                    MaterialTheme.colors.primary,
+                                    MaterialTheme.colorScheme.primary,
                                     RoundedCornerShape(8.dp)
                                 )
-                                .background(MaterialTheme.colors.background)
+                                .background(MaterialTheme.colorScheme.background)
                                 .padding(8.dp, 2.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
@@ -229,55 +224,45 @@ fun MapScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun MapSkeletonPreview() {
+private fun MapSkeletonPreview() {
     AppTheme {
         MapSkeleton(
             mapView = {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(TailwindCSSColor.Green500)
+                        .background(MaterialTheme.colorScheme.surfaceVariant)
                 )
             }
         )
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun MapSkeletonPreviewDark() {
-    AppTheme {
-        MapSkeleton(
-            mapView = {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(TailwindCSSColor.Green500)
-                )
-            }
-        )
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun MapSkeleton(
     mapView: @Composable (Modifier) -> Unit,
     showLoadingView: Boolean = true,
     showEmptyView: Boolean = true,
     goBack: () -> Unit = {},
-    onRetryClicked: () -> Unit = {}
+    onRetryClick: () -> Unit = {}
 ) {
-    val scaffoldState = rememberScaffoldState()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
         modifier = Modifier
             .navigationBarsPadding()
             .imePadding()
             .statusBarsPadding(),
-        scaffoldState = scaffoldState,
-        snackbarHost = { CustomSnackbarHost(it) }
+        topBar = {
+            AppComponent.Header(
+                "Divisions of Bangladesh",
+                goBack = goBack
+            )
+        },
+        snackbarHost = { CustomSnackbarHost(snackbarHostState) }
     ) { innerPadding ->
         mapView(
             Modifier
@@ -288,24 +273,17 @@ fun MapSkeleton(
 
         MapEmptyView(
             modifier = Modifier
-                .padding(top = 56.dp)
+                .padding(innerPadding)
                 .fillMaxSize(),
             show = showEmptyView,
-            onRetryClicked = onRetryClicked
+            onRetryClick = onRetryClick
         )
 
-        Column(Modifier.fillMaxSize()) {
-            TopAppBar(
-                title = { Text("Divisions of Bangladesh") },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        goBack()
-                    }) {
-                        Icon(Icons.Rounded.ArrowBack, contentDescription = null)
-                    }
-                }
-            )
-
+        Column(
+            Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+        ) {
             Box(
                 Modifier
                     .fillMaxWidth(),
@@ -335,7 +313,7 @@ private fun MapLoadingView(
             modifier
                 .shadow(2.dp, CircleShape)
                 .clip(CircleShape)
-                .background(MaterialTheme.colors.surface)
+                .background(MaterialTheme.colorScheme.surface)
                 .padding(0.dp, 4.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -349,7 +327,7 @@ private fun MapLoadingView(
                 modifier = Modifier.padding(end = 12.dp),
                 text = "Loading...",
                 fontSize = 14.sp,
-                color = MaterialTheme.colors.onSurface.copy(alpha = .75f)
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = .75f)
             )
         }
     }
@@ -359,7 +337,7 @@ private fun MapLoadingView(
 fun MapEmptyView(
     modifier: Modifier = Modifier,
     show: Boolean = true,
-    onRetryClicked: () -> Unit
+    onRetryClick: () -> Unit
 ) {
     AnimatedVisibility(
         visible = show,
@@ -379,7 +357,7 @@ fun MapEmptyView(
             Column(
                 Modifier
                     .clip(RoundedCornerShape(32.dp, 32.dp, 32.dp, 32.dp))
-                    .background(MaterialTheme.colors.surface)
+                    .background(MaterialTheme.colorScheme.surface)
                     .padding(start = 32.dp, end = 32.dp, bottom = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
@@ -393,14 +371,14 @@ fun MapEmptyView(
                     ),
                     contentDescription = "Empty",
                     alpha = .25f,
-                    colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface)
+                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface)
                 )
 
                 Text(
                     modifier = Modifier.padding(top = 8.dp),
                     text = "Nothing to see!",
                     fontSize = 18.sp,
-                    color = MaterialTheme.colors.onSurface.copy(alpha = .7f),
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = .7f),
                     textAlign = TextAlign.Center
                 )
 
@@ -408,14 +386,14 @@ fun MapEmptyView(
                     modifier = Modifier.padding(top = 4.dp),
                     text = "Please try again.",
                     fontSize = 16.sp,
-                    color = MaterialTheme.colors.onSurface.copy(alpha = .7f),
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = .7f),
                     textAlign = TextAlign.Center
                 )
 
                 TextButton(
                     modifier = Modifier.padding(top = 8.dp),
                     onClick = {
-                        onRetryClicked()
+                        onRetryClick()
                     }
                 ) {
                     Text(text = "Retry")

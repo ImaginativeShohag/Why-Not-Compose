@@ -38,16 +38,15 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
@@ -61,24 +60,15 @@ fun ListColumnScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun ListColumnScreenSkeletonPreview() {
+private fun ListColumnScreenSkeletonPreview() {
     AppTheme {
         ListColumnScreenSkeleton()
     }
 }
 
-@Preview
-@Composable
-fun ListColumnScreenSkeletonPreviewDark() {
-    AppTheme(
-        darkTheme = true
-    ) {
-        ListColumnScreenSkeleton()
-    }
-}
-
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun ListColumnScreenSkeleton(
     goBack: () -> Unit = {}
@@ -87,47 +77,38 @@ fun ListColumnScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
-    ) { innerPadding ->
-        Column(
-            Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-        ) {
+            .statusBarsPadding(),
+        topBar = {
             AppComponent.Header(
                 "List with Column",
                 goBack = goBack
             )
+        }
+    ) { innerPadding ->
+        val scrollState = rememberScrollState()
 
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            Divider()
-
-            val scrollState = rememberScrollState()
-
-            Column(
-                Modifier
-                    .fillMaxSize()
-                    .verticalScroll(scrollState)
-                    .padding(0.dp, 8.dp)
-            ) {
-                for (i in 1..50) {
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp, 4.dp)
-                            .shadow(2.dp, RoundedCornerShape(4.dp))
-                            .clip(RoundedCornerShape(4.dp))
-                            .clickable {
-                                // do things here.
-                            }
-                            .background(MaterialTheme.colors.surface)
-                            .padding(16.dp, 8.dp),
-                        text = "Item Number $i",
-                        textAlign = TextAlign.Center
-                    )
-                }
+        Column(
+            Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+                .verticalScroll(scrollState)
+                .padding(0.dp, 8.dp)
+        ) {
+            for (i in 1..50) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp, 4.dp)
+                        .shadow(2.dp, RoundedCornerShape(4.dp))
+                        .clip(RoundedCornerShape(4.dp))
+                        .clickable {
+                            // do things here.
+                        }
+                        .background(MaterialTheme.colorScheme.surface)
+                        .padding(16.dp, 8.dp),
+                    text = "Item Number $i",
+                    textAlign = TextAlign.Center
+                )
             }
         }
     }

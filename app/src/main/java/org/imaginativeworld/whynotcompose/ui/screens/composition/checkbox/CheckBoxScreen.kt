@@ -36,12 +36,12 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.material.Checkbox
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TriStateCheckbox
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TriStateCheckbox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -49,7 +49,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.state.ToggleableState
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
@@ -65,14 +65,15 @@ fun CheckBoxScreen(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun CheckBoxScreenSkeletonPreview() {
+private fun CheckBoxScreenSkeletonPreview() {
     AppTheme {
         CheckBoxScreenSkeleton()
     }
 }
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun CheckBoxScreenSkeleton(
     goBack: () -> Unit = {}
@@ -81,23 +82,19 @@ fun CheckBoxScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "Check Box",
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            AppComponent.Header(
-                "Check Box",
-                goBack = goBack
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            Divider()
-
             Column(Modifier.padding(start = 16.dp, end = 16.dp)) {
                 AppComponent.SubHeader("Simple Check Box")
 
@@ -121,7 +118,7 @@ fun CheckBoxScreenSkeleton(
             // ----------------------------------------------------------------
             // ----------------------------------------------------------------
 
-            Divider()
+            HorizontalDivider()
 
             Column(Modifier.padding(start = 16.dp, end = 16.dp)) {
                 AppComponent.SubHeader("Tri-State Check Box")
@@ -139,7 +136,7 @@ fun CheckBoxScreenSkeleton(
 }
 
 @Composable
-fun TriStateCheckboxSample() {
+private fun TriStateCheckboxSample() {
     Column {
         // define dependent checkboxes states
         val (state1, onStateChange1) = remember { mutableStateOf(true) }
@@ -186,10 +183,11 @@ fun TriStateCheckboxSample() {
 fun GeneralTriStateCheckBox(
     text: String,
     state: ToggleableState,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
     Row(
-        Modifier
+        modifier
             .fillMaxWidth()
             .height(ELEMENT_HEIGHT)
             .selectable(
@@ -203,21 +201,21 @@ fun GeneralTriStateCheckBox(
         TriStateCheckbox(state, null)
         Text(
             text = text,
-            style = MaterialTheme.typography.body1.merge(),
+            style = MaterialTheme.typography.bodyMedium.merge(),
             modifier = Modifier.padding(start = 16.dp)
         )
     }
 }
 
-// TODO: Add `Modifier` param.
 @Composable
 fun GeneralCheckBox(
     text: String,
     state: Boolean,
+    modifier: Modifier = Modifier,
     onStateChange: (Boolean) -> Unit
 ) {
     Row(
-        Modifier
+        modifier
             .fillMaxWidth()
             .height(ELEMENT_HEIGHT)
             .selectable(
@@ -231,7 +229,7 @@ fun GeneralCheckBox(
         Checkbox(state, null)
         Text(
             text = text,
-            style = MaterialTheme.typography.body1.merge(),
+            style = MaterialTheme.typography.bodyLarge.merge(),
             modifier = Modifier.padding(start = 16.dp)
         )
     }

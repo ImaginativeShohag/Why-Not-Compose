@@ -26,8 +26,8 @@
 
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.lottie
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -41,11 +41,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.RocketLaunch
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -56,6 +59,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -65,6 +69,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieAnimatable
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.airbnb.lottie.compose.resetToBeginning
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
@@ -81,7 +86,7 @@ fun LottieScreen(
 
 @PreviewLightDark
 @Composable
-private fun LottieScreenSkeletonPreviewDark() {
+private fun LottieScreenSkeletonPreview() {
     AppTheme {
         LottieScreenSkeleton()
     }
@@ -92,6 +97,24 @@ private fun LottieScreenSkeletonPreviewDark() {
 fun LottieScreenSkeleton(
     goBack: () -> Unit = {}
 ) {
+    val scope = rememberCoroutineScope()
+
+    // ----------------------------------------------------------------
+
+    val loadingComposition by rememberLottieComposition(
+        LottieCompositionSpec.RawRes(R.raw.loading)
+    )
+    var showLoading by remember { mutableStateOf(false) }
+
+    // ----------------------------------------------------------------
+
+    val compositionConfetti by rememberLottieComposition(
+        LottieCompositionSpec.RawRes(R.raw.confetti)
+    )
+    val confettiAnimatable = rememberLottieAnimatable()
+
+    // ----------------------------------------------------------------
+
     Scaffold(
         Modifier
             .navigationBarsPadding()
@@ -107,8 +130,8 @@ fun LottieScreenSkeleton(
         Column(
             Modifier
                 .padding(innerPadding)
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(
                 Modifier.padding(
@@ -162,7 +185,6 @@ fun LottieScreenSkeleton(
                     )
 
                     Box(Modifier.size(48.dp)) {
-                        val scope = rememberCoroutineScope()
                         var isFavorite by remember { mutableStateOf(false) }
                         val compositionHeart by rememberLottieComposition(
                             LottieCompositionSpec.RawRes(
@@ -174,29 +196,86 @@ fun LottieScreenSkeleton(
                         LottieAnimation(
                             modifier = Modifier
                                 .requiredSize(96.dp)
-                                .clickable(
-                                    interactionSource = remember { MutableInteractionSource() },
-                                    indication = null,
-                                    onClick = {
-                                        compositionHeart ?: return@clickable
+                                .pointerInput(Unit) {
+                                    detectTapGestures(
+                                        onPress = {
+                                            compositionHeart ?: return@detectTapGestures
 
-                                        scope.launch {
-                                            if (isFavorite) {
-                                                heartAnimatable.resetToBeginning()
-                                            } else {
-                                                heartAnimatable.animate(
-                                                    compositionHeart,
-                                                    continueFromPreviousAnimate = false
-                                                )
+                                            scope.launch {
+                                                if (isFavorite) {
+                                                    heartAnimatable.resetToBeginning()
+                                                } else {
+                                                    heartAnimatable.animate(
+                                                        compositionHeart,
+                                                        continueFromPreviousAnimate = false
+                                                    )
+                                                }
+
+                                                isFavorite = !isFavorite
                                             }
-
-                                            isFavorite = !isFavorite
                                         }
-                                    }
-                                ),
+                                    )
+                                },
                             composition = compositionHeart,
                             progress = { heartAnimatable.progress }
                         )
+                    }
+                }
+            }
+
+            Spacer(Modifier.weight(1f))
+
+            // ----------------------------------------------------------------
+
+            Box(
+                contentAlignment = Alignment.Center
+            ) {
+                Crossfade(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(128.dp),
+                    targetState = showLoading,
+                    label = "Launch button"
+                ) {
+                    when (it) {
+                        true -> LottieAnimation(
+                            modifier = Modifier.height(128.dp),
+                            composition = loadingComposition,
+                            iterations = LottieConstants.IterateForever
+                        )
+
+                        false -> Box(
+                            Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            OutlinedButton(
+                                modifier = Modifier,
+                                onClick = {
+                                    scope.launch {
+                                        showLoading = true
+
+                                        delay(2000)
+
+                                        showLoading = false
+
+                                        confettiAnimatable.animate(
+                                            compositionConfetti,
+                                            continueFromPreviousAnimate = false
+                                        )
+                                    }
+                                },
+                                contentPadding = ButtonDefaults.ButtonWithIconContentPadding
+                            ) {
+                                Icon(
+                                    Icons.Rounded.RocketLaunch,
+                                    contentDescription = "Launch",
+                                    modifier = Modifier.size(ButtonDefaults.IconSize)
+                                )
+                                Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+
+                                Text("Launch")
+                            }
+                        }
                     }
                 }
             }
@@ -206,5 +285,14 @@ fun LottieScreenSkeleton(
 
             AppComponent.BigSpacer()
         }
+
+        LottieAnimation(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+                .padding(16.dp),
+            composition = compositionConfetti,
+            progress = { confettiAnimatable.progress }
+        )
     }
 }

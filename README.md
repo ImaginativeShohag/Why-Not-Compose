@@ -101,6 +101,7 @@ Feel free to request features or suggestions for improvements.
 - [ ] Get sidebar from Emudi app (https://www.youtube.com/watch?v=HNSKJIQtb4c)
 - [x] Update `popBackStack()`
 - [ ] Migrate ExoPlayer: https://developer.android.com/media/media3/exoplayer/migration-guide
+- [ ] Update all `LaunchedEffect` with lambda issue using `rememberUpdatedState`: https://developer.android.com/develop/ui/compose/side-effects#rememberupdatedstate
 
 # Note
 

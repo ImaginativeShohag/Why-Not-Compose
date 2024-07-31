@@ -30,9 +30,10 @@ import android.app.Application
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.OnMapsSdkInitializedCallback
 import com.onesignal.OneSignal
+import com.onesignal.debug.LogLevel
 import dagger.hilt.android.HiltAndroidApp
-import org.imaginativeworld.whynotcompose.utils.onesignal.MyNotificationOpenedHandler
-import org.imaginativeworld.whynotcompose.utils.onesignal.MyNotificationWillShowInForegroundHandler
+import org.imaginativeworld.whynotcompose.utils.onesignal.MyNotificationClickListener
+import org.imaginativeworld.whynotcompose.utils.onesignal.MyNotificationLifecycleListener
 import timber.log.Timber
 
 @HiltAndroidApp
@@ -45,19 +46,22 @@ class App :
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
 
-            OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE)
+            OneSignal.Debug.logLevel = LogLevel.VERBOSE
+        } else {
+            OneSignal.Debug.logLevel = LogLevel.NONE
         }
 
         // New Map Renderer
         MapsInitializer.initialize(applicationContext, MapsInitializer.Renderer.LATEST, this)
 
         // OneSignal
-        OneSignal.initWithContext(this)
-        OneSignal.setAppId(ONESIGNAL_APP_ID)
-        OneSignal.setNotificationWillShowInForegroundHandler(
-            MyNotificationWillShowInForegroundHandler(this)
+        OneSignal.initWithContext(this, ONESIGNAL_APP_ID)
+        OneSignal.Notifications.addForegroundLifecycleListener(
+            MyNotificationLifecycleListener(this)
         )
-        OneSignal.setNotificationOpenedHandler(MyNotificationOpenedHandler(this))
+        OneSignal.Notifications.addClickListener(
+            MyNotificationClickListener(this)
+        )
     }
 
     override fun onMapsSdkInitialized(renderer: MapsInitializer.Renderer) {

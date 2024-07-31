@@ -56,14 +56,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.onesignal.OneSignal
 import org.imaginativeworld.whynotcompose.base.extensions.toast
 import org.imaginativeworld.whynotcompose.base.utils.Constants
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.json.JSONException
-import org.json.JSONObject
-import timber.log.Timber
+
+// ⚠️ WARNING ⚠️
+// This tutorial is deprecated. Because OneSignal removed the `postNotification` method.
+// Details: https://github.com/OneSignal/OneSignal-Unity-SDK/issues/585
 
 @Composable
 fun OneSignalAndBroadcastScreen(
@@ -77,7 +78,7 @@ fun OneSignalAndBroadcastScreen(
 
     DisposableEffect(context) {
         /**
-         * We will receive the broadcast data here. See [MyNotificationWillShowInForegroundHandler]
+         * We will receive the broadcast data here. See [MyNotificationLifecycleListener]
          * for how to receive data and broadcast data when a new OneSignal notification comes.
          */
         val broadcast = object : BroadcastReceiver() {
@@ -106,9 +107,9 @@ fun OneSignalAndBroadcastScreen(
             try {
                 counter++
 
-                sendNewNotification(counter.toString()) { errorMessage ->
-                    showError = errorMessage
-                }
+                // sendNewNotification(counter.toString()) { errorMessage ->
+                //     showError = errorMessage
+                // }
             } catch (e: JSONException) {
                 e.printStackTrace()
 
@@ -140,42 +141,42 @@ fun OneSignalAndBroadcastScreen(
 /**
  * Send a new OneSignal notification to the current app user with given [value].
  */
-private fun sendNewNotification(value: String, onError: (String) -> Unit) {
-    if (OneSignal.getDeviceState() != null && OneSignal.getDeviceState()!!.isSubscribed) {
-        // This is the current device OneSignal userId.
-        val userId = OneSignal.getDeviceState()!!.userId
-
-        OneSignal.postNotification(
-            """
-{
-  "contents": {
-    "en": "Current value is $value"
-  },
-  "data": {
-    "value": "$value"
-  },
-  "include_player_ids": [
-    "$userId"
-  ]
-}
-            """.trimIndent(),
-            object : OneSignal.PostNotificationResponseHandler {
-                override fun onSuccess(response: JSONObject?) {
-                    Timber.i("postNotification Success: " + response.toString())
-                }
-
-                override fun onFailure(response: JSONObject?) {
-                    Timber.e("postNotification Failure: " + response.toString())
-                }
-            }
-        )
-    } else {
-        onError(
-            "OneSignal is not initialized yet or the user is not subscribed! " +
-                "Another reason could be notification permission is not allowed."
-        )
-    }
-}
+// private fun sendNewNotification(value: String, onError: (String) -> Unit) {
+//    if (OneSignal.getDeviceState() != null && OneSignal.getDeviceState()!!.isSubscribed) {
+//        // This is the current device OneSignal userId.
+//        val userId = OneSignal.getDeviceState()!!.userId
+//
+//        OneSignal.postNotification(
+//            """
+// {
+//  "contents": {
+//    "en": "Current value is $value"
+//  },
+//  "data": {
+//    "value": "$value"
+//  },
+//  "include_player_ids": [
+//    "$userId"
+//  ]
+// }
+//            """.trimIndent(),
+//            object : OneSignal.PostNotificationResponseHandler {
+//                override fun onSuccess(response: JSONObject?) {
+//                    Timber.i("postNotification Success: " + response.toString())
+//                }
+//
+//                override fun onFailure(response: JSONObject?) {
+//                    Timber.e("postNotification Failure: " + response.toString())
+//                }
+//            }
+//        )
+//    } else {
+//        onError(
+//            "OneSignal is not initialized yet or the user is not subscribed! " +
+//                "Another reason could be notification permission is not allowed."
+//        )
+//    }
+// }
 
 @PreviewLightDark
 @Composable

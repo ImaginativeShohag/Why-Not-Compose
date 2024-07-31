@@ -113,12 +113,6 @@ data class Tutorial(
                 level = TutorialLevel.Advanced
             ),
             Tutorial(
-                name = "OneSignal and Broadcast",
-                description = "Send notification with data using `OneSignal`, then send broadcast when a new notification comes. Finally, receive the broadcast and data from Compose UI.",
-                route = TutorialsScreen.TutorialOneSignalAndBroadcast,
-                level = TutorialLevel.Intermediate
-            ),
-            Tutorial(
                 name = "ExoPlayer",
                 description = "Example usage of `ExoPlayer` with Compose.",
                 route = TutorialsScreen.TutorialExoPlayer,

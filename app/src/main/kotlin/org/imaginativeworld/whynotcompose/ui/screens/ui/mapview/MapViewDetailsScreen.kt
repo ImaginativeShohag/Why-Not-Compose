@@ -51,6 +51,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.models.MapPlace
 import org.imaginativeworld.whynotcompose.repositories.MapPlaceRepo
@@ -86,24 +87,19 @@ fun MapViewDetailsScreenSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                item.name,
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
         Column(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            TopAppBar(
-                title = { Text(item.name) },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        goBack()
-                    }) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = null)
-                    }
-                }
-            )
-
             Row(
                 Modifier
                     .fillMaxWidth()

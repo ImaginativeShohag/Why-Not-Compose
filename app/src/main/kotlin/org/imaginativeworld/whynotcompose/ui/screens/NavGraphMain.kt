@@ -123,7 +123,6 @@ import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDat
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDataPassOneScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDataPassThreeScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.navdatapass.NavDataPassTwoScreen
-import org.imaginativeworld.whynotcompose.ui.screens.tutorial.onesignalandbroadcast.OneSignalAndBroadcastScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.permission.PermissionScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.reactivemodel.ReactiveModelScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.reactivemodel.ReactiveModelViewModel
@@ -232,7 +231,6 @@ sealed class TutorialsScreen(val route: String) {
     data object TutorialPermission : TutorialsScreen("tutorial/permission")
     data object TutorialDataFetchAndPaging : TutorialsScreen("tutorial/data-fetch-and-paging")
     data object TutorialTicTacToe : TutorialsScreen("tutorial/tic-tac-toe")
-    data object TutorialOneSignalAndBroadcast : TutorialsScreen("tutorial/onesignal-and-broadcast")
     data object TutorialExoPlayer : TutorialsScreen("tutorial/exoplayer")
     data object TutorialCMS : TutorialsScreen("tutorial/cms")
     data object TutorialDeepLink : TutorialsScreen("tutorial/deep-link")
@@ -943,14 +941,6 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
 
         TicTacToeScreen(
             viewModel = viewModel,
-            goBack = {
-                navController.popBackStackOrIgnore()
-            }
-        )
-    }
-
-    composable(TutorialsScreen.TutorialOneSignalAndBroadcast.route) {
-        OneSignalAndBroadcastScreen(
             goBack = {
                 navController.popBackStackOrIgnore()
             }

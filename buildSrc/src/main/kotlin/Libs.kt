@@ -45,7 +45,7 @@ object Libs {
     }
 
     object Coil {
-        private const val version = "2.6.0"
+        private const val version = "2.7.0"
 
         const val compose = "io.coil-kt:coil-compose:$version"
         const val svg = "io.coil-kt:coil-svg:$version"
@@ -77,7 +77,7 @@ object Libs {
         const val exoplayer = "com.google.android.exoplayer:exoplayer:2.19.1"
 
         object DevTools {
-            const val kspVersion = "2.0.0-1.0.22"
+            const val kspVersion = "2.0.0-1.0.24"
 
             const val ksp = "com.google.devtools.ksp"
         }
@@ -85,7 +85,7 @@ object Libs {
         object Firebase {
             const val crashlyticsGradlePluginVersion = "3.0.2"
 
-            const val bom = "com.google.firebase:firebase-bom:33.1.1"
+            const val bom = "com.google.firebase:firebase-bom:33.1.2"
             const val analytics = "com.google.firebase:firebase-analytics-ktx"
 
             const val crashlyticsGradlePlugin = "com.google.firebase.crashlytics"
@@ -105,12 +105,12 @@ object Libs {
         }
 
         object Maps {
-            private const val version = "5.1.0"
+            private const val version = "5.1.1"
             const val secretsGradlePluginVersion = "2.0.1"
 
             const val core = "com.google.maps.android:maps-ktx:$version"
             const val utils = "com.google.maps.android:maps-utils-ktx:$version"
-            const val compose = "com.google.maps.android:maps-compose:6.0.0"
+            const val compose = "com.google.maps.android:maps-compose:6.1.1"
             const val secretsGradlePlugin =
                 "com.google.android.libraries.mapsplatform.secrets-gradle-plugin"
         }
@@ -156,7 +156,7 @@ object Libs {
         const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
         object Activity {
-            const val activityCompose = "androidx.activity:activity-compose:1.9.0"
+            const val activityCompose = "androidx.activity:activity-compose:1.9.1"
         }
 
         object Compose {
@@ -173,7 +173,7 @@ object Libs {
             const val materialIconsExtended =
                 "androidx.compose.material:material-icons-extended"
 
-            const val material3 = "androidx.compose.material3:material3:1.3.0-beta04" // Remove when stable
+            const val material3 = "androidx.compose.material3:material3:1.3.0-beta05" // Remove when stable
             const val material3WindowSizeClass =
                 "androidx.compose.material3:material3-window-size-class"
 
@@ -211,7 +211,7 @@ object Libs {
         }
 
         object Lifecycle {
-            private const val version = "2.8.3"
+            private const val version = "2.8.4"
 
             const val extensions = "androidx.lifecycle:lifecycle-extensions:$version"
             const val livedata = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
@@ -222,7 +222,7 @@ object Libs {
         }
 
         object Navigation {
-            private const val version = "2.8.0-beta04"
+            private const val version = "2.8.0-beta06"
 
             const val fragment = "androidx.navigation:navigation-fragment-ktx:$version"
             const val uiKtx = "androidx.navigation:navigation-ui-ktx:$version"
@@ -230,7 +230,7 @@ object Libs {
         }
 
         object Paging {
-            private const val version = "3.3.0"
+            private const val version = "3.3.1"
 
             const val runtime = "androidx.paging:paging-runtime:$version"
             const val compose = "androidx.paging:paging-compose:$version"
@@ -261,7 +261,7 @@ object Libs {
     }
 
     object OneSignal {
-        const val core = "com.onesignal:OneSignal:4.8.6"
+        const val core = "com.onesignal:OneSignal:5.1.18"
     }
 
     object Square {

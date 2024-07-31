@@ -141,7 +141,6 @@ fun MapScreen(
             viewModel.loadMapPlaces()
         },
         mapView = { modifier ->
-
             GoogleMap(
                 modifier = modifier,
                 cameraPositionState = cameraPositionState,
@@ -267,7 +266,6 @@ fun MapSkeleton(
         mapView(
             Modifier
                 .padding(innerPadding)
-                .padding(top = 56.dp)
                 .fillMaxSize()
         )
 

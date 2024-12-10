@@ -29,8 +29,12 @@ package org.imaginativeworld.whynotcompose.common.compose.composeutils
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
+import coil3.compose.rememberAsyncImagePainter
+import coil3.request.ImageRequest
+import coil3.request.crossfade
+import coil3.request.error
+import coil3.request.fallback
+import coil3.request.placeholder
 
 @Composable
 fun rememberImagePainter(
@@ -39,7 +43,7 @@ fun rememberImagePainter(
     crossFade: Boolean = true
 ) = rememberAsyncImagePainter(
     ImageRequest.Builder(LocalContext.current)
-        .data(data = data)
+        .data(data)
         .apply {
             crossfade(crossFade)
             placeholder?.let {

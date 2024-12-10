@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
+
 /*
  * Copyright 2023 Md. Mahmudul Hasan Shohag
  *
@@ -65,7 +67,9 @@ android {
     }
 
     composeCompiler {
-        enableStrongSkippingMode = true
+        featureFlags = setOf(
+            ComposeFeatureFlag.StrongSkipping
+        )
     }
 }
 
@@ -133,4 +137,5 @@ dependencies {
     // Coil
     implementation(Libs.Coil.compose)
     implementation(Libs.Coil.svg)
+    implementation(Libs.Coil.network)
 }

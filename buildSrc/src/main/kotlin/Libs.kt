@@ -130,7 +130,6 @@ object Libs {
             "com.google.accompanist:accompanist-systemuicontroller:$version"
         const val flowlayout = "com.google.accompanist:accompanist-flowlayout:$version"
         const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:$version"
-        const val placeholder = "com.google.accompanist:accompanist-placeholder-material:$version"
     }
 
     object Kotlin {
@@ -154,7 +153,7 @@ object Libs {
     object AndroidX {
         const val appcompat = "androidx.appcompat:appcompat:1.7.0"
         const val coreKtx = "androidx.core:core-ktx:1.15.0"
-        const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+        const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0" // 🔴
 
         object Activity {
             const val activityCompose = "androidx.activity:activity-compose:1.9.3"
@@ -213,7 +212,7 @@ object Libs {
         object Lifecycle {
             private const val version = "2.8.7"
 
-            const val extensions = "androidx.lifecycle:lifecycle-extensions:$version"
+            const val extensions = "androidx.lifecycle:lifecycle-extensions:$version" // 🔴
             const val livedata = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
             const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
             const val common = "androidx.lifecycle:lifecycle-common:$version"

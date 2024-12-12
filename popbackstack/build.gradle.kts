@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
-
 plugins {
     id(Libs.Android.library)
     kotlin("android")
@@ -50,12 +48,6 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
-    }
-
-    composeCompiler {
-        featureFlags = setOf(
-            ComposeFeatureFlag.StrongSkipping
-        )
     }
 }
 
@@ -109,7 +101,6 @@ dependencies {
     implementation(Libs.Accompanist.systemuicontroller)
     implementation(Libs.Accompanist.flowlayout)
     implementation(Libs.Accompanist.swipeRefresh)
-    implementation(Libs.Accompanist.placeholder)
 
     // ----------------------------------------------------------------
 

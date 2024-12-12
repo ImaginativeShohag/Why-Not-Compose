@@ -50,9 +50,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
@@ -180,7 +178,6 @@ fun TicTacToeScreenSkeleton(
             Modifier
                 .padding(it)
                 .fillMaxSize()
-                //.verticalScroll(rememberScrollState())
         ) {
             AppComponent.MediumSpacer()
 

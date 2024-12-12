@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
-
 /*
  * Copyright 2023 Md. Mahmudul Hasan Shohag
  *
@@ -66,12 +64,6 @@ android {
         buildConfig = true
         compose = true
     }
-
-    composeCompiler {
-        featureFlags = setOf(
-            ComposeFeatureFlag.StrongSkipping
-        )
-    }
 }
 
 dependencies {
@@ -125,7 +117,6 @@ dependencies {
     implementation(Libs.Accompanist.systemuicontroller)
     implementation(Libs.Accompanist.flowlayout)
     implementation(Libs.Accompanist.swipeRefresh)
-    implementation(Libs.Accompanist.placeholder)
 
     // ----------------------------------------------------------------
 

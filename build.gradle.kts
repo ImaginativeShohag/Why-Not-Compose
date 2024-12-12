@@ -43,21 +43,6 @@ buildscript {
     }
 }
 
-/*
-  id(Libs.Android.application) version Libs.Gradle.version apply false
-    id(Libs.Android.library) version Libs.Gradle.version apply false
-    kotlin("android") version Libs.Kotlin.version apply false
-    kotlin("plugin.serialization") version Libs.Kotlin.version apply false
-    id(Libs.Kotlin.composeCompilerGradlePlugin) version Libs.Kotlin.version apply false
-    id(Libs.Google.DevTools.ksp) version Libs.Google.DevTools.kspVersion apply false
-    id(Libs.Google.Firebase.crashlyticsGradlePlugin) version Libs.Google.Firebase.crashlyticsGradlePluginVersion apply false
-    id(Libs.Google.Services.gradlePlugin) version Libs.Google.Services.version apply false
-    id(Libs.Google.Maps.secretsGradlePlugin) version Libs.Google.Maps.secretsGradlePluginVersion apply false
-    id(Libs.Google.Hilt.gradlePlugin) version Libs.Google.Hilt.version apply false
-
-    id(Libs.DiffPlug.spotless) version Libs.DiffPlug.version
- */
-
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
@@ -69,7 +54,6 @@ plugins {
     alias(libs.plugins.gms) apply false
     alias(libs.plugins.secrets) apply false
     alias(libs.plugins.hilt) apply false
-    // alias(libs.plugins.spotless) apply false
 }
 
 allprojects {

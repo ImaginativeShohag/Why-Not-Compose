@@ -45,7 +45,7 @@ android {
         minSdk = BuildConfigConst.minSdk
         targetSdk = BuildConfigConst.targetSdk
         versionCode = (findProperty("android.injected.version.code") as? String)?.toIntOrNull() ?: 1
-        versionName = "7.1.0.${getCurrentDateAsYYMMDD()}" // Major.Minor.Patch.YYMMDD
+        versionName = "7.2.0.${getCurrentDateAsYYMMDD()}" // Major.Minor.Patch.YYMMDD
         vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -132,9 +132,6 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.swiperefreshlayout)
-
-    // Let's not use material xml view components at all. :)
-    // implementation(Google.android.material)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext)

@@ -39,6 +39,10 @@ class ReactiveModelViewModel : ViewModel() {
     private val _products = MutableStateFlow<List<ProductReactiveModel>>(emptyList())
     val products = _products.asStateFlow()
 
+    val totalPrice = derivedStateOf {
+        _products.value.sumOf { it.totalPrice }
+    }
+
     init {
         _products.value = ProductReactiveModelMock.items
     }
@@ -51,6 +55,8 @@ class ReactiveModelViewModel : ViewModel() {
 
     fun decreaseQuantity(product: ProductReactiveModel) {
         product.decreaseQuantity()
+
+        Timber.e("product: $product")
     }
 }
 
@@ -58,6 +64,7 @@ class ReactiveModelViewModel : ViewModel() {
 
 class ProductReactiveModel internal constructor(
     val name: String,
+    val icon: String,
     val price: Double,
     initialQuantity: Int
 ) {
@@ -65,7 +72,7 @@ class ProductReactiveModel internal constructor(
         private set
 
     val totalPrice by derivedStateOf {
-        initialQuantity * price
+        quantity * price
     }
 
     fun increaseQuantity() {
@@ -88,66 +95,79 @@ object ProductReactiveModelMock {
     val items = listOf(
         ProductReactiveModel(
             name = "Apple",
+            icon = "🍎",
             price = 5.0,
             initialQuantity = 0
         ),
         ProductReactiveModel(
             name = "Orange",
+            icon = "🍊",
             price = 100.0,
             initialQuantity = 4
         ),
         ProductReactiveModel(
             name = "Banana",
+            icon = "🍌",
             price = 10.0,
-            initialQuantity = 50
+            initialQuantity = 30
         ),
         ProductReactiveModel(
             name = "Grapes",
+            icon = "🍇",
             price = 8.5,
             initialQuantity = 20
         ),
         ProductReactiveModel(
             name = "Strawberry",
+            icon = "🍓",
             price = 15.0,
-            initialQuantity = 12
+            initialQuantity = 0
         ),
         ProductReactiveModel(
             name = "Watermelon",
+            icon = "🍉",
             price = 25.0,
             initialQuantity = 2
         ),
         ProductReactiveModel(
             name = "Pineapple",
+            icon = "🍍",
             price = 12.0,
             initialQuantity = 8
         ),
         ProductReactiveModel(
             name = "Mango",
+            icon = "🥭",
             price = 18.0,
             initialQuantity = 6
         ),
         ProductReactiveModel(
             name = "Cherry",
+            icon = "🍒",
             price = 7.0,
             initialQuantity = 15
         ),
         ProductReactiveModel(
             name = "Blueberry",
+            icon = "🫐",
             price = 20.0,
             initialQuantity = 10
         ),
         ProductReactiveModel(
             name = "Peach",
+            icon = "🍑",
             price = 14.0,
             initialQuantity = 18
         ),
         ProductReactiveModel(
             name = "Kiwi",
+            icon = "🥝",
             price = 9.0,
             initialQuantity = 25
         ),
         ProductReactiveModel(
             name = "Pear",
+            icon = "🍐",
             price = 11.0,
             initialQuantity = 30
         )

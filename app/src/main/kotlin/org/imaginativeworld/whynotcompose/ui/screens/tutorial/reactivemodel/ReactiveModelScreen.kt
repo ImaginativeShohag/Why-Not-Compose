@@ -27,6 +27,8 @@
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.reactivemodel
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -37,16 +39,16 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Remove
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.FilledIconButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -58,6 +60,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
@@ -74,8 +78,9 @@ fun ReactiveModelScreen(
 ) {
     val counter = viewModel.products.collectAsState()
 
-    CounterWithVMScreenSkeleton(
+    ReactiveModelScreenSkeleton(
         products = counter.value,
+        totalPrice = viewModel.totalPrice.value,
         goBack = goBack,
         increaseQuantity = viewModel::incrementQuantity,
         decreaseQuantity = viewModel::decreaseQuantity
@@ -84,7 +89,7 @@ fun ReactiveModelScreen(
 
 @PreviewLightDark
 @Composable
-private fun CounterWithVMScreenSkeletonPreview() {
+private fun ReactiveModelScreenSkeletonPreview() {
     val products by remember {
         mutableStateOf(
             ProductReactiveModelMock.items
@@ -92,8 +97,9 @@ private fun CounterWithVMScreenSkeletonPreview() {
     }
 
     AppTheme {
-        CounterWithVMScreenSkeleton(
+        ReactiveModelScreenSkeleton(
             products = products,
+            totalPrice = products.sumOf { it.totalPrice },
             increaseQuantity = { product ->
                 product.increaseQuantity()
             },
@@ -106,8 +112,9 @@ private fun CounterWithVMScreenSkeletonPreview() {
 
 @Suppress("ktlint:compose:modifier-missing-check")
 @Composable
-fun CounterWithVMScreenSkeleton(
+fun ReactiveModelScreenSkeleton(
     products: List<ProductReactiveModel>,
+    totalPrice: Double,
     goBack: () -> Unit = {},
     increaseQuantity: (ProductReactiveModel) -> Unit = {},
     decreaseQuantity: (ProductReactiveModel) -> Unit = {}
@@ -124,22 +131,45 @@ fun CounterWithVMScreenSkeleton(
             )
         }
     ) { innerPadding ->
-        LazyColumn(
+        Column(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
-                .padding(start = 16.dp, end = 16.dp),
-            contentPadding = PaddingValues(vertical = 4.dp)
         ) {
-            items(products) { product ->
-                ProductItemView(
-                    modifier = Modifier.padding(vertical = 8.dp),
-                    name = product.name,
-                    price = product.price,
-                    quantity = product.quantity,
-                    totalPrice = product.totalPrice,
-                    increase = { increaseQuantity(product) },
-                    decrease = { decreaseQuantity(product) }
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                modifier = Modifier.weight(1f),
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                items(products) { product ->
+                    ProductItemView(
+                        modifier = Modifier,
+                        name = product.name,
+                        icon = product.icon,
+                        price = product.price,
+                        quantity = product.quantity,
+                        totalPrice = product.totalPrice,
+                        increase = { increaseQuantity(product) },
+                        decrease = { decreaseQuantity(product) }
+                    )
+                }
+            }
+
+            HorizontalDivider()
+
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.surfaceVariant)
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+            ) {
+                Text("Total Price")
+                Spacer(Modifier.weight(1f))
+                Text(
+                    "$totalPrice $",
+                    style = MaterialTheme.typography.titleMedium
                 )
             }
         }
@@ -149,6 +179,7 @@ fun CounterWithVMScreenSkeleton(
 @Composable
 private fun ProductItemView(
     name: String,
+    icon: String,
     price: Double,
     quantity: Int,
     totalPrice: Double,
@@ -162,60 +193,81 @@ private fun ProductItemView(
             defaultElevation = 4.dp
         )
     ) {
-        Column(Modifier.padding(8.dp)) {
+        Column(
+            Modifier.padding(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                icon,
+                modifier = Modifier,
+                style = MaterialTheme.typography.displayLarge
+            )
+
             Text(
                 name,
+                modifier = Modifier,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
                 style = MaterialTheme.typography.titleLarge
             )
 
-            Row {
+            Row(Modifier.padding(top = 8.dp)) {
                 Text(
-                    "Price: $price $",
+                    "Price:",
                     style = MaterialTheme.typography.titleSmall
                 )
-
                 Spacer(Modifier.weight(1f))
-
                 Text(
-                    "Quantity: $quantity",
+                    "$price $",
                     style = MaterialTheme.typography.titleSmall
+                )
+            }
+
+            Row {
+                Text(
+                    "Total:",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Spacer(Modifier.weight(1f))
+                Text(
+                    "$totalPrice $",
+                    style = MaterialTheme.typography.titleMedium
                 )
             }
 
             Card(
                 Modifier.padding(top = 8.dp),
-                border = BorderStroke(1.dp, MaterialTheme.colorScheme.onBackground.copy(0.2f))
+                border = BorderStroke(
+                    1.dp,
+                    MaterialTheme.colorScheme.onBackground.copy(0.2f)
+                )
             ) {
                 Row(
                     Modifier
-                        .padding(horizontal = 8.dp, vertical = 4.dp)
+                        .padding(horizontal = 4.dp, vertical = 4.dp)
                         .fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Button(
-                        modifier = Modifier,
-                        onClick = { increase() },
-                        shape = CircleShape
-                    ) {
-                        Icon(imageVector = Icons.Rounded.Add, contentDescription = "Add")
-                    }
-
-                    Spacer(Modifier.width(16.dp))
-
-                    Button(
-                        modifier = Modifier,
+                    FilledIconButton(
                         onClick = { decrease() },
-                        shape = CircleShape
+                        enabled = quantity > 0
                     ) {
                         Icon(imageVector = Icons.Rounded.Remove, contentDescription = "Add")
                     }
 
-                    Spacer(Modifier.weight(1f))
-
                     Text(
-                        "Total: $totalPrice $",
-                        style = MaterialTheme.typography.titleMedium
+                        "$quantity",
+                        modifier = Modifier.weight(1f),
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.titleSmall
                     )
+
+                    FilledIconButton(
+                        onClick = { increase() },
+                        enabled = quantity < 30
+                    ) {
+                        Icon(imageVector = Icons.Rounded.Add, contentDescription = "Add")
+                    }
                 }
             }
         }

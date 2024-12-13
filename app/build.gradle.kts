@@ -49,28 +49,24 @@ android {
         vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        signingConfig = signingConfigs.getByName("debug")
     }
 
     buildTypes {
-        getByName("release") {
-            signingConfig = signingConfigs.getByName("debug")
-        }
-        named("debug") {
-            isDebuggable = true
+        debug {
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-debug"
         }
-        named("release") {
-            isMinifyEnabled = false
-            isShrinkResources = false
-            setProguardFiles(
-                listOf(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
-                )
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
             )
+
+            // To publish on the Play store a private signing key is required, but to allow anyone
+            // who clones the code to sign and run the release variant, use the debug signing key.
+            signingConfig = signingConfigs.named("debug").get()
         }
     }
 
@@ -108,15 +104,6 @@ android {
         // buildConfig false
         resValues = false
         shaders = false
-    }
-
-    signingConfigs {
-        getByName("debug") {
-            storeFile = file("../debug.keystore")
-            storePassword = "android"
-            keyAlias = "androiddebugkey"
-            keyPassword = "android"
-        }
     }
 }
 

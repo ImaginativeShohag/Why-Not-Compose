@@ -103,7 +103,7 @@ Feel free to request features or suggestions for improvements.
 - [ ] Migrate ExoPlayer: https://developer.android.com/media/media3/exoplayer/migration-guide
 - [ ] Update all `LaunchedEffect` with lambda issue using `rememberUpdatedState`: https://developer.android.com/develop/ui/compose/side-effects#rememberupdatedstate
 - [ ] Add example for AppColorLocal from Jaber vai
-- [ ] Update to coil 3
+- [x] Update to coil 3
 
 # Note
 

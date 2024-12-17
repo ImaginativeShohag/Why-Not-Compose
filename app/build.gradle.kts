@@ -34,6 +34,7 @@ plugins {
     alias(libs.plugins.secrets)
     alias(libs.plugins.gms)
     alias(libs.plugins.firebase.crashlytics)
+    alias(libs.plugins.baselineprofile)
 }
 
 android {
@@ -67,6 +68,9 @@ android {
             // To publish on the Play store a private signing key is required, but to allow anyone
             // who clones the code to sign and run the release variant, use the debug signing key.
             signingConfig = signingConfigs.named("debug").get()
+
+            // Ensure Baseline Profile is fresh for release builds.
+            baselineProfile.automaticGenerationDuringBuild = true
         }
     }
 
@@ -114,11 +118,13 @@ dependencies {
     implementation(project(":exoplayer"))
     implementation(project(":cms"))
     implementation(project(":popbackstack"))
+    "baselineProfile"(project(":benchmarks"))
 
     implementation(libs.kotlin.stdlib)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.swiperefreshlayout)
+    implementation(libs.androidx.profileinstaller)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext)
@@ -243,4 +249,13 @@ dependencies {
     implementation(platform(libs.firebase.bom))
 
     implementation(libs.firebase.analytics.ktx)
+}
+
+baselineProfile {
+    // Don't build on every iteration of a full assemble.
+    // Instead enable generation directly for the release build variant.
+    automaticGenerationDuringBuild = false
+
+    // Make use of Dex Layout Optimizations via Startup Profiles
+    dexLayoutOptimization = true
 }

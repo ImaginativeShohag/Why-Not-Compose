@@ -42,6 +42,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent.Header
@@ -75,6 +76,7 @@ fun AnimationIndexSkeleton(
 ) {
     Scaffold(
         Modifier
+            .testTag("screen:animations:index")
             .navigationBarsPadding()
             .imePadding()
             .statusBarsPadding(),
@@ -95,13 +97,13 @@ fun AnimationIndexSkeleton(
                 contentPadding = PaddingValues(bottom = 16.dp)
             ) {
                 itemsIndexed(Animation.animationList) { index, item ->
-
                     if (index != 0) {
                         HorizontalDivider(Modifier.padding(16.dp, 0.dp))
                     }
 
                     Text(
                         modifier = Modifier
+                            .testTag("list-item")
                             .clickable {
                                 navigate(item.route)
                             }

@@ -42,6 +42,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent.Header
@@ -75,6 +76,7 @@ fun CompositionIndexSkeleton(
 ) {
     Scaffold(
         Modifier
+            .testTag("screen:compositions:index")
             .navigationBarsPadding()
             .imePadding()
             .statusBarsPadding(),
@@ -101,6 +103,7 @@ fun CompositionIndexSkeleton(
 
                     Text(
                         modifier = Modifier
+                            .testTag("list-item")
                             .clickable {
                                 navigate(item.route)
                             }

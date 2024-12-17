@@ -45,6 +45,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -66,11 +67,11 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
 @Composable
 fun EmudiScreen() {
-    val animState = MutableStateFlow(false)
-    val animStateDot1 = MutableStateFlow(false)
-    val animStateDot2 = MutableStateFlow(false)
-    val animStateDot3 = MutableStateFlow(false)
-    val animStateDot4 = MutableStateFlow(false)
+    val animState = remember { MutableStateFlow(false) }
+    val animStateDot1 = remember { MutableStateFlow(false) }
+    val animStateDot2 = remember { MutableStateFlow(false) }
+    val animStateDot3 = remember { MutableStateFlow(false) }
+    val animStateDot4 = remember { MutableStateFlow(false) }
 
     LaunchedEffect(Unit) {
         while (true) {

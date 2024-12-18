@@ -82,6 +82,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
@@ -191,6 +192,7 @@ fun HomeIndexScreen(
 
     Scaffold(
         Modifier
+            .testTag("screen:home")
             .navigationBarsPadding()
             .imePadding()
     ) { innerPadding ->
@@ -265,7 +267,9 @@ fun HomeIndexScreen(
                                         )
 
                                         Button(onClick = {
-                                            requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                                requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+                                            }
                                         }) {
                                             Text("Allow")
                                         }

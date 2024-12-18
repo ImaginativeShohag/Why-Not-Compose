@@ -119,7 +119,7 @@ Feel free to request features or suggestions for improvements.
   with [klint](https://github.com/pinterest/ktlint). Apply spotless using the following command.
 
 ```bash
-./gradlew spotlessApply
+./gradlew --init-script gradle/init.gradle.kts spotlessApply
 ```
 
 ## Setup

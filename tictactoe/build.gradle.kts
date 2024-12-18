@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
-
 /*
  * Copyright 2023 Md. Mahmudul Hasan Shohag
  *
@@ -27,10 +25,10 @@ import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
  */
 
 plugins {
-    id(Libs.Android.library)
-    kotlin("android")
-    kotlin("kapt")
-    id(Libs.Kotlin.composeCompilerGradlePlugin)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -66,74 +64,67 @@ android {
         buildConfig = true
         compose = true
     }
-
-    composeCompiler {
-        featureFlags = setOf(
-            ComposeFeatureFlag.StrongSkipping
-        )
-    }
 }
 
 dependencies {
     implementation(project(":base"))
     implementation(project(":common-ui-compose"))
 
-    implementation(Libs.Kotlin.stdlib)
-    implementation(Libs.AndroidX.coreKtx)
-    implementation(Libs.AndroidX.appcompat)
-    implementation(Libs.AndroidX.swipeRefreshLayout)
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.swiperefreshlayout)
 
     // ----------------------------------------------------------------
     // Compose
     // ----------------------------------------------------------------
-    implementation(platform(Libs.AndroidX.Compose.bom))
+    implementation(platform(libs.androidx.compose.bom))
 
-    implementation(Libs.AndroidX.Compose.ui)
-    implementation(Libs.AndroidX.Compose.uiUtil)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.util)
     // Tooling support (Previews, etc.)
-    debugImplementation(Libs.AndroidX.Compose.tooling)
-    implementation(Libs.AndroidX.Compose.toolingPreview)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.androidx.compose.ui.tooling.preview)
     // Animation
-    implementation(Libs.AndroidX.Compose.animation)
+    implementation(libs.androidx.compose.animation)
     // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
-    implementation(Libs.AndroidX.Compose.foundation)
-    implementation(Libs.AndroidX.Compose.layout)
+    implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.compose.foundation.layout)
     // Material Design
-    implementation(Libs.AndroidX.Compose.material3)
-    implementation(Libs.AndroidX.Compose.material3WindowSizeClass)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material3.windowSizeClass)
     // Material design icons
-    implementation(Libs.AndroidX.Compose.materialIconsCore)
-    implementation(Libs.AndroidX.Compose.materialIconsExtended)
+    implementation(libs.androidx.compose.material.iconsCore)
+    implementation(libs.androidx.compose.material.iconsExtended)
     // Integration with observables
-    implementation(Libs.AndroidX.Compose.runtime)
-    implementation(Libs.AndroidX.Compose.runtimeLivedata)
-    implementation(Libs.AndroidX.Compose.runtimeTracing)
-    // Compose Navigation Component
-    implementation(Libs.AndroidX.Navigation.compose)
+    implementation(libs.androidx.compose.runtime)
+    implementation(libs.androidx.compose.runtime.livedata)
+    implementation(libs.androidx.compose.runtime.tracing)
+    // compose Navigation Component
+    implementation(libs.androidx.navigation.compose)
     // Constraint Layout
-    implementation(Libs.AndroidX.ConstraintLayout.compose)
+    implementation(libs.androidx.constraintlayout.compose)
     // Integration with activities
-    implementation(Libs.AndroidX.Activity.activityCompose)
+    implementation(libs.androidx.activity.compose)
 
-    // Jetpack Compose Integration for ViewModel
-    implementation(Libs.AndroidX.Lifecycle.viewModelCompose)
+    // Jetpack compose Integration for ViewModel
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     // Paging
-    implementation(Libs.AndroidX.Paging.compose)
+    implementation(libs.androidx.paging.compose)
 
     // Accompanist
-    implementation(Libs.Accompanist.systemuicontroller)
-    implementation(Libs.Accompanist.flowlayout)
-    implementation(Libs.Accompanist.swipeRefresh)
-    implementation(Libs.Accompanist.placeholder)
+    implementation(libs.accompanist.systemuicontroller)
+    implementation(libs.accompanist.flowlayout)
+    implementation(libs.accompanist.swiperefresh)
 
     // ----------------------------------------------------------------
 
     // Timber
-    implementation(Libs.timber)
+    implementation(libs.timber)
 
     // Hilt
-    implementation(Libs.Google.Hilt.core)
-    kapt(Libs.Google.Hilt.compiler)
-    implementation(Libs.AndroidX.Hilt.navigationCompose)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
 }

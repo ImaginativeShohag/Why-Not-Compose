@@ -32,20 +32,24 @@ import org.imaginativeworld.whynotcompose.ui.screens.TutorialsScreen
 
 sealed class TutorialLevel(
     val name: String,
+    val value: Int,
     val color: Color
 ) {
     data object Beginner : TutorialLevel(
         name = "Beginner",
+        value = 1,
         color = TailwindCSSColor.Green500
     )
 
     data object Intermediate : TutorialLevel(
         name = "Intermediate",
+        value = 2,
         color = TailwindCSSColor.Yellow500
     )
 
     data object Advanced : TutorialLevel(
         name = "Advanced",
+        value = 3,
         color = TailwindCSSColor.Red500
     )
 }
@@ -147,7 +151,15 @@ data class Tutorial(
                 description = "Solutions for `popBackStack()` blank screen issue.",
                 route = TutorialsScreen.TutorialPopBackStack,
                 level = TutorialLevel.Intermediate
+            ),
+            Tutorial(
+                name = "Baseline profiles",
+                description = "Check the baseline profile install status using `ProfileVerifier`.",
+                route = TutorialsScreen.TutorialBaselineProfiles,
+                level = TutorialLevel.Intermediate
             )
         )
+            .sortedBy { it.name }
+            .sortedBy { it.level.value }
     }
 }

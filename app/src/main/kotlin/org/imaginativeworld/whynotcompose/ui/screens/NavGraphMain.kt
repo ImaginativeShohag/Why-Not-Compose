@@ -108,6 +108,8 @@ import org.imaginativeworld.whynotcompose.ui.screens.composition.textfield.TextF
 import org.imaginativeworld.whynotcompose.ui.screens.home.index.HomeIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.splash.SplashScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.animatedvisibility.AnimatedVisibilityScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.baselineprofiles.BaselineProfilesScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.baselineprofiles.BaselineProfilesViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.captureimageandcrop.CaptureImageAndCropScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.captureimageandcrop.CaptureImageAndCropViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.counter.CounterScreen
@@ -290,6 +292,8 @@ sealed class TutorialsScreen(val route: String) {
     // ================================================================
 
     data object TutorialPopBackStack : TutorialsScreen("tutorial/pop-back-stack")
+
+    data object TutorialBaselineProfiles : TutorialsScreen("tutorial/baseline-profiles")
 }
 
 // ================================================================
@@ -1190,6 +1194,17 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
 
     activity(TutorialsScreen.TutorialPopBackStack.route) {
         activityClass = PopBackStackActivity::class
+    }
+
+    composable(TutorialsScreen.TutorialBaselineProfiles.route) {
+        val viewModel: BaselineProfilesViewModel = hiltViewModel()
+
+        BaselineProfilesScreen(
+            viewModel = viewModel,
+            goBack = {
+                navController.popBackStackOrIgnore()
+            }
+        )
     }
 }
 

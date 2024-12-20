@@ -28,12 +28,11 @@ package org.imaginativeworld.whynotcompose.ui.screens.tutorial.counterwithviewmo
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class CounterWithVMViewModel : ViewModel() {
     private val _counter = MutableStateFlow(0)
-    val counter: StateFlow<Int>
-        get() = _counter
+    val counter = _counter.asStateFlow()
 
     fun increase() {
         _counter.value += 1

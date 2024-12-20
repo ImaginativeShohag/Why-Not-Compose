@@ -203,6 +203,7 @@ dependencies {
     // Kotlin Coroutines
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.coroutines.guava)
 
     // Room Persistence Library
     implementation(libs.room.runtime)

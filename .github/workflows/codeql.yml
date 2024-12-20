@@ -115,14 +115,15 @@ jobs:
       - name: Run tests
         run: ./gradlew test
 
-      - name: Setup GMD
-        run: ./gradlew :benchmarks:pixel6Api35Setup
-          --info
-          -Pandroid.experimental.testOptions.managedDevices.emulator.showKernelLogging=true
-          -Pandroid.testoptions.manageddevices.emulator.gpu="swiftshader_indirect"
+      # - name: Setup GMD
+      #   run: ./gradlew :benchmarks:pixel6Api35Setup
+      #     --info
+      #     -Pandroid.experimental.testOptions.managedDevices.emulator.showKernelLogging=true
+      #     -Pandroid.testoptions.manageddevices.emulator.gpu="swiftshader_indirect"
 
       - name: Build all build type and flavor permutations
-        run: ./gradlew :app:assemble :benchmarks:assemble -Pandroidx.baselineprofile.skipgeneration
+        run: ./gradlew assemble
+          -Pandroidx.baselineprofile.skipgeneration
           -Pandroid.testoptions.manageddevices.emulator.gpu="swiftshader_indirect"
           -Pandroid.experimental.testOptions.managedDevices.emulator.showKernelLogging=true
           -Pandroid.experimental.androidTest.numManagedDeviceShards=1

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="com.nbadal.ktlint.KtlintProjectSettings">
     <ktlintMode>DISTRACT_FREE</ktlintMode>
-    <ktlintRulesetVersion>V1_3_0</ktlintRulesetVersion>
+    <ktlintRulesetVersion>V1_3_1</ktlintRulesetVersion>
     <externalJarPaths>
       <list>
         <option value="$PROJECT_DIR$/spotless/ktlint/ktlint-compose-0.4.5-all.jar" />

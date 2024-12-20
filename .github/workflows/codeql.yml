@@ -121,7 +121,7 @@ jobs:
       #     -Pandroid.experimental.testOptions.managedDevices.emulator.showKernelLogging=true
       #     -Pandroid.testoptions.manageddevices.emulator.gpu="swiftshader_indirect"
 
-      - name: Build all build type and flavor permutations
+      - name: Build all build type and flavor permutations (Ignore baseline profile generation)
         run: ./gradlew assemble
           -Pandroidx.baselineprofile.skipgeneration
           -Pandroid.testoptions.manageddevices.emulator.gpu="swiftshader_indirect"

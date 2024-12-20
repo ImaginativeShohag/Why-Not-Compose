@@ -46,6 +46,12 @@ jobs:
           fileName: "android_keystore.keystore"
           encodedString: ${{ secrets.KEYSTORE }}
 
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Generate baseline profile
+        run: ./gradlew :app:generateBaselineProfile
+
       - name: Build & deploy Android release
         run: bundle exec fastlane android deploy
         env:

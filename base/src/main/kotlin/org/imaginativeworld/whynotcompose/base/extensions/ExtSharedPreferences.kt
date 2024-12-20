@@ -63,8 +63,7 @@ fun SharedPreferences.set(key: String, value: Set<String>?) {
         }
 }
 
-fun SharedPreferences.get(key: String, default: Set<String>?): Set<String>? =
-    getStringSet(key, default)
+fun SharedPreferences.get(key: String, default: Set<String>?): Set<String>? = getStringSet(key, default)
 
 // ----------------------------------------------------------------
 // Boolean

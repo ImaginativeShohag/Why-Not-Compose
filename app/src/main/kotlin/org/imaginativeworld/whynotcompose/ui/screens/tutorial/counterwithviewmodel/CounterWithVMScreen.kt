@@ -75,7 +75,7 @@ fun CounterWithVMScreen(
 
 @PreviewLightDark
 @Composable
-private fun CounterWithVMScreenSkeletonPreviewDark() {
+private fun CounterWithVMScreenSkeletonPreview() {
     var counter by remember { mutableIntStateOf(0) }
 
     AppTheme {

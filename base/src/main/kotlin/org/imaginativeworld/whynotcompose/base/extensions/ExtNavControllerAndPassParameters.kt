@@ -78,11 +78,10 @@ fun NavHostController.navigate(
  * @return the value based on the [key]. If no argument found, returns `null`.
  */
 @Composable
-inline fun <reified T> navArg(key: String): NullableSaverWrapper<T> =
-    rememberSaveable(saver = nullableSaver()) {
-        val cacheKey = MemoryCacheKeyForNavController.Argument(key)
-        val value: T? = MemoryCache.get(cacheKey)
-        MemoryCache.remove(cacheKey)
-        Timber.v("key:value = $key:$value")
-        return@rememberSaveable NullableSaverWrapper(value)
-    }
+inline fun <reified T> navArg(key: String): NullableSaverWrapper<T> = rememberSaveable(saver = nullableSaver()) {
+    val cacheKey = MemoryCacheKeyForNavController.Argument(key)
+    val value: T? = MemoryCache.get(cacheKey)
+    MemoryCache.remove(cacheKey)
+    Timber.v("key:value = $key:$value")
+    return@rememberSaveable NullableSaverWrapper(value)
+}

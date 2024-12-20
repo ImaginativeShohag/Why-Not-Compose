@@ -250,6 +250,9 @@ dependencies {
     implementation(platform(libs.firebase.bom))
 
     implementation(libs.firebase.analytics.ktx)
+
+    // Code Scanner
+    implementation(libs.google.playservice.code.scanner)
 }
 
 baselineProfile {

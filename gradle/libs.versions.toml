@@ -61,6 +61,7 @@ ucrop = "2.2.10"
 lottie = "6.6.1"
 exoplayer = "2.19.1"
 googlePlayServiceMaps = "19.0.0"
+googlePlayServiceCodeScanner = "16.1.0"
 googleMaps = "5.1.1"
 googleMapsCompose = "6.4.0"
 androidxConstraintlayoutCompose = "1.1.0"
@@ -84,6 +85,7 @@ google-playservice-maps = { group = "com.google.android.gms", name = "play-servi
 google-maps-ktx = { group = "com.google.maps.android", name = "maps-ktx", version.ref = "googleMaps" }
 google-maps-utils-ktx = { group = "com.google.maps.android", name = "maps-utils-ktx", version.ref = "googleMaps" }
 google-maps-compose = { group = "com.google.maps.android", name = "maps-compose", version.ref = "googleMapsCompose" }
+google-playservice-code-scanner = { group = "com.google.android.gms", name = "play-services-code-scanner", version.ref = "googlePlayServiceCodeScanner" }
 
 accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanist" }
 accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }

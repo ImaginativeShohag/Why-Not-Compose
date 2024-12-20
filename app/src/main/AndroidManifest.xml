@@ -121,6 +121,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
 
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="barcode_ui"/>
+
         <!-- File Provider -->
         <provider
             android:name="androidx.core.content.FileProvider"

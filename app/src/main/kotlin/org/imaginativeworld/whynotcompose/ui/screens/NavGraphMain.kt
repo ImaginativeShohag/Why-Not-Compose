@@ -108,6 +108,8 @@ import org.imaginativeworld.whynotcompose.ui.screens.composition.textfield.TextF
 import org.imaginativeworld.whynotcompose.ui.screens.home.index.HomeIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.splash.SplashScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.animatedvisibility.AnimatedVisibilityScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.barcodescanner.BarcodeScannerScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.barcodescanner.BarcodeScannerViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.baselineprofiles.BaselineProfilesScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.baselineprofiles.BaselineProfilesViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.captureimageandcrop.CaptureImageAndCropScreen
@@ -294,6 +296,8 @@ sealed class TutorialsScreen(val route: String) {
     data object TutorialPopBackStack : TutorialsScreen("tutorial/pop-back-stack")
 
     data object TutorialBaselineProfiles : TutorialsScreen("tutorial/baseline-profiles")
+
+    data object TutorialBarcodeScanner : TutorialsScreen("tutorial/barcode-scanner")
 }
 
 // ================================================================
@@ -1200,6 +1204,17 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
         val viewModel: BaselineProfilesViewModel = hiltViewModel()
 
         BaselineProfilesScreen(
+            viewModel = viewModel,
+            goBack = {
+                navController.popBackStackOrIgnore()
+            }
+        )
+    }
+
+    composable(TutorialsScreen.TutorialBarcodeScanner.route) {
+        val viewModel: BarcodeScannerViewModel = hiltViewModel()
+
+        BarcodeScannerScreen(
             viewModel = viewModel,
             goBack = {
                 navController.popBackStackOrIgnore()

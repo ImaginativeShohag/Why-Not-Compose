@@ -58,7 +58,8 @@ data class Tutorial(
     val name: String,
     val description: String? = null,
     val route: TutorialsScreen,
-    val level: TutorialLevel
+    val level: TutorialLevel,
+    val testTag: String = "tutorial-${route.route}"
 ) {
     companion object {
         val tutorialList = listOf(
@@ -150,7 +151,8 @@ data class Tutorial(
                 name = "Navigation blank screen issue",
                 description = "Solutions for `popBackStack()` blank screen issue.",
                 route = TutorialsScreen.TutorialPopBackStack,
-                level = TutorialLevel.Intermediate
+                level = TutorialLevel.Intermediate,
+                testTag = "tutorial-popbackstack"
             ),
             Tutorial(
                 name = "Baseline profiles",

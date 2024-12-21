@@ -144,6 +144,7 @@ private fun MenuItem(
     ) {
         Text(
             modifier = Modifier
+                .testTag(item.testTag)
                 .fillMaxWidth(),
             text = buildAnnotatedString {
                 append(item.name)

@@ -26,14 +26,18 @@
 
 package org.imaginativeworld.whynotcompose.benchmarks.baselineprofile
 
+import android.util.Log
 import androidx.benchmark.macro.junit4.BaselineProfileRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
-import org.imaginativeworld.whynotcompose.benchmarks.commonModuleTraverseActions
+import org.imaginativeworld.whynotcompose.benchmarks.clickAndWaitForIdle
+import org.imaginativeworld.whynotcompose.benchmarks.dumpWindowHierarchy
+import org.imaginativeworld.whynotcompose.benchmarks.pressBackAndWaitForIdle
 import org.imaginativeworld.whynotcompose.benchmarks.startActivityAndAllowNotifications
 import org.imaginativeworld.whynotcompose.benchmarks.waitAndFindObject
+import org.imaginativeworld.whynotcompose.benchmarks.waitAndFindObjects
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -97,10 +101,34 @@ class TutorialsModuleBaselineProfile {
             // Wait for home screen
             device.waitAndFindObject(By.res("screen:home"), 5_000)
 
-            commonModuleTraverseActions(
-                moduleButtonText = "Tutorials",
-                screenTag = "screen:tutorials:index"
-            )
+            val moduleButtonText = "Tutorials"
+            val screenTag = "screen:tutorials:index"
+
+            val moduleButton = device.findObject(By.text(moduleButtonText))
+            device.clickAndWaitForIdle(moduleButton)
+
+            val items = device.waitAndFindObjects(By.res("list-item"), 5_000)
+
+            Log.d("BaselineProfileGenerator", "hierarchy: ${device.dumpWindowHierarchy()}")
+
+            val count = items.count()
+
+            for (i in 0..<count) {
+                device.waitAndFindObject(By.res(screenTag), 5_000)
+                val items = device.waitAndFindObjects(By.res("list-item"), 5_000)
+
+                // PopBackStack tutorial is open a new activity, so the go back will not work.
+                // So we will ignore this item traverse.
+                val popBackStackItem = items[i].findObject(By.res("tutorial-popbackstack"))
+                if (popBackStackItem != null) continue
+                // ----------------------------------------------------------------
+
+                device.clickAndWaitForIdle(items[i])
+
+                Thread.sleep(2_000)
+
+                device.pressBackAndWaitForIdle()
+            }
         }
     }
 }

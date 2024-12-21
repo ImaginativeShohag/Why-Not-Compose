@@ -24,7 +24,7 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.ui.screens.tutorial.barcodescanner
+package org.imaginativeworld.whynotcompose.ui.screens.tutorial.barcodescanner.index
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
@@ -64,5 +64,9 @@ class BarcodeScannerViewModel @Inject constructor(
             .addOnFailureListener { e ->
                 _scannedCode.value = e.message
             }
+    }
+
+    fun setScannedCode(barcode: Barcode) {
+        _scannedCode.value = barcode.rawValue
     }
 }

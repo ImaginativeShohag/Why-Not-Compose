@@ -69,6 +69,8 @@ paging = "3.3.4"
 onesignal = "5.1.18"
 moshi = "1.15.2"
 swiperefreshlayout = "1.1.0"
+mlkitBarcodeScanning = "17.3.0"
+cameraX = "1.4.1"
 
 [bundles]
 androidx-compose-ui-test = ["androidx-compose-ui-test", "androidx-compose-ui-testManifest"]
@@ -200,6 +202,22 @@ turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine
 
 moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
 moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi" }
+
+mlkit-barcode-scanning = { group = "com.google.mlkit", name = "barcode-scanning", version.ref = "mlkitBarcodeScanning" }
+
+# The following line is optional, as the core library is included indirectly by camera-camera2
+camerax-core = { group = "androidx.camera", name = "camera-core", version.ref = "cameraX" }
+camerax-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "cameraX" }
+# If you want to additionally use the CameraX Lifecycle library
+camerax-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "cameraX" }
+# If you want to additionally use the CameraX VideoCapture library
+camerax-video = { group = "androidx.camera", name = "camera-video", version.ref = "cameraX" }
+# If you want to additionally use the CameraX View class
+camerax-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraX" }
+# If you want to additionally add CameraX ML Kit Vision Integration
+camerax-mlkit-vision = { group = "androidx.camera", name = "camera-mlkit-vision", version.ref = "cameraX" }
+# If you want to additionally use the CameraX Extensions library
+camerax-extensions = { group = "androidx.camera", name = "camera-extensions", version.ref = "cameraX" }
 
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }

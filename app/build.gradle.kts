@@ -253,6 +253,16 @@ dependencies {
 
     // Code Scanner
     implementation(libs.google.playservice.code.scanner)
+    implementation(libs.mlkit.barcode.scanning)
+
+    // Camera
+    implementation(libs.camerax.core)
+    implementation(libs.camerax.camera2)
+    implementation(libs.camerax.lifecycle)
+    implementation(libs.camerax.video)
+    implementation(libs.camerax.view)
+    implementation(libs.camerax.mlkit.vision)
+    implementation(libs.camerax.extensions)
 }
 
 baselineProfile {

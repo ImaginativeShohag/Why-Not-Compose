@@ -24,7 +24,7 @@
  * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
  */
 
-package org.imaginativeworld.whynotcompose.ui.screens.tutorial.barcodescanner
+package org.imaginativeworld.whynotcompose.ui.screens.tutorial.barcodescanner.index
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -44,6 +44,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,12 +53,15 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.barcodescanner.custombarcodescanner.CustomBarcodeScannerSheet
 
 @Composable
 fun BarcodeScannerScreen(
     viewModel: BarcodeScannerViewModel,
     goBack: () -> Unit
 ) {
+    var showCustomCodeScanner by remember { mutableStateOf(false) }
+
     val scannedCode = viewModel.scannedCode.collectAsState()
 
     BarcodeScannerScreenSkeleton(
@@ -66,9 +71,24 @@ fun BarcodeScannerScreen(
             viewModel.openGoogleBarcodeScanner()
         },
         onOpenCustomCodeScannerClick = {
-            // TODO: implement custom code scanner
+            showCustomCodeScanner = true
         }
     )
+
+    // ----------------------------------------------------------------
+    // Sheets
+    // ----------------------------------------------------------------
+
+    if (showCustomCodeScanner) {
+        CustomBarcodeScannerSheet(
+            onDismissRequest = {
+                showCustomCodeScanner = false
+            },
+            onSuccess = { barcode ->
+                viewModel.setScannedCode(barcode)
+            }
+        )
+    }
 }
 
 @PreviewLightDark

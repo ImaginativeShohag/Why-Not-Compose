@@ -27,13 +27,24 @@
 package org.imaginativeworld.whynotcompose.ui.screens.tutorial.barcodescanner.custombarcodescanner
 
 import android.Manifest
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
+import android.content.pm.PackageManager
 import androidx.camera.core.ImageCapture.FLASH_MODE_OFF
 import androidx.camera.core.ImageCapture.FLASH_MODE_ON
 import androidx.camera.view.LifecycleCameraController
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.BottomSheetDefaults
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -41,18 +52,27 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.permissions.shouldShowRationale
 import com.google.mlkit.vision.barcode.common.Barcode
 import kotlinx.coroutines.launch
-import org.imaginativeworld.whynotcompose.base.extensions.toast
 import org.imaginativeworld.whynotcompose.base.models.Event
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.barcodescanner.custombarcodescanner.components.CameraPreviewView
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.barcodescanner.custombarcodescanner.components.CodeScannerView
 
-// todo#1: add accompanist permission and add permission uis
 // todo#2: add no camera ui
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun CustomBarcodeScannerSheet(
     onDismissRequest: () -> Unit,
@@ -65,6 +85,12 @@ fun CustomBarcodeScannerSheet(
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
     )
+    val cameraPermissionState = rememberPermissionState(
+        Manifest.permission.CAMERA
+    )
+    val hasAnyCamera = remember {
+        context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY) == true
+    }
 
     val goBack: () -> Unit = {
         scope.launch {
@@ -80,45 +106,60 @@ fun CustomBarcodeScannerSheet(
         }
     }
 
-    val requestSinglePermission =
-        rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { permissionGranted ->
-            if (permissionGranted) {
-                context.toast("Single permission is granted.")
-            } else {
-                context.toast("Single permission is denied.")
-            }
-        }
-
-    LaunchedEffect(Unit) {
-        requestSinglePermission.launch(Manifest.permission.CAMERA)
-    }
-
     ModalBottomSheet(
         onDismissRequest = onDismissRequest,
         sheetState = bottomSheetState
     ) {
-        CustomBarcodeScannerScreenSkeleton(
-            message = null,
-            isFlashAvailable = cameraController.cameraInfo?.hasFlashUnit() == true,
-            isFlashOn = cameraController.imageCaptureFlashMode == FLASH_MODE_ON,
-            onFlashToggleClick = {
-                if (cameraController.imageCaptureFlashMode == FLASH_MODE_ON) {
-                    cameraController.imageCaptureFlashMode = FLASH_MODE_OFF
-                } else {
-                    cameraController.imageCaptureFlashMode = FLASH_MODE_ON
-                }
-            },
-            cameraContent = {
-                CameraPreviewView(
-                    onSuccess = { barcodes ->
-                        barcodes.firstOrNull()?.let {
-                            goBack()
-                            currentOnSuccess(it)
-                        }
-                    }
-                )
+        if (!hasAnyCamera) {
+            Box(
+                Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text("Camera not available!")
             }
-        )
+        } else if (cameraPermissionState.status.isGranted) {
+            CustomBarcodeScannerScreenSkeleton(
+                message = null,
+                isFlashAvailable = cameraController.cameraInfo?.hasFlashUnit() == true,
+                isFlashOn = cameraController.imageCaptureFlashMode == FLASH_MODE_ON,
+                onFlashToggleClick = {
+                    if (cameraController.imageCaptureFlashMode == FLASH_MODE_ON) {
+                        cameraController.imageCaptureFlashMode = FLASH_MODE_OFF
+                    } else {
+                        cameraController.imageCaptureFlashMode = FLASH_MODE_ON
+                    }
+                },
+                cameraContent = {
+                    CameraPreviewView(
+                        onSuccess = { barcodes ->
+                            barcodes.firstOrNull()?.let {
+                                goBack()
+                                currentOnSuccess(it)
+                            }
+                        }
+                    )
+                }
+            )
+        } else {
+            val textToShow = if (cameraPermissionState.status.shouldShowRationale) {
+                // If the user has denied the permission but the rationale can be shown,
+                // then gently explain why the app requires this permission
+                "The camera is needed to use the scanner. Please grant the permission."
+            } else {
+                // If it's the first time the user lands on this feature, or the user
+                // doesn't want to be asked again for this permission, explain that the
+                // permission is required
+                "Camera permission required for this feature to be available. " +
+                    "Please grant the permission"
+            }
+
+            RequestPermissionSection(
+                message = textToShow,
+                onRequestPermissionClick = {
+                    cameraPermissionState.launchPermissionRequest()
+                }
+            )
+        }
     }
 }
 
@@ -131,7 +172,9 @@ private fun CustomBarcodeScannerScreenSkeletonPreview() {
             isFlashAvailable = true,
             isFlashOn = true,
             onFlashToggleClick = {},
-            cameraContent = {}
+            cameraContent = {},
+            modifier = Modifier
+                .background(BottomSheetDefaults.ContainerColor)
         )
     }
 }
@@ -143,7 +186,8 @@ fun CustomBarcodeScannerScreenSkeleton(
     isFlashAvailable: Boolean,
     isFlashOn: Boolean,
     onFlashToggleClick: () -> Unit,
-    cameraContent: @Composable () -> Unit
+    cameraContent: @Composable () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -157,10 +201,56 @@ fun CustomBarcodeScannerScreenSkeleton(
     }
 
     CodeScannerView(
+        modifier = modifier,
         isFlashAvailable = isFlashAvailable,
         isFlashOn = isFlashOn,
         onFlashToggleClick = onFlashToggleClick
     ) {
         cameraContent()
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun RequestPermissionSectionPreview() {
+    AppTheme {
+        RequestPermissionSection(
+            message = "The camera is needed to use the scanner. Please grant the permission.",
+            onRequestPermissionClick = {},
+            modifier = Modifier
+                .fillMaxSize()
+                .background(BottomSheetDefaults.ContainerColor)
+        )
+    }
+}
+
+@Composable
+private fun RequestPermissionSection(
+    message: String,
+    onRequestPermissionClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                message,
+                color = MaterialTheme.colorScheme.onSurface,
+                textAlign = TextAlign.Center
+            )
+
+            Spacer(Modifier.height(16.dp))
+
+            Button(onClick = onRequestPermissionClick) {
+                Text("Request permission")
+            }
+        }
     }
 }

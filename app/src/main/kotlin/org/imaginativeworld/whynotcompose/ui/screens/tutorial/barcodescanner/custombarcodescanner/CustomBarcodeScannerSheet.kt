@@ -28,8 +28,7 @@ package org.imaginativeworld.whynotcompose.ui.screens.tutorial.barcodescanner.cu
 
 import android.Manifest
 import android.content.pm.PackageManager
-import androidx.camera.core.ImageCapture.FLASH_MODE_OFF
-import androidx.camera.core.ImageCapture.FLASH_MODE_ON
+import androidx.camera.core.TorchState
 import androidx.camera.view.LifecycleCameraController
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -49,6 +48,7 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
@@ -69,8 +69,6 @@ import org.imaginativeworld.whynotcompose.base.models.Event
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.barcodescanner.custombarcodescanner.components.CameraPreviewView
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.barcodescanner.custombarcodescanner.components.CodeScannerView
-
-// todo#2: add no camera ui
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -106,6 +104,8 @@ fun CustomBarcodeScannerSheet(
         }
     }
 
+    val torchState = cameraController.torchState.observeAsState()
+
     ModalBottomSheet(
         onDismissRequest = onDismissRequest,
         sheetState = bottomSheetState
@@ -120,17 +120,18 @@ fun CustomBarcodeScannerSheet(
         } else if (cameraPermissionState.status.isGranted) {
             CustomBarcodeScannerScreenSkeleton(
                 message = null,
-                isFlashAvailable = cameraController.cameraInfo?.hasFlashUnit() == true,
-                isFlashOn = cameraController.imageCaptureFlashMode == FLASH_MODE_ON,
+                isFlashAvailable = true,
+                isFlashOn = torchState.value == TorchState.ON,
                 onFlashToggleClick = {
-                    if (cameraController.imageCaptureFlashMode == FLASH_MODE_ON) {
-                        cameraController.imageCaptureFlashMode = FLASH_MODE_OFF
+                    if (torchState.value == TorchState.ON) {
+                        cameraController.enableTorch(false)
                     } else {
-                        cameraController.imageCaptureFlashMode = FLASH_MODE_ON
+                        cameraController.enableTorch(true)
                     }
                 },
                 cameraContent = {
                     CameraPreviewView(
+                        cameraController = cameraController,
                         onSuccess = { barcodes ->
                             barcodes.firstOrNull()?.let {
                                 goBack()

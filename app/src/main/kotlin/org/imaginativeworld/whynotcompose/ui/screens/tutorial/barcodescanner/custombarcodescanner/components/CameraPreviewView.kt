@@ -23,18 +23,19 @@ import timber.log.Timber
 
 @Composable
 fun CameraPreviewView(
+    cameraController: LifecycleCameraController,
     onSuccess: (barcodes: List<Barcode>) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    val cameraController = remember {
-        LifecycleCameraController(context).apply {
-            // Bind the LifecycleCameraController to the lifecycleOwner
-            bindToLifecycle(lifecycleOwner)
-        }
-    }
+//    val cameraController = remember {
+//        LifecycleCameraController(context).apply {
+//            // Bind the LifecycleCameraController to the lifecycleOwner
+//            bindToLifecycle(lifecycleOwner)
+//        }
+//    }
     var cameraProvider: ProcessCameraProvider? = remember { null }
 
     val stopCamera = {

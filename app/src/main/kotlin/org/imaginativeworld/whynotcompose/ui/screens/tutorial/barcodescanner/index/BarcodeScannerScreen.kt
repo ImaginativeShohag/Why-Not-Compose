@@ -129,12 +129,12 @@ fun BarcodeScannerScreenSkeleton(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                "Scanned Code",
+                "Scanned Data",
                 style = MaterialTheme.typography.titleMedium
             )
 
             if (scannedCode.isNullOrBlank()) {
-                Text("No Result")
+                Text("No Data")
             } else {
                 Text(scannedCode)
             }

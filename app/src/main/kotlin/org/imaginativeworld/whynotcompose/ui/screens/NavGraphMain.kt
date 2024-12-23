@@ -108,8 +108,6 @@ import org.imaginativeworld.whynotcompose.ui.screens.composition.textfield.TextF
 import org.imaginativeworld.whynotcompose.ui.screens.home.index.HomeIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.splash.SplashScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.animatedvisibility.AnimatedVisibilityScreen
-import org.imaginativeworld.whynotcompose.ui.screens.tutorial.barcodescanner.custombarcodescanner.CustomBarcodeScannerSheet
-import org.imaginativeworld.whynotcompose.ui.screens.tutorial.barcodescanner.custombarcodescanner.CustomBarcodeScannerViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.barcodescanner.index.BarcodeScannerScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.barcodescanner.index.BarcodeScannerViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.baselineprofiles.BaselineProfilesScreen

@@ -114,7 +114,7 @@ fun BarcodeScannerScreenSkeleton(
             .statusBarsPadding(),
         topBar = {
             AppComponent.Header(
-                "BarcodeScanner",
+                "Barcode Scanner",
                 goBack = goBack
             )
         }

@@ -57,7 +57,7 @@ Feel free to request features or suggestions for improvements.
 
 - Counter (Beginner)
 - Counter with ViewModel (Beginner)
-- AnimatedVisibility (Beginner)
+- `AnimatedVisibility` (Beginner)
 - Lottie (Beginner)
 - Select image and crop for upload (Intermediate)
 - Capture image and crop for upload (Intermediate)
@@ -72,6 +72,7 @@ Feel free to request features or suggestions for improvements.
 - Navigation Data Pass (Intermediate)
 - Reactive Model (Beginner)
 - Baseline Profiles (Intermediate)
+- [Barcode Scanner](https://developers.google.com/ml-kit/vision/barcode-scanning) ([Google code scanner](https://developers.google.com/ml-kit/vision/barcode-scanning/code-scanner) and [ML Kit Barcode](https://developers.google.com/ml-kit/vision/barcode-scanning/android)) (Intermediate)
 
 |    ![Counter](images/counter.gif)    | ![Animated Visibility](images/animated-visibility.gif) | ![Lottie](images/lottie.gif) |
 |:------------------------------------:|:------------------------------------------------------:|:----------------------------:|

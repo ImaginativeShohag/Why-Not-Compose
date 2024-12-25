@@ -1,27 +1,27 @@
-package org.imaginativeworld.whynotcompose.ui.screens.ui.pager
+package org.imaginativeworld.whynotcompose.ui.screens.ui.pager.data
 
 object UiPagerRepository {
     val animals = listOf(
         Element(1, "Cat", "🐱", "#FFD700", "Independent and affectionate animals, often kept as pets. Known for their agility and playful behavior."),
         Element(2, "Lion", "🦁", "#FFA500", "Majestic big cats known as 'king of the jungle.' Recognized for their powerful roar and social pride behavior."),
         Element(3, "Tiger", "🐯", "#FF4500", "Large, striped cats native to Asia. Tigers are known for their strength and solitary hunting habits."),
-        Element(4, "Dog", "🐶", "#B5651D", "Loyal, playful companions commonly kept as pets. Known for their love and companionship to humans.")
-//        Element(5, "Elephant", "🐘", "#A9A9A9", "The largest land animals, famous for their intelligence and strong social bonds. Known for their long trunks and tusks."),
-//        Element(6, "Monkey", "🐒", "#8B4513", "Playful primates often seen swinging through trees. Monkeys are known for their intelligence and social behavior."),
-//        Element(7, "Panda", "🐼", "#000000", "Herbivorous bears primarily found in China. Famous for their distinct black-and-white fur and love for bamboo."),
-//        Element(8, "Penguin", "🐧", "#FFFFFF", "Flightless birds adapted to life in cold climates. Known for their waddling walk and excellent swimming skills."),
-//        Element(9, "Rabbit", "🐰", "#F5F5F5", "Small, fluffy mammals known for their quick movements. They are often kept as pets or raised for their meat and fur."),
-//        Element(10, "Fox", "🦊", "#FF4500", "Small, clever mammals often associated with cunning. Known for their beautiful fur and adaptability to different environments."),
-//        Element(11, "Bear", "🐻", "#8B4513", "Large, powerful mammals found in North America, Asia, and Europe. Bears are known for their strength and hibernation habits."),
-//        Element(12, "Koala", "🐨", "#A9A9A9", "Marsupials from Australia, famous for their sleepy demeanor. They live in eucalyptus trees and are known for their unique appearance."),
-//        Element(13, "Frog", "🐸", "#228B22", "Amphibians known for their jumping abilities and croaking sounds. Frogs often thrive in moist environments like ponds and wetlands."),
-//        Element(14, "Horse", "🐴", "#A0522D", "Majestic animals used for transportation and farming. Known for their speed, strength, and bond with humans."),
-//        Element(15, "Wolf", "🐺", "#696969", "Wild canines that live in packs, known for their hunting skills and strong family bonds. Wolves symbolize strength and loyalty."),
-//        Element(16, "Chicken", "🐔", "#FFD700", "Domesticated birds raised for eggs and meat. Known for their clucking sounds and common role on farms worldwide."),
-//        Element(17, "Cow", "🐮", "#FFFFFF", "Large domesticated mammals known for their milk production. Cows play an essential role in agriculture and the food industry."),
-//        Element(18, "Pig", "🐷", "#FFC0CB", "Intelligent, domesticated animals raised for meat. Pigs are also known for their playful and curious nature."),
-//        Element(19, "Zebra", "🦓", "#000000", "Equids known for their black and white stripes. Found primarily in Africa, zebras are social creatures that live in herds."),
-//        Element(20, "Whale", "🐋", "#4682B4", "The largest marine mammals, known for their size and intelligence. Whales are famous for their migratory patterns and songs.")
+        Element(4, "Dog", "🐶", "#B5651D", "Loyal, playful companions commonly kept as pets. Known for their love and companionship to humans."),
+        Element(5, "Elephant", "🐘", "#A9A9A9", "The largest land animals, famous for their intelligence and strong social bonds. Known for their long trunks and tusks."),
+        Element(6, "Monkey", "🐒", "#8B4513", "Playful primates often seen swinging through trees. Monkeys are known for their intelligence and social behavior."),
+        Element(7, "Panda", "🐼", "#000000", "Herbivorous bears primarily found in China. Famous for their distinct black-and-white fur and love for bamboo."),
+        Element(8, "Penguin", "🐧", "#FFFFFF", "Flightless birds adapted to life in cold climates. Known for their waddling walk and excellent swimming skills."),
+        Element(9, "Rabbit", "🐰", "#F5F5F5", "Small, fluffy mammals known for their quick movements. They are often kept as pets or raised for their meat and fur."),
+        Element(10, "Fox", "🦊", "#FF4500", "Small, clever mammals often associated with cunning. Known for their beautiful fur and adaptability to different environments."),
+        Element(11, "Bear", "🐻", "#8B4513", "Large, powerful mammals found in North America, Asia, and Europe. Bears are known for their strength and hibernation habits."),
+        Element(12, "Koala", "🐨", "#A9A9A9", "Marsupials from Australia, famous for their sleepy demeanor. They live in eucalyptus trees and are known for their unique appearance."),
+        Element(13, "Frog", "🐸", "#228B22", "Amphibians known for their jumping abilities and croaking sounds. Frogs often thrive in moist environments like ponds and wetlands."),
+        Element(14, "Horse", "🐴", "#A0522D", "Majestic animals used for transportation and farming. Known for their speed, strength, and bond with humans."),
+        Element(15, "Wolf", "🐺", "#696969", "Wild canines that live in packs, known for their hunting skills and strong family bonds. Wolves symbolize strength and loyalty."),
+        Element(16, "Chicken", "🐔", "#FFD700", "Domesticated birds raised for eggs and meat. Known for their clucking sounds and common role on farms worldwide."),
+        Element(17, "Cow", "🐮", "#FFFFFF", "Large domesticated mammals known for their milk production. Cows play an essential role in agriculture and the food industry."),
+        Element(18, "Pig", "🐷", "#FFC0CB", "Intelligent, domesticated animals raised for meat. Pigs are also known for their playful and curious nature."),
+        Element(19, "Zebra", "🦓", "#000000", "Equids known for their black and white stripes. Found primarily in Africa, zebras are social creatures that live in herds."),
+        Element(20, "Whale", "🐋", "#4682B4", "The largest marine mammals, known for their size and intelligence. Whales are famous for their migratory patterns and songs.")
     )
 
     val flowers = listOf(
@@ -71,7 +71,8 @@ object UiPagerRepository {
     )
 
     fun getItems(type: ElementCategory, page: Long): List<Element> {
-        if (page == 3L) return emptyList()
+        // Assuming we have only 3 page.
+        if (page > 3L) return emptyList()
 
         return when (type) {
             ElementCategory.Animal -> animals.shuffled()

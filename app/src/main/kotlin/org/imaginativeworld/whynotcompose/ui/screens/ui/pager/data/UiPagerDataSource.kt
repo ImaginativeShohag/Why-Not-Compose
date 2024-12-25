@@ -1,4 +1,4 @@
-package org.imaginativeworld.whynotcompose.ui.screens.ui.pager
+package org.imaginativeworld.whynotcompose.ui.screens.ui.pager.data
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

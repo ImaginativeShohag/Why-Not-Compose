@@ -14,11 +14,15 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
+import org.imaginativeworld.whynotcompose.ui.screens.ui.pager.data.Element
+import org.imaginativeworld.whynotcompose.ui.screens.ui.pager.data.ElementCategory
+import org.imaginativeworld.whynotcompose.ui.screens.ui.pager.data.UiPagerDataSource
 
 @HiltViewModel
 class UiPagerViewModel @Inject constructor() : ViewModel() {
     private var categories = MutableStateFlow<List<ElementCategory>>(ElementCategory.entries)
     private var items = MutableStateFlow<Flow<PagingData<Element>>>(emptyFlow())
+    private var selectedCategory = MutableStateFlow<ElementCategory>(ElementCategory.Animal)
 
     // ----------------------------------------------------------------
 
@@ -31,11 +35,13 @@ class UiPagerViewModel @Inject constructor() : ViewModel() {
         viewModelScope.launch {
             combine(
                 categories,
-                items
-            ) { categories, items ->
+                items,
+                selectedCategory
+            ) { categories, items, selectedCategory ->
                 UiPagerViewState(
                     categories = categories,
-                    items = items
+                    items = items,
+                    selectedCategory = selectedCategory
                 )
             }.collect {
                 _state.value = it
@@ -46,8 +52,6 @@ class UiPagerViewModel @Inject constructor() : ViewModel() {
     // ----------------------------------------------------------------
     // ----------------------------------------------------------------
 
-    private var currentSelectedType = ElementCategory.Animal
-
     fun load() {
         items.value = Pager(
             config = PagingConfig(
@@ -56,7 +60,7 @@ class UiPagerViewModel @Inject constructor() : ViewModel() {
             ),
             pagingSourceFactory = {
                 UiPagerDataSource(
-                    type = currentSelectedType
+                    type = selectedCategory.value
                 )
             }
         )
@@ -64,13 +68,14 @@ class UiPagerViewModel @Inject constructor() : ViewModel() {
             .cachedIn(viewModelScope)
     }
 
-    fun selectType(type: ElementCategory) {
-        currentSelectedType = type
+    fun selectCategory(category: ElementCategory) {
+        selectedCategory.value = category
         load()
     }
 }
 
 data class UiPagerViewState(
     val categories: List<ElementCategory> = emptyList(),
-    val items: Flow<PagingData<Element>> = emptyFlow()
+    val items: Flow<PagingData<Element>> = emptyFlow(),
+    val selectedCategory: ElementCategory = ElementCategory.Animal
 )

@@ -71,6 +71,7 @@ moshi = "1.15.2"
 swiperefreshlayout = "1.1.0"
 mlkitBarcodeScanning = "17.3.0"
 cameraX = "1.4.1"
+haze = "1.1.1"
 
 [bundles]
 androidx-compose-ui-test = ["androidx-compose-ui-test", "androidx-compose-ui-testManifest"]
@@ -204,6 +205,9 @@ moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.re
 moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi" }
 
 mlkit-barcode-scanning = { group = "com.google.mlkit", name = "barcode-scanning", version.ref = "mlkitBarcodeScanning" }
+
+haze = { group = "dev.chrisbanes.haze", name = "haze", version.ref = "haze" }
+haze-materials = { group = "dev.chrisbanes.haze", name = "haze-materials", version.ref = "haze" }
 
 # The following line is optional, as the core library is included indirectly by camera-camera2
 camerax-core = { group = "androidx.camera", name = "camera-core", version.ref = "cameraX" }

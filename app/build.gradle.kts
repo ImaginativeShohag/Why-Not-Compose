@@ -264,6 +264,10 @@ dependencies {
     implementation(libs.camerax.view)
     implementation(libs.camerax.mlkit.vision)
     implementation(libs.camerax.extensions)
+
+    // Haze
+    implementation(libs.haze)
+    implementation(libs.haze.materials)
 }
 
 baselineProfile {

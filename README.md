@@ -106,6 +106,7 @@ Feel free to request features or suggestions for improvements.
 - [ ] Update all `LaunchedEffect` with lambda issue using `rememberUpdatedState`: https://developer.android.com/develop/ui/compose/side-effects#rememberupdatedstate
 - [ ] Add example for AppColorLocal from Jaber vai
 - [x] Update to coil 3
+- [ ] Update ktlint
 
 # Note
 

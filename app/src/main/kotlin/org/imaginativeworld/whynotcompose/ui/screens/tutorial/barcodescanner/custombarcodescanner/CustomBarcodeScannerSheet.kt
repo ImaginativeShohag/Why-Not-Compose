@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Md. Mahmudul Hasan Shohag
+ * Copyright 2024 Md. Mahmudul Hasan Shohag
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -132,7 +132,7 @@ fun CustomBarcodeScannerSheet(
                 cameraContent = {
                     CameraPreviewView(
                         cameraController = cameraController,
-                        onSuccess = { barcodes ->
+                        onBarcodeDetect = { barcodes ->
                             barcodes.firstOrNull()?.let {
                                 goBack()
                                 currentOnSuccess(it)

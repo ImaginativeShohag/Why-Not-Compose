@@ -135,7 +135,7 @@ import org.imaginativeworld.whynotcompose.ui.screens.tutorial.selectimageandcrop
 import org.imaginativeworld.whynotcompose.ui.screens.ui.index.UiIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.mapview.MapScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.mapview.MapViewDetailsScreen
-import org.imaginativeworld.whynotcompose.ui.screens.ui.mapview.MapViewModel
+import org.imaginativeworld.whynotcompose.ui.screens.ui.mapview.MapViewViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.ui.otpcodeverify.OtpCodeVerifyScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.otpcodeverify.OtpCodeVerifyViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.ui.pager.UiPagerScreen
@@ -692,7 +692,7 @@ private fun NavGraphBuilder.addUiScreens(
         }
 
         composable(UIsScreen.UiMapView.route) {
-            val viewModel: MapViewModel = hiltViewModel()
+            val viewModel: MapViewViewModel = hiltViewModel()
 
             MapScreen(
                 viewModel = viewModel,

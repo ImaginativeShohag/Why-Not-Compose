@@ -80,7 +80,7 @@ object MapPlaceRepo {
         // Note: It randomly send empty list to demonstrate empty view.
         val random = Random.nextInt(10)
 
-        if (random > 5) {
+        if (random > 2) {
             return places
         }
 

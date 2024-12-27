@@ -50,7 +50,7 @@ import org.imaginativeworld.whynotcompose.repositories.MapPlaceRepo
 import timber.log.Timber
 
 @HiltViewModel
-class MapViewModel @Inject constructor() : ViewModel() {
+class MapViewViewModel @Inject constructor() : ViewModel() {
     private val eventShowLoading = MutableStateFlow(false)
     private val eventShowEmpty = MutableStateFlow(false)
     private val eventShowMessage = MutableStateFlow<Event<String>?>(null)
@@ -113,7 +113,7 @@ class MapViewModel @Inject constructor() : ViewModel() {
 
             previousResult = places
 
-            this@MapViewModel.places.value = places
+            this@MapViewViewModel.places.value = places
 
             eventShowEmpty.value = places.isEmpty()
 

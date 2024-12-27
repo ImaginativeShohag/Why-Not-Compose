@@ -99,7 +99,7 @@ import timber.log.Timber
 @Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun MapScreen(
-    viewModel: MapViewModel,
+    viewModel: MapViewViewModel,
     goBack: () -> Unit,
     gotoDetailsScreen: (MapPlace) -> Unit
 ) {

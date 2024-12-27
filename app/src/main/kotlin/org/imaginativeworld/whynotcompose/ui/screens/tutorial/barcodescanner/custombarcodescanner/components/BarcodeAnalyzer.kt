@@ -41,7 +41,7 @@ import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 import timber.log.Timber
 
-class BarcodeAnalyser(
+class BarcodeAnalyzer(
     private val controller: LifecycleCameraController,
     private val onBarcodeDetect: (barcodes: List<Barcode>) -> Unit
 ) : ImageAnalysis.Analyzer {

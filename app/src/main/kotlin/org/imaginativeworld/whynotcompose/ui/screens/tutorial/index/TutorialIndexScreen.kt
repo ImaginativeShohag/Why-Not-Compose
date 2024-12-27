@@ -43,6 +43,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
@@ -83,6 +84,7 @@ fun TutorialIndexSkeleton(
 ) {
     Scaffold(
         Modifier
+            .testTag("screen:tutorials:index")
             .navigationBarsPadding()
             .imePadding()
             .statusBarsPadding(),
@@ -111,7 +113,9 @@ fun TutorialIndexSkeleton(
                         item = item,
                         onClick = {
                             navigate(item.route)
-                        }
+                        },
+                        modifier = Modifier
+                            .testTag("list-item")
                     )
                 }
             }
@@ -140,6 +144,7 @@ private fun MenuItem(
     ) {
         Text(
             modifier = Modifier
+                .testTag(item.testTag)
                 .fillMaxWidth(),
             text = buildAnnotatedString {
                 append(item.name)

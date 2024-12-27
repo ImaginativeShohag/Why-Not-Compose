@@ -23,8 +23,9 @@
 bin/
 gen/
 out/
-#  Uncomment the following line in case you need and you don't have the release build type files in your app
-release/
+generated/
+# Uncomment the following line in case you need and you don't have the release build type files in your app
+release/*
 
 # Gradle files
 .gradle/

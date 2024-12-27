@@ -88,8 +88,8 @@ fun SplashScreen(
                 .fillMaxSize()
         ) {
             with(density) {
-                val maxWidth = maxWidth
-                val maxHeight = maxHeight
+                val maxWidth = this@BoxWithConstraints.maxWidth
+                val maxHeight = this@BoxWithConstraints.maxHeight
 
                 for (i in 0..50) {
                     var state by remember { mutableStateOf(false) }

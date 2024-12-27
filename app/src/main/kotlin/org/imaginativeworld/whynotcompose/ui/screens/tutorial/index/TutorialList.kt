@@ -32,20 +32,24 @@ import org.imaginativeworld.whynotcompose.ui.screens.TutorialsScreen
 
 sealed class TutorialLevel(
     val name: String,
+    val value: Int,
     val color: Color
 ) {
     data object Beginner : TutorialLevel(
         name = "Beginner",
+        value = 1,
         color = TailwindCSSColor.Green500
     )
 
     data object Intermediate : TutorialLevel(
         name = "Intermediate",
+        value = 2,
         color = TailwindCSSColor.Yellow500
     )
 
     data object Advanced : TutorialLevel(
         name = "Advanced",
+        value = 3,
         color = TailwindCSSColor.Red500
     )
 }
@@ -54,7 +58,8 @@ data class Tutorial(
     val name: String,
     val description: String? = null,
     val route: TutorialsScreen,
-    val level: TutorialLevel
+    val level: TutorialLevel,
+    val testTag: String = "tutorial-${route.route}"
 ) {
     companion object {
         val tutorialList = listOf(
@@ -146,8 +151,23 @@ data class Tutorial(
                 name = "Navigation blank screen issue",
                 description = "Solutions for `popBackStack()` blank screen issue.",
                 route = TutorialsScreen.TutorialPopBackStack,
+                level = TutorialLevel.Intermediate,
+                testTag = "tutorial-popbackstack"
+            ),
+            Tutorial(
+                name = "Baseline profiles",
+                description = "Check the baseline profile install status using `ProfileVerifier`.",
+                route = TutorialsScreen.TutorialBaselineProfiles,
+                level = TutorialLevel.Intermediate
+            ),
+            Tutorial(
+                name = "Barcode Scanner",
+                description = "Multiple ways to scan barcode.",
+                route = TutorialsScreen.TutorialBarcodeScanner,
                 level = TutorialLevel.Intermediate
             )
         )
+            .sortedBy { it.name }
+            .sortedBy { it.level.value }
     }
 }

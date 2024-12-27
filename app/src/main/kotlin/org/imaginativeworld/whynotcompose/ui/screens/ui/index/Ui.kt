@@ -45,6 +45,10 @@ data class Ui(
             Ui(
                 name = "Web View",
                 route = UIsScreen.UiWebView
+            ),
+            Ui(
+                name = "Pager",
+                route = UIsScreen.UiPager
             )
         )
     }

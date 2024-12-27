@@ -25,11 +25,10 @@
  */
 
 plugins {
-    id(Libs.Android.library)
-    kotlin("android")
-    kotlin("kapt")
-    id(Libs.Kotlin.composeCompilerGradlePlugin)
-    id(Libs.Google.DevTools.ksp)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -52,85 +51,69 @@ android {
     buildFeatures {
         compose = true
     }
-
-    composeCompiler {
-        enableStrongSkippingMode = true
-    }
 }
 
 dependencies {
-    implementation(Libs.Kotlin.stdlib)
+    implementation(libs.kotlin.stdlib)
 
     // ----------------------------------------------------------------
     // Compose
     // ----------------------------------------------------------------
-    implementation(platform(Libs.AndroidX.Compose.bom))
+    implementation(platform(libs.androidx.compose.bom))
 
-    implementation(Libs.AndroidX.Compose.ui)
-    implementation(Libs.AndroidX.Compose.uiUtil)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.util)
     // Tooling support (Previews, etc.)
-    debugImplementation(Libs.AndroidX.Compose.tooling)
-    implementation(Libs.AndroidX.Compose.toolingPreview)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.androidx.compose.ui.tooling.preview)
     // Animation
-    implementation(Libs.AndroidX.Compose.animation)
+    implementation(libs.androidx.compose.animation)
     // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
-    implementation(Libs.AndroidX.Compose.foundation)
-    implementation(Libs.AndroidX.Compose.layout)
+    implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.compose.foundation.layout)
     // Material Design
-    implementation(Libs.AndroidX.Compose.material3)
-    implementation(Libs.AndroidX.Compose.material3WindowSizeClass)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material3.windowSizeClass)
     // Material design icons
-    implementation(Libs.AndroidX.Compose.materialIconsCore)
-    implementation(Libs.AndroidX.Compose.materialIconsExtended)
+    implementation(libs.androidx.compose.material.iconsCore)
+    implementation(libs.androidx.compose.material.iconsExtended)
     // Integration with observables
-    implementation(Libs.AndroidX.Compose.runtime)
-    implementation(Libs.AndroidX.Compose.runtimeLivedata)
-    implementation(Libs.AndroidX.Compose.runtimeTracing)
-    // Compose Navigation Component
-    implementation(Libs.AndroidX.Navigation.compose)
+    implementation(libs.androidx.compose.runtime)
+    implementation(libs.androidx.compose.runtime.livedata)
+    implementation(libs.androidx.compose.runtime.tracing)
+    // compose Navigation Component
+    implementation(libs.androidx.navigation.compose)
     // Constraint Layout
-    implementation(Libs.AndroidX.ConstraintLayout.compose)
+    implementation(libs.androidx.constraintlayout.compose)
     // Integration with activities
-    implementation(Libs.AndroidX.Activity.activityCompose)
+    implementation(libs.androidx.activity.compose)
 
-    // Jetpack Compose Integration for ViewModel
-    implementation(Libs.AndroidX.Lifecycle.viewModelCompose)
+    // Jetpack compose Integration for ViewModel
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     // Paging
-    implementation(Libs.AndroidX.Paging.compose)
-
-    // Accompanist
-    implementation(Libs.Accompanist.systemuicontroller)
-    implementation(Libs.Accompanist.flowlayout)
-    implementation(Libs.Accompanist.swipeRefresh)
-    implementation(Libs.Accompanist.placeholder)
+    implementation(libs.androidx.paging.compose)
 
     // ----------------------------------------------------------------
 
     // Retrofit
-    implementation(Libs.Square.Retrofit.core)
-    implementation(Libs.Square.okhttpLoggingInterceptor)
+    implementation(libs.retrofit.core)
+    implementation(libs.okhttp.logging)
 
     // Moshi
-    implementation(Libs.Square.Retrofit.converterMoshi)
-    implementation(Libs.Square.Moshi.core)
-    ksp(Libs.Square.Moshi.codegen)
-
-    // ViewModel and LiveData
-    implementation(Libs.AndroidX.Lifecycle.viewModel)
-    implementation(Libs.AndroidX.Lifecycle.livedata)
-    implementation(Libs.AndroidX.Lifecycle.common)
-    implementation(Libs.AndroidX.Lifecycle.runtime)
+    implementation(libs.retrofit.moshi)
+    implementation(libs.moshi.kotlin)
+    ksp(libs.moshi.kotlin.codegen)
 
     // Timber
-    implementation(Libs.timber)
+    implementation(libs.timber)
 
     // Hilt
-    implementation(Libs.Google.Hilt.core)
-    kapt(Libs.Google.Hilt.compiler)
-    implementation(Libs.AndroidX.Hilt.navigationCompose)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     // Room Persistence Library
-    implementation(Libs.AndroidX.Room.runtime)
-    ksp(Libs.AndroidX.Room.compiler)
+    implementation(libs.room.runtime)
+    ksp(libs.room.compiler)
 }

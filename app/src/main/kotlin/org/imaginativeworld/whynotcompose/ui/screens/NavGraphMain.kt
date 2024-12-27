@@ -108,6 +108,10 @@ import org.imaginativeworld.whynotcompose.ui.screens.composition.textfield.TextF
 import org.imaginativeworld.whynotcompose.ui.screens.home.index.HomeIndexScreen
 import org.imaginativeworld.whynotcompose.ui.screens.home.splash.SplashScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.animatedvisibility.AnimatedVisibilityScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.barcodescanner.index.BarcodeScannerScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.barcodescanner.index.BarcodeScannerViewModel
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.baselineprofiles.BaselineProfilesScreen
+import org.imaginativeworld.whynotcompose.ui.screens.tutorial.baselineprofiles.BaselineProfilesViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.captureimageandcrop.CaptureImageAndCropScreen
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.captureimageandcrop.CaptureImageAndCropViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.tutorial.counter.CounterScreen
@@ -134,6 +138,8 @@ import org.imaginativeworld.whynotcompose.ui.screens.ui.mapview.MapViewDetailsSc
 import org.imaginativeworld.whynotcompose.ui.screens.ui.mapview.MapViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.ui.otpcodeverify.OtpCodeVerifyScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.otpcodeverify.OtpCodeVerifyViewModel
+import org.imaginativeworld.whynotcompose.ui.screens.ui.pager.UiPagerScreen
+import org.imaginativeworld.whynotcompose.ui.screens.ui.pager.UiPagerViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.WebViewScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.WebViewTarget
 import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.WebViewViewModel
@@ -217,6 +223,7 @@ sealed class UIsScreen(val route: String) {
     }
 
     data object UiOtpCodeVerify : UIsScreen("ui/otpcodeverify")
+    data object UiPager : UIsScreen("ui/slider")
 }
 
 sealed class TutorialsScreen(val route: String) {
@@ -290,6 +297,10 @@ sealed class TutorialsScreen(val route: String) {
     // ================================================================
 
     data object TutorialPopBackStack : TutorialsScreen("tutorial/pop-back-stack")
+
+    data object TutorialBaselineProfiles : TutorialsScreen("tutorial/baseline-profiles")
+
+    data object TutorialBarcodeScanner : TutorialsScreen("tutorial/barcode-scanner")
 }
 
 // ================================================================
@@ -721,6 +732,17 @@ private fun NavGraphBuilder.addUiScreens(
             OtpCodeVerifyScreen(
                 viewModel = viewModel,
                 phoneNumber = "+8801234567891",
+                goBack = {
+                    navController.popBackStackOrIgnore()
+                }
+            )
+        }
+
+        composable(UIsScreen.UiPager.route) {
+            val viewModel: UiPagerViewModel = hiltViewModel()
+
+            UiPagerScreen(
+                viewModel = viewModel,
                 goBack = {
                     navController.popBackStackOrIgnore()
                 }
@@ -1190,6 +1212,28 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
 
     activity(TutorialsScreen.TutorialPopBackStack.route) {
         activityClass = PopBackStackActivity::class
+    }
+
+    composable(TutorialsScreen.TutorialBaselineProfiles.route) {
+        val viewModel: BaselineProfilesViewModel = hiltViewModel()
+
+        BaselineProfilesScreen(
+            viewModel = viewModel,
+            goBack = {
+                navController.popBackStackOrIgnore()
+            }
+        )
+    }
+
+    composable(TutorialsScreen.TutorialBarcodeScanner.route) {
+        val viewModel: BarcodeScannerViewModel = hiltViewModel()
+
+        BarcodeScannerScreen(
+            viewModel = viewModel,
+            goBack = {
+                navController.popBackStackOrIgnore()
+            }
+        )
     }
 }
 

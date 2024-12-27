@@ -30,7 +30,13 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
-        google()
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
         mavenCentral()
         gradlePluginPortal()
         maven(url = "https://jitpack.io")
@@ -38,52 +44,18 @@ buildscript {
 }
 
 plugins {
-    id(Libs.Android.application) version Libs.Gradle.version apply false
-    id(Libs.Android.library) version Libs.Gradle.version apply false
-    kotlin("android") version Libs.Kotlin.version apply false
-    kotlin("plugin.serialization") version Libs.Kotlin.version apply false
-    id(Libs.Kotlin.composeCompilerGradlePlugin) version Libs.Kotlin.version apply false
-    id(Libs.Google.DevTools.ksp) version Libs.Google.DevTools.kspVersion apply false
-    id(Libs.Google.Firebase.crashlyticsGradlePlugin) version Libs.Google.Firebase.crashlyticsGradlePluginVersion apply false
-    id(Libs.Google.Services.gradlePlugin) version Libs.Google.Services.version apply false
-    id(Libs.Google.Maps.secretsGradlePlugin) version Libs.Google.Maps.secretsGradlePluginVersion apply false
-    id(Libs.Google.Hilt.gradlePlugin) version Libs.Google.Hilt.version apply false
-
-    id(Libs.DiffPlug.spotless) version Libs.DiffPlug.version
-}
-
-subprojects {
-    apply(plugin = Libs.DiffPlug.spotless)
-
-    spotless {
-        kotlin {
-            target("**/*.kt")
-            targetExclude("${layout.buildDirectory}/**/*.kt")
-            targetExclude("bin/**/*.kt")
-
-            ktlint("1.3.1")
-                .customRuleSets(
-                    listOf(
-                        "io.nlopez.compose.rules:ktlint:0.4.5"
-                    )
-                )
-            licenseHeaderFile(rootProject.file("spotless/copyright.kt"))
-        }
-
-        format("kts") {
-            target("**/*.kts")
-            targetExclude("**/build/**/*.kts")
-            // Look for the first line that doesn't have a block comment (assumed to be the license)
-            licenseHeaderFile(rootProject.file("spotless/copyright.kts"), "(^(?![\\/ ]\\*).*$)")
-        }
-
-        format("xml") {
-            target("**/*.xml")
-            targetExclude("**/build/**/*.xml")
-            // Look for the first XML tag that isn't a comment (<!--) or the xml declaration (<?xml)
-            licenseHeaderFile(rootProject.file("spotless/copyright.xml"), "(<[^!?])")
-        }
-    }
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.android.test) apply false
+    alias(libs.plugins.baselineprofile) apply false
+    alias(libs.plugins.compose) apply false
+    alias(libs.plugins.kotlin.jvm) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.firebase.crashlytics) apply false
+    alias(libs.plugins.gms) apply false
+    alias(libs.plugins.secrets) apply false
+    alias(libs.plugins.hilt) apply false
 }
 
 allprojects {

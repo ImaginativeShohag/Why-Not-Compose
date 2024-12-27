@@ -40,7 +40,6 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -48,10 +47,10 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
@@ -167,26 +166,19 @@ fun TicTacToeScreenSkeleton(
             .navigationBarsPadding()
             .imePadding()
             .statusBarsPadding(),
+        topBar = {
+            AppComponent.Header(
+                "Tic-Tac-Toe",
+                goBack = goBack
+            )
+        },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) {
         Column(
             Modifier
                 .padding(it)
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
         ) {
-            AppComponent.Header(
-                "Tic-Tac-Toe",
-                goBack = goBack
-            )
-
-            // ----------------------------------------------------------------
-            // ----------------------------------------------------------------
-
-            HorizontalDivider()
-
-            // ----------------------------------------------------------------
-
             AppComponent.MediumSpacer()
 
             Row(Modifier.padding(start = 16.dp, end = 16.dp)) {
@@ -225,53 +217,20 @@ fun TicTacToeScreenSkeleton(
 
             AppComponent.MediumSpacer()
 
-            Box(Modifier.fillMaxWidth()) {
-                Column(
-                    Modifier
-                        .padding(start = 32.dp, end = 32.dp)
-                        .fillMaxWidth()
-                ) {
-                    Row(
-                        Modifier.fillMaxWidth()
-                    ) {
-                        for (i in 1..3) {
-                            Block(
-                                position = i,
-                                currentPlayingMoves = currentPlayingMoves,
-                                enabled = !paused,
-                                isMarked = winPosition != null && i in winPosition.places,
-                                onClick = {
-                                    onBoxClick(i)
-                                }
-                            )
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(3),
+                modifier = Modifier.padding(start = 32.dp, end = 32.dp)
+            ) {
+                items((1..9).toList()) { i ->
+                    Block(
+                        position = i,
+                        currentPlayingMoves = currentPlayingMoves,
+                        enabled = !paused,
+                        isMarked = winPosition != null && i in winPosition.places,
+                        onClick = {
+                            onBoxClick(i)
                         }
-                    }
-                    Row(Modifier.fillMaxWidth()) {
-                        for (i in 4..6) {
-                            Block(
-                                position = i,
-                                currentPlayingMoves = currentPlayingMoves,
-                                enabled = !paused,
-                                isMarked = winPosition != null && i in winPosition.places,
-                                onClick = {
-                                    onBoxClick(i)
-                                }
-                            )
-                        }
-                    }
-                    Row(Modifier.fillMaxWidth()) {
-                        for (i in 7..9) {
-                            Block(
-                                position = i,
-                                currentPlayingMoves = currentPlayingMoves,
-                                enabled = !paused,
-                                isMarked = winPosition != null && i in winPosition.places,
-                                onClick = {
-                                    onBoxClick(i)
-                                }
-                            )
-                        }
-                    }
+                    )
                 }
             }
 
@@ -320,7 +279,7 @@ fun TicTacToeScreenSkeleton(
 }
 
 @Composable
-fun RowScope.Block(
+private fun Block(
     position: Int,
     currentPlayingMoves: String,
     enabled: Boolean,
@@ -339,7 +298,8 @@ fun RowScope.Block(
             MaterialTheme.colorScheme.error
         } else {
             MaterialTheme.colorScheme.background
-        }
+        },
+        label = "background color"
     )
 
     val iconColor by animateColorAsState(
@@ -347,14 +307,15 @@ fun RowScope.Block(
             MaterialTheme.colorScheme.onError
         } else {
             MaterialTheme.colorScheme.onBackground
-        }
+        },
+        label = "icon color"
     )
 
     Box(
         modifier
             .padding(4.dp)
             .clip(CircleShape)
-            .weight(1f)
+            .fillMaxWidth()
             .aspectRatio(1f)
             .border(
                 width = 1.dp,
@@ -377,7 +338,8 @@ fun RowScope.Block(
         contentAlignment = Alignment.Center
     ) {
         AnimatedContent(
-            targetState = currentPiece
+            targetState = currentPiece,
+            label = "block icon"
         ) { targetCurrentPiece ->
             Image(
                 modifier = Modifier

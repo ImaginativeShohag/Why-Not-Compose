@@ -48,17 +48,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.placeholder.PlaceholderHighlight
-import com.google.accompanist.placeholder.material.placeholder
-import com.google.accompanist.placeholder.material.shimmer
 import org.imaginativeworld.whynotcompose.base.models.github.GithubRepo
 import org.imaginativeworld.whynotcompose.common.compose.composeutils.rememberImagePainter
+import org.imaginativeworld.whynotcompose.common.compose.compositions.placeholder.PlaceholderHighlight
+import org.imaginativeworld.whynotcompose.common.compose.compositions.placeholder.placeholder
+import org.imaginativeworld.whynotcompose.common.compose.compositions.placeholder.shimmer
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.repositories.MockData
 
@@ -185,7 +186,7 @@ private fun GithubRepoItemPreview() {
 fun LoadingGithubRepoItem(
     modifier: Modifier = Modifier
 ) {
-    val onBackgroundColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.15f)
+    val highlightColor = Color.Gray
 
     Column(
         modifier
@@ -202,8 +203,7 @@ fun LoadingGithubRepoItem(
                 .height(16.dp)
                 .placeholder(
                     visible = true,
-                    color = onBackgroundColor,
-                    highlight = PlaceholderHighlight.shimmer()
+                    highlight = PlaceholderHighlight.shimmer(highlightColor)
                 )
         )
 
@@ -219,8 +219,7 @@ fun LoadingGithubRepoItem(
                     .clip(CircleShape)
                     .placeholder(
                         visible = true,
-                        color = onBackgroundColor,
-                        highlight = PlaceholderHighlight.shimmer()
+                        highlight = PlaceholderHighlight.shimmer(highlightColor)
                     )
             )
 
@@ -232,8 +231,7 @@ fun LoadingGithubRepoItem(
                     .height(10.dp)
                     .placeholder(
                         visible = true,
-                        color = onBackgroundColor,
-                        highlight = PlaceholderHighlight.shimmer()
+                        highlight = PlaceholderHighlight.shimmer(highlightColor)
                     )
             )
         }
@@ -246,8 +244,7 @@ fun LoadingGithubRepoItem(
                 .height(10.dp)
                 .placeholder(
                     visible = true,
-                    color = onBackgroundColor,
-                    highlight = PlaceholderHighlight.shimmer()
+                    highlight = PlaceholderHighlight.shimmer(highlightColor)
                 )
         )
 
@@ -259,8 +256,7 @@ fun LoadingGithubRepoItem(
                 .height(10.dp)
                 .placeholder(
                     visible = true,
-                    color = onBackgroundColor,
-                    highlight = PlaceholderHighlight.shimmer()
+                    highlight = PlaceholderHighlight.shimmer(highlightColor)
                 )
         )
 
@@ -272,8 +268,8 @@ fun LoadingGithubRepoItem(
                 .height(10.dp)
                 .placeholder(
                     visible = true,
-                    color = onBackgroundColor,
-                    highlight = PlaceholderHighlight.shimmer()
+                    // color = onBackgroundColor,
+                    highlight = PlaceholderHighlight.shimmer(highlightColor)
                 )
         )
 
@@ -295,8 +291,8 @@ fun LoadingGithubRepoItem(
                             .height(16.dp)
                             .placeholder(
                                 visible = true,
-                                color = onBackgroundColor,
-                                highlight = PlaceholderHighlight.shimmer()
+                                // color = onBackgroundColor,
+                                highlight = PlaceholderHighlight.shimmer(highlightColor)
                             )
                     )
                 }

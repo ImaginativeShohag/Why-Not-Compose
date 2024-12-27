@@ -25,16 +25,16 @@
  */
 
 plugins {
-    id(Libs.Android.application)
-    kotlin("android")
-    kotlin("kapt")
-    id(Libs.Kotlin.composeCompilerGradlePlugin)
-    id(Libs.Google.DevTools.ksp)
-    id(Libs.Kotlin.percelizeGradlePlugin)
-    id(Libs.Google.Hilt.gradlePlugin)
-    id(Libs.Google.Maps.secretsGradlePlugin)
-    id(Libs.Google.Services.gradlePlugin)
-    id(Libs.Google.Firebase.crashlyticsGradlePlugin)
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.compose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.secrets)
+    alias(libs.plugins.gms)
+    alias(libs.plugins.firebase.crashlytics)
+    alias(libs.plugins.baselineprofile)
 }
 
 android {
@@ -46,32 +46,31 @@ android {
         minSdk = BuildConfigConst.minSdk
         targetSdk = BuildConfigConst.targetSdk
         versionCode = (findProperty("android.injected.version.code") as? String)?.toIntOrNull() ?: 1
-        versionName = "7.1.0.${getCurrentDateAsYYMMDD()}" // Major.Minor.Patch.YYMMDD
+        versionName = "7.2.0.${getCurrentDateAsYYMMDD()}" // Major.Minor.Patch.YYMMDD
         vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        signingConfig = signingConfigs.getByName("debug")
     }
 
     buildTypes {
-        getByName("release") {
-            signingConfig = signingConfigs.getByName("debug")
-        }
-        named("debug") {
-            isDebuggable = true
+        debug {
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-debug"
         }
-        named("release") {
-            isMinifyEnabled = false
-            isShrinkResources = false
-            setProguardFiles(
-                listOf(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
-                )
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
             )
+
+            // To publish on the Play store a private signing key is required, but to allow anyone
+            // who clones the code to sign and run the release variant, use the debug signing key.
+            signingConfig = signingConfigs.named("debug").get()
+
+            // Ensure Baseline Profile is fresh for release builds.
+            baselineProfile.automaticGenerationDuringBuild = true
         }
     }
 
@@ -110,19 +109,6 @@ android {
         resValues = false
         shaders = false
     }
-
-    composeCompiler {
-        enableStrongSkippingMode = true
-    }
-
-    signingConfigs {
-        getByName("debug") {
-            storeFile = file("../debug.keystore")
-            storePassword = "android"
-            keyAlias = "androiddebugkey"
-            keyPassword = "android"
-        }
-    }
 }
 
 dependencies {
@@ -132,135 +118,160 @@ dependencies {
     implementation(project(":exoplayer"))
     implementation(project(":cms"))
     implementation(project(":popbackstack"))
+    "baselineProfile"(project(":benchmarks"))
 
-    implementation(Libs.Kotlin.stdlib)
-    implementation(Libs.AndroidX.coreKtx)
-    implementation(Libs.AndroidX.appcompat)
-    implementation(Libs.AndroidX.swipeRefreshLayout)
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.swiperefreshlayout)
+    implementation(libs.androidx.profileinstaller)
 
-    // Let's not use material xml view components at all. :)
-    // implementation(Google.android.material)
-
-    testImplementation(Libs.junit)
-    androidTestImplementation(Libs.AndroidX.Test.Ext.junit)
-    androidTestImplementation(Libs.AndroidX.Test.espressoCore)
-    androidTestImplementation(platform(Libs.AndroidX.Compose.bom))
-    androidTestImplementation(Libs.AndroidX.Compose.uiTest)
-    debugImplementation(Libs.AndroidX.Compose.uiTestManifest)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext)
+    androidTestImplementation(libs.androidx.test.espresso.core)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.compose.ui.test.junit)
+    debugImplementation(libs.androidx.compose.ui.testManifest)
 
     // ----------------------------------------------------------------
-    // Compose
+    // compose
     // ----------------------------------------------------------------
-    implementation(platform(Libs.AndroidX.Compose.bom))
+    implementation(platform(libs.androidx.compose.bom))
 
-    implementation(Libs.AndroidX.Compose.ui)
-    implementation(Libs.AndroidX.Compose.uiUtil)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.util)
     // Tooling support (Previews, etc.)
-    debugImplementation(Libs.AndroidX.Compose.tooling)
-    implementation(Libs.AndroidX.Compose.toolingPreview)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.androidx.compose.ui.tooling.preview)
     // Animation
-    implementation(Libs.AndroidX.Compose.animation)
+    implementation(libs.androidx.compose.animation)
     // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
-    implementation(Libs.AndroidX.Compose.foundation)
-    implementation(Libs.AndroidX.Compose.layout)
+    implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.compose.foundation.layout)
     // Material Design
-    implementation(Libs.AndroidX.Compose.material3)
-    implementation(Libs.AndroidX.Compose.material3WindowSizeClass)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material3.windowSizeClass)
     // Material design icons
-    implementation(Libs.AndroidX.Compose.materialIconsCore)
-    implementation(Libs.AndroidX.Compose.materialIconsExtended)
+    implementation(libs.androidx.compose.material.iconsCore)
+    implementation(libs.androidx.compose.material.iconsExtended)
     // Integration with observables
-    implementation(Libs.AndroidX.Compose.runtime)
-    implementation(Libs.AndroidX.Compose.runtimeLivedata)
-    implementation(Libs.AndroidX.Compose.runtimeTracing)
-    // Compose Navigation Component
-    implementation(Libs.AndroidX.Navigation.compose)
+    implementation(libs.androidx.compose.runtime)
+    implementation(libs.androidx.compose.runtime.livedata)
+    implementation(libs.androidx.compose.runtime.tracing)
+    // compose Navigation Component
+    implementation(libs.androidx.navigation.compose)
     // Constraint Layout
-    implementation(Libs.AndroidX.ConstraintLayout.compose)
+    implementation(libs.androidx.constraintlayout.compose)
     // Integration with activities
-    implementation(Libs.AndroidX.Activity.activityCompose)
+    implementation(libs.androidx.activity.compose)
 
-    // Jetpack Compose Integration for ViewModel
-    implementation(Libs.AndroidX.Lifecycle.viewModelCompose)
+    // Jetpack compose Integration for ViewModel
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     // Paging
-    implementation(Libs.AndroidX.Paging.compose)
+    implementation(libs.androidx.paging.compose)
 
     // Accompanist
-    implementation(Libs.Accompanist.systemuicontroller)
-    implementation(Libs.Accompanist.flowlayout)
-    implementation(Libs.Accompanist.swipeRefresh)
-    implementation(Libs.Accompanist.placeholder)
+    implementation(libs.accompanist.permissions)
 
     // ----------------------------------------------------------------
 
     // Splash Screen
-    implementation(Libs.AndroidX.Core.splashScreen)
+    implementation(libs.androidx.core.splashscreen)
 
     // Retrofit
-    implementation(Libs.Square.Retrofit.core)
-    implementation(Libs.Square.okhttpLoggingInterceptor)
+    implementation(libs.retrofit.core)
+    implementation(libs.okhttp.logging)
 
     // Moshi
-    implementation(Libs.Square.Retrofit.converterMoshi)
-    implementation(Libs.Square.Moshi.core)
-    ksp(Libs.Square.Moshi.codegen)
+    implementation(libs.retrofit.moshi)
+    implementation(libs.moshi.kotlin)
+    ksp(libs.moshi.kotlin.codegen)
 
     // Gson
-    implementation(Libs.gson)
+    implementation(libs.gson)
 
     // ViewModel and LiveData
-    implementation(Libs.AndroidX.Lifecycle.viewModel)
-    implementation(Libs.AndroidX.Lifecycle.livedata)
-    implementation(Libs.AndroidX.Lifecycle.common)
-    implementation(Libs.AndroidX.Lifecycle.runtime)
+    // implementation(libs.androidx.lifecycle.runtime.compose)
+    // implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    // implementation(libs.androidx.lifecycle.livedata.ktx)
+    // implementation(libs.androidx.lifecycle.common)
+    // implementation(libs.androidx.lifecycle.runtime.ktx)
 
     // Kotlin Coroutines
-    implementation(Libs.Coroutines.core)
-    implementation(Libs.Coroutines.android)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.coroutines.guava)
 
     // Room Persistence Library
-    implementation(Libs.AndroidX.Room.runtime)
-    ksp(Libs.AndroidX.Room.compiler)
+    implementation(libs.room.runtime)
+    ksp(libs.room.compiler)
 
     // Room: Kotlin Extensions and Coroutines support for Room
-    implementation(Libs.AndroidX.Room.ktx)
+    implementation(libs.room.ktx)
 
     // Coil
-    implementation(Libs.Coil.compose)
-    implementation(Libs.Coil.svg)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.svg)
+    implementation(libs.coil.network)
 
     // Paging
-    implementation(Libs.AndroidX.Paging.runtime)
+    implementation(libs.androidx.paging.runtime)
 
     // Timber
-    implementation(Libs.timber)
+    implementation(libs.timber)
 
     // Hilt
-    implementation(Libs.Google.Hilt.core)
-    kapt(Libs.Google.Hilt.compiler)
-    implementation(Libs.AndroidX.Hilt.navigationCompose)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     // No Internet Library
-    implementation(Libs.oopsNoInternet)
+    implementation(libs.oopsNoInternet)
 
     // Maps
-    implementation(Libs.Google.PlayService.maps)
-    implementation(Libs.Google.Maps.core)
-    implementation(Libs.Google.Maps.utils)
-    implementation(Libs.Google.Maps.compose)
+    implementation(libs.google.playservice.maps)
+    implementation(libs.google.maps.ktx)
+    implementation(libs.google.maps.utils.ktx)
+    implementation(libs.google.maps.compose)
 
     // Lottie
-    implementation(Libs.Airbnb.Lottie.compose)
+    implementation(libs.lottie.compose)
 
     // uCrop
-    implementation(Libs.Yalantis.uCrop)
+    implementation(libs.ucrop)
 
     // OneSignal
-    implementation(Libs.OneSignal.core)
+    implementation(libs.onesignal)
 
     // Firebase
-    implementation(platform(Libs.Google.Firebase.bom))
+    implementation(platform(libs.firebase.bom))
 
-    implementation(Libs.Google.Firebase.analytics)
+    implementation(libs.firebase.analytics.ktx)
+
+    // Code Scanner
+    implementation(libs.google.playservice.code.scanner)
+    implementation(libs.mlkit.barcode.scanning)
+
+    // Camera
+    implementation(libs.camerax.core)
+    implementation(libs.camerax.camera2)
+    implementation(libs.camerax.lifecycle)
+    implementation(libs.camerax.video)
+    implementation(libs.camerax.view)
+    implementation(libs.camerax.mlkit.vision)
+    implementation(libs.camerax.extensions)
+
+    // Haze
+    implementation(libs.haze)
+    implementation(libs.haze.materials)
+}
+
+baselineProfile {
+    // Don't build on every iteration of a full assemble.
+    // Instead enable generation directly for the release build variant.
+    automaticGenerationDuringBuild = false
+
+    // Make use of Dex Layout Optimizations via Startup Profiles
+    dexLayoutOptimization = true
 }

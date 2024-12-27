@@ -49,7 +49,7 @@ import timber.log.Timber
 @Composable
 fun CameraPreviewView(
     cameraController: LifecycleCameraController,
-    onSuccess: (barcodes: List<Barcode>) -> Unit,
+    onBarcodeDetect: (barcodes: List<Barcode>) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -84,18 +84,20 @@ fun CameraPreviewView(
                 }
 
                 cameraProvider = cameraProviderFuture.get()
-                val barcodeAnalyser = BarcodeAnalyser(
-                    controller = cameraController
-                ) { barcodes ->
-                    stopCamera()
 
-                    onSuccess(barcodes)
-                }
-                val imageAnalysis: ImageAnalysis = ImageAnalysis.Builder()
+                val barcodeAnalyzer = BarcodeAnalyzer(
+                    controller = cameraController,
+                    onBarcodeDetect = { barcodes ->
+                        stopCamera()
+
+                        onBarcodeDetect(barcodes)
+                    }
+                )
+                val imageAnalysis = ImageAnalysis.Builder()
                     .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                     .build()
                     .also {
-                        it.setAnalyzer(cameraExecutor, barcodeAnalyser)
+                        it.setAnalyzer(cameraExecutor, barcodeAnalyzer)
                     }
 
                 try {
@@ -120,7 +122,7 @@ fun CameraPreviewView(
         },
         modifier = modifier,
         onRelease = {
-            Timber.d("Released...")
+            Timber.d("Releasing PreviewView.")
             stopCamera()
         }
     )

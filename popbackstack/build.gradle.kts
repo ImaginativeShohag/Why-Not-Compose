@@ -123,11 +123,6 @@ dependencies {
     // Paging
     implementation(libs.androidx.paging.compose)
 
-    // Accompanist
-    implementation(libs.accompanist.systemuicontroller)
-    implementation(libs.accompanist.flowlayout)
-    implementation(libs.accompanist.swiperefresh)
-
     // ----------------------------------------------------------------
 
     // Timber

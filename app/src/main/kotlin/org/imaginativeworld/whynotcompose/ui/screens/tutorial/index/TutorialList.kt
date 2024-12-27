@@ -159,6 +159,12 @@ data class Tutorial(
                 description = "Check the baseline profile install status using `ProfileVerifier`.",
                 route = TutorialsScreen.TutorialBaselineProfiles,
                 level = TutorialLevel.Intermediate
+            ),
+            Tutorial(
+                name = "Barcode Scanner",
+                description = "Multiple ways to scan barcode.",
+                route = TutorialsScreen.TutorialBarcodeScanner,
+                level = TutorialLevel.Intermediate
             )
         )
             .sortedBy { it.name }

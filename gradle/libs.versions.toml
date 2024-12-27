@@ -1,5 +1,5 @@
 [versions]
-accompanist = "0.36.0"
+accompanist = "0.37.0"
 androidDesugarJdkLibs = "2.0.4"
 # AGP and tools should be updated together
 androidGradlePlugin = "8.7.3"
@@ -7,17 +7,17 @@ androidTools = "31.7.2"
 androidxActivity = "1.9.3"
 androidxAppCompat = "1.7.0"
 androidxBrowser = "1.8.0"
-androidxComposeBom = "2024.11.00"
+androidxComposeBom = "2024.12.01"
 androidxCore = "1.15.0"
 androidxCoreSplashscreen = "1.0.1"
 androidxDataStore = "1.1.1"
 androidxEspresso = "3.6.1"
 androidxHiltNavigationCompose = "1.2.0"
 androidxLifecycle = "2.8.7"
-androidxMacroBenchmark = "1.3.1"
+androidxMacroBenchmark = "1.3.3"
 androidxMetrics = "1.0.0-beta01"
-androidxNavigation = "2.8.4"
-androidxProfileinstaller = "1.3.1"
+androidxNavigation = "2.8.5"
+androidxProfileinstaller = "1.4.1"
 androidxTestCore = "1.6.1"
 androidxTestExt = "1.2.1"
 androidxTestRules = "1.6.1"
@@ -29,16 +29,16 @@ androidxWork = "2.9.0"
 coil = "3.0.4"
 dependencyGuard = "0.5.0"
 firebaseBom = "33.7.0"
-firebaseCrashlyticsPlugin = "2.9.9"
+firebaseCrashlyticsPlugin = "3.0.2"
 firebasePerfPlugin = "1.4.2"
 gmsPlugin = "4.4.2"
 googleOss = "17.1.0"
 googleOssPlugin = "0.10.6"
-hilt = "2.53.1"
+hilt = "2.54"
 hiltExt = "1.2.0"
 junit = "4.13.2"
 kotlin = "2.0.21"
-kotlinxCoroutines = "1.9.0"
+kotlinxCoroutines = "1.10.1"
 kotlinxDatetime = "0.6.1"
 kotlinxSerializationJson = "1.7.3"
 ksp = "2.0.21-1.0.28"
@@ -58,16 +58,19 @@ timber = "5.0.1"
 oopsNoInternet = "2.0.0"
 spotless = "6.25.0"
 ucrop = "2.2.10"
-lottie = "6.6.1"
+lottie = "6.6.2"
 exoplayer = "2.19.1"
 googlePlayServiceMaps = "19.0.0"
+googlePlayServiceCodeScanner = "16.1.0"
 googleMaps = "5.1.1"
 googleMapsCompose = "6.4.0"
 androidxConstraintlayoutCompose = "1.1.0"
-paging = "3.3.4"
-onesignal = "5.1.18"
+paging = "3.3.5"
+onesignal = "5.1.26"
 moshi = "1.15.2"
 swiperefreshlayout = "1.1.0"
+mlkitBarcodeScanning = "17.3.0"
+cameraX = "1.4.1"
 
 [bundles]
 androidx-compose-ui-test = ["androidx-compose-ui-test", "androidx-compose-ui-testManifest"]
@@ -84,11 +87,9 @@ google-playservice-maps = { group = "com.google.android.gms", name = "play-servi
 google-maps-ktx = { group = "com.google.maps.android", name = "maps-ktx", version.ref = "googleMaps" }
 google-maps-utils-ktx = { group = "com.google.maps.android", name = "maps-utils-ktx", version.ref = "googleMaps" }
 google-maps-compose = { group = "com.google.maps.android", name = "maps-compose", version.ref = "googleMapsCompose" }
+google-playservice-code-scanner = { group = "com.google.android.gms", name = "play-services-code-scanner", version.ref = "googlePlayServiceCodeScanner" }
 
 accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanist" }
-accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
-accompanist-flowlayout = { group = "com.google.accompanist", name = "accompanist-flowlayout", version.ref = "accompanist" }
-accompanist-swiperefresh = { group = "com.google.accompanist", name = "accompanist-swiperefresh", version.ref = "accompanist" }
 
 onesignal = { group = "com.onesignal", name = "OneSignal", version.ref = "onesignal" }
 
@@ -198,6 +199,22 @@ turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine
 
 moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
 moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi" }
+
+mlkit-barcode-scanning = { group = "com.google.mlkit", name = "barcode-scanning", version.ref = "mlkitBarcodeScanning" }
+
+# The following line is optional, as the core library is included indirectly by camera-camera2
+camerax-core = { group = "androidx.camera", name = "camera-core", version.ref = "cameraX" }
+camerax-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "cameraX" }
+# If you want to additionally use the CameraX Lifecycle library
+camerax-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "cameraX" }
+# If you want to additionally use the CameraX VideoCapture library
+camerax-video = { group = "androidx.camera", name = "camera-video", version.ref = "cameraX" }
+# If you want to additionally use the CameraX View class
+camerax-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraX" }
+# If you want to additionally add CameraX ML Kit Vision Integration
+camerax-mlkit-vision = { group = "androidx.camera", name = "camera-mlkit-vision", version.ref = "cameraX" }
+# If you want to additionally use the CameraX Extensions library
+camerax-extensions = { group = "androidx.camera", name = "camera-extensions", version.ref = "cameraX" }
 
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }

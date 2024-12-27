@@ -172,9 +172,7 @@ dependencies {
     implementation(libs.androidx.paging.compose)
 
     // Accompanist
-    implementation(libs.accompanist.systemuicontroller)
-    implementation(libs.accompanist.flowlayout)
-    implementation(libs.accompanist.swiperefresh)
+    implementation(libs.accompanist.permissions)
 
     // ----------------------------------------------------------------
 
@@ -250,6 +248,19 @@ dependencies {
     implementation(platform(libs.firebase.bom))
 
     implementation(libs.firebase.analytics.ktx)
+
+    // Code Scanner
+    implementation(libs.google.playservice.code.scanner)
+    implementation(libs.mlkit.barcode.scanning)
+
+    // Camera
+    implementation(libs.camerax.core)
+    implementation(libs.camerax.camera2)
+    implementation(libs.camerax.lifecycle)
+    implementation(libs.camerax.video)
+    implementation(libs.camerax.view)
+    implementation(libs.camerax.mlkit.vision)
+    implementation(libs.camerax.extensions)
 }
 
 baselineProfile {

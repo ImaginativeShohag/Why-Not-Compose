@@ -138,6 +138,8 @@ import org.imaginativeworld.whynotcompose.ui.screens.ui.mapview.MapViewDetailsSc
 import org.imaginativeworld.whynotcompose.ui.screens.ui.mapview.MapViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.ui.otpcodeverify.OtpCodeVerifyScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.otpcodeverify.OtpCodeVerifyViewModel
+import org.imaginativeworld.whynotcompose.ui.screens.ui.pager.UiPagerScreen
+import org.imaginativeworld.whynotcompose.ui.screens.ui.pager.UiPagerViewModel
 import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.WebViewScreen
 import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.WebViewTarget
 import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.WebViewViewModel
@@ -221,6 +223,7 @@ sealed class UIsScreen(val route: String) {
     }
 
     data object UiOtpCodeVerify : UIsScreen("ui/otpcodeverify")
+    data object UiPager : UIsScreen("ui/slider")
 }
 
 sealed class TutorialsScreen(val route: String) {
@@ -729,6 +732,17 @@ private fun NavGraphBuilder.addUiScreens(
             OtpCodeVerifyScreen(
                 viewModel = viewModel,
                 phoneNumber = "+8801234567891",
+                goBack = {
+                    navController.popBackStackOrIgnore()
+                }
+            )
+        }
+
+        composable(UIsScreen.UiPager.route) {
+            val viewModel: UiPagerViewModel = hiltViewModel()
+
+            UiPagerScreen(
+                viewModel = viewModel,
                 goBack = {
                     navController.popBackStackOrIgnore()
                 }

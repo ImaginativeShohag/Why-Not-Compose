@@ -87,7 +87,7 @@ fun MacrobenchmarkScope.commonModuleTraverseActions(
 
         Thread.sleep(2_000)
 
-        if (device.wait(Until.hasObject(By.res("nav_btn_back")), 5_000)) {
+        if (device.wait(Until.hasObject(By.res("nav_btn_back")), 5_000) == true) {
             val backButton = device.findObject(By.res("nav_btn_back"))
             device.clickAndWaitForIdle(backButton)
         } else {

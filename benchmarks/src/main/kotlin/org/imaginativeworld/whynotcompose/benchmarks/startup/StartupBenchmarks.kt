@@ -35,7 +35,7 @@ import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
 import org.imaginativeworld.whynotcompose.benchmarks.allowNotifications
-import org.imaginativeworld.whynotcompose.benchmarks.commonModuleTraverseActions
+import org.imaginativeworld.whynotcompose.benchmarks.indexScreenTraverseActions
 import org.imaginativeworld.whynotcompose.benchmarks.startActivityAndAllowNotifications
 import org.imaginativeworld.whynotcompose.benchmarks.waitAndFindObject
 import org.junit.Rule
@@ -103,7 +103,7 @@ class StartupBenchmarks {
                 // Wait for home screen
                 device.waitAndFindObject(By.res("screen:home"), 5_000)
 
-                commonModuleTraverseActions(
+                indexScreenTraverseActions(
                     moduleButtonText = "Animations",
                     screenTag = "screen:animations:index"
                 )

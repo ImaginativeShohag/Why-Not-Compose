@@ -70,8 +70,8 @@ fun UiDevice.pressBackAndWaitForIdle() {
     waitForIdle()
 }
 
-fun UiDevice.clickAndWaitForIdle(uiObject: UiObject2) {
-    uiObject.click()
+fun UiDevice.clickAndWaitForIdle(element: UiObject2) {
+    element.click()
     waitForIdle()
 }
 

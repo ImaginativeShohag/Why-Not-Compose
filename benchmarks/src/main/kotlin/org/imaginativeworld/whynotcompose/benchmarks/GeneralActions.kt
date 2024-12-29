@@ -78,6 +78,8 @@ fun MacrobenchmarkScope.commonModuleTraverseActions(
     val count = items.count()
 
     for (i in 0..<count) {
+        Log.d("BaselineProfileGenerator", "item index: $i")
+
         device.waitAndFindObject(By.res(screenTag), 5_000)
         val items = device.waitAndFindObjects(By.res("list-item"), 5_000)
         device.clickAndWaitForIdle(items[i])

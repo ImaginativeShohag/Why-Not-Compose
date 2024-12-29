@@ -50,8 +50,9 @@ Feel free to request features or suggestions for improvements.
 
 ### UIs
 
-| ![Preview](images/map-view.png) | ![Preview](images/otp-code-verify.png) | ![Preview](images/web-view.png) |
-|:-------------------------------:|:--------------------------------------:|:-------------------------------:|
+| ![Map View](images/map-view.png) | ![OTP code verify](images/otp-code-verify.png) | ![Web View](images/web-view.png) |
+|:--------------------------------:|:----------------------------------------------:|:--------------------------------:|
+|    ![Pager](images/pager.mp4)    |                                                |                                  |
 
 ### Tutorials
 
@@ -77,7 +78,7 @@ Feel free to request features or suggestions for improvements.
 |    ![Counter](images/counter.gif)    | ![Animated Visibility](images/animated-visibility.gif) | ![Lottie](images/lottie.gif) |
 |:------------------------------------:|:------------------------------------------------------:|:----------------------------:|
 | ![Exo Player](images/exo-player.gif) |         ![Tic-Tac-Toe](images/tic-tac-toe.gif)         |    ![CMS](images/cms.gif)    |
-| ![Deep Links](images/deep-links.gif) |                                                        |                              |
+| ![Deep Links](images/deep-links.gif) |     ![Barcode Scanner](images/barcode_scanner.mp4)     |                              |
 
 # TODO
 

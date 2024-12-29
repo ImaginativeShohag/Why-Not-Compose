@@ -1,28 +1,28 @@
 /*
-* Copyright 2024 Md. Mahmudul Hasan Shohag
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*
-* ------------------------------------------------------------------------
-*
-* Project: Why Not Compose!
-* Developed by: @ImaginativeShohag
-*
-* Md. Mahmudul Hasan Shohag
-* imaginativeshohag@gmail.com
-*
-* Source: https://github.com/ImaginativeShohag/Why-Not-Compose
-*/
+ * Copyright 2024 Md. Mahmudul Hasan Shohag
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * Project: Why Not Compose!
+ * Developed by: @ImaginativeShohag
+ *
+ * Md. Mahmudul Hasan Shohag
+ * imaginativeshohag@gmail.com
+ *
+ * Source: https://github.com/ImaginativeShohag/Why-Not-Compose
+ */
 
 package org.imaginativeworld.whynotcompose.benchmarks.baselineprofile
 
@@ -32,6 +32,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
+import androidx.test.uiautomator.Until
 import org.imaginativeworld.whynotcompose.benchmarks.clickAndWaitForIdle
 import org.imaginativeworld.whynotcompose.benchmarks.dumpWindowHierarchy
 import org.imaginativeworld.whynotcompose.benchmarks.pressBackAndWaitForIdle
@@ -114,20 +115,31 @@ class TutorialsModuleBaselineProfile {
             val count = items.count()
 
             for (i in 0..<count) {
-                device.waitAndFindObject(By.res(screenTag), 5_000)
+                // Wait for the index screen to come in the screen.
+                device.waitAndFindObject(By.res(screenTag), 5_000, "item index: $i")
+
+                // Query for all list items.
                 val items = device.waitAndFindObjects(By.res("list-item"), 5_000)
 
                 // PopBackStack tutorial is open a new activity, so the go back will not work.
                 // So we will ignore this item traverse.
                 val popBackStackItem = items[i].findObject(By.res("tutorial-popbackstack"))
                 if (popBackStackItem != null) continue
-                // ----------------------------------------------------------------
 
+                // Click on the next item in the index screen.
                 device.clickAndWaitForIdle(items[i])
 
-                Thread.sleep(2_000)
+                // Wait until the index screen is gone.
+                device.wait(Until.gone(By.res(screenTag)), 5_000)
 
-                device.pressBackAndWaitForIdle()
+                // Try to click the back button from app bar if it is available.
+                if (device.wait(Until.hasObject(By.res("nav_btn_back")), 2_000)) {
+                    val backButton = device.findObject(By.res("nav_btn_back"))
+
+                    device.clickAndWaitForIdle(backButton)
+                } else {
+                    device.pressBackAndWaitForIdle()
+                }
             }
         }
     }

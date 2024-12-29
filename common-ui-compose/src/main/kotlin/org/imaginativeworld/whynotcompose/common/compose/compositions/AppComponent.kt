@@ -47,6 +47,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -63,7 +64,10 @@ object AppComponent {
             modifier = modifier,
             title = { Text(text) },
             navigationIcon = {
-                IconButton(onClick = goBack) {
+                IconButton(
+                    onClick = goBack,
+                    modifier = Modifier.testTag("nav_btn_back")
+                ) {
                     Icon(Icons.Filled.ArrowBackIosNew, contentDescription = "Go Back")
                 }
             },

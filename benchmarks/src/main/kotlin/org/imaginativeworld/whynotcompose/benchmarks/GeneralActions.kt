@@ -32,6 +32,7 @@ import android.os.Build.VERSION_CODES.TIRAMISU
 import android.util.Log
 import androidx.benchmark.macro.MacrobenchmarkScope
 import androidx.test.uiautomator.By
+import androidx.test.uiautomator.Until
 
 /**
  * Because the app under test is different from the one running the instrumentation test,
@@ -86,6 +87,11 @@ fun MacrobenchmarkScope.commonModuleTraverseActions(
 
         Thread.sleep(2_000)
 
-        device.pressBackAndWaitForIdle()
+        if (device.wait(Until.hasObject(By.res("nav_btn_back")), 5_000)) {
+            val backButton = device.findObject(By.res("nav_btn_back"))
+            device.clickAndWaitForIdle(backButton)
+        } else {
+            device.pressBackAndWaitForIdle()
+        }
     }
 }

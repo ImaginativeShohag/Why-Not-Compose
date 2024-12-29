@@ -35,8 +35,8 @@ Please feel free to ask for features or suggestions for improvements.
 ### Animations
 
 | <img src="images/animated-text-and-bubbles.gif" style="width:320px"/> | <img src="images/the-story.gif" style="width:320px"/> | <img src="images/running-car.gif" style="width:320px"/> |
-|:--------------------------------------------------------------------:|:----------------------------------------------------:|:------------------------------------------------------:|
-|           <img src="images/emudi.gif" style="width:320px">           |                                                      |                                                        |
+|:---------------------------------------------------------------------:|:-----------------------------------------------------:|:-------------------------------------------------------:|
+|           <img src="images/emudi.gif" style="width:320px">            |                                                       |                                                         |
 
 ### Compositions
 
@@ -50,9 +50,9 @@ Please feel free to ask for features or suggestions for improvements.
 
 ### UIs
 
-| <img src="images/map-view.png" alt="Map View" style="width:320px"/> | <img src="images/otp-code-verify.png" alt="OTP code verify" style="width:320px"/> | <img src="images/web-view.png" alt="Web View" style="width:320px"/> |
-|:--------------------------------:|:----------------------------------------------:|:--------------------------------:|
-|    <video src="https://github.com/user-attachments/assets/263d712f-1d9a-4e2e-bbf2-e006ab42591a"></video>    |                                                |                                  |
+|                  <img src="images/map-view.png" alt="Map View" style="width:320px"/>                  | <img src="images/otp-code-verify.png" alt="OTP code verify" style="width:320px"/> | <img src="images/web-view.png" alt="Web View" style="width:320px"/> |
+|:-----------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------:|:-------------------------------------------------------------------:|
+| <video src="https://github.com/user-attachments/assets/263d712f-1d9a-4e2e-bbf2-e006ab42591a"></video> |                                                                                   |                                                                     |
 
 ### Tutorials
 
@@ -75,10 +75,10 @@ Please feel free to ask for features or suggestions for improvements.
 - Baseline Profiles (Intermediate)
 - [Barcode Scanner](https://developers.google.com/ml-kit/vision/barcode-scanning) ([Google code scanner](https://developers.google.com/ml-kit/vision/barcode-scanning/code-scanner) and [ML Kit Barcode](https://developers.google.com/ml-kit/vision/barcode-scanning/android)) (Intermediate)
 
-|    <img src="images/counter.gif" alt="Counter" style="width:320px"/>    | <img src="images/animated-visibility.gif" alt="Animated Visibility" style="width:320px"/> | <img src="images/lottie.gif" alt="Lottie" style="width:320px"/> |
-|:------------------------------------:|:------------------------------------------------------:|:----------------------------:|
-| <img src="images/exo-player.gif" alt="Exo Player" style="width:320px"/> | <img src="images/tic-tac-toe.gif" alt="Tic-Tac-Toe" style="width:320px"/> | <img src="images/cms.gif" alt="CMS" style="width:320px"/> |
-| <img src="images/deep-links.gif" alt="Deep Links" style="width:320px"/> | <video src="https://github.com/user-attachments/assets/71d86d8e-1b4e-4a0d-bf2c-e9bb84bb5d39" style="width:320px"></video> |                                         |
+|    <img src="images/counter.gif" alt="Counter" style="width:320px"/>    |                 <img src="images/animated-visibility.gif" alt="Animated Visibility" style="width:320px"/>                 | <img src="images/lottie.gif" alt="Lottie" style="width:320px"/> |
+|:-----------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------:|
+| <img src="images/exo-player.gif" alt="Exo Player" style="width:320px"/> |                         <img src="images/tic-tac-toe.gif" alt="Tic-Tac-Toe" style="width:320px"/>                         |    <img src="images/cms.gif" alt="CMS" style="width:320px"/>    |
+| <img src="images/deep-links.gif" alt="Deep Links" style="width:320px"/> | <video src="https://github.com/user-attachments/assets/71d86d8e-1b4e-4a0d-bf2c-e9bb84bb5d39" style="width:320px"></video> |                                                                 |
 
 # TODO
 

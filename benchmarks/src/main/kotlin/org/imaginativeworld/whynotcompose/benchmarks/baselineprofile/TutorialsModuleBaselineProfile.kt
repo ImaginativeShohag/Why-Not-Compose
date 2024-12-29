@@ -105,7 +105,7 @@ class TutorialsModuleBaselineProfile {
             val moduleButtonText = "Tutorials"
             val screenTag = "screen:tutorials:index"
 
-            val moduleButton = device.findObject(By.text(moduleButtonText))
+            val moduleButton = device.waitAndFindObject(By.text(moduleButtonText), 5_000)
             device.clickAndWaitForIdle(moduleButton)
 
             val items = device.waitAndFindObjects(By.res("list-item"), 5_000)
@@ -121,7 +121,7 @@ class TutorialsModuleBaselineProfile {
                 // Query for all list items.
                 val items = device.waitAndFindObjects(By.res("list-item"), 5_000)
 
-                // PopBackStack tutorial is open a new activity, so the go back will not work.
+                // Exceptional case: PopBackStack tutorial is open a new activity, so the go back will not work.
                 // So we will ignore this item traverse.
                 val popBackStackItem = items[i].findObject(By.res("tutorial-popbackstack"))
                 if (popBackStackItem != null) continue

@@ -265,22 +265,24 @@ fun PostDetailsScreenSkeleton(
 
                     Row {
                         GeneralOutlinedButton(
-                            modifier = Modifier.weight(1f),
                             caption = "Delete",
+                            {
+                                onDeleteClick()
+                            },
+                            modifier = Modifier.weight(1f),
                             icon = Icons.Rounded.Delete
-                        ) {
-                            onDeleteClick()
-                        }
+                        )
 
                         Spacer(Modifier.width(16.dp))
 
                         GeneralOutlinedButton(
-                            modifier = Modifier.weight(1f),
                             caption = "Edit",
+                            {
+                                onEditClick()
+                            },
+                            modifier = Modifier.weight(1f),
                             icon = Icons.Rounded.Edit
-                        ) {
-                            onEditClick()
-                        }
+                        )
                     }
 
                     Row(horizontalArrangement = Arrangement.Center) {

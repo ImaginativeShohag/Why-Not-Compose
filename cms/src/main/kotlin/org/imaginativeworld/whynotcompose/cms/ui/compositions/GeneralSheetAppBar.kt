@@ -51,8 +51,8 @@ import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralOutl
 @Composable
 fun GeneralSheetAppBar(
     title: String,
-    modifier: Modifier = Modifier,
-    onCancelClick: () -> Unit
+    onCancelClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     TopAppBar(
         modifier = modifier,

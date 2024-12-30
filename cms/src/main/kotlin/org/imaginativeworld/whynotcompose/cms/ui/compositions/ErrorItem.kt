@@ -60,9 +60,10 @@ private fun ErrorItemPreview() {
                 contentAlignment = Alignment.Center
             ) {
                 ErrorItem(
-                    "Something went wrong!"
-                ) {
-                }
+                    "Something went wrong!",
+                    {
+                    }
+                )
             }
         }
     }
@@ -71,8 +72,8 @@ private fun ErrorItemPreview() {
 @Composable
 fun ErrorItem(
     message: String,
-    modifier: Modifier = Modifier,
-    onRetryClick: () -> Unit
+    onRetryClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier

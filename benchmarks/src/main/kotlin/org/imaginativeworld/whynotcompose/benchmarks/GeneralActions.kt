@@ -32,6 +32,7 @@ import android.os.Build.VERSION_CODES.TIRAMISU
 import android.util.Log
 import androidx.benchmark.macro.MacrobenchmarkScope
 import androidx.test.uiautomator.By
+import androidx.test.uiautomator.Until
 
 /**
  * Because the app under test is different from the one running the instrumentation test,
@@ -64,11 +65,14 @@ fun MacrobenchmarkScope.startActivityAndAllowNotifications() {
     allowNotifications()
 }
 
-fun MacrobenchmarkScope.commonModuleTraverseActions(
+/**
+ * Traverse all visible list items' screens in the index screen.
+ */
+fun MacrobenchmarkScope.indexScreenTraverseActions(
     moduleButtonText: String,
     screenTag: String
 ) {
-    val moduleButton = device.findObject(By.text(moduleButtonText))
+    val moduleButton = device.waitAndFindObject(By.text(moduleButtonText), 5_000)
     device.clickAndWaitForIdle(moduleButton)
 
     val items = device.waitAndFindObjects(By.res("list-item"), 5_000)
@@ -80,12 +84,24 @@ fun MacrobenchmarkScope.commonModuleTraverseActions(
     for (i in 0..<count) {
         Log.d("BaselineProfileGenerator", "item index: $i")
 
-        device.waitAndFindObject(By.res(screenTag), 5_000)
+        // Wait for the index screen to come in the screen.
+        device.waitAndFindObject(By.res(screenTag), 5_000, "item index: $i")
+
+        // Query for all list items.
         val items = device.waitAndFindObjects(By.res("list-item"), 5_000)
+        // Click on the next item in the index screen.
         device.clickAndWaitForIdle(items[i])
 
-        Thread.sleep(2_000)
+        // Wait until the index screen is gone.
+        device.wait(Until.gone(By.res(screenTag)), 5_000)
 
-        device.pressBackAndWaitForIdle()
+        // Try to click the back button from app bar if it is available.
+        if (device.wait(Until.hasObject(By.res("nav_btn_back")), 2_000)) {
+            val backButton = device.findObject(By.res("nav_btn_back"))
+
+            device.clickAndWaitForIdle(backButton)
+        } else {
+            device.pressBackAndWaitForIdle()
+        }
     }
 }

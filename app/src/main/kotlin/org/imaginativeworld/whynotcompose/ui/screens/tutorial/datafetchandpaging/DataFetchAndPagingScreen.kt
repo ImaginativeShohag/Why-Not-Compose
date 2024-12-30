@@ -268,16 +268,16 @@ fun DataFetchAndPagingScreenSkeleton(
                             Text("Loading...")
                         } else {
                             GithubRepoItem(
+                                item = repo,
+                                onClick = {
+                                    // do something...
+                                },
                                 modifier = Modifier.padding(
                                     start = 12.dp,
                                     top = 4.dp,
                                     end = 12.dp,
                                     bottom = 4.dp
-                                ),
-                                item = repo,
-                                onClick = {
-                                    // do something...
-                                }
+                                )
                             )
                         }
                     }
@@ -287,7 +287,7 @@ fun DataFetchAndPagingScreenSkeleton(
                             loadState.refresh is LoadState.Loading -> {
                                 item {
                                     Column {
-                                        for (i in 1..6) {
+                                        repeat(6) {
                                             LoadingGithubRepoItem(
                                                 Modifier
                                                     .padding(
@@ -450,17 +450,17 @@ fun DataFetchAndPagingScreenSkeleton(
 private fun ErrorItemPreview() {
     AppTheme {
         ErrorItem(
-            "Something went wrong!"
-        ) {
-        }
+            message = "Something went wrong!",
+            onRetryClick = {}
+        )
     }
 }
 
 @Composable
 fun ErrorItem(
     message: String,
-    modifier: Modifier = Modifier,
-    onRetryClick: () -> Unit
+    onRetryClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier

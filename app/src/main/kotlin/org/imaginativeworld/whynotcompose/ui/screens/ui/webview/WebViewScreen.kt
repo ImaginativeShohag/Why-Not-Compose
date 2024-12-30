@@ -42,7 +42,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -54,11 +53,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -70,7 +65,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -78,8 +72,8 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.common.compose.R as CommonComposeR
+import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent.Header
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
 import org.imaginativeworld.whynotcompose.ui.screens.ui.webview.components.ErrorView
@@ -167,45 +161,33 @@ fun WebViewSkeleton(
         Modifier
             .navigationBarsPadding()
             .imePadding()
-            .statusBarsPadding()
+            .statusBarsPadding(),
+        topBar = {
+            Header(
+                title,
+                goBack = goBack
+            )
+        }
     ) { innerPadding ->
-        Column(
+        Box(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            TopAppBar(
-                title = { Text(title) },
-                navigationIcon = {
-                    IconButton(onClick = { goBack() }) {
-                        Icon(
-                            painter = painterResource(
-                                id = R.drawable.ic_arrow_left_single
-                            ),
-                            contentDescription = "Back"
-                        )
-                    }
-                }
-            )
+            webView(Modifier.fillMaxSize())
 
-            Box(
-                Modifier.weight(1f)
+            AnimatedVisibility(
+                visible = webViewError != null,
+                enter = fadeIn(),
+                exit = fadeOut()
             ) {
-                webView(Modifier.fillMaxSize())
-
-                androidx.compose.animation.AnimatedVisibility(
-                    visible = webViewError != null,
-                    enter = fadeIn(),
-                    exit = fadeOut()
-                ) {
-                    webViewError?.let {
-                        ErrorView(
-                            errorCode = webViewError.errorCode,
-                            description = webViewError.description,
-                            failingUrl = webViewError.failingUrl,
-                            onRetry = onRetry
-                        )
-                    }
+                webViewError?.let {
+                    ErrorView(
+                        errorCode = webViewError.errorCode,
+                        description = webViewError.description,
+                        failingUrl = webViewError.failingUrl,
+                        onRetry = onRetry
+                    )
                 }
             }
         }
@@ -343,7 +325,7 @@ private fun LoadingContainer(
                             .fillMaxHeight()
                             .clip(CircleShape)
                             .animateContentSize()
-                            .width(maxWidth * progress / 100)
+                            .width(this.maxWidth * progress / 100)
                             .background(color, CircleShape)
                     )
                 }

@@ -48,9 +48,9 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 @Composable
 fun GeneralFilledButton(
     caption: String,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    icon: ImageVector? = null,
-    onClick: () -> Unit
+    icon: ImageVector? = null
 ) {
     Button(
         modifier = modifier,
@@ -85,13 +85,15 @@ private fun GeneralFilledButtonPreview() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 GeneralFilledButton(
-                    caption = "Click Me"
-                ) {}
+                    caption = "Click Me",
+                    onClick = {}
+                )
 
                 GeneralFilledButton(
                     caption = "Click Me",
+                    onClick = {},
                     icon = Icons.Outlined.Star
-                ) {}
+                )
             }
         }
     }

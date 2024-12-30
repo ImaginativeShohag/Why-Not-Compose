@@ -59,10 +59,9 @@ class CropImage(
     private val aspectRatioX: Float = 1f,
     private val aspectRatioY: Float = 1f
 ) : ActivityResultContract<Pair<Uri, Uri>, Uri?>() {
-    override fun createIntent(context: Context, input: Pair<Uri, Uri>): Intent =
-        UCrop.of(input.first, input.second)
-            .withAspectRatio(aspectRatioX, aspectRatioY)
-            .getIntent(context)
+    override fun createIntent(context: Context, input: Pair<Uri, Uri>): Intent = UCrop.of(input.first, input.second)
+        .withAspectRatio(aspectRatioX, aspectRatioY)
+        .getIntent(context)
 
     override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
         if (resultCode != Activity.RESULT_OK || intent == null) {

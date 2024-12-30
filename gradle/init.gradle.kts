@@ -1,4 +1,4 @@
-val ktlintVersion = "1.3.1"
+val ktlintVersion = "1.4.1"
 
 initscript {
     val spotlessVersion = "6.25.0"
@@ -24,7 +24,7 @@ rootProject {
                 ktlint(ktlintVersion)
                     .customRuleSets(
                         listOf(
-                            "io.nlopez.compose.rules:ktlint:0.4.5"
+                            "io.nlopez.compose.rules:ktlint:0.4.22"
                         )
                     )
                 licenseHeaderFile(rootProject.file("spotless/copyright.kt"))

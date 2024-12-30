@@ -345,7 +345,6 @@ fun UserEditSheetSkeleton(
 
                     GeneralFilledButton(
                         caption = "Update User",
-                        icon = Icons.Rounded.Check,
                         onClick = {
                             updateUser(
                                 name,
@@ -353,7 +352,8 @@ fun UserEditSheetSkeleton(
                                 selectedGenderOption,
                                 selectedStatusOption
                             )
-                        }
+                        },
+                        icon = Icons.Rounded.Check
                     )
                 }
             }

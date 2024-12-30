@@ -1,9 +1,9 @@
 # Why Not Compose!
 
-A collection of animations, compositions, UIs using Jetpack Compose. You can say Jetpack Compose
-cookbook or play-ground if you want!
+A collection of animations, compositions, and UIs using Jetpack Compose. You can say Jetpack Compose
+cookbook or playground if you want!
 
-Feel free to request features or suggestions for improvements.
+Please feel free to ask for features or suggestions for improvements.
 
 [![Developer](https://img.shields.io/badge/Maintainer-ImaginativeShohag-green)](https://github.com/ImaginativeShohag)
 [![Buy Me A Coffee](https://img.shields.io/badge/-buy_me_a_coffee-gray?logo=buy-me-a-coffee)](https://www.buymeacoffee.com/ImShohag)
@@ -34,9 +34,9 @@ Feel free to request features or suggestions for improvements.
 
 ### Animations
 
-| <img src="images/animated-text-and-bubbles.gif" style="width:320px"> | <img src="images/the-story.gif" style="width:320px"> | <img src="images/running-car.gif" style="width:320px"> |
-|:--------------------------------------------------------------------:|:----------------------------------------------------:|:------------------------------------------------------:|
-|           <img src="images/emudi.gif" style="width:320px">           |                                                      |                                                        |
+| <img src="images/animated-text-and-bubbles.gif" style="width:320px"/> | <img src="images/the-story.gif" style="width:320px"/> | <img src="images/running-car.gif" style="width:320px"/> |
+|:---------------------------------------------------------------------:|:-----------------------------------------------------:|:-------------------------------------------------------:|
+|           <img src="images/emudi.gif" style="width:320px">            |                                                       |                                                         |
 
 ### Compositions
 
@@ -50,9 +50,9 @@ Feel free to request features or suggestions for improvements.
 
 ### UIs
 
-| ![Map View](images/map-view.png) | ![OTP code verify](images/otp-code-verify.png) | ![Web View](images/web-view.png) |
-|:--------------------------------:|:----------------------------------------------:|:--------------------------------:|
-|    ![Pager](images/pager.mp4)    |                                                |                                  |
+|                  <img src="images/map-view.png" alt="Map View" style="width:320px"/>                  | <img src="images/otp-code-verify.png" alt="OTP code verify" style="width:320px"/> | <img src="images/web-view.png" alt="Web View" style="width:320px"/> |
+|:-----------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------:|:-------------------------------------------------------------------:|
+| <video src="https://github.com/user-attachments/assets/263d712f-1d9a-4e2e-bbf2-e006ab42591a"></video> |                                                                                   |                                                                     |
 
 ### Tutorials
 
@@ -75,10 +75,10 @@ Feel free to request features or suggestions for improvements.
 - Baseline Profiles (Intermediate)
 - [Barcode Scanner](https://developers.google.com/ml-kit/vision/barcode-scanning) ([Google code scanner](https://developers.google.com/ml-kit/vision/barcode-scanning/code-scanner) and [ML Kit Barcode](https://developers.google.com/ml-kit/vision/barcode-scanning/android)) (Intermediate)
 
-|    ![Counter](images/counter.gif)    | ![Animated Visibility](images/animated-visibility.gif) | ![Lottie](images/lottie.gif) |
-|:------------------------------------:|:------------------------------------------------------:|:----------------------------:|
-| ![Exo Player](images/exo-player.gif) |         ![Tic-Tac-Toe](images/tic-tac-toe.gif)         |    ![CMS](images/cms.gif)    |
-| ![Deep Links](images/deep-links.gif) |     ![Barcode Scanner](images/barcode_scanner.mp4)     |                              |
+|    <img src="images/counter.gif" alt="Counter" style="width:320px"/>    |                 <img src="images/animated-visibility.gif" alt="Animated Visibility" style="width:320px"/>                 | <img src="images/lottie.gif" alt="Lottie" style="width:320px"/> |
+|:-----------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------:|
+| <img src="images/exo-player.gif" alt="Exo Player" style="width:320px"/> |                         <img src="images/tic-tac-toe.gif" alt="Tic-Tac-Toe" style="width:320px"/>                         |    <img src="images/cms.gif" alt="CMS" style="width:320px"/>    |
+| <img src="images/deep-links.gif" alt="Deep Links" style="width:320px"/> | <video src="https://github.com/user-attachments/assets/71d86d8e-1b4e-4a0d-bf2c-e9bb84bb5d39" style="width:320px"></video> |                                                                 |
 
 # TODO
 
@@ -113,7 +113,7 @@ Feel free to request features or suggestions for improvements.
 
 - For dependency version check I am currently
   using [Gradle Versions Plugin](https://github.com/ben-manes/gradle-versions-plugin#using-a-gradle-init-script)
-  . I added this in the Gradle init script and can check versions using the following commend.
+  . I added this in the Gradle init script and can check versions using the following command.
 
 ```bash
 ./gradlew dependencyUpdates

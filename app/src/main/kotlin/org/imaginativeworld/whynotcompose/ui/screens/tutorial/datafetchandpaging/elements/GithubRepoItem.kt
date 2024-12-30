@@ -66,8 +66,8 @@ import org.imaginativeworld.whynotcompose.repositories.MockData
 @Composable
 fun GithubRepoItem(
     item: GithubRepo,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier
@@ -159,12 +159,6 @@ private fun GithubRepoItemPreview() {
             Column(Modifier.padding(innerPadding)) {
                 repeat(10) {
                     GithubRepoItem(
-                        modifier = Modifier.padding(
-                            start = 12.dp,
-                            top = 4.dp,
-                            end = 12.dp,
-                            bottom = 4.dp
-                        ),
                         item = if (it % 2 == 0) {
                             MockData.dummyGithubRepo
                         } else {
@@ -172,7 +166,13 @@ private fun GithubRepoItemPreview() {
                                 description = null
                             )
                         },
-                        onClick = {}
+                        onClick = {},
+                        modifier = Modifier.padding(
+                            start = 12.dp,
+                            top = 4.dp,
+                            end = 12.dp,
+                            bottom = 4.dp
+                        )
                     )
                 }
             }

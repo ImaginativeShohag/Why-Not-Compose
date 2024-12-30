@@ -252,14 +252,14 @@ fun CommentEditSheetSkeleton(
 
                     GeneralFilledButton(
                         caption = "Update Comment",
-                        icon = Icons.Rounded.Check,
                         onClick = {
                             updateComment(
                                 name,
                                 email,
                                 body
                             )
-                        }
+                        },
+                        icon = Icons.Rounded.Check
                     )
                 }
             }

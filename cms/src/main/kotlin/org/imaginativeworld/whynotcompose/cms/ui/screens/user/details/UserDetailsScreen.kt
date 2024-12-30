@@ -268,42 +268,46 @@ fun UserDetailsScreenSkeleton(
 
                     Row {
                         GeneralOutlinedButton(
-                            modifier = Modifier.weight(1f),
                             caption = "Delete",
+                            {
+                                onDeleteClick()
+                            },
+                            modifier = Modifier.weight(1f),
                             icon = Icons.Rounded.Delete
-                        ) {
-                            onDeleteClick()
-                        }
+                        )
 
                         Spacer(Modifier.width(16.dp))
 
                         GeneralOutlinedButton(
-                            modifier = Modifier.weight(1f),
                             caption = "Edit",
+                            {
+                                onEditClick()
+                            },
+                            modifier = Modifier.weight(1f),
                             icon = Icons.Rounded.Edit
-                        ) {
-                            onEditClick()
-                        }
+                        )
                     }
 
                     Row {
                         GeneralFilledButton(
-                            modifier = Modifier.weight(1f),
                             caption = "Todos",
+                            {
+                                onTodosClick()
+                            },
+                            modifier = Modifier.weight(1f),
                             icon = Icons.Rounded.Ballot
-                        ) {
-                            onTodosClick()
-                        }
+                        )
 
                         Spacer(Modifier.width(16.dp))
 
                         GeneralFilledButton(
-                            modifier = Modifier.weight(1f),
                             caption = "Posts",
+                            {
+                                onPostsClick()
+                            },
+                            modifier = Modifier.weight(1f),
                             icon = Icons.Rounded.TextSnippet
-                        ) {
-                            onPostsClick()
-                        }
+                        )
                     }
                 }
             }

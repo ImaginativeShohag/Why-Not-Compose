@@ -70,10 +70,11 @@ fun GeneralSheetAppBar(
         actions = {
             GeneralOutlinedIconButton(
                 icon = Icons.Rounded.Close,
+                {
+                    onCancelClick()
+                },
                 contentDescription = "Cancel"
-            ) {
-                onCancelClick()
-            }
+            )
 
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
         },

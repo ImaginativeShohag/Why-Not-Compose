@@ -289,12 +289,13 @@ fun PostDetailsScreenSkeleton(
                         Spacer(Modifier.weight(1f))
 
                         GeneralFilledButton(
-                            modifier = Modifier.weight(2f),
                             caption = "Comments",
+                            {
+                                onCommentsClick()
+                            },
+                            modifier = Modifier.weight(2f),
                             icon = Icons.Rounded.Chat
-                        ) {
-                            onCommentsClick()
-                        }
+                        )
 
                         Spacer(Modifier.weight(1f))
                     }

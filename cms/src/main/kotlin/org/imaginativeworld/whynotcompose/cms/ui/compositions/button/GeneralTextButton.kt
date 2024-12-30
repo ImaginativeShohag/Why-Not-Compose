@@ -48,9 +48,9 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 @Composable
 fun GeneralTextButton(
     caption: String,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    icon: ImageVector? = null,
-    onClick: () -> Unit
+    icon: ImageVector? = null
 ) {
     TextButton(
         modifier = modifier,
@@ -85,13 +85,15 @@ private fun GeneralTextButtonPreview() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 GeneralTextButton(
-                    caption = "Click Me"
-                ) {}
+                    caption = "Click Me",
+                    {}
+                )
 
                 GeneralTextButton(
                     caption = "Click Me",
+                    {},
                     icon = Icons.Outlined.Star
-                ) {}
+                )
             }
         }
     }

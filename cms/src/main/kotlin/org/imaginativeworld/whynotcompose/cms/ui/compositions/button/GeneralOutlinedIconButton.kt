@@ -44,9 +44,9 @@ import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 @Composable
 fun GeneralOutlinedIconButton(
     icon: ImageVector,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    contentDescription: String? = null,
-    onClick: () -> Unit
+    contentDescription: String? = null
 ) {
     OutlinedIconButton(
         modifier = modifier,
@@ -71,8 +71,9 @@ private fun GeneralOutlinedButtonPreview() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 GeneralOutlinedIconButton(
-                    icon = Icons.Outlined.Star
-                ) {}
+                    icon = Icons.Outlined.Star,
+                    onClick = {}
+                )
             }
         }
     }

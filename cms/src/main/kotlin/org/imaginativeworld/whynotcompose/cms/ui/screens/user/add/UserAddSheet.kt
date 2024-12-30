@@ -321,7 +321,6 @@ fun UserAddSheetSkeleton(
 
                 GeneralFilledButton(
                     caption = "Add User",
-                    icon = Icons.Rounded.Add,
                     onClick = {
                         addUser(
                             name,
@@ -329,7 +328,8 @@ fun UserAddSheetSkeleton(
                             selectedGenderOption,
                             selectedStatusOption
                         )
-                    }
+                    },
+                    icon = Icons.Rounded.Add
                 )
             }
         }

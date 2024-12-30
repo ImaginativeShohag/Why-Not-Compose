@@ -236,13 +236,13 @@ fun PostEditSheetSkeleton(
 
                     GeneralFilledButton(
                         caption = "Update Post",
-                        icon = Icons.Rounded.Check,
                         onClick = {
                             updatePost(
                                 title,
                                 body
                             )
-                        }
+                        },
+                        icon = Icons.Rounded.Check
                     )
                 }
             }

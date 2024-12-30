@@ -183,8 +183,8 @@ private fun TriStateCheckboxSample() {
 fun GeneralTriStateCheckBox(
     text: String,
     state: ToggleableState,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Row(
         modifier
@@ -211,8 +211,8 @@ fun GeneralTriStateCheckBox(
 fun GeneralCheckBox(
     text: String,
     state: Boolean,
-    modifier: Modifier = Modifier,
-    onStateChange: (Boolean) -> Unit
+    onStateChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Row(
         modifier

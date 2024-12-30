@@ -290,22 +290,24 @@ fun UserDetailsScreenSkeleton(
 
                     Row {
                         GeneralFilledButton(
-                            modifier = Modifier.weight(1f),
                             caption = "Todos",
+                            {
+                                onTodosClick()
+                            },
+                            modifier = Modifier.weight(1f),
                             icon = Icons.Rounded.Ballot
-                        ) {
-                            onTodosClick()
-                        }
+                        )
 
                         Spacer(Modifier.width(16.dp))
 
                         GeneralFilledButton(
-                            modifier = Modifier.weight(1f),
                             caption = "Posts",
+                            {
+                                onPostsClick()
+                            },
+                            modifier = Modifier.weight(1f),
                             icon = Icons.Rounded.TextSnippet
-                        ) {
-                            onPostsClick()
-                        }
+                        )
                     }
                 }
             }

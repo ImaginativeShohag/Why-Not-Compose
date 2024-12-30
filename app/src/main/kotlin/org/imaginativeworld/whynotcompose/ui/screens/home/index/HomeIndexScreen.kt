@@ -432,12 +432,12 @@ fun HomeIndexScreen(
 }
 
 @Composable
-fun ModuleButton(
+private fun ModuleButton(
     name: String,
     @DrawableRes icon: Int,
     color: Color,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Button(
         modifier = modifier

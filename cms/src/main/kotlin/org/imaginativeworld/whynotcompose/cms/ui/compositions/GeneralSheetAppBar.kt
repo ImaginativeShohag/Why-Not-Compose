@@ -51,8 +51,8 @@ import org.imaginativeworld.whynotcompose.cms.ui.compositions.button.GeneralOutl
 @Composable
 fun GeneralSheetAppBar(
     title: String,
-    modifier: Modifier = Modifier,
-    onCancelClick: () -> Unit
+    onCancelClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     TopAppBar(
         modifier = modifier,
@@ -70,10 +70,11 @@ fun GeneralSheetAppBar(
         actions = {
             GeneralOutlinedIconButton(
                 icon = Icons.Rounded.Close,
+                {
+                    onCancelClick()
+                },
                 contentDescription = "Cancel"
-            ) {
-                onCancelClick()
-            }
+            )
 
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
         },

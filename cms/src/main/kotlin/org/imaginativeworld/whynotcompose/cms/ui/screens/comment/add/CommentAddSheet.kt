@@ -232,14 +232,14 @@ fun CommentAddSheetSkeleton(
 
                 GeneralFilledButton(
                     caption = "Add Comment",
-                    icon = Icons.Rounded.Add,
                     onClick = {
                         addComment(
                             name,
                             email,
                             body
                         )
-                    }
+                    },
+                    icon = Icons.Rounded.Add
                 )
             }
         }

@@ -218,8 +218,7 @@ sealed class UIsScreen(val route: String) {
     data object UiMapView : UIsScreen("ui/mapview")
     data object UiMapViewDetails : UIsScreen("ui/mapview/details?item={item}") {
         const val PARAM_ITEM = "item"
-        fun createRoute(item: MapPlace) =
-            route.replace("{$PARAM_ITEM}", item.getJsonFromObj() ?: "")
+        fun createRoute(item: MapPlace) = route.replace("{$PARAM_ITEM}", item.getJsonFromObj() ?: "")
     }
 
     data object UiOtpCodeVerify : UIsScreen("ui/otpcodeverify")
@@ -253,8 +252,7 @@ sealed class TutorialsScreen(val route: String) {
     data object TutorialNavDataPassScreen1 :
         TutorialsScreen("tutorial/nav-data-pass/one/{data}") {
         const val PARAM_DATA = "data"
-        fun createRoute(item: DemoData) =
-            route.replace("{$PARAM_DATA}", item.getJsonFromObj() ?: "")
+        fun createRoute(item: DemoData) = route.replace("{$PARAM_DATA}", item.getJsonFromObj() ?: "")
     }
 
     data object TutorialNavDataPassScreen2 : TutorialsScreen("tutorial/nav-data-pass/two") {
@@ -266,10 +264,9 @@ sealed class TutorialsScreen(val route: String) {
         const val PARAM_ID = "id"
         const val PARAM_NAME = "name"
 
-        fun createRoute(id: Int, name: String) =
-            route
-                .replace("{$PARAM_ID}", "$id")
-                .replace("{$PARAM_NAME}", name)
+        fun createRoute(id: Int, name: String) = route
+            .replace("{$PARAM_ID}", "$id")
+            .replace("{$PARAM_NAME}", name)
     }
 
     data object TutorialNavDataPassScreen4 :
@@ -280,9 +277,8 @@ sealed class TutorialsScreen(val route: String) {
         const val ARG_NAME = "name"
         const val ARG_RANKS = "ranks"
 
-        fun createRoute(id: Int) =
-            route
-                .replace("{$PARAM_ID}", "$id")
+        fun createRoute(id: Int) = route
+            .replace("{$PARAM_ID}", "$id")
     }
 
     data object TutorialNavDataPassScreen5 :

@@ -216,13 +216,13 @@ fun PostAddSheetSkeleton(
 
                 GeneralFilledButton(
                     caption = "Add Post",
-                    icon = Icons.Rounded.Add,
                     onClick = {
                         addPost(
                             title,
                             body
                         )
-                    }
+                    },
+                    icon = Icons.Rounded.Add
                 )
             }
         }

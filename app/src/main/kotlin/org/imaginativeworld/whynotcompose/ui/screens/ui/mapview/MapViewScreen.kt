@@ -270,11 +270,11 @@ fun MapSkeleton(
         )
 
         MapEmptyView(
+            show = showEmptyView,
+            onRetryClick = onRetryClick,
             modifier = Modifier
                 .padding(innerPadding)
-                .fillMaxSize(),
-            show = showEmptyView,
-            onRetryClick = onRetryClick
+                .fillMaxSize()
         )
 
         Column(
@@ -332,10 +332,10 @@ private fun MapLoadingView(
 }
 
 @Composable
-fun MapEmptyView(
-    modifier: Modifier = Modifier,
-    show: Boolean = true,
-    onRetryClick: () -> Unit
+private fun MapEmptyView(
+    show: Boolean,
+    onRetryClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     AnimatedVisibility(
         visible = show,

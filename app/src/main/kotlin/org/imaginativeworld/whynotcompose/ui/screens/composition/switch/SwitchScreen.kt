@@ -152,8 +152,8 @@ fun SwitchScreenSkeleton(
 fun GeneralStartSwitch(
     text: String,
     state: Boolean,
-    modifier: Modifier = Modifier,
-    onStateChange: (Boolean) -> Unit
+    onStateChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Row(
         modifier

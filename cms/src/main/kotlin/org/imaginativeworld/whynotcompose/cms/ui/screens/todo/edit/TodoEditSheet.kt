@@ -259,12 +259,13 @@ fun TodoEditSheetSkeleton(
                     )
 
                     GeneralTextButton(
-                        modifier = Modifier.padding(top = 8.dp),
                         caption = "Select",
+                        {
+                            openDatePickerDialog = true
+                        },
+                        modifier = Modifier.padding(top = 8.dp),
                         icon = Icons.Rounded.CalendarMonth
-                    ) {
-                        openDatePickerDialog = true
-                    }
+                    )
                 }
 
                 ExposedDropdownMenuBox(
@@ -323,14 +324,14 @@ fun TodoEditSheetSkeleton(
 
                     GeneralFilledButton(
                         caption = "Update Todo",
-                        icon = Icons.Rounded.Check,
                         onClick = {
                             updateTodo(
                                 title,
                                 dueDate,
                                 selectedStatusOption
                             )
-                        }
+                        },
+                        icon = Icons.Rounded.Check
                     )
                 }
             }

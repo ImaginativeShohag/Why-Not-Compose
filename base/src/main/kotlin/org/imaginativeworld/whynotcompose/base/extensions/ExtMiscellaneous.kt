@@ -33,7 +33,7 @@ import android.net.Uri
 /**
  * Open given [url] to a browser.
  */
-fun Context.openUrl(url: String) {
+fun Context.openUrlElseToast(url: String) {
     try {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -43,4 +43,15 @@ fun Context.openUrl(url: String) {
 
         longToast("Cannot open the link!")
     }
+}
+
+/**
+ * Open given [url] to a browser.
+ *
+ * @throws Exception if [url] cannot be opened.
+ */
+fun Context.openUrl(url: String) {
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    startActivity(intent)
 }

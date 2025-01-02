@@ -39,6 +39,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -78,11 +79,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.ImageShader
+import androidx.compose.ui.graphics.ShaderBrush
+import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
@@ -97,7 +104,9 @@ import androidx.core.content.ContextCompat
 import org.imaginativeworld.whynotcompose.BuildConfig
 import org.imaginativeworld.whynotcompose.R
 import org.imaginativeworld.whynotcompose.base.R as BaseR
+import org.imaginativeworld.whynotcompose.base.extensions.longToast
 import org.imaginativeworld.whynotcompose.base.extensions.openUrl
+import org.imaginativeworld.whynotcompose.base.extensions.openUrlElseToast
 import org.imaginativeworld.whynotcompose.base.extensions.shadow
 import org.imaginativeworld.whynotcompose.base.extensions.toast
 import org.imaginativeworld.whynotcompose.base.models.UIThemeMode
@@ -105,6 +114,7 @@ import org.imaginativeworld.whynotcompose.base.models.humanReadable
 import org.imaginativeworld.whynotcompose.base.models.nextMode
 import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
+import org.imaginativeworld.whynotcompose.common.compose.theme.AppleSystemColor
 import org.imaginativeworld.whynotcompose.common.compose.theme.TailwindCSSColor
 import org.imaginativeworld.whynotcompose.ui.screens.MainActivity
 import org.imaginativeworld.whynotcompose.ui.screens.Screen
@@ -309,7 +319,6 @@ fun HomeIndexScreen(
                     item {
                         Button(
                             modifier = Modifier
-                                .padding(0.dp)
                                 .fillMaxWidth()
                                 .shadow(
                                     spread = 8.dp,
@@ -317,13 +326,13 @@ fun HomeIndexScreen(
                                     color = TailwindCSSColor.Pink500,
                                     radius = 8.dp
                                 ),
-                            shape = MaterialTheme.shapes.medium,
+                            shape = RoundedCornerShape(8.dp),
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = MaterialTheme.colorScheme.surface,
                                 contentColor = TailwindCSSColor.Pink500
                             ),
                             onClick = {
-                                context.openUrl("https://imaginativeshohag.github.io/")
+                                context.openUrlElseToast("https://imaginativeshohag.github.io/")
                             },
                             contentPadding = PaddingValues(8.dp),
                             elevation = null
@@ -351,6 +360,113 @@ fun HomeIndexScreen(
                                     overflow = TextOverflow.Ellipsis,
                                     maxLines = 1
                                 )
+                            }
+                        }
+                    }
+
+                    item(span = { GridItemSpan(maxCurrentLineSpan) }) {
+                        Button(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .shadow(
+                                    spread = 8.dp,
+                                    alpha = .25f,
+                                    color = TailwindCSSColor.Indigo500,
+                                    radius = 8.dp
+                                ),
+                            shape = RoundedCornerShape(8.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.surface,
+                                contentColor = TailwindCSSColor.Indigo500
+                            ),
+                            onClick = {
+                                val appPackageName = "org.imaginativeworld.bookkeeper"
+
+                                // Try to open the app if installed.
+                                val launchIntent = context.packageManager.getLaunchIntentForPackage(appPackageName)
+                                if (launchIntent != null) {
+                                    try {
+                                        context.startActivity(launchIntent)
+                                    } catch (_: Exception) {
+                                        context.longToast("Cannot open the app!")
+                                    }
+                                } else {
+                                    // Else open store to download the app.
+                                    try {
+                                        context.openUrl("market://details?id=$appPackageName")
+                                    } catch (_: Exception) {
+                                        context.openUrlElseToast("https://play.google.com/store/apps/details?id=$appPackageName")
+                                    }
+                                }
+                            },
+                            contentPadding = PaddingValues(8.dp),
+                            elevation = null
+                        ) {
+                            val image = ImageBitmap.imageResource(R.drawable.pattern_memphis)
+                            val brush = remember(image) {
+                                ShaderBrush(
+                                    ImageShader(
+                                        image,
+                                        TileMode.Repeated,
+                                        TileMode.Repeated
+                                    )
+                                )
+                            }
+
+                            Box(
+                                Modifier
+                                    .fillMaxWidth()
+                                    .height(IntrinsicSize.Min)
+                            ) {
+                                Box(
+                                    Modifier
+                                        .alpha(0.05f)
+                                        .background(brush)
+                                        .fillMaxSize()
+                                )
+
+                                Row(
+                                    Modifier
+                                        .fillMaxWidth(),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Center
+                                ) {
+                                    Image(
+                                        modifier = Modifier.size(80.dp),
+                                        painter = painterResource(id = R.drawable.ic_book_keeper),
+                                        contentDescription = "Book Keeper Icon"
+                                    )
+
+                                    Spacer(Modifier.width(8.dp))
+
+                                    Column(Modifier.fillMaxWidth()) {
+                                        Text(
+                                            modifier = Modifier,
+                                            text = "Book Keeper",
+                                            style = MaterialTheme.typography.headlineSmall.copy(
+                                                fontWeight = FontWeight.Bold,
+                                                brush = Brush.linearGradient(
+                                                    colors = listOf(
+                                                        AppleSystemColor.Purple,
+                                                        AppleSystemColor.Pink
+                                                    )
+                                                )
+                                            ),
+                                            fontWeight = FontWeight.Bold,
+                                            overflow = TextOverflow.Ellipsis,
+                                            maxLines = 1
+                                        )
+
+                                        Text(
+                                            text = "The Perfect Book Companion.",
+                                            color = MaterialTheme.colorScheme.onBackground.copy(.75f),
+                                            style = MaterialTheme.typography.bodyMedium,
+                                            fontWeight = FontWeight.Medium,
+                                            overflow = TextOverflow.Ellipsis,
+                                            maxLines = 1
+                                        )
+                                    }
+                                }
                             }
                         }
                     }
@@ -384,7 +500,7 @@ fun HomeIndexScreen(
                 ) {
                     TextButton(
                         onClick = {
-                            context.openUrl("https://www.buymeacoffee.com/ImShohag")
+                            context.openUrlElseToast("https://www.buymeacoffee.com/ImShohag")
                         },
                         shape = RoundedCornerShape(8.dp)
                     ) {
@@ -403,23 +519,24 @@ fun HomeIndexScreen(
 
                 Column(
                     Modifier
-                        .weight(1f),
+                        .weight(1f)
+                        .clip(RoundedCornerShape(8.dp))
+                        .clickable {
+                            context.openUrlElseToast(
+                                "https://github.com/ImaginativeShohag/Why-Not-Compose"
+                            )
+                        },
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
                         text = "Source Code —",
                         fontSize = 12.sp,
-                        color = MaterialTheme.colorScheme.onBackground.copy(.75f)
+                        color = MaterialTheme.colorScheme.onBackground.copy(.75f),
+                        fontWeight = FontWeight.Medium
                     )
 
                     Text(
                         modifier = Modifier
-                            .clip(RoundedCornerShape(8.dp))
-                            .clickable {
-                                context.openUrl(
-                                    "https://github.com/ImaginativeShohag/Why-Not-Compose"
-                                )
-                            }
                             .padding(horizontal = 8.dp),
                         text = "GitHub",
                         fontSize = 14.sp,
@@ -449,7 +566,7 @@ private fun ModuleButton(
                 color = color,
                 radius = 8.dp
             ),
-        shape = MaterialTheme.shapes.medium,
+        shape = RoundedCornerShape(8.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.surface,
             contentColor = color

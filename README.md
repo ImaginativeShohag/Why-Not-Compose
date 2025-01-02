@@ -1,7 +1,7 @@
 # Why Not Compose!
 
 A collection of animations, compositions, and UIs using Jetpack Compose. You can say Jetpack Compose
-cookbook or playground if you want!
+cookbook, showcase or playground if you want!
 
 Please feel free to ask for features or suggestions for improvements.
 

@@ -46,7 +46,7 @@ android {
         minSdk = BuildConfigConst.minSdk
         targetSdk = BuildConfigConst.targetSdk
         versionCode = (findProperty("android.injected.version.code") as? String)?.toIntOrNull() ?: 1
-        versionName = "7.2.2.${getCurrentDateAsYYMMDD()}" // Major.Minor.Patch.YYMMDD
+        versionName = "7.3.0.${getCurrentDateAsYYMMDD()}" // Major.Minor.Patch.YYMMDD
         vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

@@ -61,7 +61,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.imaginativeworld.whynotcompose.base.extensions.openUrl
+import org.imaginativeworld.whynotcompose.base.extensions.openUrlElseToast
 import org.imaginativeworld.whynotcompose.common.compose.compositions.AppComponent
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppTheme
 
@@ -203,7 +203,7 @@ fun DeepLinksScreenSkeleton(
                     OutlinedButton(
                         modifier = Modifier.padding(top = 16.dp),
                         onClick = {
-                            context.openUrl("app://why-not-compose")
+                            context.openUrlElseToast("app://why-not-compose")
                         }
                     ) {
                         Text(
@@ -216,7 +216,7 @@ fun DeepLinksScreenSkeleton(
                     OutlinedButton(
                         modifier = Modifier.padding(top = 8.dp),
                         onClick = {
-                            context.openUrl("http://imaginativeworld.org/why-not-compose")
+                            context.openUrlElseToast("http://imaginativeworld.org/why-not-compose")
                         }
                     ) {
                         Text(
@@ -229,7 +229,7 @@ fun DeepLinksScreenSkeleton(
                     OutlinedButton(
                         modifier = Modifier.padding(top = 8.dp),
                         onClick = {
-                            context.openUrl("https://imaginativeworld.org/why-not-compose")
+                            context.openUrlElseToast("https://imaginativeworld.org/why-not-compose")
                         }
                     ) {
                         Text(

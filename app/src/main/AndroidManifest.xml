@@ -43,6 +43,7 @@
         <intent>
             <action android:name="android.media.action.IMAGE_CAPTURE" />
         </intent>
+        <package android:name="org.imaginativeworld.bookkeeper" />
     </queries>
 
     <application

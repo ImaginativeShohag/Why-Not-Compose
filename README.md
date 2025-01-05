@@ -14,7 +14,7 @@ Please feel free to ask for features or suggestions for improvements.
 
 ## Notable Features & Libraries
 
-- MVI Pattern
+- MVVM Pattern
 - Navigation Component
 - Hilt
 - Everywhere dark mode support
@@ -24,7 +24,8 @@ Please feel free to ask for features or suggestions for improvements.
 - CI/CD
     - ktlint
     - CodeQL
-    - Publish to Google Play
+    - Baseline profile generation
+    - Fastlane: Publish to Google Play
 - Material 3 examples
 - Animated Splash Screen (Introduced in Android 12)
 
@@ -93,7 +94,6 @@ Please feel free to ask for features or suggestions for improvements.
 - [ ] List with `LazyGrid`
 - [ ] Paging with `LazyGrid`
 - [ ] Update to new storage permission
-- [x] Auto Theme mode from system
 - [ ] Create color ready for dark and light mode
 - [ ] AlarmManager example
 - [ ] Update `CheckBox` code (see example from AOSP)
@@ -102,12 +102,9 @@ Please feel free to ask for features or suggestions for improvements.
 - [x] Check map example issue: on click freeze
 - [ ] New: File browser using MediaStore
 - [ ] Get sidebar from Emudi app (https://www.youtube.com/watch?v=HNSKJIQtb4c)
-- [x] Update `popBackStack()`
 - [ ] Migrate ExoPlayer: https://developer.android.com/media/media3/exoplayer/migration-guide
 - [ ] Update all `LaunchedEffect` with lambda issue using `rememberUpdatedState`: https://developer.android.com/develop/ui/compose/side-effects#rememberupdatedstate
 - [ ] Add example for AppColorLocal from Jaber vai
-- [x] Update to coil 3
-- [x] Update ktlint
 
 # Note
 

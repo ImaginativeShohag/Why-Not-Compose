@@ -71,7 +71,7 @@ moshi = "1.15.2"
 swiperefreshlayout = "1.1.0"
 mlkitBarcodeScanning = "17.3.0"
 cameraX = "1.4.1"
-haze = "1.1.1"
+haze = "1.2.1"
 
 [bundles]
 androidx-compose-ui-test = ["androidx-compose-ui-test", "androidx-compose-ui-testManifest"]

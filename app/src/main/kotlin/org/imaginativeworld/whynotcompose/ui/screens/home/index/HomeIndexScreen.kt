@@ -41,7 +41,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -49,9 +48,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -101,6 +98,7 @@ import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import org.imaginativeworld.whynotcompose.BuildConfig
 import org.imaginativeworld.whynotcompose.R
+import org.imaginativeworld.whynotcompose.base.R as BaseR
 import org.imaginativeworld.whynotcompose.base.extensions.openUrlElseToast
 import org.imaginativeworld.whynotcompose.base.extensions.shadow
 import org.imaginativeworld.whynotcompose.base.extensions.toast
@@ -114,7 +112,6 @@ import org.imaginativeworld.whynotcompose.ui.screens.MainActivity
 import org.imaginativeworld.whynotcompose.ui.screens.Screen
 import org.imaginativeworld.whynotcompose.ui.screens.home.index.elements.BookKeeperButton
 import org.imaginativeworld.whynotcompose.ui.screens.home.index.model.MenuItem
-import org.imaginativeworld.whynotcompose.base.R as BaseR
 
 @Suppress("ktlint:compose:modifier-missing-check")
 @Composable
@@ -363,19 +360,13 @@ private fun HomeIndexScreenSkeleton(
                                 preferPerformance = true
                             )
                         }
-                        .padding(top = 24.dp)
+                        .padding(top = 24.dp, bottom = 24.dp)
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Spacer(Modifier.windowInsetsTopHeight(WindowInsets.statusBars))
-
                     Text(
                         modifier = Modifier
-                            .padding(
-                                start = 16.dp,
-                                top = 16.dp,
-                                end = 16.dp
-                            )
+                            .padding(horizontal = 16.dp)
                             .fillMaxWidth(),
                         text = stringResource(id = BaseR.string.app_name),
                         style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
@@ -387,8 +378,7 @@ private fun HomeIndexScreenSkeleton(
                             .padding(
                                 start = 16.dp,
                                 top = 4.dp,
-                                end = 16.dp,
-                                bottom = 16.dp
+                                end = 16.dp
                             ),
                         text = "Version ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
                         textAlign = TextAlign.Center,
@@ -444,7 +434,7 @@ private fun HomeIndexScreenSkeleton(
                             .clip(RoundedCornerShape(8.dp))
                             .hazeEffect(
                                 state = hazeState,
-                                style = HazeMaterials.regular(MaterialTheme.colorScheme.background)
+                                style = HazeMaterials.thin(MaterialTheme.colorScheme.background)
                             ) {
                                 inputScale = HazeInputScale.Auto
                             }

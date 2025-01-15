@@ -15,5 +15,5 @@ jobs:
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
-          ktlint_version: 1.4.1
+          ktlint_version: 1.5.0
           custom_rule_path: spotless/ktlint/ktlint-compose-0.4.22-all.jar

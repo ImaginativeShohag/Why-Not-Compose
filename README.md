@@ -83,9 +83,6 @@ Please feel free to ask for features or suggestions for improvements.
 
 # TODO
 
-- Migrate to Material 3
-    - [x] CMS
-    - [x] Full app
 - [ ] Add accompanist WebView
 - [ ] x, y, z translation simulation
 - [ ] Shadow manipulation with device gyroscope
@@ -99,7 +96,6 @@ Please feel free to ask for features or suggestions for improvements.
 - [ ] Update `CheckBox` code (see example from AOSP)
 - [ ] Month-Picker component
 - [ ] Upgrade OneSignal lib
-- [x] Check map example issue: on click freeze
 - [ ] New: File browser using MediaStore
 - [ ] Get sidebar from Emudi app (https://www.youtube.com/watch?v=HNSKJIQtb4c)
 - [ ] Migrate ExoPlayer: https://developer.android.com/media/media3/exoplayer/migration-guide
@@ -108,12 +104,11 @@ Please feel free to ask for features or suggestions for improvements.
 
 # Note
 
-- For dependency version check I am currently
-  using [Gradle Versions Plugin](https://github.com/ben-manes/gradle-versions-plugin#using-a-gradle-init-script)
-  . I added this in the Gradle init script and can check versions using the following command.
+- For dependency version check I am currently using [refreshVersions](https://github.com/Splitties/refreshVersions). 
+  Use the following command to fetch version updates.
 
 ```bash
-./gradlew dependencyUpdates
+./gradlew refreshVersions
 ```
 
 - The project using [spotless](https://github.com/diffplug/spotless/tree/main/plugin-gradle)

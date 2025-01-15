@@ -28,11 +28,22 @@ dependencyResolutionManagement {
 plugins {
     // See https://jmfayard.github.io/refreshVersions
     id("de.fayard.refreshVersions") version "0.60.5"
+
+    // See https://docs.gradle.com/develocity/gradle-plugin/current/
+    id("com.gradle.develocity").version("3.19")
 }
 
 refreshVersions {
     rejectVersionIf {
         candidate.stabilityLevel.isLessStableThan(current.stabilityLevel)
+    }
+}
+
+develocity {
+    buildScan {
+        termsOfUseUrl.set("https://gradle.com/help/legal-terms-of-use")
+        termsOfUseAgree.set("yes")
+        publishing.onlyIf { it.buildResult.failures.isNotEmpty() }
     }
 }
 

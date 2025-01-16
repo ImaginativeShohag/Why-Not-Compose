@@ -95,7 +95,7 @@ class CompositionsModuleBaselineProfile {
             // https://d.android.com/training/testing/other-components/ui-automator
 
             // Wait for home screen
-            device.waitAndFindObject(By.res("screen:home"), 5_000)
+            device.waitAndFindObject(By.res("screen:home"), 5_000, "Initial home screen")
 
             indexScreenTraverseActions(
                 moduleButtonText = "Compositions",

@@ -52,6 +52,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -77,13 +80,18 @@ enum class CarState {
 
 @Composable
 fun RunningCarScreen() {
-    val animState = MutableStateFlow(CarState.INITIAL)
+    val animState = remember { MutableStateFlow(CarState.INITIAL) }
+    var isFirstTime by remember { mutableStateOf(true) }
 
     LaunchedEffect(Unit) {
         while (true) {
             animState.value = CarState.INITIAL
 
-            delay(3000)
+            if (isFirstTime) {
+                isFirstTime = false
+            } else {
+                delay(3000)
+            }
 
             animState.value = CarState.RUNNING
 

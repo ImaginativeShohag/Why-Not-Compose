@@ -61,6 +61,7 @@ jobs:
           --info
           -Pandroid.experimental.testOptions.managedDevices.emulator.showKernelLogging=true
           -Pandroid.testoptions.manageddevices.emulator.gpu="swiftshader_indirect"
+          --scan
 
       - name: Generate baseline profile
         run: ./gradlew :app:generateBaselineProfile
@@ -69,6 +70,7 @@ jobs:
           -Pandroid.experimental.androidTest.numManagedDeviceShards=1
           -Pandroid.experimental.testOptions.managedDevices.maxConcurrentDevices=1
           --stacktrace
+          --scan
 
       - name: Build & deploy Android release
         run: bundle exec fastlane android deploy

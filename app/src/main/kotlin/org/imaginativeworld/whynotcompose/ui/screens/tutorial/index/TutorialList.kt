@@ -130,6 +130,12 @@ data class Tutorial(
                 level = TutorialLevel.Advanced
             ),
             Tutorial(
+                name = "Store",
+                description = "Example of a Content Management System.",
+                route = TutorialsScreen.TutorialStore,
+                level = TutorialLevel.Advanced
+            ),
+            Tutorial(
                 name = "Deep Link",
                 description = "Example of Deep Link.",
                 route = TutorialsScreen.TutorialDeepLink,

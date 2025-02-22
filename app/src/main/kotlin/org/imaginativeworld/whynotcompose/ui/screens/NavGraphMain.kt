@@ -50,6 +50,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.example.store.ui.screen.StoreMainScreen
 import org.imaginativeworld.whynotcompose.base.extensions.getJsonFromObj
 import org.imaginativeworld.whynotcompose.base.extensions.getObjFromJson
 import org.imaginativeworld.whynotcompose.base.extensions.navArg
@@ -239,6 +240,7 @@ sealed class TutorialsScreen(val route: String) {
     data object TutorialTicTacToe : TutorialsScreen("tutorial/tic-tac-toe")
     data object TutorialExoPlayer : TutorialsScreen("tutorial/exoplayer")
     data object TutorialCMS : TutorialsScreen("tutorial/cms")
+    data object TutorialStore : TutorialsScreen("tutorial/store")
     data object TutorialDeepLink : TutorialsScreen("tutorial/deep-link")
 
     // ================================================================
@@ -975,6 +977,15 @@ private fun NavGraphBuilder.addTutorialIndexScreen(
 
     composable(TutorialsScreen.TutorialCMS.route) {
         CMSMainScreen(
+            updateUiThemeMode = updateUiThemeMode,
+            goBack = {
+                navController.popBackStackOrIgnore()
+            }
+        )
+    }
+
+    composable(TutorialsScreen.TutorialStore.route) {
+        StoreMainScreen(
             updateUiThemeMode = updateUiThemeMode,
             goBack = {
                 navController.popBackStackOrIgnore()

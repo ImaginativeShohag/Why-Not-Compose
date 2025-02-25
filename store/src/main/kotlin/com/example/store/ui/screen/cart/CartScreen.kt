@@ -11,17 +11,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
@@ -29,7 +23,6 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -37,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.store.theme.StoreAppTheme
 import com.example.store.ui.compositions.CartItemCard
+import com.example.store.ui.compositions.StoreAppBar
 import com.example.store.ui.screen.productdetails.Product
 import com.example.store.ui.screen.productdetails.dummyProducts
 
@@ -66,20 +60,11 @@ fun CartScreenSkeleton(
 ) {
     Scaffold(
         topBar = {
-//            TopAppBar(
-//                title = {},
-//                navigationIcon = {},
-//                actions = {
-//                    IconButton(onClick = goBack) {
-//                        Icon(Icons.Default.Menu, contentDescription = "Back")
-//                    }
-//                }
-//            )
-//            StoreAppBar(
-//                title = "Store Overflow",
-//                goBack = goBack,
-//                toggleUIMode = toggleUIMode
-//            )
+            StoreAppBar(
+                title = "Cart",
+                goBack = goBack,
+                toggleUIMode = toggleUIMode
+            )
         }
     ) { paddingValues ->
         val context = LocalContext.current
@@ -92,13 +77,6 @@ fun CartScreenSkeleton(
                 .padding(paddingValues)
                 .padding(horizontal = 16.dp)
         ) {
-            Text(
-                text = "Cart",
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-
             Column(
                 modifier = Modifier
                     .weight(1f)
@@ -109,7 +87,7 @@ fun CartScreenSkeleton(
                     Text(
                         text = "Your cart is empty",
                         fontSize = 18.sp,
-                        color = Color.Gray
+                        color = MaterialTheme.colorScheme.outline
                     )
                 } else {
                     cartItems.forEach { product ->
@@ -140,13 +118,13 @@ fun CartScreenSkeleton(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "Total:",
-                        fontSize = 18.sp,
+                        text = "Total",
+                        style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
                         text = "$${"%.2f".format(totalPrice)}",
-                        fontSize = 18.sp,
+                        style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold
                     )
                 }
@@ -160,13 +138,13 @@ fun CartScreenSkeleton(
                     },
                     modifier = Modifier
                         .fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Blue),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                     shape = MaterialTheme.shapes.medium
                 ) {
                     Text(
                         text = "Place Order",
-                        fontSize = 18.sp,
-                        color = Color.White
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.surface
                     )
                 }
             }

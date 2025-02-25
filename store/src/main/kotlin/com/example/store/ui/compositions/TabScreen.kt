@@ -15,7 +15,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -33,6 +32,7 @@ import com.example.store.ui.screen.productdetails.dummyProducts
 @Composable
 fun TabScreen(
     userName: String,
+    onProfileClick: () -> Unit,
     product: List<Product>,
     goBack: () -> Unit,
     toggleUIMode: () -> Unit,
@@ -81,6 +81,7 @@ fun TabScreen(
             composable(Screens.Home.route) {
                 StoreHomeScreen(
                     userName = userName,
+                    onProfileClick = onProfileClick,
                     toggleUIMode = toggleUIMode,
                     products = product,
                     onProductClick = onProductClick,
@@ -130,6 +131,7 @@ private fun TabScreenPreview() {
     StoreAppTheme {
         TabScreen(
             userName = "John Doe",
+            onProfileClick = {},
             product = dummyProducts,
             goBack = {},
             toggleUIMode = {},

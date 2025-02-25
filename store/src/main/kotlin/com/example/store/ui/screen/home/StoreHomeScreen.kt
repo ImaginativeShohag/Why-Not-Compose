@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.example.store.theme.StoreAppTheme
 import com.example.store.ui.compositions.ProductItem
+import com.example.store.ui.compositions.StoreAppBar
 import com.example.store.ui.screen.categories.Category
 import com.example.store.ui.screen.categories.categories
 import com.example.store.ui.screen.productdetails.Product
@@ -48,6 +49,7 @@ import com.example.store.ui.screen.productdetails.dummyProducts
 @Composable
 fun StoreHomeScreen(
     userName: String,
+    onProfileClick: () -> Unit,
     onCategoryClick: (Category) -> Unit,
     products: List<Product>,
     onProductClick: (Product) -> Unit,
@@ -55,6 +57,7 @@ fun StoreHomeScreen(
 ) {
     StoreHomeSkeleton(
         userName = userName,
+        onProfileClick = onProfileClick,
         categories = categories,
         products = products,
         onCategoryClick = onCategoryClick,
@@ -67,6 +70,7 @@ fun StoreHomeScreen(
 @Composable
 fun StoreHomeSkeleton(
     userName: String,
+    onProfileClick: () -> Unit,
     categories: List<Category>,
     products: List<Product>,
     onCategoryClick: (Category) -> Unit,
@@ -74,11 +78,11 @@ fun StoreHomeSkeleton(
     toggleUIMode: () -> Unit
 ) {
     Scaffold(
-//        topBar = {
-//            StoreAppBar(
-//                toggleUIMode = toggleUIMode
-//            )
-//        },
+        topBar = {
+            StoreAppBar(
+                toggleUIMode = toggleUIMode
+            )
+        },
         contentWindowInsets = WindowInsets(0.dp, 0.dp, 0.dp, 0.dp)
     ) { innerPadding ->
         Column(
@@ -95,8 +99,7 @@ fun StoreHomeSkeleton(
             ) {
                 Text(
                     text = "Welcome, $userName",
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontSize = 24.sp,
+                    style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                 )
@@ -105,8 +108,11 @@ fun StoreHomeSkeleton(
                     painter = painterResource(org.imaginativeworld.whynotcompose.common.compose.R.drawable.store),
                     contentDescription = "Profile Image",
                     modifier = Modifier
-                        .size(30.dp)
-                        .clip(CircleShape),
+                        .size(40.dp)
+                        .clip(CircleShape)
+                        .clickable {
+                            onProfileClick()
+                        },
                     contentScale = ContentScale.Crop
                 )
             }
@@ -194,7 +200,7 @@ fun CategoryItem(
 
             Text(
                 text = category.name,
-                fontSize = 14.sp,
+                style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
             )
@@ -239,6 +245,7 @@ private fun StoreHomeScreenPreview() {
     StoreAppTheme {
         StoreHomeScreen(
             userName = "John Doe",
+            onProfileClick = {},
             onCategoryClick = {},
             products = dummyProducts,
             onProductClick = {},

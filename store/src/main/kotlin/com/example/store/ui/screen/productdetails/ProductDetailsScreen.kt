@@ -89,16 +89,15 @@ fun ProductDetailsScreenSkeleton(
 
             Text(
                 text = product.title,
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(bottom = 8.dp),
-                fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 maxLines = 1
-
             )
 
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Start
             ) {
                 Icon(
                     Icons.Default.Star,
@@ -116,8 +115,7 @@ fun ProductDetailsScreenSkeleton(
 
             Text(
                 text = product.description,
-                style = MaterialTheme.typography.bodyMedium,
-                fontSize = 16.sp
+                style = MaterialTheme.typography.bodyLarge,
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -129,10 +127,9 @@ fun ProductDetailsScreenSkeleton(
             ) {
                 Text(
                     text = "$${product.price}",
-                    style = MaterialTheme.typography.bodySmall,
+                    style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.error,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp
+                    fontWeight = FontWeight.Bold
                 )
 
                 Row(
@@ -159,8 +156,7 @@ fun ProductDetailsScreenSkeleton(
 
                     Text(
                         text = "$quantity",
-                        style = MaterialTheme.typography.bodySmall,
-                        fontSize = 16.sp,
+                        style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier
                             .padding(horizontal = 8.dp)
                     )

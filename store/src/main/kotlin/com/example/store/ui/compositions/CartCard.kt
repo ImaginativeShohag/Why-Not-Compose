@@ -66,6 +66,7 @@ fun CartItemCard(
                 modifier = Modifier
                     .width(80.dp)
                     .height(80.dp)
+                    .clip(RoundedCornerShape(8.dp))
                     .background(Color.Gray)
             )
 
@@ -77,13 +78,13 @@ fun CartItemCard(
             ) {
                 Text(
                     product.title,
-                    fontSize = 16.sp,
+                    style = MaterialTheme.typography.bodyLarge,
                     maxLines = 1,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
                     text = "$${product.price}",
-                    fontSize = 14.sp,
+                    style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Bold
                 )
             }
@@ -112,7 +113,7 @@ fun CartItemCard(
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(8.dp))
-                            .background(Color.Blue.copy(alpha = .7f))
+                            .background(MaterialTheme.colorScheme.primary.copy(alpha = .7f))
                             .padding(4.dp),
 //                        .border(1.dp, MaterialTheme.colorScheme.surface),
                         contentAlignment = Alignment.Center
@@ -127,8 +128,7 @@ fun CartItemCard(
 
                 Text(
                     text = "$quantity",
-                    style = MaterialTheme.typography.bodySmall,
-                    fontSize = 16.sp,
+                    style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(horizontal = 8.dp)
                 )
@@ -142,7 +142,7 @@ fun CartItemCard(
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(8.dp))
-                            .background(Color.Blue.copy(alpha = .7f))
+                            .background(MaterialTheme.colorScheme.primary.copy(alpha = .7f))
                             .padding(4.dp)
                     ) {
                         Icon(
@@ -156,7 +156,7 @@ fun CartItemCard(
 
             Text(
                 text = "$$totalPrice",
-                fontSize = 14.sp,
+                style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.End,
                 color = MaterialTheme.colorScheme.error,

@@ -95,14 +95,14 @@ fun LoginSkeleton(
                 ) {
                     Text(
                         text = "Welcome to",
-                        fontSize = 18.sp,
+                        style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.surface,
-                        fontWeight = FontWeight.Medium
+                        fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = "Store Overflow",
-                        fontSize = 26.sp,
+                        style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.surface
                     )
@@ -170,6 +170,7 @@ fun LoginSkeleton(
                     modifier = Modifier
                         .fillMaxWidth()
                 )
+
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Column(
@@ -182,7 +183,7 @@ fun LoginSkeleton(
                             .wrapContentSize(),
                         enabled = true,
                         colors = ButtonColors(
-                            containerColor = Color.Blue.copy(alpha = 0.7f),
+                            containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
                             contentColor = MaterialTheme.colorScheme.surface,
                             disabledContainerColor = MaterialTheme.colorScheme.outlineVariant,
                             disabledContentColor = MaterialTheme.colorScheme.onPrimaryContainer
@@ -191,7 +192,7 @@ fun LoginSkeleton(
                     ) {
                         Text(
                             text = "Login",
-                            fontSize = 18.sp,
+                            style = MaterialTheme.typography.titleMedium,
                             modifier = Modifier
                                 .padding(
                                     vertical = 6.dp,

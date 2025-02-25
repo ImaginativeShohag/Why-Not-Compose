@@ -14,8 +14,11 @@ import com.example.store.ui.compositions.TabScreen
 import com.example.store.ui.screen.categories.CategoriesScreen
 import com.example.store.ui.screen.categorieswiseproduct.CategoriesWiseProductScreen
 import com.example.store.ui.screen.home.StoreHomeScreen
+import com.example.store.ui.screen.order.Order
+import com.example.store.ui.screen.order.OrdersScreen
 import com.example.store.ui.screen.productdetails.ProductDetailsScreen
 import com.example.store.ui.screen.productdetails.dummyProducts
+import com.example.store.ui.screen.profile.ProfileScreen
 import com.example.store.ui.screen.splash.StoreSplashScreen
 import kotlinx.serialization.Serializable
 import org.imaginativeworld.whynotcompose.base.models.UIThemeMode
@@ -64,6 +67,18 @@ sealed class DetailsScreen {
 sealed class CartScreen {
     @Serializable
     object Cart
+}
+
+@Serializable
+sealed class ProfilesScreen {
+    @Serializable
+    object Profile
+}
+
+@Serializable
+sealed class OrderScreen {
+    @Serializable
+    object Order
 }
 
 @Composable
@@ -121,6 +136,9 @@ private fun NavGraphBuilder.addStoreScreens(
 
         TabScreen(
             userName = "John Doe",
+            onProfileClick = {
+                navController.navigate(ProfilesScreen.Profile)
+            },
             product = dummyProducts,
             goBack = {
                 navController.popBackStack()
@@ -145,6 +163,9 @@ private fun NavGraphBuilder.addStoreScreens(
 
         StoreHomeScreen(
             userName = "John Doe",
+            onProfileClick = {
+                navController.navigate(ProfilesScreen.Profile)
+            },
             toggleUIMode = {
                 updateUiThemeMode(isDarkMode.nextMode())
             },
@@ -205,6 +226,44 @@ private fun NavGraphBuilder.addStoreScreens(
             },
             toggleUIMode = {
                 updateUiThemeMode(isDarkMode.nextMode())
+            }
+        )
+    }
+
+    composable<ProfilesScreen.Profile> {
+        val isDarkMode by UIThemeController.uiThemeMode.collectAsState()
+        ProfileScreen(
+            goBack = {},
+            onOrdersClick = {
+                navController.navigate(OrderScreen.Order) {
+                }
+            },
+            onSignOutClick = {
+                navController.navigate(AuthScreen.Login) {
+                    popUpTo(MainScreen.TabScreen) { inclusive = true }
+                }
+            },
+            toggleUIMode = {
+                updateUiThemeMode(isDarkMode.nextMode())
+            }
+        )
+    }
+
+    composable<OrderScreen.Order> {
+        val isDarkMode by UIThemeController.uiThemeMode.collectAsState()
+        OrdersScreen(
+            orders = listOf(
+                Order(
+                    id = 7,
+                    date = "01 Mar 2020",
+                    products = listOf(
+                        dummyProducts[0],
+                        dummyProducts[1]
+                    )
+                )
+            ),
+            goBack = {
+                navController.popBackStack()
             }
         )
     }

@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -25,7 +26,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -33,31 +33,25 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.store.ui.compositions.StoreAppBar
 import org.imaginativeworld.whynotcompose.store.R
 
 @Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun ProfileScreen(
     goBack: () -> Unit,
+    toggleUIMode: () -> Unit,
     onOrdersClick: () -> Unit,
     onSignOutClick: () -> Unit
 ) {
     Scaffold(
-//        topBar = {
-//            TopAppBar(
-//                title = { Text(text = "Profile") },
-//                navigationIcon = {
-//                    IconButton(onClick = goBack) {
-//                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
-//                    }
-//                },
-//                actions = {
-//                    TextButton(onClick = goBack) {
-//                        Text(text = "Done", color = Color.Blue)
-//                    }
-//                }
-//            )
-//        }
+        topBar = {
+            StoreAppBar(
+                title = "Profile",
+                goBack = goBack,
+                toggleUIMode = toggleUIMode
+            )
+        }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -95,7 +89,7 @@ fun ProfileScreen(
                 Text(
                     text = "DETAILS",
                     fontSize = 14.sp,
-                    color = Color.Gray,
+                    color = MaterialTheme.colorScheme.outline,
                     textAlign = TextAlign.Start,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -110,11 +104,38 @@ fun ProfileScreen(
                         .background(MaterialTheme.colorScheme.surfaceContainer)
                         .padding(16.dp)
                 ) {
-                    ProfileInfoRow(title = "Name", value = "John Doe")
-                    ProfileInfoRow(title = "Username", value = "johnd")
-                    ProfileInfoRow(title = "Email", value = "john@gmail.com")
-                    ProfileInfoRow(title = "Phone", value = "1-570-236-7033")
-                    ProfileInfoRow(title = "Address", value = "New Road, Kilcoole")
+                    ProfileInfoRow(
+                        title = "Name",
+                        value = "John Doe"
+                    )
+
+                    HorizontalDivider()
+
+                    ProfileInfoRow(
+                        title = "Username",
+                        value = "johnd"
+                    )
+
+                    HorizontalDivider()
+
+                    ProfileInfoRow(
+                        title = "Email",
+                        value = "john@gmail.com"
+                    )
+
+                    HorizontalDivider()
+
+                    ProfileInfoRow(
+                        title = "Phone",
+                        value = "1-570-236-7033"
+                    )
+
+                    HorizontalDivider()
+
+                    ProfileInfoRow(
+                        title = "Address",
+                        value = "New Road, Kilcoole"
+                    )
                 }
             }
 
@@ -130,8 +151,8 @@ fun ProfileScreen(
             ) {
                 Text(
                     text = "Orders",
-                    color = Color.Blue,
-                    fontSize = 18.sp
+                    color = MaterialTheme.colorScheme.primary,
+                    style = MaterialTheme.typography.titleMedium
                 )
             }
 
@@ -148,7 +169,7 @@ fun ProfileScreen(
                 Text(
                     text = "Sign Out",
                     color = MaterialTheme.colorScheme.error,
-                    fontSize = 18.sp
+                    style = MaterialTheme.typography.titleMedium
                 )
             }
         }
@@ -157,7 +178,10 @@ fun ProfileScreen(
 
 @Suppress("ktlint:compose:modifier-missing-check")
 @Composable
-fun ProfileInfoRow(title: String, value: String) {
+fun ProfileInfoRow(
+    title: String,
+    value: String
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -166,11 +190,11 @@ fun ProfileInfoRow(title: String, value: String) {
     ) {
         Text(
             text = title,
-            fontSize = 16.sp
+            style = MaterialTheme.typography.bodyMedium
         )
         Text(
             text = value,
-            fontSize = 16.sp,
+            style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.Medium
         )
     }
@@ -181,6 +205,7 @@ fun ProfileInfoRow(title: String, value: String) {
 private fun ProfileScreenPreview() {
     ProfileScreen(
         goBack = {},
+        toggleUIMode = {},
         onOrdersClick = {},
         onSignOutClick = {}
     )

@@ -32,12 +32,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.example.store.theme.StoreAppTheme
 import com.example.store.ui.screen.productdetails.Product
@@ -70,14 +70,16 @@ fun ProductItem(
                 modifier = Modifier
                     .width(150.dp)
                     .height(150.dp)
-                    .background(color = MaterialTheme.colorScheme.outline)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(color = MaterialTheme.colorScheme.outline),
+                contentScale = ContentScale.Crop
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
                 text = product.title,
-                fontSize = 14.sp,
+                style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Start,
                 fontWeight = FontWeight.Bold,
                 maxLines = 1,
@@ -87,7 +89,7 @@ fun ProductItem(
             )
             Text(
                 text = "$${product.price}",
-                fontSize = 16.sp,
+                style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.error,
                 textAlign = TextAlign.Start,
                 fontWeight = FontWeight.Bold,
@@ -126,7 +128,7 @@ fun ProductItem(
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(8.dp))
-                        .background(Color.Blue.copy(alpha = .7f))
+                        .background(MaterialTheme.colorScheme.primary.copy(alpha = .7f))
                         .padding(4.dp),
 //                        .border(1.dp, MaterialTheme.colorScheme.surface),
                     contentAlignment = Alignment.Center
@@ -141,8 +143,7 @@ fun ProductItem(
 
             Text(
                 text = "$quantity",
-                style = MaterialTheme.typography.bodySmall,
-                fontSize = 16.sp,
+                style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(horizontal = 8.dp)
             )
@@ -153,7 +154,7 @@ fun ProductItem(
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(8.dp))
-                        .background(Color.Blue.copy(alpha = .7f))
+                        .background(MaterialTheme.colorScheme.primary.copy(alpha = .7f))
                         .padding(4.dp),
                     contentAlignment = Alignment.Center
                 ) {

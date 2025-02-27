@@ -71,7 +71,7 @@ fun ProductItem(
                     .width(150.dp)
                     .height(150.dp)
                     .clip(RoundedCornerShape(12.dp))
-                    .background(color = MaterialTheme.colorScheme.surface)
+                    .background(Color.White)
             )
 
             Spacer(modifier = Modifier.height(8.dp))

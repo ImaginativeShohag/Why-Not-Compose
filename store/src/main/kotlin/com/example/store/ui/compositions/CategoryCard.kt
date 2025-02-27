@@ -1,10 +1,13 @@
 package com.example.store.ui.compositions
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -13,19 +16,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.example.store.theme.StoreAppTheme
 import com.example.store.ui.screen.categories.Category
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
-import dev.chrisbanes.haze.hazeChild
 
 @Composable
 fun CategoryCard(
@@ -41,10 +42,9 @@ fun CategoryCard(
             .clickable {
                 onClick()
             }
-            .haze(state = hazeState)
     ) {
-        AsyncImage(
-            model = category.imageUrl,
+        Image(
+            painter = painterResource(id = org.imaginativeworld.whynotcompose.common.compose.R.drawable.store),
             contentDescription = "",
             contentScale = ContentScale.Crop,
             modifier = Modifier.matchParentSize()
@@ -52,40 +52,27 @@ fun CategoryCard(
 
         Box(
             modifier = Modifier
-                .matchParentSize()
-                .background(
-                    Brush.verticalGradient(
-                        colors = listOf(
-                            Color.Black.copy(alpha = 0.3f),
-                            Color.Transparent
-                        )
-                    )
-                )
-                .clip(RoundedCornerShape(12.dp))
-                .hazeChild(state = hazeState)
-        )
-        Text(
-            text = category.name,
-           style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = Modifier
+                .wrapContentSize()
+                .clip(RoundedCornerShape(20))
                 .align(Alignment.Center)
-                .hazeChild(
-                    state = hazeState
-                )
-        )
-//        Box {
-//            LazyColumn(
-//                modifier = Modifier
-//                    .fillMaxSize()
-//                    // Pass it the HazeState we stored above
-//                    .hazeSource(state = hazeState)
-//            ) {
-//                // todo
-//            }}
+                .padding(16.dp)
+                .clip(RoundedCornerShape(20))
+                .background(MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.7f))
+                .haze(state = hazeState),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = category.name,
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.surface,
+                modifier = Modifier
+                    .padding(12.dp)
+                    .align(Alignment.Center)
+            )
+        }
     }
-
 }
 
 @PreviewLightDark
@@ -95,7 +82,7 @@ private fun CategoryCardPreview() {
         CategoryCard(
             category = Category(
                 id = 1,
-                name = "Electronics",
+                name = " Women's Clothing",
                 imageUrl = ""
             )
         )

@@ -42,8 +42,8 @@ fun CategoriesWiseProductScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            items(products.size) { index ->
-                val product = products[index]
+            items(dummyProducts.size) { index ->
+                val product = dummyProducts[index]
                 ProductItem(
                     product = product,
                     onClick = { onProductClick(product) },

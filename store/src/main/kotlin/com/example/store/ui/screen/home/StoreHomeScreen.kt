@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -28,6 +30,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,7 +42,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.example.store.theme.StoreAppTheme
 import com.example.store.ui.compositions.ProductItem
@@ -45,11 +50,13 @@ import com.example.store.ui.screen.categories.Category
 import com.example.store.ui.screen.categories.categories
 import com.example.store.ui.screen.productdetails.Product
 import com.example.store.ui.screen.productdetails.dummyProducts
+import com.example.store.ui.screen.profile.ProfileScreen
 
 @Composable
 fun StoreHomeScreen(
     userName: String,
-    onProfileClick: () -> Unit,
+    onOrderClick: () -> Unit,
+    onSignOutClick: () -> Unit,
     onCategoryClick: (Category) -> Unit,
     products: List<Product>,
     onProductClick: (Product) -> Unit,
@@ -57,7 +64,8 @@ fun StoreHomeScreen(
 ) {
     StoreHomeSkeleton(
         userName = userName,
-        onProfileClick = onProfileClick,
+        onOrdersClick = onOrderClick,
+        onSignOutClick = onSignOutClick,
         categories = categories,
         products = products,
         onCategoryClick = onCategoryClick,
@@ -70,13 +78,16 @@ fun StoreHomeScreen(
 @Composable
 fun StoreHomeSkeleton(
     userName: String,
-    onProfileClick: () -> Unit,
+    onOrdersClick: () -> Unit,
+    onSignOutClick: () -> Unit,
     categories: List<Category>,
     products: List<Product>,
     onCategoryClick: (Category) -> Unit,
     onProductClick: (Product) -> Unit,
     toggleUIMode: () -> Unit
 ) {
+    var showProfileSheet by remember { mutableStateOf(false) }
+
     Scaffold(
         topBar = {
             StoreAppBar(
@@ -89,79 +100,108 @@ fun StoreHomeSkeleton(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
-                .padding(16.dp)
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "Welcome, $userName",
-                    style = MaterialTheme.typography.headlineSmall,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                )
-
-                Image(
-                    painter = painterResource(org.imaginativeworld.whynotcompose.common.compose.R.drawable.store),
-                    contentDescription = "Profile Image",
-                    modifier = Modifier
-                        .size(40.dp)
-                        .clip(CircleShape)
-                        .clickable {
-                            onProfileClick()
-                        },
-                    contentScale = ContentScale.Crop
-                )
-            }
-
-            Spacer(modifier = Modifier.height(30.dp))
-
-            LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                items(homeScreenImages.size) {
-                    HomeScreenImage(
-                        image = homeScreenImages[it],
-                        modifier = Modifier
-                            .width(300.dp)
-                            .height(150.dp)
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                items(categories.size) {
-                    CategoryItem(
-                        category = categories[it],
-                        modifier = Modifier,
-                        onClick = {
-                            onCategoryClick(categories[it])
-                        }
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
+                item(span = { GridItemSpan(maxCurrentLineSpan) }) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .padding(top=16.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = "Welcome, $userName",
+                            style = MaterialTheme.typography.headlineSmall,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                        )
+
+                        Image(
+                            painter = painterResource(org.imaginativeworld.whynotcompose.common.compose.R.drawable.store),
+                            contentDescription = "",
+                            modifier = Modifier
+                                .size(40.dp)
+                                .clip(CircleShape)
+                                .clickable {
+                                    showProfileSheet = true
+                                },
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                }
+
+                item(span = { GridItemSpan(maxCurrentLineSpan) }) {
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        contentPadding = PaddingValues(
+                            horizontal = 16.dp
+                        )
+                    ) {
+                        items(homeScreenImages.size) {
+                            HomeScreenImage(
+                                image = homeScreenImages[it],
+                                modifier = Modifier
+                                    .width(300.dp)
+                                    .height(150.dp)
+                                    .background(MaterialTheme.colorScheme.surface)
+                            )
+                        }
+                    }
+                }
+
+                item(span = { GridItemSpan(maxCurrentLineSpan) }) {
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        contentPadding = PaddingValues(
+                            horizontal = 16.dp
+                        )
+                    ) {
+                        items(categories.size) {
+                            CategoryItem(
+                                category = categories[it],
+                                modifier = Modifier,
+                                onClick = {
+                                    onCategoryClick(categories[it])
+                                }
+                            )
+                        }
+                    }
+                }
+
                 items(products.size) { index ->
                     ProductItem(
                         product = products[index],
                         onClick = {
                             onProductClick(products[index])
-                        }
+                        },
+                        modifier = Modifier
+                            .then(
+                                if (index % 2 == 0) {
+                                    Modifier.padding(start = 16.dp)
+                                } else {
+                                    Modifier.padding(end = 16.dp)
+                                }
+
+                            )
+
                     )
                 }
             }
         }
+    }
+    if (showProfileSheet) {
+        ProfileScreen(
+            onDismiss = { showProfileSheet = false },
+            onOrdersClick = onOrdersClick,
+            onSignOutClick = onSignOutClick
+        )
     }
 }
 
@@ -245,7 +285,8 @@ private fun StoreHomeScreenPreview() {
     StoreAppTheme {
         StoreHomeScreen(
             userName = "John Doe",
-            onProfileClick = {},
+            onOrderClick = {},
+            onSignOutClick = {},
             onCategoryClick = {},
             products = dummyProducts,
             onProductClick = {},

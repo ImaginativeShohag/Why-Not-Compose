@@ -70,9 +70,8 @@ fun ProductItem(
                 modifier = Modifier
                     .width(150.dp)
                     .height(150.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(color = MaterialTheme.colorScheme.outline),
-                contentScale = ContentScale.Crop
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(color = MaterialTheme.colorScheme.surface)
             )
 
             Spacer(modifier = Modifier.height(8.dp))

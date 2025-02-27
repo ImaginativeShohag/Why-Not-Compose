@@ -39,6 +39,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.store.theme.StoreAppTheme
+import com.example.store.ui.compositions.StoreAppBar
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppleSystemColor
 
 @Composable
@@ -70,11 +71,12 @@ fun LoginSkeleton(
             AppleSystemColor.Blue
         )
     )
+
     Scaffold(
         topBar = {
-//            StoreAppBar(
-//                toggleUIMode = toggleUIMode
-//            )
+            StoreAppBar(
+                toggleUIMode = toggleUIMode
+            )
         }
     ) { innerPadding ->
         Column(

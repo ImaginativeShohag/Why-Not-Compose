@@ -13,9 +13,11 @@ import androidx.navigation.toRoute
 import com.example.store.ui.compositions.TabScreen
 import com.example.store.ui.screen.categories.CategoriesScreen
 import com.example.store.ui.screen.categorieswiseproduct.CategoriesWiseProductScreen
+import com.example.store.ui.screen.checkout.CheckOutScreen
 import com.example.store.ui.screen.home.StoreHomeScreen
 import com.example.store.ui.screen.order.Order
 import com.example.store.ui.screen.order.OrdersScreen
+import com.example.store.ui.screen.order.dummyOrders
 import com.example.store.ui.screen.productdetails.ProductDetailsScreen
 import com.example.store.ui.screen.productdetails.dummyProducts
 import com.example.store.ui.screen.profile.ProfileScreen
@@ -81,6 +83,12 @@ sealed class OrderScreen {
     object Order
 }
 
+@Serializable
+sealed class CheckoutScreen {
+    @Serializable
+    object Checkout
+}
+
 @Composable
 fun StoreNavHost(
     navController: NavHostController,
@@ -136,8 +144,15 @@ private fun NavGraphBuilder.addStoreScreens(
 
         TabScreen(
             userName = "John Doe",
-            onProfileClick = {
-                navController.navigate(ProfilesScreen.Profile)
+            onOrderClick = {
+                navController.navigate(OrderScreen.Order) {
+                    popUpTo(MainScreen.TabScreen) { inclusive = true }
+                }
+            },
+            onSignOutClick = {
+                navController.navigate(AuthScreen.Login) {
+                    popUpTo(MainScreen.TabScreen) { inclusive = true }
+                }
             },
             product = dummyProducts,
             goBack = {
@@ -153,7 +168,7 @@ private fun NavGraphBuilder.addStoreScreens(
                 navController.navigate(CategoriesWiseProducts.CategoriesWiseProduct(it.name))
             },
             onCheckout = {
-                navController.navigate(MainScreen.TabScreen)
+                navController.navigate(CheckoutScreen.Checkout)
             }
         )
     }
@@ -163,8 +178,15 @@ private fun NavGraphBuilder.addStoreScreens(
 
         StoreHomeScreen(
             userName = "John Doe",
-            onProfileClick = {
-                navController.navigate(ProfilesScreen.Profile)
+            onOrderClick = {
+                navController.navigate(OrderScreen.Order) {
+                    popUpTo(MainScreen.TabScreen) { inclusive = true }
+                }
+            },
+            onSignOutClick = {
+                navController.navigate(AuthScreen.Login) {
+                    popUpTo(MainScreen.TabScreen) { inclusive = true }
+                }
             },
             toggleUIMode = {
                 updateUiThemeMode(isDarkMode.nextMode())
@@ -231,20 +253,19 @@ private fun NavGraphBuilder.addStoreScreens(
     }
 
     composable<ProfilesScreen.Profile> {
-        val isDarkMode by UIThemeController.uiThemeMode.collectAsState()
         ProfileScreen(
-            goBack = {},
+            onDismiss = {
+                navController.popBackStack()
+            },
             onOrdersClick = {
                 navController.navigate(OrderScreen.Order) {
+                    popUpTo(MainScreen.TabScreen) { inclusive = true }
                 }
             },
             onSignOutClick = {
                 navController.navigate(AuthScreen.Login) {
                     popUpTo(MainScreen.TabScreen) { inclusive = true }
                 }
-            },
-            toggleUIMode = {
-                updateUiThemeMode(isDarkMode.nextMode())
             }
         )
     }
@@ -252,18 +273,27 @@ private fun NavGraphBuilder.addStoreScreens(
     composable<OrderScreen.Order> {
         val isDarkMode by UIThemeController.uiThemeMode.collectAsState()
         OrdersScreen(
-            orders = listOf(
-                Order(
-                    id = 7,
-                    date = "01 Mar 2020",
-                    products = listOf(
-                        dummyProducts[0],
-                        dummyProducts[1]
-                    )
-                )
-            ),
+            orders = dummyOrders,
+            toggleUIMode = {
+                updateUiThemeMode(isDarkMode.nextMode())
+            },
             goBack = {
-                navController.popBackStack()
+                navController.navigate(MainScreen.TabScreen)
+            }
+        )
+    }
+
+    composable<CheckoutScreen.Checkout> {
+        val isDarkMode by UIThemeController.uiThemeMode.collectAsState()
+        CheckOutScreen(
+            goBack = {
+                navController.navigate(MainScreen.TabScreen)
+            },
+            toggleUIMode = {
+                updateUiThemeMode(isDarkMode.nextMode())
+            },
+            goToTab = {
+                navController.navigate(MainScreen.TabScreen)
             }
         )
     }

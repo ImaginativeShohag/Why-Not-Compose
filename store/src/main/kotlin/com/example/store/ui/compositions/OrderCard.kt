@@ -44,7 +44,7 @@ fun OrderCard(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
-            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .background(MaterialTheme.colorScheme.onBackground)
             .padding(16.dp)
     ) {
         Row(

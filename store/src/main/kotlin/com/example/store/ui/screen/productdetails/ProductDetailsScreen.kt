@@ -33,7 +33,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.example.store.theme.StoreAppTheme
 import com.example.store.ui.compositions.StoreAppBar
@@ -70,6 +69,7 @@ fun ProductDetailsScreenSkeleton(
     ) { innerPadding ->
         var quantity by remember { mutableIntStateOf(0) }
         val scrollState = rememberScrollState()
+
         Column(
             modifier = Modifier
                 .padding(innerPadding)
@@ -82,7 +82,8 @@ fun ProductDetailsScreenSkeleton(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(500.dp)
-                    .background(MaterialTheme.colorScheme.outline)
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(MaterialTheme.colorScheme.surface)
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -115,7 +116,7 @@ fun ProductDetailsScreenSkeleton(
 
             Text(
                 text = product.description,
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.bodyLarge
             )
 
             Spacer(modifier = Modifier.height(16.dp))

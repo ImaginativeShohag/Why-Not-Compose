@@ -17,8 +17,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.example.store.theme.StoreAppTheme
@@ -50,8 +53,8 @@ fun OrderProductItem(
             Text(
                 text = product.title,
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.surface,
                 maxLines = 1,
+                color = MaterialTheme.colorScheme.outline,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -62,16 +65,21 @@ fun OrderProductItem(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "$${product.price} × ${product.quantity}",
+                    text = buildAnnotatedString {
+                        append("$${product.price} × ")
+                        withStyle(SpanStyle(color = MaterialTheme.colorScheme.error)) {
+                            append("${product.quantity}")
+                        }
+                    },
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.surface
+                    color = MaterialTheme.colorScheme.outline,
                 )
 
                 Text(
                     text = "$${"%.2f".format(product.price * product.quantity)}",
                     style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.error,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.surface
                 )
             }
         }

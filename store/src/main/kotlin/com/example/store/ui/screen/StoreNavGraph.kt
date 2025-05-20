@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -15,6 +16,7 @@ import com.example.store.ui.screen.categories.CategoriesScreen
 import com.example.store.ui.screen.categorieswiseproduct.CategoriesWiseProductScreen
 import com.example.store.ui.screen.checkout.CheckOutScreen
 import com.example.store.ui.screen.home.StoreHomeScreen
+import com.example.store.ui.screen.home.StoreHomeScreenViewModel
 import com.example.store.ui.screen.order.Order
 import com.example.store.ui.screen.order.OrdersScreen
 import com.example.store.ui.screen.order.dummyOrders
@@ -154,7 +156,6 @@ private fun NavGraphBuilder.addStoreScreens(
                     popUpTo(MainScreen.TabScreen) { inclusive = true }
                 }
             },
-            product = dummyProducts,
             goBack = {
                 navController.popBackStack()
             },
@@ -175,8 +176,9 @@ private fun NavGraphBuilder.addStoreScreens(
 
     composable<StoreScreen.StoreHome> {
         val isDarkMode by UIThemeController.uiThemeMode.collectAsState()
-
+        val viewModel: StoreHomeScreenViewModel = hiltViewModel()
         StoreHomeScreen(
+            viewModel = viewModel,
             userName = "John Doe",
             onOrderClick = {
                 navController.navigate(OrderScreen.Order) {
@@ -191,7 +193,6 @@ private fun NavGraphBuilder.addStoreScreens(
             toggleUIMode = {
                 updateUiThemeMode(isDarkMode.nextMode())
             },
-            products = dummyProducts,
             onProductClick = { product ->
                 navController.navigate(DetailsScreen.ProductDetails(product.id))
             },

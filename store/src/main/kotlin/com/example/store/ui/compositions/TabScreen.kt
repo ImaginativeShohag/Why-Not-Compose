@@ -17,17 +17,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.store.models.product.Product
 import com.example.store.theme.StoreAppTheme
 import com.example.store.ui.screen.cart.CartScreen
 import com.example.store.ui.screen.categories.CategoriesScreen
 import com.example.store.ui.screen.categories.Category
 import com.example.store.ui.screen.home.StoreHomeScreen
-import com.example.store.ui.screen.productdetails.Product
+import com.example.store.ui.screen.home.StoreHomeScreenViewModel
 import com.example.store.ui.screen.productdetails.dummyProducts
 
 @Suppress("ktlint:compose:modifier-missing-check")
@@ -36,7 +38,6 @@ fun TabScreen(
     userName: String,
     onOrderClick: () -> Unit,
     onSignOutClick: () -> Unit,
-    product: List<Product>,
     goBack: () -> Unit,
     toggleUIMode: () -> Unit,
     onCheckout: () -> Unit,
@@ -83,12 +84,13 @@ fun TabScreen(
             modifier = Modifier.padding(paddingValues)
         ) {
             composable(Screens.Home.route) {
+                val viewModel: StoreHomeScreenViewModel = hiltViewModel()
                 StoreHomeScreen(
+                    viewModel = viewModel,
                     userName = userName,
                     onOrderClick = onOrderClick,
                     onSignOutClick = onSignOutClick,
                     toggleUIMode = toggleUIMode,
-                    products = product,
                     onProductClick = onProductClick,
                     onCategoryClick = onCategoryClick
                 )
@@ -102,7 +104,7 @@ fun TabScreen(
             }
             composable(Screens.Cart.route) {
                 CartScreen(
-                    products = product,
+                    products = dummyProducts,
                     goBack = goBack,
                     onCheckout = onCheckout,
                     toggleUIMode = toggleUIMode
@@ -138,7 +140,6 @@ private fun TabScreenPreview() {
             userName = "John Doe",
             onOrderClick = {},
             onSignOutClick = {},
-            product = dummyProducts,
             goBack = {},
             toggleUIMode = {},
             onCheckout = {},

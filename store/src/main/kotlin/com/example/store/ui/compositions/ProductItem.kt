@@ -32,15 +32,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import com.example.store.models.product.Product
 import com.example.store.theme.StoreAppTheme
-import com.example.store.ui.screen.productdetails.Product
 
 @Composable
 fun ProductItem(
@@ -65,7 +64,7 @@ fun ProductItem(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AsyncImage(
-                model = product.imageUrl,
+                model = product.image,
                 contentDescription = "Product Image",
                 modifier = Modifier
                     .width(150.dp)
@@ -106,7 +105,7 @@ fun ProductItem(
                     tint = Color.Yellow.copy(alpha = .5f)
                 )
                 Text(
-                    text = ("${product.rating} (${product.reviewCount})"),
+                    text = ("${product.rating.rate} (${product.rating.count})"),
                     modifier = Modifier.padding(start = 4.dp),
                     color = MaterialTheme.colorScheme.outline
                 )
@@ -179,20 +178,20 @@ private fun PreviewProductDetailsScreen() {
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            ProductItem(
-                onClick = {},
-                product = Product(
-                    category = "jewelery",
-                    id = 1,
-                    title = "WD 2TB Elements Portable External...",
-                    imageUrl = "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-                    price = 64.00,
-                    rating = 3.3,
-                    reviewCount = 203,
-                    description = "USB 3.0 and USB 2.0 Compatibility Fast data transfers Improve PC Performance High Capacity;...",
-                    quantity = 0
-                )
-            )
+//            ProductItem(
+//                onClick = {},
+//                product = Product(
+//                    category = "jewelery",
+//                    id = 1,
+//                    title = "WD 2TB Elements Portable External...",
+//                    imageUrl = "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+//                    price = 64.00,
+//                    rating = 3.3,
+//                    reviewCount = 203,
+//                    description = "USB 3.0 and USB 2.0 Compatibility Fast data transfers Improve PC Performance High Capacity;...",
+//                    quantity = 0
+//                )
+//            )
         }
     }
 }

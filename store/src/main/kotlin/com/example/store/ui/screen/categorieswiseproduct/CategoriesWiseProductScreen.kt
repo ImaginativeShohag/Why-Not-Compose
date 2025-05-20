@@ -36,20 +36,27 @@ fun CategoriesWiseProductScreen(
         LazyVerticalGrid(
             modifier = Modifier
                 .padding(innerPadding)
-                .fillMaxSize()
-                .padding(16.dp),
+                .fillMaxSize(),
             columns = GridCells.Fixed(2),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            items(dummyProducts.size) { index ->
-                val product = dummyProducts[index]
-                ProductItem(
-                    product = product,
-                    onClick = { onProductClick(product) },
-                    modifier = Modifier
-                )
-            }
+//            items(dummyProducts.size) { index ->
+//                val product = dummyProducts[index]
+//                ProductItem(
+//                    product = product,
+//                    onClick = { onProductClick(product) },
+//                    modifier = Modifier
+//                        .then(
+//                            if (index % 2 == 0) {
+//                                Modifier.padding(start = 16.dp)
+//                            } else {
+//                                Modifier.padding(end = 16.dp)
+//                            }
+//
+//                        )
+//                )
+//            }
         }
     }
 }

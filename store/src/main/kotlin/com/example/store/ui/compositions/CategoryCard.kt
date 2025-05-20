@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
@@ -22,11 +21,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
 import com.example.store.theme.StoreAppTheme
 import com.example.store.ui.screen.categories.Category
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.haze
+import dev.chrisbanes.haze.hazeEffect
+import dev.chrisbanes.haze.hazeSource
+import dev.chrisbanes.haze.materials.HazeMaterials
 
 @Composable
 fun CategoryCard(
@@ -39,6 +39,7 @@ fun CategoryCard(
         modifier = modifier
             .size(150.dp)
             .clip(RoundedCornerShape(12.dp))
+            .hazeSource(state = hazeState)
             .clickable {
                 onClick()
             }
@@ -53,12 +54,11 @@ fun CategoryCard(
         Box(
             modifier = Modifier
                 .wrapContentSize()
-                .clip(RoundedCornerShape(20))
                 .align(Alignment.Center)
                 .padding(16.dp)
                 .clip(RoundedCornerShape(20))
-                .background(MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.7f))
-                .haze(state = hazeState),
+                .background(MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.9f))
+                .hazeEffect(state = hazeState, style = HazeMaterials.ultraThin()),
             contentAlignment = Alignment.Center
         ) {
             Text(

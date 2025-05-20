@@ -34,6 +34,7 @@ object Constants {
      */
     const val SERVER_ENDPOINT = "https://imaginativeworld.org"
     const val CMS_SERVER_ENDPOINT = "https://gorest.co.in/public"
+    const val STORE_SERVER_ENDPOINT = "https://fakestoreapi.com"
 
     /**
      * For MyNotificationOpenedHandler

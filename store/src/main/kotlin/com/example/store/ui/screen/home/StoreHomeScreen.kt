@@ -1,5 +1,6 @@
 package com.example.store.ui.screen.home
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -30,6 +31,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,32 +45,42 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import coil3.compose.AsyncImage
+import com.example.store.models.product.Product
 import com.example.store.theme.StoreAppTheme
 import com.example.store.ui.compositions.ProductItem
 import com.example.store.ui.compositions.StoreAppBar
 import com.example.store.ui.screen.categories.Category
 import com.example.store.ui.screen.categories.categories
-import com.example.store.ui.screen.productdetails.Product
-import com.example.store.ui.screen.productdetails.dummyProducts
 import com.example.store.ui.screen.profile.ProfileScreen
 
+@Suppress("ktlint:compose:param-order-check")
 @Composable
 fun StoreHomeScreen(
+    viewModel: StoreHomeScreenViewModel,
     userName: String,
     onOrderClick: () -> Unit,
     onSignOutClick: () -> Unit,
     onCategoryClick: (Category) -> Unit,
-    products: List<Product>,
     onProductClick: (Product) -> Unit,
     toggleUIMode: () -> Unit
 ) {
+    val state by viewModel.state.collectAsState()
+
+    val pagedProducts = state.items.collectAsLazyPagingItems()
+
+    LaunchedEffect(Unit) {
+        viewModel.loadProducts()
+    }
+
     StoreHomeSkeleton(
         userName = userName,
         onOrdersClick = onOrderClick,
         onSignOutClick = onSignOutClick,
         categories = categories,
-        products = products,
+        products = pagedProducts,
         onCategoryClick = onCategoryClick,
         onProductClick = onProductClick,
         toggleUIMode = toggleUIMode
@@ -81,7 +94,7 @@ fun StoreHomeSkeleton(
     onOrdersClick: () -> Unit,
     onSignOutClick: () -> Unit,
     categories: List<Category>,
-    products: List<Product>,
+    products: LazyPagingItems<Product>,
     onCategoryClick: (Category) -> Unit,
     onProductClick: (Product) -> Unit,
     toggleUIMode: () -> Unit
@@ -112,7 +125,7 @@ fun StoreHomeSkeleton(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp)
-                            .padding(top=16.dp),
+                            .padding(top = 16.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
@@ -174,24 +187,25 @@ fun StoreHomeSkeleton(
                         }
                     }
                 }
-
-                items(products.size) { index ->
-                    ProductItem(
-                        product = products[index],
-                        onClick = {
-                            onProductClick(products[index])
-                        },
-                        modifier = Modifier
-                            .then(
-                                if (index % 2 == 0) {
-                                    Modifier.padding(start = 16.dp)
-                                } else {
-                                    Modifier.padding(end = 16.dp)
-                                }
-
-                            )
-
-                    )
+                items(products.itemCount) { index ->
+                    val product = products[index]
+                    if (product != null) {
+                        Log.d("Log404", "StoreHomeSkeleton: $product")
+                        ProductItem(
+                            product = product,
+                            onClick = {
+                                onProductClick(product)
+                            },
+                            modifier = Modifier
+                                .then(
+                                    if (index % 2 == 0) {
+                                        Modifier.padding(start = 16.dp)
+                                    } else {
+                                        Modifier.padding(end = 16.dp)
+                                    }
+                                )
+                        )
+                    }
                 }
             }
         }
@@ -281,16 +295,17 @@ val homeScreenImages = listOf(
 
 @PreviewLightDark
 @Composable
-private fun StoreHomeScreenPreview() {
+private fun StoreHomeSkeletonPreview() {
     StoreAppTheme {
-        StoreHomeScreen(
-            userName = "John Doe",
-            onOrderClick = {},
-            onSignOutClick = {},
-            onCategoryClick = {},
-            products = dummyProducts,
-            onProductClick = {},
-            toggleUIMode = {}
-        )
+//        StoreHomeSkeleton(
+//            userName = "Shihab",
+//            onOrdersClick = {},
+//            onSignOutClick = {},
+//            categories = categories,
+//            products = {},
+//            onCategoryClick = {},
+//            onProductClick = {},
+//            toggleUIMode = {}
+//        )
     }
 }

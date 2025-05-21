@@ -23,11 +23,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.store.models.categorie.Category
 import com.example.store.models.product.Product
 import com.example.store.theme.StoreAppTheme
 import com.example.store.ui.screen.cart.CartScreen
 import com.example.store.ui.screen.categories.CategoriesScreen
-import com.example.store.ui.screen.categories.Category
 import com.example.store.ui.screen.home.StoreHomeScreen
 import com.example.store.ui.screen.home.StoreHomeScreenViewModel
 import com.example.store.ui.screen.productdetails.dummyProducts

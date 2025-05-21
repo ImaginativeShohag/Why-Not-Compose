@@ -1,6 +1,5 @@
 package com.example.store.ui.screen.home
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -48,12 +47,11 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil3.compose.AsyncImage
+import com.example.store.models.categorie.Category
 import com.example.store.models.product.Product
 import com.example.store.theme.StoreAppTheme
 import com.example.store.ui.compositions.ProductItem
 import com.example.store.ui.compositions.StoreAppBar
-import com.example.store.ui.screen.categories.Category
-import com.example.store.ui.screen.categories.categories
 import com.example.store.ui.screen.profile.ProfileScreen
 
 @Suppress("ktlint:compose:param-order-check")
@@ -68,18 +66,17 @@ fun StoreHomeScreen(
     toggleUIMode: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()
-
     val pagedProducts = state.items.collectAsLazyPagingItems()
 
     LaunchedEffect(Unit) {
-        viewModel.loadProducts()
+        viewModel.loadCategories()
     }
 
     StoreHomeSkeleton(
         userName = userName,
         onOrdersClick = onOrderClick,
         onSignOutClick = onSignOutClick,
-        categories = categories,
+        categories = state.categories,
         products = pagedProducts,
         onCategoryClick = onCategoryClick,
         onProductClick = onProductClick,
@@ -178,7 +175,7 @@ fun StoreHomeSkeleton(
                     ) {
                         items(categories.size) {
                             CategoryItem(
-                                category = categories[it],
+                                categories = categories[it],
                                 modifier = Modifier,
                                 onClick = {
                                     onCategoryClick(categories[it])
@@ -190,7 +187,6 @@ fun StoreHomeSkeleton(
                 items(products.itemCount) { index ->
                     val product = products[index]
                     if (product != null) {
-                        Log.d("Log404", "StoreHomeSkeleton: $product")
                         ProductItem(
                             product = product,
                             onClick = {
@@ -221,7 +217,7 @@ fun StoreHomeSkeleton(
 
 @Composable
 fun CategoryItem(
-    category: Category,
+    categories: Category,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {}
 ) {
@@ -253,7 +249,7 @@ fun CategoryItem(
             Spacer(modifier = Modifier.width(8.dp))
 
             Text(
-                text = category.name,
+                text = categories.name,
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier

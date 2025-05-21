@@ -1,5 +1,6 @@
 package com.example.store.di
 
+import com.example.store.network.api.CategoriesApiInterface
 import com.example.store.network.api.ProductsApiInterface
 import com.squareup.moshi.Moshi
 import dagger.Module
@@ -27,4 +28,8 @@ class StoreAppModule {
     @Singleton
     @Provides
     fun provideProductApiInterface(@Named("STORE") retrofit: Retrofit): ProductsApiInterface = retrofit.create(ProductsApiInterface::class.java)
+
+    @Singleton
+    @Provides
+    fun provideCategoriesApiInterface(@Named("STORE") retrofit: Retrofit): CategoriesApiInterface = retrofit.create(CategoriesApiInterface::class.java)
 }

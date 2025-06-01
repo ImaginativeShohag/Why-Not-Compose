@@ -83,14 +83,11 @@ class StoreHomeScreenViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val response = categoriesRepository.getCategories()
-                Log.d("Log404", "loadCategories response: $response ")
                 val categoriesList = response?.mapIndexed { index, name ->
                     Category(id = index + 1, name = name, imageUrl = "")
                 } ?: emptyList()
 
                 categories.value = categoriesList
-
-                Log.d("Log404", "loadCategories categoriesList: $categoriesList ")
             } catch (e: Exception) {
                 eventShowMessage.emit(Event("Failed to load categories"))
             } finally {

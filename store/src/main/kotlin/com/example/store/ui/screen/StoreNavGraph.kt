@@ -6,6 +6,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -21,6 +22,7 @@ import com.example.store.ui.screen.order.Order
 import com.example.store.ui.screen.order.OrdersScreen
 import com.example.store.ui.screen.order.dummyOrders
 import com.example.store.ui.screen.productdetails.ProductDetailsScreen
+import com.example.store.ui.screen.productdetails.ProductDetailsViewModel
 import com.example.store.ui.screen.productdetails.dummyProducts
 import com.example.store.ui.screen.profile.ProfileScreen
 import com.example.store.ui.screen.splash.StoreSplashScreen
@@ -206,9 +208,10 @@ private fun NavGraphBuilder.addStoreScreens(
         val productDetails: DetailsScreen.ProductDetails = backStackEntry.toRoute()
         val product = dummyProducts.find { it.id == productDetails.productId }
         val isDarkMode by UIThemeController.uiThemeMode.collectAsState()
-
+        val viewModel: ProductDetailsViewModel = hiltViewModel()
         product?.let {
             ProductDetailsScreen(
+                viewModel = viewModel,
                 product = it,
                 goBack = {
                     navController.popBackStack()

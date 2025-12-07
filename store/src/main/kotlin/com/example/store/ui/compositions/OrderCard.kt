@@ -1,5 +1,6 @@
 package com.example.store.ui.compositions
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,49 +29,71 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import com.example.store.models.cart.CartUIModel
+import com.example.store.models.order.OrderUIModel
+import com.example.store.models.product.Product
+import com.example.store.models.product.Rating
 import com.example.store.theme.StoreAppTheme
-import com.example.store.ui.screen.order.Order
-import com.example.store.ui.screen.productdetails.Product
 
 @Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun OrderCard(
-    order: Order,
+    order: OrderUIModel,
     modifier: Modifier = Modifier
 ) {
-    var isExpanded by remember { mutableStateOf(true) }
+    var isExpanded by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
-            .background(MaterialTheme.colorScheme.onBackground)
+            .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.2f))
             .padding(16.dp)
     ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Text(
+                text = "Order #${order.id}",
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            Text(
+                text = order.date,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "#${order.id}",
+                text = "Total Amount:",
                 style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.surface
+                color = MaterialTheme.colorScheme.primary
             )
             Text(
-                text = order.date,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.surface
+                text = "$${String.format("%.2f", order.totalPrice)}",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary
             )
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
         Button(
             onClick = { isExpanded = !isExpanded },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.surfaceContainer
+                containerColor = MaterialTheme.colorScheme.surface
             ),
             shape = MaterialTheme.shapes.medium
         ) {
@@ -80,13 +103,7 @@ fun OrderCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Total ${order.products.size} ${
-                        if (order.products.size > 1) {
-                            "products"
-                        } else {
-                            "product"
-                        }
-                    }",
+                    text = "${order.products.size} Items",
                     color = MaterialTheme.colorScheme.primary
                 )
                 Icon(
@@ -98,11 +115,12 @@ fun OrderCard(
         }
 
         if (isExpanded) {
-            Spacer(modifier = Modifier.height(8.dp))
-            Column {
-                order.products.forEach { product ->
-                    OrderProductItem(product = product)
-                    Spacer(modifier = Modifier.height(4.dp))
+            AnimatedVisibility(visible = isExpanded) {
+                Column(modifier = Modifier.padding(top = 8.dp)) {
+                    order.products.forEach { cartItem ->
+                        OrderProductItem(cartItem = cartItem)
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
                 }
             }
         }
@@ -113,24 +131,47 @@ fun OrderCard(
 @Composable
 private fun OrderCardPreview() {
     StoreAppTheme {
+        val dummyProduct1 = Product(
+            id = 1,
+            title = "Mens Cotton Jacket",
+            price = 55.99,
+            description = "Great outerwear for winter.",
+            category = "men's clothing",
+            image = "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
+            rating = Rating(rate = 4.6, count = 500),
+            quantity = 0
+        )
+
+        val dummyProduct2 = Product(
+            id = 2,
+            title = "Slim Fit T-Shirt",
+            price = 22.30,
+            description = "Casual slim fit t-shirt.",
+            category = "men's clothing",
+            image = "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
+            rating = Rating(rate = 4.6, count = 500),
+            quantity = 0
+        )
+
+        val cartItem1 = CartUIModel(
+            product = dummyProduct1,
+            quantity = 2
+        )
+
+        val cartItem2 = CartUIModel(
+            product = dummyProduct2,
+            quantity = 1
+        )
+
+        val dummyOrder = OrderUIModel(
+            id = 998877,
+            date = "2025-12-05",
+            totalPrice = 134.28,
+            products = listOf(cartItem1, cartItem2)
+        )
+
         OrderCard(
-            order = Order(
-                id = 7,
-                date = "01 Mar 2020",
-                products = listOf(
-                    Product(
-                        category = "Backpack",
-                        id = 1,
-                        title = "Fits 15 Laptops",
-                        imageUrl = "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-                        price = 109.95,
-                        rating = 4.5,
-                        reviewCount = 120,
-                        description = "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
-                        quantity = 10
-                    )
-                )
-            )
+            order = dummyOrder
         )
     }
 }

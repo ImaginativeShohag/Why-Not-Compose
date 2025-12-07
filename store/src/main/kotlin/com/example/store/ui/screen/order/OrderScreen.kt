@@ -1,28 +1,51 @@
 package com.example.store.ui.screen.order
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.store.models.order.OrderUIModel
 import com.example.store.theme.StoreAppTheme
 import com.example.store.ui.compositions.OrderCard
 import com.example.store.ui.compositions.StoreAppBar
-import com.example.store.ui.screen.productdetails.Product
 
 @Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun OrdersScreen(
-    orders: List<Order>,
+    goBack: () -> Unit,
+    toggleUIMode: () -> Unit,
+    viewModel: OrdersViewModel = hiltViewModel()
+) {
+    val orders by viewModel.orders.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
+
+    OrdersScreenSkeleton(
+        orders = orders,
+        isLoading = isLoading,
+        goBack = goBack,
+        toggleUIMode = toggleUIMode
+    )
+}
+
+@Suppress("ktlint:compose:modifier-missing-check")
+@Composable
+fun OrdersScreenSkeleton(
+    orders: List<OrderUIModel>,
+    isLoading: Boolean,
     goBack: () -> Unit,
     toggleUIMode: () -> Unit
 ) {
@@ -35,88 +58,92 @@ fun OrdersScreen(
             )
         }
     ) { paddingValues ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues),
-            contentPadding = PaddingValues(16.dp)
-        ) {
-            items(orders) { order ->
-                OrderCard(order = order)
-                Spacer(modifier = Modifier.height(12.dp))
+        if (isLoading) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        } else if (orders.isEmpty()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "No orders found")
+            }
+        } else {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(24.dp)
+            ) {
+                items(orders) { order ->
+                    OrderCard(order = order)
+                }
             }
         }
     }
 }
 
-data class Order(
-    val id: Int,
-    val date: String,
-    val products: List<Product>
-)
-
-var dummyOrders = listOf(
-    Order(
-        id = 7,
-        date = "01 Mar 2020",
-        listOf(
-            Product(
-                category = "T-shirt",
-                id = 2,
-                title = "Mens Casual Premium Slim Fit T-Shirts",
-                imageUrl = "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
-                price = 22.3,
-                rating = 4.5,
-                reviewCount = 259,
-                description = "Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing.",
-                quantity = 8
-            )
-        )
-    ),
-
-    Order(
-        id = 6,
-        date = "01 Mar 2020",
-        listOf(
-            Product(
-                category = "Backpack",
-                id = 1,
-                title = "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
-                imageUrl = "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-                price = 109.95,
-                rating = 4.5,
-                reviewCount = 120,
-                description = "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
-                quantity = 10
-            )
-        )
-    ),
-
-    Order(
-        id = 5,
-        date = "01 Mar 2020",
-        listOf(
-            Product(
-                category = "Jacket",
-                id = 3,
-                title = "Mens Cotton Jacket",
-                imageUrl = "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
-                price = 55.99,
-                rating = 4.5,
-                reviewCount = 500,
-                description = "Great outerwear jackets for Spring/Autumn/Winter, suitable for many occasions, such as working, hiking, camping, mountain/rock climbing, cycling.",
-                quantity = 5
-            )
-        )
-    )
-)
-
 @PreviewLightDark
 @Composable
 private fun OrdersScreenPreview() {
+    val product1 = com.example.store.models.product.Product(
+        id = 1,
+        title = "Fjallraven - Foldsack No. 1 Backpack",
+        price = 109.95,
+        description = "Your perfect pack for everyday use...",
+        category = "men's clothing",
+        image = "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+        rating = com.example.store.models.product.Rating(rate = 3.9, count = 120),
+        quantity = 0
+    )
+
+    val product2 = com.example.store.models.product.Product(
+        id = 2,
+        title = "Mens Casual Premium Slim Fit T-Shirts",
+        price = 22.3,
+        description = "Slim-fitting style, contrast raglan long sleeve...",
+        category = "men's clothing",
+        image = "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
+        rating = com.example.store.models.product.Rating(rate = 4.1, count = 259),
+        quantity = 0
+    )
+    val cartItem1 = com.example.store.models.cart.CartUIModel(product = product1, quantity = 1)
+    val cartItem2 = com.example.store.models.cart.CartUIModel(product = product2, quantity = 2)
+
+    val dummyOrders = listOf(
+        OrderUIModel(
+            id = 1001,
+            date = "2025-12-05",
+            totalPrice = 154.55,
+            products = listOf(cartItem1, cartItem2)
+        ),
+        OrderUIModel(
+            id = 1002,
+            date = "2025-11-20",
+            totalPrice = 109.95,
+            products = listOf(cartItem1)
+        ),
+        OrderUIModel(
+            id = 1003,
+            date = "2025-10-15",
+            totalPrice = 44.60,
+            products = listOf(cartItem2)
+        )
+    )
+
     StoreAppTheme {
-        OrdersScreen(
+        OrdersScreenSkeleton(
             orders = dummyOrders,
+            isLoading = false,
             goBack = {},
             toggleUIMode = {}
         )

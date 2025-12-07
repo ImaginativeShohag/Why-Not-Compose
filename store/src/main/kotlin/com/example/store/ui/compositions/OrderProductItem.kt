@@ -1,6 +1,6 @@
 package com.example.store.ui.compositions
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,8 +15,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -24,34 +24,41 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
+import com.example.store.models.cart.CartUIModel
+import com.example.store.models.product.Product
+import com.example.store.models.product.Rating
 import com.example.store.theme.StoreAppTheme
-import com.example.store.ui.screen.productdetails.Product
+import kotlin.text.format
 
 @Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun OrderProductItem(
-    product: Product,
+    cartItem: CartUIModel,
     modifier: Modifier = Modifier
 ) {
+    val quantity = cartItem.quantity
+    val totalPrice = cartItem.product.price * quantity
     Row(
         modifier = modifier
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
-            painter = painterResource(id = org.imaginativeworld.whynotcompose.common.compose.R.drawable.store),
-            contentDescription = "",
+        AsyncImage(
+            model = cartItem.product.image,
+            contentDescription = "Product Image",
             modifier = Modifier
-                .size(40.dp)
-                .clip(RoundedCornerShape(8.dp)),
-            contentScale = ContentScale.Crop
+                .size(50.dp)
+                .clip(RoundedCornerShape(8.dp))
+                .background(Color.White),
+            contentScale = ContentScale.Fit
         )
 
         Spacer(modifier = Modifier.width(8.dp))
 
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = product.title,
+                text = cartItem.product.title,
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 1,
                 color = MaterialTheme.colorScheme.outline,
@@ -66,20 +73,20 @@ fun OrderProductItem(
             ) {
                 Text(
                     text = buildAnnotatedString {
-                        append("$${product.price} × ")
-                        withStyle(SpanStyle(color = MaterialTheme.colorScheme.error)) {
-                            append("${product.quantity}")
+                        append("$${cartItem.product.price} × ")
+                        withStyle(SpanStyle(color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)) {
+                            append("$quantity")
                         }
                     },
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.outline,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.outline
                 )
 
                 Text(
-                    text = "$${"%.2f".format(product.price * product.quantity)}",
+                    text = "$${String.format("%.2f", totalPrice)}",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.error,
-                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary,
+                    fontWeight = FontWeight.Bold
                 )
             }
         }
@@ -90,16 +97,19 @@ fun OrderProductItem(
 @Composable
 private fun OrderProductItemPreview() {
     StoreAppTheme {
+        val dummyProduct = Product(
+            category = "Jacket",
+            id = 3,
+            title = "Mens Cotton Jacket",
+            image = "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
+            price = 55.99,
+            rating = Rating(300, 4.5),
+            description = "Great outerwear...",
+            quantity = 0
+        )
         OrderProductItem(
-            product = Product(
-                category = "Jacket",
-                id = 3,
-                title = "Mens Cotton Jacket",
-                imageUrl = "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
-                price = 55.99,
-                rating = 4.5,
-                reviewCount = 500,
-                description = "Great outerwear jackets for Spring/Autumn/Winter, suitable for many occasions, such as working, hiking, camping, mountain/rock climbing, cycling.",
+            cartItem = CartUIModel(
+                product = dummyProduct,
                 quantity = 5
             )
         )

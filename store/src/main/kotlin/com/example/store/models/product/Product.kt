@@ -20,5 +20,5 @@ data class Product(
     @Json(name = "title")
     val title: String,
     @Json(name = "quantity")
-    var quantity: Int? = null
+    var quantity: Int = 0
 )

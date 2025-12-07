@@ -27,7 +27,7 @@ import org.imaginativeworld.whynotcompose.base.utils.UIThemeController
 fun StoreAppBar(
     modifier: Modifier = Modifier,
     title: String = "Store Overflow",
-    goBack: () -> Unit = {},
+    goBack: (() -> Unit)? = null,
     toggleUIMode: () -> Unit = {}
 ) {
     val uiThemeMode by UIThemeController.uiThemeMode.collectAsState()
@@ -43,13 +43,15 @@ fun StoreAppBar(
             )
         },
         navigationIcon = {
-            IconButton(onClick = {
-                goBack()
-            }) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                    contentDescription = "Go back"
-                )
+            if (goBack != null) {
+                IconButton(onClick = {
+                    goBack()
+                }) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                        contentDescription = "Go back"
+                    )
+                }
             }
         },
         actions = {

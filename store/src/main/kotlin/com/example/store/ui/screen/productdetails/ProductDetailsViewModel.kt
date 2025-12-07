@@ -1,8 +1,8 @@
 package com.example.store.ui.screen.productdetails
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.store.models.product.Product
 import com.example.store.repositories.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotcompose.base.models.Event
 
@@ -35,7 +36,7 @@ class ProductDetailsViewModel @Inject constructor(
                 ProductDetailsScreenState(
                     loading = showLoading,
                     message = showMessage,
-                    productId = productId
+                    product = null
                 )
             }.catch { throwable ->
                 eventShowMessage.emit(Event("Something went wrong"))
@@ -48,13 +49,24 @@ class ProductDetailsViewModel @Inject constructor(
 
     fun loadProductDetails(id: Int) {
         viewModelScope.launch {
+            _state.update { it.copy(loading = true) }
+
             try {
                 val response = productRepository.getProductsId(id)
-                Log.d("Log404", "loadProductDetails viewMOdel response: $response")
+
+                if (response != null) {
+                    _state.update {
+                        it.copy(loading = false, product = response)
+                    }
+                } else {
+                    _state.update {
+                        it.copy(loading = false, message = Event("Product not found"))
+                    }
+                }
             } catch (e: Exception) {
-                eventShowMessage.emit(Event("Failed to load product details"))
-            } finally {
-                eventShowLoading.emit(false)
+                _state.update {
+                    it.copy(loading = false, message = Event("Failed to load details"))
+                }
             }
         }
     }
@@ -63,5 +75,5 @@ class ProductDetailsViewModel @Inject constructor(
 data class ProductDetailsScreenState(
     val loading: Boolean = false,
     val message: Event<String>? = null,
-    val productId: Int = -1
+    val product: Product? = null
 )

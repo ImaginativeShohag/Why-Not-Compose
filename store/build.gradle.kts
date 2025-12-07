@@ -11,6 +11,7 @@ android {
     compileSdk = BuildConfigConst.compileSdk
 
     defaultConfig {
+        minSdk = 23
         minSdk = BuildConfigConst.minSdk
     }
 
@@ -61,6 +62,7 @@ dependencies {
 
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.util)
+    implementation(libs.androidx.compose.ui.text)
     // Tooling support (Previews, etc.)
     debugImplementation(libs.androidx.compose.ui.tooling)
     implementation(libs.androidx.compose.ui.tooling.preview)

@@ -105,6 +105,7 @@ mlkitBarcodeScanning = "17.3.0"
 cameraX = "1.4.1"
 haze = "1.2.2"
 material = "1.8.0"
+uiText = "1.10.0"
 
 [libraries]
 
@@ -264,3 +265,4 @@ firebase-performance-gradlePlugin = { group = "com.google.firebase", name = "per
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 room-gradlePlugin = { group = "androidx.room", name = "room-gradle-plugin", version.ref = "room" }
+androidx-compose-ui-text = { group = "androidx.compose.ui", name = "ui-text", version.ref = "uiText" }

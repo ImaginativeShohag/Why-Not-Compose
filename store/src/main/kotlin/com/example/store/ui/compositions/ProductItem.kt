@@ -24,10 +24,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,16 +35,18 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.store.models.product.Product
+import com.example.store.models.product.Rating
 import com.example.store.theme.StoreAppTheme
 
 @Composable
 fun ProductItem(
     product: Product,
+    cartQuantity: Int,
+    onIncrement: () -> Unit,
+    onDecrement: () -> Unit,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var quantity by remember { mutableIntStateOf(0) }
-
     Card(
         modifier = modifier
             .clickable { onClick() },
@@ -120,7 +118,11 @@ fun ProductItem(
             modifier = Modifier.fillMaxWidth()
         ) {
             IconButton(
-                onClick = { if (quantity > 0) quantity-- },
+                onClick = {
+                    if (cartQuantity > 0) {
+                        onDecrement()
+                    }
+                },
                 modifier = Modifier
             ) {
                 Box(
@@ -128,7 +130,6 @@ fun ProductItem(
                         .clip(RoundedCornerShape(8.dp))
                         .background(MaterialTheme.colorScheme.primary.copy(alpha = .7f))
                         .padding(4.dp),
-//                        .border(1.dp, MaterialTheme.colorScheme.surface),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
@@ -140,14 +141,16 @@ fun ProductItem(
             }
 
             Text(
-                text = "$quantity",
+                text = "$cartQuantity",
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(horizontal = 8.dp)
             )
 
             IconButton(
-                onClick = { quantity++ }
+                onClick = {
+                    onIncrement()
+                }
             ) {
                 Box(
                     modifier = Modifier
@@ -178,20 +181,22 @@ private fun PreviewProductDetailsScreen() {
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-//            ProductItem(
-//                onClick = {},
-//                product = Product(
-//                    category = "jewelery",
-//                    id = 1,
-//                    title = "WD 2TB Elements Portable External...",
-//                    imageUrl = "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-//                    price = 64.00,
-//                    rating = 3.3,
-//                    reviewCount = 203,
-//                    description = "USB 3.0 and USB 2.0 Compatibility Fast data transfers Improve PC Performance High Capacity;...",
-//                    quantity = 0
-//                )
-//            )
+            ProductItem(
+                onClick = {},
+                onIncrement = {},
+                onDecrement = {},
+                cartQuantity = 2,
+                product = Product(
+                    category = "jewelery",
+                    id = 1,
+                    title = "WD 2TB Elements Portable External...",
+                    image = "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+                    price = 64.00,
+                    rating = Rating(rate = 3.3, count = 203),
+                    description = "USB 3.0 and USB 2.0 Compatibility...",
+                    quantity = 0
+                )
+            )
         }
     }
 }

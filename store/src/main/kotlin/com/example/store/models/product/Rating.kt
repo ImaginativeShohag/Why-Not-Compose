@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class Rating(
     @Json(name = "count")
-    val count: Int,
+    var count: Int,
     @Json(name = "rate")
-    val rate: Double
+    var rate: Double
 )

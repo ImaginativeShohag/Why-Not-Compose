@@ -1,3 +1,4 @@
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +23,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,16 +40,18 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.store.theme.StoreAppTheme
 import com.example.store.ui.compositions.StoreAppBar
+import com.example.store.ui.screen.login.LoginViewModel
 import org.imaginativeworld.whynotcompose.common.compose.theme.AppleSystemColor
 
 @Composable
 fun LoginScreen(
     onLogin: () -> Unit = {},
-    toggleUIMode: () -> Unit = {}
+    toggleUIMode: () -> Unit = {},
 ) {
+
     LoginSkeleton(
         onLogin = onLogin,
         toggleUIMode = toggleUIMode
@@ -59,7 +64,7 @@ fun LoginSkeleton(
     onLogin: () -> Unit,
     toggleUIMode: () -> Unit = {}
 ) {
-    var username by remember { mutableStateOf("store") }
+    var username by remember { mutableStateOf("John") }
     var password by remember { mutableStateOf("223355") }
     var usernameError by rememberSaveable { mutableStateOf("") }
     var passwordError by rememberSaveable { mutableStateOf("") }

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Category
@@ -24,6 +25,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,44 +35,54 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.store.models.cart.CartUIModel
 import com.example.store.ui.compositions.OrderProductItem
 import com.example.store.ui.compositions.StoreAppBar
-import com.example.store.ui.screen.productdetails.Product
-import com.example.store.ui.screen.productdetails.dummyProducts
+import com.example.store.ui.screen.cart.CartViewModel
 
 @Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun CheckOutScreen(
     goBack: () -> Unit = {},
     toggleUIMode: () -> Unit = {},
-    goToTab: () -> Unit = {}
+    goToTab: () -> Unit = {},
+    viewModel: CartViewModel = hiltViewModel()
 ) {
+    val cartItems by viewModel.cartItems.collectAsState()
+    val totalPrice by viewModel.totalPrice.collectAsState()
     CheckOutScreenSkeleton(
-        goBack = goBack,
-        products = dummyProducts,
+        cartItems = cartItems,
+        totalPrice = totalPrice,
         toggleUIMode = toggleUIMode,
-        goToTab = goToTab
+        goBack = goBack,
+        onPlaceOrder = {
+            viewModel.clearCart()
+            goToTab()
+        }
     )
 }
 
 @Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun CheckOutScreenSkeleton(
-    goBack: () -> Unit = {},
-    products: List<Product>,
+    cartItems: List<CartUIModel>,
+    totalPrice: Double,
     toggleUIMode: () -> Unit,
-    goToTab: () -> Unit = {}
+    goBack: () -> Unit = {},
+    onPlaceOrder: () -> Unit = {}
 ) {
-    var context = LocalContext.current
+    val context = LocalContext.current
     var name by remember { mutableStateOf(TextFieldValue("")) }
     var phone by remember { mutableStateOf(TextFieldValue("")) }
     var address by remember { mutableStateOf(TextFieldValue("")) }
-    val totalPrice = products.sumOf { it.price }
-    val productCount = products.size
     Scaffold(
         topBar = {
             StoreAppBar(
@@ -110,13 +122,23 @@ fun CheckOutScreenSkeleton(
                         unfocusedIndicatorColor = Color.Transparent,
                         disabledIndicatorColor = Color.Transparent
                     ),
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(12.dp),
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(
+                        capitalization = KeyboardCapitalization.Words,
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Next
+                    )
                 )
                 Spacer(modifier = Modifier.height(8.dp))
 
                 TextField(
                     value = phone,
-                    onValueChange = { phone = it },
+                    onValueChange = { newValue ->
+                        if (newValue.text.all { it.isDigit() }) {
+                            phone = newValue
+                        }
+                    },
                     placeholder = { Text(text = "Phone number...") },
                     modifier = Modifier.fillMaxWidth(),
                     colors = TextFieldDefaults.colors(
@@ -124,7 +146,12 @@ fun CheckOutScreenSkeleton(
                         unfocusedIndicatorColor = Color.Transparent,
                         disabledIndicatorColor = Color.Transparent
                     ),
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(12.dp),
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Phone,
+                        imeAction = ImeAction.Next
+                    )
                 )
                 Spacer(modifier = Modifier.height(8.dp))
 
@@ -143,7 +170,11 @@ fun CheckOutScreenSkeleton(
                         disabledIndicatorColor = Color.Transparent
                     ),
                     shape = RoundedCornerShape(12.dp),
-                    maxLines = 5
+                    maxLines = 5,
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Done
+                    )
                 )
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -158,7 +189,7 @@ fun CheckOutScreenSkeleton(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "$productCount Products",
+                        text = "${cartItems.size}Products",
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Medium
                     )
@@ -166,8 +197,8 @@ fun CheckOutScreenSkeleton(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                products.forEach { product ->
-                    OrderProductItem(product = product)
+                cartItems.forEach { cartItem ->
+                    OrderProductItem(cartItem = cartItem)
                     Spacer(modifier = Modifier.height(12.dp))
                 }
             }
@@ -185,14 +216,15 @@ fun CheckOutScreenSkeleton(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "Total",
+                        text = "Total Amount",
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = "$4948.00",
+                        text = "$${String.format("%.2f", totalPrice)}",
                         style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
 
@@ -200,8 +232,16 @@ fun CheckOutScreenSkeleton(
 
                 TextButton(
                     onClick = {
-                        goToTab()
-                        Toast.makeText(context, "Checkout Successful", Toast.LENGTH_SHORT).show()
+                        if (name.text.isNotEmpty() && phone.text.isNotEmpty() && address.text.isNotEmpty()) {
+                            if (cartItems.isNotEmpty()) {
+                                Toast.makeText(context, "Order Placed Successfully!", Toast.LENGTH_SHORT).show()
+                                onPlaceOrder()
+                            } else {
+                                Toast.makeText(context, "Cart is empty!", Toast.LENGTH_SHORT).show()
+                            }
+                        } else {
+                            Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
+                        }
                     },
                     modifier = Modifier
                         .fillMaxWidth(),

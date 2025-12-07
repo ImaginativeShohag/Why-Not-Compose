@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -39,35 +40,48 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil3.compose.AsyncImage
+import com.example.store.models.cart.CartUIModel
 import com.example.store.models.categorie.Category
+import com.example.store.models.featureBannerData.FeaturedBannerData
+import com.example.store.models.featureBannerData.featuredBanners
 import com.example.store.models.product.Product
 import com.example.store.theme.StoreAppTheme
 import com.example.store.ui.compositions.ProductItem
 import com.example.store.ui.compositions.StoreAppBar
+import com.example.store.ui.screen.cart.CartViewModel
 import com.example.store.ui.screen.profile.ProfileScreen
+import kotlinx.coroutines.flow.flowOf
 
 @Suppress("ktlint:compose:param-order-check")
 @Composable
 fun StoreHomeScreen(
-    viewModel: StoreHomeScreenViewModel,
     userName: String,
     onOrderClick: () -> Unit,
     onSignOutClick: () -> Unit,
     onCategoryClick: (Category) -> Unit,
     onProductClick: (Product) -> Unit,
-    toggleUIMode: () -> Unit
+    toggleUIMode: () -> Unit,
+    viewModel: StoreHomeScreenViewModel,
+    cartViewModel: CartViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
     val pagedProducts = state.items.collectAsLazyPagingItems()
-
+    val cartItems by cartViewModel.cartItems.collectAsState()
     LaunchedEffect(Unit) {
         viewModel.loadCategories()
     }
@@ -80,6 +94,9 @@ fun StoreHomeScreen(
         products = pagedProducts,
         onCategoryClick = onCategoryClick,
         onProductClick = onProductClick,
+        cartItems = cartItems,
+        onAddToCart = { product -> cartViewModel.addToCart(product) },
+        onRemoveFromCart = { product -> cartViewModel.removeFromCart(product) },
         toggleUIMode = toggleUIMode
     )
 }
@@ -94,6 +111,9 @@ fun StoreHomeSkeleton(
     products: LazyPagingItems<Product>,
     onCategoryClick: (Category) -> Unit,
     onProductClick: (Product) -> Unit,
+    cartItems: List<CartUIModel>,
+    onAddToCart: (Product) -> Unit,
+    onRemoveFromCart: (Product) -> Unit,
     toggleUIMode: () -> Unit
 ) {
     var showProfileSheet by remember { mutableStateOf(false) }
@@ -154,13 +174,12 @@ fun StoreHomeSkeleton(
                             horizontal = 16.dp
                         )
                     ) {
-                        items(homeScreenImages.size) {
-                            HomeScreenImage(
-                                image = homeScreenImages[it],
+                        items(featuredBanners.size) { index ->
+                            FeaturedProductBanner(
+                                data = featuredBanners[index],
                                 modifier = Modifier
-                                    .width(300.dp)
-                                    .height(150.dp)
-                                    .background(MaterialTheme.colorScheme.surface)
+                                    .width(320.dp)
+                                    .height(140.dp)
                             )
                         }
                     }
@@ -187,19 +206,22 @@ fun StoreHomeSkeleton(
                 items(products.itemCount) { index ->
                     val product = products[index]
                     if (product != null) {
+                        val cartItem = cartItems.find { it.product.id == product.id }
+                        val quantity = cartItem?.quantity ?: 0
+
                         ProductItem(
                             product = product,
-                            onClick = {
-                                onProductClick(product)
-                            },
-                            modifier = Modifier
-                                .then(
-                                    if (index % 2 == 0) {
-                                        Modifier.padding(start = 16.dp)
-                                    } else {
-                                        Modifier.padding(end = 16.dp)
-                                    }
-                                )
+                            cartQuantity = quantity,
+                            onClick = { onProductClick(product) },
+                            onIncrement = { onAddToCart(product) },
+                            onDecrement = { onRemoveFromCart(product) },
+                            modifier = Modifier.then(
+                                if (index % 2 == 0) {
+                                    Modifier.padding(start = 16.dp)
+                                } else {
+                                    Modifier.padding(end = 16.dp)
+                                }
+                            )
                         )
                     }
                 }
@@ -259,49 +281,107 @@ fun CategoryItem(
 }
 
 @Composable
-fun HomeScreenImage(
-    image: HomeScreenImage,
+fun FeaturedProductBanner(
+    data: FeaturedBannerData,
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+    val darkGrayStart = Color(0xFF4E4E4E)
+    val darkGrayEnd = Color(0xFF2C2C2C)
+    val priceRed = Color(0xFFFF3B30)
+
+    Row(
+        modifier = modifier
+            .clip(RoundedCornerShape(16.dp))
+            .background(
+                brush = Brush.horizontalGradient(
+                    colors = listOf(darkGrayStart, darkGrayEnd)
+                )
+            )
+            .padding(12.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        AsyncImage(
-            model = image.imageUrl,
-            contentDescription = "Product Image",
+        Box(
             modifier = Modifier
-                .fillMaxSize()
+                .size(100.dp)
                 .clip(RoundedCornerShape(12.dp))
-                .background(color = MaterialTheme.colorScheme.outline)
-        )
+                .background(Color.White)
+                .padding(8.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            AsyncImage(
+                model = data.imageUrl,
+                contentDescription = "Featured Product",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Fit
+            )
+        }
+
+        Spacer(modifier = Modifier.width(16.dp))
+
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.Center
+        ) {
+            Box(
+                modifier = Modifier
+                    .align(Alignment.End)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(priceRed)
+                    .padding(horizontal = 12.dp, vertical = 6.dp)
+            ) {
+                Text(
+                    text = data.price,
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Text(
+                text = data.title,
+                color = Color.White,
+                textAlign = TextAlign.Center,
+                fontWeight = Bold,
+                style = MaterialTheme.typography.bodyLarge,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(
+                        brush = Brush.horizontalGradient(
+                            colors = listOf(darkGrayStart, darkGrayEnd)
+                        )
+                    )
+                    .padding(12.dp),
+            )
+        }
     }
 }
-
-data class HomeScreenImage(
-    val imageUrl: String
-)
-
-val homeScreenImages = listOf(
-    HomeScreenImage(imageUrl = "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"),
-    HomeScreenImage(imageUrl = "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg"),
-    HomeScreenImage(imageUrl = "https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879._SX._UX._SY._UY_.jpg")
-)
 
 @PreviewLightDark
 @Composable
 private fun StoreHomeSkeletonPreview() {
     StoreAppTheme {
-//        StoreHomeSkeleton(
-//            userName = "Shihab",
-//            onOrdersClick = {},
-//            onSignOutClick = {},
-//            categories = categories,
-//            products = {},
-//            onCategoryClick = {},
-//            onProductClick = {},
-//            toggleUIMode = {}
-//        )
+        val dummyPagingData = flowOf(PagingData.empty<Product>()).collectAsLazyPagingItems()
+
+        StoreHomeSkeleton(
+            userName = "Shihab",
+            onOrdersClick = {},
+            onSignOutClick = {},
+            categories = listOf(
+                Category(1, "Electronics", ""),
+                Category(2, "Jewelery", ""),
+                Category(3, "Men's Clothing", "")
+            ),
+            products = dummyPagingData,
+            onCategoryClick = {},
+            onProductClick = {},
+            cartItems = emptyList(),
+            onAddToCart = {},
+            onRemoveFromCart = {},
+            toggleUIMode = {}
+        )
     }
 }

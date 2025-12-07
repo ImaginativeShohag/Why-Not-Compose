@@ -23,8 +23,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,23 +33,26 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import com.example.store.models.product.Product
 import com.example.store.theme.StoreAppTheme
-import com.example.store.ui.screen.productdetails.Product
-import com.example.store.ui.screen.productdetails.dummyProducts
 
 @Composable
 fun CartItemCard(
     product: Product,
-    onQuantityChange: (Int) -> Unit,
+    quantity: Int,
+    onIncrement: () -> Unit,
+    onDecrement: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var quantity by remember { mutableIntStateOf(2) }
-    val totalPrice = product.price * quantity
-
+    val totalItemPrice = product.price * quantity
+    val priceRed = Color(0xFFFF3B30)
     Card(
         modifier = modifier
             .fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        shape = RoundedCornerShape(16.dp)
+
     ) {
         Row(
             modifier = Modifier
@@ -60,7 +61,7 @@ fun CartItemCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
-                model = product.imageUrl,
+                model = product.image,
                 contentDescription = null,
                 modifier = Modifier
                     .width(80.dp)
@@ -77,13 +78,13 @@ fun CartItemCard(
             ) {
                 Text(
                     product.title,
-                    style = MaterialTheme.typography.bodyLarge,
+                    style = MaterialTheme.typography.titleMedium,
                     maxLines = 1,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
                     text = "$${product.price}",
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold
                 )
             }
@@ -102,19 +103,13 @@ fun CartItemCard(
                 modifier = Modifier.weight(.4f)
             ) {
                 IconButton(
-                    onClick = {
-                        if (quantity > 1) {
-                            quantity--
-                            onQuantityChange(quantity)
-                        }
-                    }
+                    onClick = onDecrement
                 ) {
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(8.dp))
                             .background(MaterialTheme.colorScheme.primary.copy(alpha = .7f))
                             .padding(4.dp),
-//                        .border(1.dp, MaterialTheme.colorScheme.surface),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
@@ -127,16 +122,13 @@ fun CartItemCard(
 
                 Text(
                     text = "$quantity",
-                    style = MaterialTheme.typography.bodyLarge,
+                    style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(horizontal = 8.dp)
                 )
 
                 IconButton(
-                    onClick = {
-                        quantity++
-                        onQuantityChange(quantity)
-                    }
+                    onClick = onIncrement
                 ) {
                     Box(
                         modifier = Modifier
@@ -154,11 +146,11 @@ fun CartItemCard(
             }
 
             Text(
-                text = "$$totalPrice",
-                style = MaterialTheme.typography.bodyMedium,
+                text = "$${String.format("%.2f", totalItemPrice)}",
+                style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.End,
-                color = MaterialTheme.colorScheme.error,
+                color = priceRed,
                 modifier = Modifier
                     .padding(horizontal = 8.dp)
                     .weight(.5f)
@@ -171,10 +163,28 @@ fun CartItemCard(
 @Composable
 private fun CartItemCardPreview() {
     StoreAppTheme {
-        CartItemCard(
-            product = dummyProducts[0],
-            onQuantityChange = {},
-            modifier = Modifier
+        val dummyProduct = Product(
+            id = 1,
+            title = "Mens Cotton Jacket",
+            price = 55.99,
+            description = "Great outerwear for winter.",
+            category = "men's clothing",
+            image = "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
+            rating = com.example.store.models.product.Rating(rate = 4.7, count = 500),
+            quantity = 0
         )
+
+        Box(
+            modifier = Modifier
+                .padding(16.dp)
+                .background(MaterialTheme.colorScheme.background)
+        ) {
+            CartItemCard(
+                product = dummyProduct,
+                quantity = 2,
+                onIncrement = {},
+                onDecrement = {}
+            )
+        }
     }
 }

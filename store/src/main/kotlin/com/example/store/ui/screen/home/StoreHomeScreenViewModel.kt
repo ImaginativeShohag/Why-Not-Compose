@@ -66,7 +66,7 @@ class StoreHomeScreenViewModel @Inject constructor(
         }
 
         loadProducts()
-        Log.d("Log404", "Collecting UI state: ${loadProducts()}")
+        Log.d("Log404", "Collecting UI state loadProducts: ${loadProducts()}")
     }
 
     // ---------------- Load Products ------------------

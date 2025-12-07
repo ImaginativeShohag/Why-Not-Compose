@@ -1,5 +1,7 @@
 package com.example.store.di
 
+import com.example.store.network.api.AuthApiInterface
+import com.example.store.network.api.CartApiInterface
 import com.example.store.network.api.CategoriesApiInterface
 import com.example.store.network.api.ProductDetailsApiInterface
 import com.example.store.network.api.ProductsApiInterface
@@ -26,6 +28,12 @@ class StoreAppModule {
         mapOf()
     )
 
+    @Provides
+    @Singleton
+    fun provideAuthApi(retrofit: Retrofit): AuthApiInterface {
+        return retrofit.create(AuthApiInterface::class.java)
+    }
+
     @Singleton
     @Provides
     fun provideProductApiInterface(@Named("STORE") retrofit: Retrofit): ProductsApiInterface = retrofit.create(ProductsApiInterface::class.java)
@@ -37,4 +45,8 @@ class StoreAppModule {
     @Singleton
     @Provides
     fun provideCategoriesApiInterface(@Named("STORE") retrofit: Retrofit): CategoriesApiInterface = retrofit.create(CategoriesApiInterface::class.java)
+
+    @Singleton
+    @Provides
+    fun provideCartApiInterface(@Named("STORE") retrofit: Retrofit): CartApiInterface = retrofit.create(CartApiInterface::class.java)
 }

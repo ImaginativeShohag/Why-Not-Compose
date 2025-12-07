@@ -30,7 +30,6 @@ import com.example.store.ui.screen.cart.CartScreen
 import com.example.store.ui.screen.categories.CategoriesScreen
 import com.example.store.ui.screen.home.StoreHomeScreen
 import com.example.store.ui.screen.home.StoreHomeScreenViewModel
-import com.example.store.ui.screen.productdetails.dummyProducts
 
 @Suppress("ktlint:compose:modifier-missing-check")
 @Composable
@@ -38,7 +37,6 @@ fun TabScreen(
     userName: String,
     onOrderClick: () -> Unit,
     onSignOutClick: () -> Unit,
-    goBack: () -> Unit,
     toggleUIMode: () -> Unit,
     onCheckout: () -> Unit,
     onProductClick: (Product) -> Unit,
@@ -97,15 +95,12 @@ fun TabScreen(
             }
             composable(Screens.Categories.route) {
                 CategoriesScreen(
-                    goBack = goBack,
                     toggleUIMode = toggleUIMode,
                     onCategoryClick = onCategoryClick
                 )
             }
             composable(Screens.Cart.route) {
                 CartScreen(
-                    products = dummyProducts,
-                    goBack = goBack,
                     onCheckout = onCheckout,
                     toggleUIMode = toggleUIMode
                 )
@@ -140,7 +135,6 @@ private fun TabScreenPreview() {
             userName = "John Doe",
             onOrderClick = {},
             onSignOutClick = {},
-            goBack = {},
             toggleUIMode = {},
             onCheckout = {},
             onProductClick = {},

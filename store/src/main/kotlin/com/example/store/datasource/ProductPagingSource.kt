@@ -14,12 +14,10 @@ class ProductPagingSource(
 
     override suspend fun load(params: LoadParams<Long>): LoadResult<Long, Product> {
         val pagePosition = params.key ?: 1
-
         return try {
             val products = repository.getProducts(
                 pagePosition
             )
-
             if (products == null) {
                 LoadResult.Error(ApiException("No data returned!"))
             } else {

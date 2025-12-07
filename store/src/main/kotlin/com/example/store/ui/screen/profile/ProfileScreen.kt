@@ -26,6 +26,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,6 +38,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.store.data.UserSession
 import com.example.store.theme.StoreAppTheme
 import com.example.store.ui.compositions.KeyValue
 import kotlinx.coroutines.launch
@@ -47,7 +50,10 @@ fun ProfileScreen(
     onOrdersClick: () -> Unit,
     onSignOutClick: () -> Unit
 ) {
+    val username by UserSession.username.collectAsState()
+
     ProfileScreenSkeleton(
+        username = username,
         onDismiss = onDismiss,
         onOrdersClick = onOrdersClick,
         onSignOutClick = onSignOutClick
@@ -57,12 +63,16 @@ fun ProfileScreen(
 @Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun ProfileScreenSkeleton(
+    username: String,
     onDismiss: () -> Unit,
     onOrdersClick: () -> Unit,
     onSignOutClick: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
+    val displayUsername = username.lowercase().replace(" ", "")
+
     ModalBottomSheet(
         onDismissRequest = { onDismiss() },
         sheetState = sheetState,
@@ -150,21 +160,21 @@ fun ProfileScreenSkeleton(
                     ) {
                         KeyValue(
                             title = "Name",
-                            value = "John Doe"
+                            value = username // ৬. ডায়নামিক নাম দেখানো হচ্ছে
                         )
 
                         HorizontalDivider()
 
                         KeyValue(
                             title = "Username",
-                            value = "johnd"
+                            value = displayUsername // ৭. ডায়নামিক ইউজারনেম
                         )
 
                         HorizontalDivider()
 
                         KeyValue(
                             title = "Email",
-                            value = "john@gmail.com"
+                            value = "$displayUsername@gmail.com" // ৮. ফেইক ডায়নামিক ইমেইল
                         )
 
                         HorizontalDivider()
@@ -226,6 +236,7 @@ fun ProfileScreenSkeleton(
 private fun ProfileScreenSkeletonPreview() {
     StoreAppTheme {
         ProfileScreenSkeleton(
+            username = "John Doe",
             onDismiss = {},
             onOrdersClick = {},
             onSignOutClick = {}

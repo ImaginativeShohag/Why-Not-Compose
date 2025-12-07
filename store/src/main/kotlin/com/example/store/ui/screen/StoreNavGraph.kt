@@ -2,28 +2,29 @@ package com.example.store.ui.screen
 
 import LoginScreen
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.example.store.data.UserSession
+import com.example.store.data.local.TokenManager
 import com.example.store.ui.compositions.TabScreen
+import com.example.store.ui.screen.cart.CartScreen
 import com.example.store.ui.screen.categories.CategoriesScreen
 import com.example.store.ui.screen.categorieswiseproduct.CategoriesWiseProductScreen
 import com.example.store.ui.screen.checkout.CheckOutScreen
 import com.example.store.ui.screen.home.StoreHomeScreen
 import com.example.store.ui.screen.home.StoreHomeScreenViewModel
-import com.example.store.ui.screen.order.Order
 import com.example.store.ui.screen.order.OrdersScreen
-import com.example.store.ui.screen.order.dummyOrders
 import com.example.store.ui.screen.productdetails.ProductDetailsScreen
-import com.example.store.ui.screen.productdetails.ProductDetailsViewModel
-import com.example.store.ui.screen.productdetails.dummyProducts
 import com.example.store.ui.screen.profile.ProfileScreen
 import com.example.store.ui.screen.splash.StoreSplashScreen
 import kotlinx.serialization.Serializable
@@ -100,16 +101,32 @@ fun StoreNavHost(
     goBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
+    val tokenManager = remember { TokenManager(context) }
+
+    LaunchedEffect(Unit) {
+        val savedName = tokenManager.getUserFullName()
+        if (savedName != null) {
+            UserSession.setUsername(savedName)
+        }
+    }
+
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = SplashScreen.Splash
+        startDestination = if (tokenManager.getToken() != null) MainScreen.TabScreen else SplashScreen.Splash
     ) {
         composable<SplashScreen.Splash> {
             StoreSplashScreen(
                 gotoHomeIndex = {
-                    navController.navigate(AuthScreen.Login) {
-                        popUpTo(SplashScreen.Splash) { inclusive = true }
+                    if (tokenManager.getToken() != null) {
+                        navController.navigate(MainScreen.TabScreen) {
+                            popUpTo(SplashScreen.Splash) { inclusive = true }
+                        }
+                    } else {
+                        navController.navigate(AuthScreen.Login) {
+                            popUpTo(SplashScreen.Splash) { inclusive = true }
+                        }
                     }
                 }
             )
@@ -117,7 +134,6 @@ fun StoreNavHost(
 
         composable<AuthScreen.Login> {
             val isDarkMode by UIThemeController.uiThemeMode.collectAsState()
-
             LoginScreen(
                 onLogin = {
                     navController.navigate(MainScreen.TabScreen) {
@@ -145,21 +161,24 @@ private fun NavGraphBuilder.addStoreScreens(
 ) {
     composable<MainScreen.TabScreen> {
         val isDarkMode by UIThemeController.uiThemeMode.collectAsState()
+        val context = LocalContext.current
 
+        val currentUserName by UserSession.username.collectAsState()
         TabScreen(
-            userName = "John Doe",
+            userName = currentUserName,
             onOrderClick = {
                 navController.navigate(OrderScreen.Order) {
                     popUpTo(MainScreen.TabScreen) { inclusive = true }
                 }
             },
             onSignOutClick = {
+                val tokenManager = TokenManager(context)
+                tokenManager.clearSession()
+                UserSession.setUsername("Guest")
+
                 navController.navigate(AuthScreen.Login) {
                     popUpTo(MainScreen.TabScreen) { inclusive = true }
                 }
-            },
-            goBack = {
-                navController.popBackStack()
             },
             toggleUIMode = {
                 updateUiThemeMode(isDarkMode.nextMode())
@@ -179,9 +198,13 @@ private fun NavGraphBuilder.addStoreScreens(
     composable<StoreScreen.StoreHome> {
         val isDarkMode by UIThemeController.uiThemeMode.collectAsState()
         val viewModel: StoreHomeScreenViewModel = hiltViewModel()
+        val context = LocalContext.current
+
+        val currentUserName by UserSession.username.collectAsState()
+
         StoreHomeScreen(
             viewModel = viewModel,
-            userName = "John Doe",
+            userName = currentUserName,
             onOrderClick = {
                 navController.navigate(OrderScreen.Order) {
                     popUpTo(MainScreen.TabScreen) { inclusive = true }
@@ -206,29 +229,22 @@ private fun NavGraphBuilder.addStoreScreens(
 
     composable<DetailsScreen.ProductDetails> { backStackEntry ->
         val productDetails: DetailsScreen.ProductDetails = backStackEntry.toRoute()
-        val product = dummyProducts.find { it.id == productDetails.productId }
         val isDarkMode by UIThemeController.uiThemeMode.collectAsState()
-        val viewModel: ProductDetailsViewModel = hiltViewModel()
-        product?.let {
-            ProductDetailsScreen(
-                viewModel = viewModel,
-                product = it,
-                goBack = {
-                    navController.popBackStack()
-                },
-                toggleUIMode = {
-                    updateUiThemeMode(isDarkMode.nextMode())
-                }
-            )
-        }
+
+        ProductDetailsScreen(
+            productId = productDetails.productId,
+            goBack = {
+                navController.popBackStack()
+            },
+            toggleUIMode = {
+                updateUiThemeMode(isDarkMode.nextMode())
+            }
+        )
     }
 
     composable<CategorieScreen.Categories> {
         val isDarkMode by UIThemeController.uiThemeMode.collectAsState()
         CategoriesScreen(
-            goBack = {
-                navController.popBackStack()
-            },
             onCategoryClick = {
                 navController.navigate(CategoriesWiseProducts.CategoriesWiseProduct(it.name))
             },
@@ -239,11 +255,13 @@ private fun NavGraphBuilder.addStoreScreens(
     }
 
     composable<CategoriesWiseProducts.CategoriesWiseProduct> { backStackEntry ->
-        val categoryDetails: CategoriesWiseProducts.CategoriesWiseProduct = backStackEntry.toRoute()
+        val categoryDetails = backStackEntry.toRoute<CategoriesWiseProducts.CategoriesWiseProduct>()
+
         val isDarkMode by UIThemeController.uiThemeMode.collectAsState()
-        val products = dummyProducts.filter { it.category == categoryDetails.categoryTitle }
+
         CategoriesWiseProductScreen(
-            products = products,
+            categoryName = categoryDetails.categoryTitle,
+
             onProductClick = { product ->
                 navController.navigate(DetailsScreen.ProductDetails(product.id))
             },
@@ -257,6 +275,7 @@ private fun NavGraphBuilder.addStoreScreens(
     }
 
     composable<ProfilesScreen.Profile> {
+        val context = LocalContext.current
         ProfileScreen(
             onDismiss = {
                 navController.popBackStack()
@@ -267,6 +286,10 @@ private fun NavGraphBuilder.addStoreScreens(
                 }
             },
             onSignOutClick = {
+                val tokenManager = TokenManager(context)
+                tokenManager.clearSession()
+                UserSession.setUsername("Guest")
+
                 navController.navigate(AuthScreen.Login) {
                     popUpTo(MainScreen.TabScreen) { inclusive = true }
                 }
@@ -277,7 +300,6 @@ private fun NavGraphBuilder.addStoreScreens(
     composable<OrderScreen.Order> {
         val isDarkMode by UIThemeController.uiThemeMode.collectAsState()
         OrdersScreen(
-            orders = dummyOrders,
             toggleUIMode = {
                 updateUiThemeMode(isDarkMode.nextMode())
             },
@@ -298,6 +320,18 @@ private fun NavGraphBuilder.addStoreScreens(
             },
             goToTab = {
                 navController.navigate(MainScreen.TabScreen)
+            }
+        )
+    }
+
+    composable<CartScreen.Cart> {
+        val isDarkMode by UIThemeController.uiThemeMode.collectAsState()
+        CartScreen(
+            onCheckout = {
+                navController.navigate(CheckoutScreen.Checkout)
+            },
+            toggleUIMode = {
+                updateUiThemeMode(isDarkMode.nextMode())
             }
         )
     }

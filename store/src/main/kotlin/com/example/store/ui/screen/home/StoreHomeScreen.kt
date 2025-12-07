@@ -1,0 +1,387 @@
+package com.example.store.ui.screen.home
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.SportsBaseball
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import coil3.compose.AsyncImage
+import com.example.store.models.cart.CartUIModel
+import com.example.store.models.categorie.Category
+import com.example.store.models.featureBannerData.FeaturedBannerData
+import com.example.store.models.featureBannerData.featuredBanners
+import com.example.store.models.product.Product
+import com.example.store.theme.StoreAppTheme
+import com.example.store.ui.compositions.ProductItem
+import com.example.store.ui.compositions.StoreAppBar
+import com.example.store.ui.screen.cart.CartViewModel
+import com.example.store.ui.screen.profile.ProfileScreen
+import kotlinx.coroutines.flow.flowOf
+
+@Suppress("ktlint:compose:param-order-check")
+@Composable
+fun StoreHomeScreen(
+    userName: String,
+    onOrderClick: () -> Unit,
+    onSignOutClick: () -> Unit,
+    onCategoryClick: (Category) -> Unit,
+    onProductClick: (Product) -> Unit,
+    toggleUIMode: () -> Unit,
+    viewModel: StoreHomeScreenViewModel,
+    cartViewModel: CartViewModel = hiltViewModel()
+) {
+    val state by viewModel.state.collectAsState()
+    val pagedProducts = state.items.collectAsLazyPagingItems()
+    val cartItems by cartViewModel.cartItems.collectAsState()
+    LaunchedEffect(Unit) {
+        viewModel.loadCategories()
+    }
+
+    StoreHomeSkeleton(
+        userName = userName,
+        onOrdersClick = onOrderClick,
+        onSignOutClick = onSignOutClick,
+        categories = state.categories,
+        products = pagedProducts,
+        onCategoryClick = onCategoryClick,
+        onProductClick = onProductClick,
+        cartItems = cartItems,
+        onAddToCart = { product -> cartViewModel.addToCart(product) },
+        onRemoveFromCart = { product -> cartViewModel.removeFromCart(product) },
+        toggleUIMode = toggleUIMode
+    )
+}
+
+@Suppress("ktlint:compose:modifier-missing-check")
+@Composable
+fun StoreHomeSkeleton(
+    userName: String,
+    onOrdersClick: () -> Unit,
+    onSignOutClick: () -> Unit,
+    categories: List<Category>,
+    products: LazyPagingItems<Product>,
+    onCategoryClick: (Category) -> Unit,
+    onProductClick: (Product) -> Unit,
+    cartItems: List<CartUIModel>,
+    onAddToCart: (Product) -> Unit,
+    onRemoveFromCart: (Product) -> Unit,
+    toggleUIMode: () -> Unit
+) {
+    var showProfileSheet by remember { mutableStateOf(false) }
+
+    Scaffold(
+        topBar = {
+            StoreAppBar(
+                toggleUIMode = toggleUIMode
+            )
+        },
+        contentWindowInsets = WindowInsets(0.dp, 0.dp, 0.dp, 0.dp)
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+        ) {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                item(span = { GridItemSpan(maxCurrentLineSpan) }) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .padding(top = 16.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = "Welcome, $userName",
+                            style = MaterialTheme.typography.headlineSmall,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                        )
+
+                        Image(
+                            painter = painterResource(org.imaginativeworld.whynotcompose.common.compose.R.drawable.store),
+                            contentDescription = "",
+                            modifier = Modifier
+                                .size(40.dp)
+                                .clip(CircleShape)
+                                .clickable {
+                                    showProfileSheet = true
+                                },
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                }
+
+                item(span = { GridItemSpan(maxCurrentLineSpan) }) {
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        contentPadding = PaddingValues(
+                            horizontal = 16.dp
+                        )
+                    ) {
+                        items(featuredBanners.size) { index ->
+                            FeaturedProductBanner(
+                                data = featuredBanners[index],
+                                modifier = Modifier
+                                    .width(320.dp)
+                                    .height(140.dp)
+                            )
+                        }
+                    }
+                }
+
+                item(span = { GridItemSpan(maxCurrentLineSpan) }) {
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        contentPadding = PaddingValues(
+                            horizontal = 16.dp
+                        )
+                    ) {
+                        items(categories.size) {
+                            CategoryItem(
+                                categories = categories[it],
+                                modifier = Modifier,
+                                onClick = {
+                                    onCategoryClick(categories[it])
+                                }
+                            )
+                        }
+                    }
+                }
+                items(products.itemCount) { index ->
+                    val product = products[index]
+                    if (product != null) {
+                        val cartItem = cartItems.find { it.product.id == product.id }
+                        val quantity = cartItem?.quantity ?: 0
+
+                        ProductItem(
+                            product = product,
+                            cartQuantity = quantity,
+                            onClick = { onProductClick(product) },
+                            onIncrement = { onAddToCart(product) },
+                            onDecrement = { onRemoveFromCart(product) },
+                            modifier = Modifier.then(
+                                if (index % 2 == 0) {
+                                    Modifier.padding(start = 16.dp)
+                                } else {
+                                    Modifier.padding(end = 16.dp)
+                                }
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+    if (showProfileSheet) {
+        ProfileScreen(
+            onDismiss = { showProfileSheet = false },
+            onOrdersClick = onOrdersClick,
+            onSignOutClick = onSignOutClick
+        )
+    }
+}
+
+@Composable
+fun CategoryItem(
+    categories: Category,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {}
+) {
+    Card(
+        modifier = modifier
+            .clickable(
+                onClick = {
+                    onClick()
+                }
+            ),
+        shape = RoundedCornerShape(8.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.outlineVariant)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    vertical = 8.dp,
+                    horizontal = 12.dp
+                ),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.SportsBaseball,
+                contentDescription = ""
+            )
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            Text(
+                text = categories.name,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+            )
+        }
+    }
+}
+
+@Composable
+fun FeaturedProductBanner(
+    data: FeaturedBannerData,
+    modifier: Modifier = Modifier
+) {
+    val darkGrayStart = Color(0xFF4E4E4E)
+    val darkGrayEnd = Color(0xFF2C2C2C)
+    val priceRed = Color(0xFFFF3B30)
+
+    Row(
+        modifier = modifier
+            .clip(RoundedCornerShape(16.dp))
+            .background(
+                brush = Brush.horizontalGradient(
+                    colors = listOf(darkGrayStart, darkGrayEnd)
+                )
+            )
+            .padding(12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier
+                .size(100.dp)
+                .clip(RoundedCornerShape(12.dp))
+                .background(Color.White)
+                .padding(8.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            AsyncImage(
+                model = data.imageUrl,
+                contentDescription = "Featured Product",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Fit
+            )
+        }
+
+        Spacer(modifier = Modifier.width(16.dp))
+
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.Center
+        ) {
+            Box(
+                modifier = Modifier
+                    .align(Alignment.End)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(priceRed)
+                    .padding(horizontal = 12.dp, vertical = 6.dp)
+            ) {
+                Text(
+                    text = data.price,
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Text(
+                text = data.title,
+                color = Color.White,
+                textAlign = TextAlign.Center,
+                fontWeight = Bold,
+                style = MaterialTheme.typography.bodyLarge,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(
+                        brush = Brush.horizontalGradient(
+                            colors = listOf(darkGrayStart, darkGrayEnd)
+                        )
+                    )
+                    .padding(12.dp),
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun StoreHomeSkeletonPreview() {
+    StoreAppTheme {
+        val dummyPagingData = flowOf(PagingData.empty<Product>()).collectAsLazyPagingItems()
+
+        StoreHomeSkeleton(
+            userName = "Shihab",
+            onOrdersClick = {},
+            onSignOutClick = {},
+            categories = listOf(
+                Category(1, "Electronics", ""),
+                Category(2, "Jewelery", ""),
+                Category(3, "Men's Clothing", "")
+            ),
+            products = dummyPagingData,
+            onCategoryClick = {},
+            onProductClick = {},
+            cartItems = emptyList(),
+            onAddToCart = {},
+            onRemoveFromCart = {},
+            toggleUIMode = {}
+        )
+    }
+}

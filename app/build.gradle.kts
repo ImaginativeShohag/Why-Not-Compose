@@ -118,6 +118,7 @@ dependencies {
     implementation(project(":exoplayer"))
     implementation(project(":cms"))
     implementation(project(":popbackstack"))
+    implementation(project(":store"))
     "baselineProfile"(project(":benchmarks"))
 
     implementation(libs.kotlin.stdlib)

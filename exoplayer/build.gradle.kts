@@ -44,24 +44,20 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
-
-        freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.RequiresOptIn"
-
-        // Enable experimental compose APIs
-        freeCompilerArgs =
-            freeCompilerArgs + "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
-        freeCompilerArgs =
-            freeCompilerArgs + "-opt-in=androidx.compose.animation.ExperimentalAnimationApi"
-        freeCompilerArgs =
-            freeCompilerArgs + "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi"
-        freeCompilerArgs =
-            freeCompilerArgs + "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi"
-    }
-
     buildFeatures {
         compose = true
+    }
+}
+
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.addAll(
+            "-opt-in=kotlin.RequiresOptIn",
+            "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+            "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
+            "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
+            "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi"
+        )
     }
 }
 

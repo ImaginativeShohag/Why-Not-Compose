@@ -26,11 +26,12 @@ dependencyResolutionManagement {
 }
 
 plugins {
-    // See https://jmfayard.github.io/refreshVersions
-    id("de.fayard.refreshVersions") version "0.60.5"
+    // See https://splitties.github.io/refreshVersions/
+    id("de.fayard.refreshVersions") version "0.60.6"
 
     // See https://docs.gradle.com/develocity/gradle-plugin/current/
     id("com.gradle.develocity").version("3.19")
+    id("org.gradle.toolchains.foojay-resolver-convention") version "0.10.0"
 }
 
 refreshVersions {

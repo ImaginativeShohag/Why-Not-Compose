@@ -68,33 +68,17 @@ android {
             // To publish on the Play store a private signing key is required, but to allow anyone
             // who clones the code to sign and run the release variant, use the debug signing key.
             signingConfig = signingConfigs.named("debug").get()
-
-            // Ensure Baseline Profile is fresh for release builds.
-            baselineProfile.automaticGenerationDuringBuild = true
         }
+    }
+
+    baselineProfile {
+        // Ensure Baseline Profile is fresh for release builds.
+        automaticGenerationDuringBuild = true
     }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = "17"
-
-        freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.RequiresOptIn"
-
-        // Enable experimental compose APIs
-        freeCompilerArgs =
-            freeCompilerArgs + "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
-        freeCompilerArgs =
-            freeCompilerArgs + "-opt-in=androidx.compose.animation.ExperimentalAnimationApi"
-        freeCompilerArgs =
-            freeCompilerArgs + "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi"
-        freeCompilerArgs =
-            freeCompilerArgs + "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi"
-        freeCompilerArgs =
-            freeCompilerArgs + "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi"
     }
 
     buildFeatures {
@@ -108,6 +92,19 @@ android {
         // buildConfig false
         resValues = false
         shaders = false
+    }
+}
+
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.addAll(
+            "-opt-in=kotlin.RequiresOptIn",
+            "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+            "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
+            "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
+            "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+            "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi"
+        )
     }
 }
 

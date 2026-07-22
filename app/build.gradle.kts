@@ -26,7 +26,6 @@
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.compose)
     alias(libs.plugins.ksp)
@@ -46,7 +45,7 @@ android {
         minSdk = BuildConfigConst.minSdk
         targetSdk = BuildConfigConst.targetSdk
         versionCode = (findProperty("android.injected.version.code") as? String)?.toIntOrNull() ?: 1
-        versionName = "7.3.1.${getCurrentDateAsYYMMDD()}" // Major.Minor.Patch.YYMMDD
+        versionName = "7.3.2.${getCurrentDateAsYYMMDD()}" // Major.Minor.Patch.YYMMDD
         vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

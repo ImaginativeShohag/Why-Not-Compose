@@ -1,7 +1,7 @@
 # Why Not Compose!
 
 A collection of animations, compositions, and UIs using Jetpack Compose. You can say Jetpack Compose
-cookbook, showcase or playground if you want!
+cookbook, showcase, or playground if you want!
 
 Please feel free to ask for features or suggestions for improvements.
 
@@ -18,7 +18,7 @@ Please feel free to ask for features or suggestions for improvements.
 - Navigation Component
 - Hilt
 - Everywhere dark mode support
-- A lot of Ready to use compositions
+- A lot of Ready-to-use compositions
 - Material 3
 - Gradle Kotlin DSL
 - CI/CD
@@ -101,6 +101,7 @@ Please feel free to ask for features or suggestions for improvements.
 - [ ] Migrate ExoPlayer: https://developer.android.com/media/media3/exoplayer/migration-guide
 - [ ] Update all `LaunchedEffect` with lambda issue using `rememberUpdatedState`: https://developer.android.com/develop/ui/compose/side-effects#rememberupdatedstate
 - [ ] Add example for AppColorLocal from Jaber vai
+- [ ] https://github.com/skydoves/compose-stability-analyzer
 
 # Note
 

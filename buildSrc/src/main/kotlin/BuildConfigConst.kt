@@ -27,7 +27,7 @@
 @file:Suppress("ktlint:standard:property-naming")
 
 object BuildConfigConst {
-    const val compileSdk = 36
-    const val minSdk = 21
+    const val compileSdk = 37
+    const val minSdk = 23
     const val targetSdk = 36
 }

@@ -7,10 +7,10 @@ plugins {
 
 android {
     namespace = "org.imaginativeworld.whynotcompose.benchmarks"
-    compileSdk = 34
+    compileSdk = BuildConfigConst.compileSdk
 
     defaultConfig {
-        minSdk = 28
+        minSdk = BuildConfigConst.minSdk
         targetSdk = BuildConfigConst.targetSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -27,9 +27,9 @@ android {
     testOptions {
         managedDevices {
             localDevices {
-                create("pixel6Api35") {
+                create("baselineProfileRunner") {
                     device = "Pixel 6"
-                    apiLevel = 35
+                    apiLevel = BuildConfigConst.targetSdk
                     systemImageSource = "google"
                 }
             }
@@ -44,7 +44,7 @@ android {
 baselineProfile {
     // This specifies the managed devices to use that you run the tests on.
     managedDevices.clear()
-    managedDevices += "pixel6Api35"
+    managedDevices += "baselineProfileRunner"
 
     // Don't use a connected device but rely on a GMD for consistency between local and CI builds.
     useConnectedDevices = false

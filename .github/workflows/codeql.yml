@@ -105,7 +105,7 @@ jobs:
         run: ./gradlew test
 
       - name: Setup GMD
-        run: ./gradlew :benchmarks:pixel6Api35Setup
+        run: ./gradlew :benchmarks:baselineProfileRunnerSetup
           --info
           -Pandroid.experimental.testOptions.managedDevices.emulator.showKernelLogging=true
           -Pandroid.testoptions.manageddevices.emulator.gpu="swiftshader_indirect"

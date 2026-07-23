@@ -243,7 +243,7 @@ dependencies {
     // Firebase
     implementation(platform(libs.firebase.bom))
 
-    implementation(libs.firebase.analytics.ktx)
+    implementation(libs.firebase.analytics)
 
     // Code Scanner
     implementation(libs.google.playservice.code.scanner)
@@ -261,6 +261,14 @@ dependencies {
     // Haze
     implementation(libs.haze)
     implementation(libs.haze.materials)
+
+    // Force a single concurrent-futures version: CameraX 1.6.1 pulls 1.1.0,
+    // but espresso-core 3.7.0 requires 1.2.0, which breaks consistent resolution
+    // between the app and androidTest classpaths.
+    constraints {
+        implementation("androidx.concurrent:concurrent-futures:1.2.0")
+        implementation("androidx.concurrent:concurrent-futures-ktx:1.2.0")
+    }
 }
 
 baselineProfile {
